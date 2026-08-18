@@ -42,6 +42,17 @@ const DIAG_CASES = [
 
 // ---------- doc freshness cases ----------
 
+const EXTRA_DIAG = [
+  { name: "Fn-bound arrow is not a signature arrow", src: `fn top_k_by<T, F, K>(items &[T], key F) Vec<&T> where F: Fn(&T) -> K, K: Ord {
+vec![]
+}`, cleanOf: ["no-arrow"] },
+  { name: "dyn Fn arrow in params is fine", src: `fn stage(f Box<dyn Fn(i64) -> i64>) i64 {
+f(1)
+}`, cleanOf: ["no-arrow"] },
+  { name: "real return arrow still flagged", src: `fn add(a u8, b u8) -> u8 {
+a + b
+}`, expect: ["no-arrow"] },
+];
 const DOC_CASES = [
   {
     name: "scoped comment anchor: orphan when absent from its own item",
@@ -526,6 +537,14 @@ for (const c of DIAG_CASES) {
   const out = attachInlineComments(m.rust, m.map, ttm, sidecar);
   if (out.includes("self.n += 1; // bump")) pass++;
   else { fail++; problems.push("ATTACH method-path anchor:\n" + out); }
+}
+for (const c of EXTRA_DIAG) {
+  const diags = diagnose(c.src);
+  const rules = diags.map((d) => d.rule);
+  let bad = null;
+  if (c.cleanOf && c.cleanOf.some((r) => rules.includes(r))) bad = `unexpected ${c.cleanOf.filter((r) => rules.includes(r))}`;
+  if (c.expect && c.expect.some((r) => !rules.includes(r))) bad = `missing ${c.expect.filter((r) => !rules.includes(r))}`;
+  if (bad) { fail++; problems.push(`DIAG2 ${c.name}: ${bad}`); } else pass++;
 }
 for (const c of DOC_CASES) {
   const diags = docCheck(c.ttm, c.sidecar);

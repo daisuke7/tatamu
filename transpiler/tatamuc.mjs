@@ -1675,10 +1675,26 @@ export function diagnose(src) {
         "`mut name = expr` is neither a binding (`:=`) nor a plain reassignment (`name = expr`).",
         `If declaring: mut ${m[1]} := ${m[2].replace(/;\s*$/, "")} — if reassigning: ${m[1]} = ${m[2].replace(/;\s*$/, "")}`);
     }
-    if (/\bfn\b[^{]*->/.test(bare)) {
-      push(n, "no-arrow", "error",
-        "Function signatures drop `->`: the return type follows the parameter list directly.",
-        `Write: ${bare.replace(/\s*->\s*/, " ")}`);
+    {
+      // only the signature's own return arrow — `->` inside Fn(..) -> T
+      // bounds, fn-pointer types, or where clauses is correct Rust-as-is
+      const fm = /\bfn\s+[A-Za-z_]\w*/.exec(bare);
+      if (fm) {
+        let i = bare.indexOf("(", fm.index);
+        if (i !== -1) {
+          let d = 0;
+          for (; i < bare.length; i++) {
+            if (bare[i] === "(") d++;
+            else if (bare[i] === ")") { d--; if (d === 0) { i++; break; } }
+          }
+          const after = bare.slice(i);
+          if (/^\s*->/.test(after)) {
+            push(n, "no-arrow", "error",
+              "Function signatures drop `->`: the return type follows the parameter list directly.",
+              `Write: ${bare.slice(0, i)}${after.replace(/^\s*->\s*/, " ")}`);
+          }
+        }
+      }
     }
     if (/^#\[derive\(/.test(bare)) {
       const m = /^#\[derive\(([^)]*)\)\]/.exec(bare);
