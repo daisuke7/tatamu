@@ -107,7 +107,7 @@ function transformFnSigs(seg) {
       let depth = 0, g = afterName;
       for (; g < seg.length; g++) {
         if (seg[g] === "<") depth++;
-        else if (seg[g] === ">") { depth--; if (depth === 0) { g++; break; } }
+        else if (seg[g] === ">" && seg[g - 1] !== "-") { depth--; if (depth === 0) { g++; break; } }
       }
       generics = seg.slice(afterName, g);
       afterName = g;
@@ -178,7 +178,7 @@ function transformBindings(seg) {
   return seg
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let mut ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let mut ${name} =`)
-    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|(?:[A-Za-z_][\w:]*)\s*\{.*?\}|[A-Za-z_]\w*(?:::[A-Za-z_]\w*)+|\[[^=]*?\])\s*:=/g, "$1let $2 =")
+    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*(?:::<[^>]*>)?)?\([^=]*?\)|(?:[A-Za-z_][\w:]*)\s*\{.*?\}|[A-Za-z_]\w*(?:::[A-Za-z_]\w*)+|\[[^=]*?\])\s*:=/g, "$1let $2 =")
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
@@ -507,7 +507,7 @@ export function transpileMapped(src) {
     if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare)) return "use-block"; // multi-line `use x::{…}` closer needs `};`
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
     if (/^(return|break)\b/.test(bare) && /\{$/.test(bare)) return "let-block"; // `return match … {` — value block, closer gets `;`
-    if (/^(const|static)\b/.test(bare) && /=[^=].*\{$/.test(bare)) return "let-block"; // `const _: fn() = || {` — initializer block
+    if (/^(const|static)\s+(?!fn\b)/.test(bare) && /=[^=].*\{$/.test(bare)) return "let-block"; // `const _: fn() = || {` — initializer block
     // lone `{`: opener of a multi-line signature (wrapped where clause) — scan
     // back past continuation lines to find the fn header
     if (/^\{$/.test(bare) && i !== undefined) {
@@ -617,8 +617,8 @@ export function transpileMapped(src) {
     else if (/\}$/.test(bare)) semi = /^(let|return|break|continue)\b/.test(bare) || topLevelAssign(bare); // inline let/assign/return of a braced expr
     else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {
-      // a let/use statement is never a tail expression
-      semi = /^let\b/.test(bare) || !VALUE_CONTEXTS.includes(stack[stack.length - 1]);
+      // let/static/const/use statements are never tail expressions
+      semi = /^(let|static|const|use)\b/.test(bare) || !VALUE_CONTEXTS.includes(stack[stack.length - 1]);
     } else semi = true;
 
     out.push(semi ? line + ";" : line);

@@ -230,6 +230,19 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "const fn with attr params is not an initializer", src: `const fn to_u64(#[cfg(feature = "bigidx")] val u64) u64 {
+val
+}
+fn after() {}`, contains: ["const fn to_u64(#[cfg(feature = \"bigidx\")] val: u64) -> u64 {", "fn after() {}"], excludes: ["};"] },
+  { name: "closure-bound generics with arrow", src: `unsafe fn take<'a, F: Fn(&'a [u8]) ->(IdxSize, &'a [u8]) , >(f F) Option<IdxSize> { g(f) }`, contains: ["(f: F) -> Option<IdxSize>"], excludes: ["-> , >"] },
+  { name: "static before fn closer keeps semi", src: `fn total_memory() u64 {
+static TOTAL: LazyLock<u64> = LazyLock::new(|| { compute() })
+*TOTAL
+}`, contains: ["LazyLock::new(|| { compute() });"] },
+  { name: "turbofish tuple pattern binding", src: `fn f(p Pair) R<()> {
+ArrayPair::<T, N>(l, r) := p.split()
+use_lr(l, r)
+}`, contains: ["let ArrayPair::<T, N>(l, r) = p.split();"] },
   { name: "inline extern block with fn declaration", src: `extern "C" fn run() u32 { unsafe extern "C" { safe fn _start () ; } _start () ; 0 }`, contains: ["safe fn _start(); }", "_start () ; 0 }"], excludes: ["-> ;"] },
   { name: "enum body folded to one line keeps following items", src: `priv enum ES {
 Running(Pin<Box<dyn F>>), Done { inner: Box<dyn D>, }, }
