@@ -102,7 +102,7 @@
   "file": "crates/core/flags/defs.rs",
   "lines": 8162,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+  "detail": "Error: Error(\"expected one of: identifier, `::`, `<`, `_`, literal, `const`, `ref`, `mut`, `&`, parentheses, square brac"
  },
  {
   "crate": "ripgrep",
@@ -318,8 +318,8 @@
   "crate": "ripgrep",
   "file": "crates/ignore/src/walk.rs",
   "lines": 2741,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -416,8 +416,8 @@
   "crate": "ripgrep",
   "file": "crates/printer/src/jsont.rs",
   "lines": 295,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",

@@ -63,8 +63,8 @@ function outsideStrings(line, fn) {
 // must never see delimiters or keywords inside strings
 function stripLiterals(line) {
   return line
-    .replace(/r(#*)".*?"\1/g, '""')
-    .replace(/"(\\.|[^"\\])*"/g, '""')
+    .replace(/(?<![A-Za-z0-9_"])b?r(#*)"[\s\S]*?"\1/g, '""')
+    .replace(/(?:(?<![A-Za-z0-9_])b)?"(\\.|[^"\\])*"/g, '""')
     .replace(/'(\\.|[^'\\])'/g, "''");
 }
 
