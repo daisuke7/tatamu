@@ -90,16 +90,18 @@ lit_depth = 1
 }
 if lit_depth > 0 {continue}
 mut depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
-if bare.ends_with(',') && !bare.contains('=') {
+if bare.ends_with(',') {
 mut ang := 0i64
-mut prev_ch := ' '
-for ch in bare.chars() {
+cs: Vec<char> := bare.chars().collect()
+for (ci, ch) in cs.iter().enumerate() {
+prev_ch := if ci > 0 {cs[ci - 1]} else {' '}
+next_ch := cs.get(ci + 1).copied().unwrap_or(' ')
+op_like := prev_ch == ' ' && (next_ch == ' ' || next_ch == '<' || next_ch == '>' || next_ch == '=')
 match ch {
-'<' => ang += 1,
-'>' if prev_ch != '-' => ang -= 1,
+'<' if !op_like => ang += 1,
+'>' if prev_ch != '-' && !op_like => ang -= 1,
 _ => {}
 }
-prev_ch = ch
 }
 if ang > 0 {depth += ang}
 }

@@ -5435,8 +5435,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax/src/ast/make/quote.rs",
   "lines": 192,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
