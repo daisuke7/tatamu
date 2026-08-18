@@ -42,9 +42,46 @@ struct Clearer;
 fn drop_docs(attrs &mut Vec<syn::Attribute>) {
 attrs.retain(|a| !a.path().is_ident("doc"))
 }
+fn reescape_tokens(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
+ts.into_iter().map(|tt| match tt {
+proc_macro2::TokenTree::Group(g) => {
+ng := proc_macro2::Group::new(g.delimiter(), reescape_tokens(g.stream()))
+proc_macro2::TokenTree::Group(ng)
+}
+proc_macro2::TokenTree::Literal(l) => {
+s := l.to_string()
+if s.starts_with('r') || s.starts_with("br") {
+match syn::parse_str::<syn::Lit>(&s) {
+Ok(syn::Lit::Str(ls)) => proc_macro2::TokenTree::Literal(proc_macro2::Literal::string(&ls.value())),
+Ok(syn::Lit::ByteStr(bs)) => proc_macro2::TokenTree::Literal(proc_macro2::Literal::byte_string(&bs.value())),
+_ => proc_macro2::TokenTree::Literal(l),
+}
+} else {
+proc_macro2::TokenTree::Literal(l)
+}
+}
+other => other,
+}).collect()
+}
 impl syn::visit_mut::VisitMut for Clearer {
 fn visit_visibility_mut(&mut self, v &mut syn::Visibility) {
 *v = syn::Visibility::Inherited
+}
+fn visit_lit_mut(&mut self, l &mut syn::Lit) {
+if let syn::Lit::Str(s) = l {
+if s.token().to_string().starts_with('r') {
+*l = syn::Lit::Str(syn::LitStr::new(&s.value(), s.span()))
+}
+} else if let syn::Lit::ByteStr(s) = l {
+if s.token().to_string().starts_with("br") {
+*l = syn::Lit::ByteStr(syn::LitByteStr::new(&s.value(), s.span()))
+}
+}
+syn::visit_mut::visit_lit_mut(self, l)
+}
+fn visit_macro_mut(&mut self, m &mut syn::Macro) {
+m.tokens = reescape_tokens(std::mem::take(&mut m.tokens))
+syn::visit_mut::visit_macro_mut(self, m)
 }
 fn visit_impl_item_fn_mut(&mut self, f &mut syn::ImplItemFn) {
 drop_docs(&mut f.attrs)

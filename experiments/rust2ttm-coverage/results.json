@@ -1095,8 +1095,8 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/styled_str.rs",
   "lines": 288,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `wrap_unstyled`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1417,8 +1417,8 @@
   "crate": "clap",
   "file": "clap_complete/src/aot/shells/elvish.rs",
   "lines": 149,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1438,8 +1438,8 @@
   "crate": "clap",
   "file": "clap_complete/src/aot/shells/powershell.rs",
   "lines": 156,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1494,8 +1494,8 @@
   "crate": "clap",
   "file": "clap_complete/src/env/shells.rs",
   "lines": 617,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
