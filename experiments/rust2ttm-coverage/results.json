@@ -102,7 +102,7 @@
   "file": "crates/core/flags/defs.rs",
   "lines": 8162,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
  },
  {
   "crate": "ripgrep",
@@ -269,8 +269,8 @@
   "crate": "ripgrep",
   "file": "crates/ignore/src/dir.rs",
   "lines": 1614,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",

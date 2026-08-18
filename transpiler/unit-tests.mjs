@@ -121,6 +121,10 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "inline assignment of if expression gets semi", src: `fn f(args &mut A, p P) R<()> {
+args.h = if p.is_empty() { None } else { Some(p) }
+Ok(())
+}`, contains: ["Some(p) };"] },
   { name: "multi-line use block in fn body", src: `fn f() u8 {
 use self::T::{
 A, B,

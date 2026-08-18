@@ -402,9 +402,8 @@ export function transpileMapped(src) {
   };
   // `x = if c { … }` / `x.y += match … {` — a top-level assignment whose value
   // is the opened block: its closer needs `;` and its tail is a value
-  const assignsValue = (bare) => {
-    if (!/\{$/.test(bare)) return false;
-    if (/^(if|while|for|match|loop|else|return|pub|struct|enum|union|trait|impl|mod|async|unsafe|extern|static|const|type|where)\b/.test(bare)) return false;
+  const topLevelAssign = (bare) => {
+    if (/^(if|while|for|match|loop|else|return|pub|struct|enum|union|trait|impl|mod|async|unsafe|extern|static|const|type|where|use|let)\b/.test(bare)) return false;
     if (/\bfn\b/.test(bare)) return false;      // fn headers carry `Item = T` bindings
     let d = 0;
     for (let i = 0; i < bare.length - 1; i++) {
@@ -421,6 +420,7 @@ export function transpileMapped(src) {
     }
     return false;
   };
+  const assignsValue = (bare) => /\{$/.test(bare) && topLevelAssign(bare);
   const blockContext = (bare, stack, i) => {
     // `} else {` / `} else if … {` closes and reopens the same construct —
     // the new block inherits the context of the one just closed
@@ -513,7 +513,7 @@ export function transpileMapped(src) {
       const valueTail = nextBare !== undefined && /^\}/.test(nextBare) && VALUE_CONTEXTS.includes(topAfter);
       semi = !valueTail;
     }
-    else if (/\}$/.test(bare)) semi = /^let\b/.test(bare);       // inline `let x = … {…}`
+    else if (/\}$/.test(bare)) semi = /^let\b/.test(bare) || topLevelAssign(bare); // inline `let x = … {…}` / `x.y = if … {…}`
     else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {
       semi = !VALUE_CONTEXTS.includes(stack[stack.length - 1]); // tail expr only in value blocks
