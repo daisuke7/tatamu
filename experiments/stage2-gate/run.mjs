@@ -63,7 +63,7 @@ function checkTatamu(code, tag) {
   const chk = spawnSync("node", [join(ROOT, "transpiler/tatamuc.mjs"), "--check", f], { encoding: "utf8" });
   try {
     const d = JSON.parse(chk.stdout);
-    const errs = (d.diagnostics ?? []).filter((x) => x.severity !== "info" && x.rule !== "no-comments");
+    const errs = (d.diagnostics ?? []).filter((x) => x.severity === "error");
     if (errs.length) return { ok: false, feedback: JSON.stringify({ tool: "tatamuc --check", diagnostics: errs }, null, 1) };
   } catch { /* fall through to compile */ }
   const cmp = spawnSync("node", [join(ROOT, "transpiler/tatamuc.mjs"), "--compile", f],

@@ -1,0 +1,24 @@
+struct Pipeline {stages Vec<(String, Box<dyn Fn(i64) -> i64>)>}
+impl Pipeline {
+fn new() Self {Pipeline {stages: Vec::new()}}
+fn stage(mut self, name &str, f impl Fn(i64) i64 + 'static) Self {
+self.stages.push((name.to_string(), Box::new(f)))
+self
+}
+fn run(&self, input i64) Vec<(String, i64)> {
+mut trace := Vec::new()
+mut value := input
+for (name, f) in &self.stages {
+value = f(value)
+trace.push((name.clone(), value))
+}
+trace
+}
+}
+fn main() {
+factor := 3
+pipeline := Pipeline::new().stage("add1", |x| x + 1).stage("times", move |x| x * factor).stage("sub2", |x| x - 2)
+trace := pipeline.run(10)
+assert_eq!(trace, vec![("add1".to_string(), 11), ("times".to_string(), 33), ("sub2".to_string(), 31)])
+println!("{trace:?}")
+}

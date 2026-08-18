@@ -345,9 +345,21 @@ const PRELUDE = [
 // transpileMapped returns { rust, map } where map[i] is the 1-based .ttm source
 // line of output line i (null for injected lines like `use` statements).
 export function transpileMapped(src) {
-  const rawLines = src.split("\n")
-    .map((l, i) => [l.trim(), i + 1])
-    .filter(([l]) => l !== "");
+  // lenient continuation joining: LLMs habitually wrap builder chains and
+  // where clauses rustfmt-style — accept them by gluing onto the previous line
+  const rawLines = [];
+  for (const [i, lineRaw] of src.split("\n").entries()) {
+    const t = lineRaw.trim();
+    if (t === "") continue;
+    const prev = rawLines[rawLines.length - 1];
+    const contChain = /^\.(?!\.)/.test(t);
+    const contWhere = /^where\b/.test(t);
+    if (prev && (contChain || contWhere) && !/[;{}]$/.test(stripLiterals(prev[0]))) {
+      prev[0] += (contWhere ? " " : "") + t;
+      continue;
+    }
+    rawLines.push([t, i + 1]);
+  }
   let lines = [];
   const lineSrc = [];
   const linePriv = [];

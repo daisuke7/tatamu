@@ -1,0 +1,674 @@
+[
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 29587,
+    "out": 13028
+   },
+   {
+    "in": 32050,
+    "out": 2902
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 157
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28206,
+    "out": 5968
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 36
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29858,
+    "out": 12411
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 112
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28086,
+    "out": 4773
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 47
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "borrowed-index",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 29840,
+    "out": 8788
+   },
+   {
+    "in": 30649,
+    "out": 14990
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 232
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "borrowed-index",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28188,
+    "out": 5955
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 58
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "borrowed-index",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29840,
+    "out": 10727
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 71
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "borrowed-index",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28188,
+    "out": 3448
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 33
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29813,
+    "out": 4100
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 43
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28161,
+    "out": 2873
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 30
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 29813,
+    "out": 11896
+   },
+   {
+    "in": 30326,
+    "out": 2699
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 140
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28161,
+    "out": 2033
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 24
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 29819,
+    "out": 3873
+   },
+   {
+    "in": 30355,
+    "out": 1156
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 57
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28167,
+    "out": 1202
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 17
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 29819,
+    "out": 2809
+   },
+   {
+    "in": 30397,
+    "out": 839
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 45
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 28167,
+    "out": 1319
+   },
+   {
+    "in": 28907,
+    "out": 915
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 32
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "windowed-iter",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29827,
+    "out": 2812
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 31
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "windowed-iter",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28175,
+    "out": 2717
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 19
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "windowed-iter",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29827,
+    "out": 3670
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 38
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "windowed-iter",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 28175,
+    "out": 2813
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 30
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41550,
+    "out": 2956
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 29
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39385,
+    "out": 755
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 10
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41550,
+    "out": 3852
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 38
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39385,
+    "out": 819
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "borrowed-index",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41516,
+    "out": 2516
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 26
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "borrowed-index",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39351,
+    "out": 685
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 10
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "borrowed-index",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41516,
+    "out": 1401
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 17
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "borrowed-index",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39351,
+    "out": 834
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41468,
+    "out": 1465
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 18
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39303,
+    "out": 1013
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 13
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41468,
+    "out": 1203
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 16
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39303,
+    "out": 1081
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 16
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 41502,
+    "out": 384
+   },
+   {
+    "in": 42105,
+    "out": 692
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 19
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39337,
+    "out": 449
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 9
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 41502,
+    "out": 384
+   },
+   {
+    "in": 42105,
+    "out": 924
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 24
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39337,
+    "out": 449
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "windowed-iter",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41507,
+    "out": 607
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "windowed-iter",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39342,
+    "out": 337
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 9
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "windowed-iter",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41507,
+    "out": 606
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "windowed-iter",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39342,
+    "out": 333
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 8
+ }
+]

@@ -276,6 +276,19 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "rustfmt-style builder chain accepted", src: `fn main() {
+p := Pipeline::new()
+.stage("add1", |x| x + 1)
+.stage("sub2", |x| x - 2)
+r := p.run(10)
+println!("{r:?}")
+}`, contains: ["let p = Pipeline::new().stage(\"add1\", |x| x + 1).stage(\"sub2\", |x| x - 2);"] },
+  { name: "wrapped where clause accepted", src: `fn top_k<T>(items &[T], k usize) Vec<&T>
+where
+T: Ord,
+{
+items.iter().take(k).collect()
+}`, contains: ["-> Vec<&T> where", "T: Ord,"] },
   { name: "dollar chars survive pubify", src: `const CURRENCY &'static [(char, char)] = &[ ('\$', '\$'), ('a', 'b')]`, contains: ["('\$', '\$')"] },
   { name: "user-defined R type disables the alias", src: `struct R<const I: usize>;
 fn f(x Res<R<3>>) {
