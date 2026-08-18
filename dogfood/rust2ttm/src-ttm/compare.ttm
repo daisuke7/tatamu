@@ -91,6 +91,7 @@ syn::visit_mut::visit_lit_mut(self, l)
 fn visit_macro_mut(&mut self, m &mut syn::Macro) {
 m.tokens = strip_macro_trailing_commas(std::mem::take(&mut m.tokens))
 m.tokens = strip_token_docs(std::mem::take(&mut m.tokens))
+m.tokens = flatten_spacing(std::mem::take(&mut m.tokens))
 if m.path.is_ident("macro_rules") {
 m.tokens = brace_rule_bodies(std::mem::take(&mut m.tokens))
 }
@@ -196,6 +197,17 @@ continue
 out.push(tt)
 }
 out.into_iter().collect()
+}
+fn flatten_spacing(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
+ts.into_iter().map(|tt| match tt {
+proc_macro2::TokenTree::Group(g) => {
+proc_macro2::TokenTree::Group(proc_macro2::Group::new(g.delimiter(), flatten_spacing(g.stream())))
+}
+proc_macro2::TokenTree::Punct(p) => {
+proc_macro2::TokenTree::Punct(proc_macro2::Punct::new(p.as_char(), proc_macro2::Spacing::Alone))
+}
+other => other,
+}).collect()
 }
 fn is_doc_group(tt &proc_macro2::TokenTree) bool {
 if let proc_macro2::TokenTree::Group(g) = tt {

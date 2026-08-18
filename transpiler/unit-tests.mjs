@@ -121,6 +121,12 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "return of struct literal gets semi", src: `fn f(num u32, semaphore S) Self {
+#[cfg(feature = "tracing")]
+return Self { node: W::new(num), semaphore, queued: false, }
+#[cfg(not(feature = "tracing"))]
+return Self { node: W::new(num), semaphore, queued: true, }
+}`, contains: ["queued: false, };", "queued: true, };"] },
   { name: "let statement before fn closer keeps semi", src: `fn f(&self) u8 {
 g := || {
 _ := self.x.update(|c| c + 1)

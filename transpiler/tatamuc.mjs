@@ -555,7 +555,7 @@ export function transpileMapped(src) {
       const valueTail = nextBare !== undefined && /^\}/.test(nextBare) && VALUE_CONTEXTS.includes(topAfter);
       semi = !valueTail;
     }
-    else if (/\}$/.test(bare)) semi = /^let\b/.test(bare) || topLevelAssign(bare); // inline `let x = … {…}` / `x.y = if … {…}`
+    else if (/\}$/.test(bare)) semi = /^(let|return|break|continue)\b/.test(bare) || topLevelAssign(bare); // inline let/assign/return of a braced expr
     else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {
       // a let/use statement is never a tail expression
