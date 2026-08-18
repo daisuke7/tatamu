@@ -185,16 +185,26 @@ function transformBindings(seg) {
 
 // shared: `name Type` field list → `name: Type` (used by struct and enum variants)
 function fieldsToRust(fieldsRaw) {
-  // depth-aware split: commas inside <>, (), [], {} (incl. attribute args) stay put
+  // depth-aware split: commas inside <>, (), [], {} (incl. attribute args) stay
+  // put; characters inside string/char literals never count
   const parts = [];
   {
+    const spans = [];
+    LIT_RE.lastIndex = 0;
+    let mm;
+    while ((mm = LIT_RE.exec(fieldsRaw))) spans.push([mm.index, mm.index + mm[0].length]);
+    let si = 0;
     let d = 0, cur = "";
     for (let i = 0; i < fieldsRaw.length; i++) {
+      while (si < spans.length && i >= spans[si][1]) si++;
+      const inLit = si < spans.length && i >= spans[si][0];
       const ch = fieldsRaw[i];
-      if ("<([{".includes(ch)) d++;
-      else if ((ch === ">" && fieldsRaw[i - 1] !== "-") || ")]}".includes(ch)) d--;
-      if (ch === "," && d === 0) { parts.push(cur); cur = ""; }
-      else cur += ch;
+      if (!inLit) {
+        if ("<([{".includes(ch)) d++;
+        else if ((ch === ">" && fieldsRaw[i - 1] !== "-") || ")]}".includes(ch)) d--;
+        if (ch === "," && d === 0) { parts.push(cur); cur = ""; continue; }
+      }
+      cur += ch;
     }
     if (cur.trim() !== "") parts.push(cur);
   }

@@ -151,8 +151,15 @@ Ok(p) => p,
 Err(_) => quote::ToTokens::to_token_stream(&cleaned).to_string(),
 }
 static PP_RANGE_FIX: OnceLock<regex::Regex> = OnceLock::new()
-printed_fixed := crate::textual::re(r"(\d\.)\.\.", &PP_RANGE_FIX).replace_all(&printed, "$1 ..").to_string()
-raw_lines: Vec<String> := printed_fixed.lines().map(String::from).collect()
+rx := crate::textual::re(r"(\d\.)\.\.", &PP_RANGE_FIX)
+raw_lines: Vec<String> := printed.lines().map(|l| {
+if rx.is_match(l) {
+(masked, lits) := crate::textual::mask_lits(l)
+crate::textual::restore_lits(&rx.replace_all(&masked, "$1 .."), &lits)
+} else {
+l.to_string()
+}
+}).collect()
 joined := join_wrapped(&raw_lines)
 in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))
 mut lines := Vec::new()

@@ -26,6 +26,11 @@ attrs.sort_by_key(|a| quote::ToTokens::to_token_stream(a).to_string())
 priv struct PathNormalizer {siblings Vec<String>}
 impl syn::visit_mut::VisitMut for PathNormalizer {
 fn visit_item_mut(&mut self, it &mut syn::Item) {
+if let syn::Item::Macro(im) = it {
+if im.mac.path.is_ident("macro_rules") {
+im.semi_token = None
+}
+}
 if let Some(a) = item_attrs_mut(it) {
 a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 merge_derives(a)
@@ -145,6 +150,8 @@ if let syn::Lit::Str(s) = l {
 *l = syn::Lit::Str(syn::LitStr::new(&s.value(), s.span()))
 } else if let syn::Lit::ByteStr(s) = l {
 *l = syn::Lit::ByteStr(syn::LitByteStr::new(&s.value(), s.span()))
+} else if let syn::Lit::CStr(s) = l {
+*l = syn::Lit::CStr(syn::LitCStr::new(&s.value(), s.span()))
 }
 syn::visit_mut::visit_lit_mut(self, l)
 }
