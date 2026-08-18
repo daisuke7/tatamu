@@ -66,14 +66,17 @@ function checkTatamu(code, tag) {
     const errs = (d.diagnostics ?? []).filter((x) => x.severity === "error");
     if (errs.length) return { ok: false, feedback: JSON.stringify({ tool: "tatamuc --check", diagnostics: errs }, null, 1) };
   } catch { /* fall through to compile */ }
-  const cmp = spawnSync("node", [join(ROOT, "transpiler/tatamuc.mjs"), "--compile", f],
-    { encoding: "utf8", timeout: 300000 });
-  try {
-    const d = JSON.parse(cmp.stdout);
-    if (d.ok) return { ok: true };
-    return { ok: false, feedback: JSON.stringify({ tool: "tatamuc --compile (rustc mapped to .ttm lines)", diagnostics: d.diagnostics }, null, 1) };
-  } catch {
-    return { ok: false, feedback: (cmp.stdout + cmp.stderr).slice(0, 6000) };
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const cmp = spawnSync("node", [join(ROOT, "transpiler/tatamuc.mjs"), "--compile", f],
+      { encoding: "utf8", timeout: 300000 });
+    try {
+      const d = JSON.parse(cmp.stdout);
+      if (d.ok) return { ok: true };
+      return { ok: false, feedback: JSON.stringify({ tool: "tatamuc --compile (rustc mapped to .ttm lines)", diagnostics: d.diagnostics }, null, 1) };
+    } catch {
+      if (attempt === 0) continue; // transient tool failure — retry once before judging
+      return { ok: false, feedback: (cmp.stdout + cmp.stderr).slice(0, 6000) };
+    }
   }
 }
 

@@ -645,6 +645,7 @@ export function transpileMapped(src) {
     }
     else if (/^#\[/.test(bare) && /\]$/.test(bare)) semi = false; // attribute-only line
     else if (/\.\.$/.test(bare) && !/^let\b/.test(bare) && !topLevelAssign(bare)) semi = false; // rest pattern continues (not an open-range binding)
+    else if (/\bwhere$/.test(bare)) semi = false;               // wrapped where clause continues
     else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare) && netClosed.length === 0) semi = true; // use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
@@ -672,7 +673,7 @@ export function transpileMapped(src) {
       for (const ch of bare) { if ("{([".includes(ch)) open++; else if ("})]".includes(ch)) open--; }
       semi = open <= 0 && (/^(let|return|break|continue)\b/.test(bare) || topLevelAssign(bare));
     }
-    else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
+    else if (/^fn\b/.test(bare) && !/\{/.test(bare) && !/\bwhere$/.test(bare)) semi = true; // trait method declaration (not a wrapped where header)
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {
       // let/static/const/use statements are never tail expressions
       semi = /^(let|static|const|use)\b/.test(bare) || !VALUE_CONTEXTS.includes(stack[stack.length - 1]);

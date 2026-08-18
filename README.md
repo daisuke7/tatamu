@@ -54,7 +54,7 @@ node transpiler/tatamuc.mjs --project src out    # cargo project + FFI bindings
 Staged plan ([docs/00](docs/00-concept.md)): dialect → own semantics → own compiler → ecosystem.
 
 - **Stage 1 (Rust token-saving dialect): gate cleared.** Token reduction ≥30% measured (27–45%, −42.2% vs handwritten Rust); LLM compile success 24/24 = raw Rust baseline
-- **Stage 2 (AI-oriented features): implemented, gate pending.** Structured diagnostics, project generation, out-of-band docs/comment ledger (AST-path anchors), C/JS/TS/Dart FFI, wasm/mobile targets are all built and verified. The gate — *measured improvement* in generation success or fix-loop count over the dialect alone — has not been formally tested yet; this is the next milestone
+- **Stage 2 (AI-oriented features): implemented; gate measured, not met.** Structured diagnostics, project generation, out-of-band docs/comment ledger (AST-path anchors), C/JS/TS/Dart FFI, wasm/mobile targets are all built and verified. The gate — *measured improvement* in generation success or fix-loop count — was tested ([docs/34](docs/34-stage2-gate.md)): frontier models tie raw Rust exactly (0.00 fix rounds both), smaller models pay a dialect tax; no improvement observed. The experiment itself caught and fixed 4 real tool defects, and points the retry at large-context comprehension tasks where Tatamu's token compression actually applies
 - **Stage 3 (independent processing): not started, by design.** Triggers only when the line-based architecture causes real harm. Decision material is already documented: 2 known limits (block-in-condition statement splitting; comment ordinals within one item), both pointing to syn-based statement handling
 - **Reverse direction (Rust → Tatamu) is production-shaped**: existing Rust projects can be migrated file-by-file with a machine-checked equivalence gate (see below)
 
@@ -136,7 +136,7 @@ node transpiler/tatamuc.mjs --project src out    # cargo プロジェクト + FF
 段階計画([docs/00](docs/00-concept.md)): 方言 → 独自意味論 → 独自処理系 → エコシステム。
 
 - **Stage 1(Rust トークン節約方言): ゲートクリア済み。** トークン削減 30% 以上を実測(27〜45%、手書き Rust 比 −42.2%)、LLM コンパイル成功 24/24 = 素の Rust と同率
-- **Stage 2(AI 向け機能): 実装完了、ゲート検証はこれから。** 構造化診断・プロジェクト生成・帯域外 doc/コメント台帳(AST パスアンカー)・C/JS/TS/Dart FFI・wasm/モバイルターゲットは全て実装・検証済み。ゲート条件 —「生成成功率や修正ループ回数の**改善**」の実測 — が未検証で、これが次のマイルストーン
+- **Stage 2(AI 向け機能): 実装完了、ゲートは実測の結果「未達」。** 構造化診断・プロジェクト生成・帯域外 doc/コメント台帳(AST パスアンカー)・C/JS/TS/Dart FFI・wasm/モバイルターゲットは全て実装・検証済み。ゲート条件 —「生成成功率や修正ループ回数の**改善**」— を実測した結果([docs/34](docs/34-stage2-gate.md))、フロンティアモデルでは素の Rust と完全同等(双方 0.00 ラウンド)、小型モデルでは方言学習コストが残り、改善は観測されなかった。実験自体がツールの実欠陥4件を検出・修正し、再挑戦は Tatamu のトークン圧縮が実際に効く「大規模文脈の理解・変更」軸で行うべきという設計指針を得た
 - **Stage 3(独自処理系): 意図的に未着手。** 行ベース設計が実害を生んだ時点で着手する条件付き。判断材料は文書化済み: 既知の限界2件(条件位置ブロック式の文分割、アイテム内コメント序数)がいずれも「文分割の syn 化」を指している
 - **逆方向(Rust → Tatamu)は実運用形**: 既存 Rust プロジェクトを、機械検証付きの同値ゲートのもとでファイル単位に移行できる(下記)
 

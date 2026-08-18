@@ -8,316 +8,8 @@
   "success": true,
   "calls": [
    {
-    "in": 28311,
-    "out": 7049
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 70
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "graph-reach",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28127,
-    "out": 5845
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 51
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "graph-reach",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 29796,
-    "out": 11734
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 107
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "graph-reach",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28144,
-    "out": 10534
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 92
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "borrowed-index",
-  "rep": 0,
-  "rounds": 1,
-  "success": true,
-  "calls": [
-   {
-    "in": 29761,
-    "out": 13918
-   },
-   {
-    "in": 30476,
-    "out": 6905
-   }
-  ],
-  "firstShotClean": false,
-  "secs": 192
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "borrowed-index",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28109,
-    "out": 5734
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 51
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "borrowed-index",
-  "rep": 1,
-  "rounds": 1,
-  "success": true,
-  "calls": [
-   {
-    "in": 29778,
-    "out": 9583
-   },
-   {
-    "in": 30981,
-    "out": 3651
-   }
-  ],
-  "firstShotClean": false,
-  "secs": 122
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "borrowed-index",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28109,
-    "out": 6555
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 60
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "generic-topk",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 29734,
-    "out": 10877
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 100
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "generic-topk",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28082,
-    "out": 5784
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 53
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "generic-topk",
-  "rep": 1,
-  "rounds": 1,
-  "success": true,
-  "calls": [
-   {
-    "in": 29734,
-    "out": 6201
-   },
-   {
-    "in": 30239,
-    "out": 1781
-   }
-  ],
-  "firstShotClean": false,
-  "secs": 77
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "generic-topk",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28082,
-    "out": 3214
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 32
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "dyn-pipeline",
-  "rep": 0,
-  "rounds": 1,
-  "success": true,
-  "calls": [
-   {
-    "in": 29740,
-    "out": 8525
-   },
-   {
-    "in": 30296,
-    "out": 822
-   }
-  ],
-  "firstShotClean": false,
-  "secs": 86
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "dyn-pipeline",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 27731,
-    "out": 1845
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 20
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "dyn-pipeline",
-  "rep": 1,
-  "rounds": 1,
-  "success": true,
-  "calls": [
-   {
-    "in": 29383,
-    "out": 3348
-   },
-   {
-    "in": 29956,
-    "out": 839
-   }
-  ],
-  "firstShotClean": false,
-  "secs": 52
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "dyn-pipeline",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 26630,
-    "out": 2949
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 37
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "windowed-iter",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 29748,
-    "out": 4771
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 48
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "rust",
-  "task": "windowed-iter",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 28113,
-    "out": 2917
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 29
- },
- {
-  "model": "claude-haiku-4-5-20251001",
-  "cond": "tatamu",
-  "task": "windowed-iter",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 29748,
-    "out": 4349
+    "in": 31213,
+    "out": 7212
    }
   ],
   "firstShotClean": true,
@@ -326,101 +18,73 @@
  {
   "model": "claude-haiku-4-5-20251001",
   "cond": "rust",
-  "task": "windowed-iter",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 27739,
-    "out": 1936
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 22
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "tatamu",
   "task": "graph-reach",
   "rep": 0,
   "rounds": 0,
   "success": true,
   "calls": [
    {
-    "in": 41426,
-    "out": 3143
+    "in": 29569,
+    "out": 1900
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 20
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 31221,
+    "out": 14471
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 129
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29569,
+    "out": 3224
    }
   ],
   "firstShotClean": true,
   "secs": 33
  },
  {
-  "model": "claude-sonnet-5",
-  "cond": "rust",
-  "task": "graph-reach",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 39261,
-    "out": 3331
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 33
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "tatamu",
-  "task": "graph-reach",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 40237,
-    "out": 3419
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 35
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "rust",
-  "task": "graph-reach",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 39261,
-    "out": 1635
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 16
- },
- {
-  "model": "claude-sonnet-5",
+  "model": "claude-haiku-4-5-20251001",
   "cond": "tatamu",
   "task": "borrowed-index",
   "rep": 0,
-  "rounds": 0,
+  "rounds": 1,
   "success": true,
   "calls": [
    {
-    "in": 41425,
-    "out": 556
+    "in": 30990,
+    "out": 7107
+   },
+   {
+    "in": 32224,
+    "out": 1420
    }
   ],
-  "firstShotClean": true,
-  "secs": 9
+  "firstShotClean": false,
+  "secs": 64
  },
  {
-  "model": "claude-sonnet-5",
+  "model": "claude-haiku-4-5-20251001",
   "cond": "rust",
   "task": "borrowed-index",
   "rep": 0,
@@ -428,31 +92,35 @@
   "success": true,
   "calls": [
    {
-    "in": 39260,
-    "out": 678
+    "in": 29551,
+    "out": 4766
    }
   ],
   "firstShotClean": true,
-  "secs": 9
+  "secs": 45
  },
  {
-  "model": "claude-sonnet-5",
+  "model": "claude-haiku-4-5-20251001",
   "cond": "tatamu",
   "task": "borrowed-index",
   "rep": 1,
-  "rounds": 0,
+  "rounds": 1,
   "success": true,
   "calls": [
    {
-    "in": 41392,
-    "out": 5606
+    "in": 31203,
+    "out": 16194
+   },
+   {
+    "in": 32099,
+    "out": 1464
    }
   ],
-  "firstShotClean": true,
-  "secs": 54
+  "firstShotClean": false,
+  "secs": 166
  },
  {
-  "model": "claude-sonnet-5",
+  "model": "claude-haiku-4-5-20251001",
   "cond": "rust",
   "task": "borrowed-index",
   "rep": 1,
@@ -460,28 +128,372 @@
   "success": true,
   "calls": [
    {
-    "in": 39260,
-    "out": 1782
+    "in": 29551,
+    "out": 9453
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 86
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 31176,
+    "out": 6709
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 64
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29524,
+    "out": 5599
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 51
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 31176,
+    "out": 11714
+   },
+   {
+    "in": 31662,
+    "out": 2127
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 131
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 28246,
+    "out": 2231
+   },
+   {
+    "in": 30602,
+    "out": 1388
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 48
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 31182,
+    "out": 5900
+   },
+   {
+    "in": 32005,
+    "out": 860
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 69
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29530,
+    "out": 1738
    }
   ],
   "firstShotClean": true,
   "secs": 19
  },
  {
-  "model": "claude-sonnet-5",
+  "model": "claude-haiku-4-5-20251001",
   "cond": "tatamu",
-  "task": "generic-topk",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 31182,
+    "out": 9627
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 90
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 28558,
+    "out": 1645
+   },
+   {
+    "in": 30324,
+    "out": 702
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 34
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "windowed-iter",
   "rep": 0,
   "rounds": 0,
   "success": true,
   "calls": [
    {
-    "in": 41377,
-    "out": 1660
+    "in": 31190,
+    "out": 4964
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 53
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "windowed-iter",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29538,
+    "out": 1679
    }
   ],
   "firstShotClean": true,
   "secs": 18
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "tatamu",
+  "task": "windowed-iter",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 31190,
+    "out": 7071
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 66
+ },
+ {
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "task": "windowed-iter",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 29538,
+    "out": 3415
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 33
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 43256,
+    "out": 4498
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 43
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41091,
+    "out": 760
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 43256,
+    "out": 2453
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 25
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "graph-reach",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 39900,
+    "out": 751
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "borrowed-index",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 43222,
+    "out": 536
+   },
+   {
+    "in": 44259,
+    "out": 552
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 17
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "borrowed-index",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41057,
+    "out": 649
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 10
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "borrowed-index",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 43222,
+    "out": 3084
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 31
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "borrowed-index",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41057,
+    "out": 645
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 11
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 0,
+  "rounds": 1,
+  "success": true,
+  "calls": [
+   {
+    "in": 43174,
+    "out": 1139
+   },
+   {
+    "in": 43840,
+    "out": 632
+   }
+  ],
+  "firstShotClean": false,
+  "secs": 28
  },
  {
   "model": "claude-sonnet-5",
@@ -492,44 +504,44 @@
   "success": true,
   "calls": [
    {
-    "in": 39212,
-    "out": 1570
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 16
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "tatamu",
-  "task": "generic-topk",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 41377,
-    "out": 1605
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 18
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "rust",
-  "task": "generic-topk",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 39179,
-    "out": 844
+    "in": 41009,
+    "out": 452
    }
   ],
   "firstShotClean": true,
   "secs": 9
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 43174,
+    "out": 395
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 8
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "generic-topk",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41009,
+    "out": 905
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 12
  },
  {
   "model": "claude-sonnet-5",
@@ -540,8 +552,72 @@
   "success": true,
   "calls": [
    {
-    "in": 41411,
-    "out": 615
+    "in": 43208,
+    "out": 1792
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 22
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41043,
+    "out": 449
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 9
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 43208,
+    "out": 1384
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 18
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "task": "dyn-pipeline",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 41043,
+    "out": 449
+   }
+  ],
+  "firstShotClean": true,
+  "secs": 10
+ },
+ {
+  "model": "claude-sonnet-5",
+  "cond": "tatamu",
+  "task": "windowed-iter",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 43213,
+    "out": 512
    }
   ],
   "firstShotClean": true,
@@ -550,46 +626,14 @@
  {
   "model": "claude-sonnet-5",
   "cond": "rust",
-  "task": "dyn-pipeline",
+  "task": "windowed-iter",
   "rep": 0,
   "rounds": 0,
   "success": true,
   "calls": [
    {
-    "in": 39246,
-    "out": 469
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 9
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "tatamu",
-  "task": "dyn-pipeline",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 41378,
-    "out": 1182
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 14
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "rust",
-  "task": "dyn-pipeline",
-  "rep": 1,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 39213,
-    "out": 490
+    "in": 41048,
+    "out": 327
    }
   ],
   "firstShotClean": true,
@@ -599,49 +643,17 @@
   "model": "claude-sonnet-5",
   "cond": "tatamu",
   "task": "windowed-iter",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 41416,
-    "out": 961
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 11
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "rust",
-  "task": "windowed-iter",
-  "rep": 0,
-  "rounds": 0,
-  "success": true,
-  "calls": [
-   {
-    "in": 39218,
-    "out": 353
-   }
-  ],
-  "firstShotClean": true,
-  "secs": 6
- },
- {
-  "model": "claude-sonnet-5",
-  "cond": "tatamu",
-  "task": "windowed-iter",
   "rep": 1,
   "rounds": 0,
   "success": true,
   "calls": [
    {
-    "in": 41383,
-    "out": 889
+    "in": 43213,
+    "out": 977
    }
   ],
   "firstShotClean": true,
-  "secs": 12
+  "secs": 16
  },
  {
   "model": "claude-sonnet-5",
@@ -652,11 +664,11 @@
   "success": true,
   "calls": [
    {
-    "in": 39251,
-    "out": 380
+    "in": 41048,
+    "out": 474
    }
   ],
   "firstShotClean": true,
-  "secs": 7
+  "secs": 10
  }
 ]

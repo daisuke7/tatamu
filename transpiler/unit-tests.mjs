@@ -283,12 +283,13 @@ p := Pipeline::new()
 r := p.run(10)
 println!("{r:?}")
 }`, contains: ["let p = Pipeline::new().stage(\"add1\", |x| x + 1).stage(\"sub2\", |x| x - 2);"] },
-  { name: "wrapped where clause accepted", src: `fn top_k<T>(items &[T], k usize) Vec<&T>
+  { name: "wrapped where clause accepted", src: `fn top_k<T, K>(items &[T], k usize) Vec<&T>
 where
+K: Ord,
 T: Ord,
 {
 items.iter().take(k).collect()
-}`, contains: ["-> Vec<&T> where", "T: Ord,"] },
+}`, contains: ["-> Vec<&T> where", "T: Ord,"], excludes: ["where;"] },
   { name: "dollar chars survive pubify", src: `const CURRENCY &'static [(char, char)] = &[ ('\$', '\$'), ('a', 'b')]`, contains: ["('\$', '\$')"] },
   { name: "user-defined R type disables the alias", src: `struct R<const I: usize>;
 fn f(x Res<R<3>>) {
