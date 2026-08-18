@@ -857,8 +857,8 @@
   "crate": "serde",
   "file": "serde_derive/src/dummy.rs",
   "lines": 32,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `wrap_in_const`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -1046,8 +1046,8 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/ext.rs",
   "lines": 47,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1319,8 +1319,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/validator.rs",
   "lines": 538,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1396,8 +1396,8 @@
   "crate": "clap",
   "file": "clap_complete/src/aot/generator/utils.rs",
   "lines": 290,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `flags`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1466,8 +1466,8 @@
   "crate": "clap",
   "file": "clap_complete/src/engine/complete.rs",
   "lines": 733,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `complete_option`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1522,8 +1522,8 @@
   "crate": "clap",
   "file": "clap_derive/src/attr.rs",
   "lines": 224,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",

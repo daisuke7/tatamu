@@ -54,20 +54,24 @@ _ => {}
 syn::visit_mut::visit_block_mut(self, b)
 }
 fn visit_arm_mut(&mut self, a &mut syn::Arm) {
-if let syn::Expr::Block(b) = &*a.body {
-if b.attrs.is_empty() && b.label.is_none() {
-if b.block.stmts.is_empty() {
-a.body = Box::new(syn::parse_quote!(()))
-} else if b.block.stmts.len() == 1 {
-match &b.block.stmts[0] {
-syn::Stmt::Expr(e, _) => a.body = Box::new(e.clone()),
-_ => {}
-}
-}
-}
+if let Some(e) = unwrap_single_block(&a.body) {
+a.body = Box::new(e)
 }
 a.comma = None
 syn::visit_mut::visit_arm_mut(self, a)
+}
+fn visit_expr_closure_mut(&mut self, c &mut syn::ExprClosure) {
+if let Some(e) = unwrap_single_block(&c.body) {
+c.body = Box::new(e)
+}
+syn::visit_mut::visit_expr_closure_mut(self, c)
+}
+fn visit_where_clause_mut(&mut self, w &mut syn::WhereClause) {
+if w.predicates.trailing_punct() {
+preds: Vec<syn::WherePredicate> := w.predicates.iter().cloned().collect()
+w.predicates = preds.into_iter().collect()
+}
+syn::visit_mut::visit_where_clause_mut(self, w)
 }
 fn visit_lit_mut(&mut self, l &mut syn::Lit) {
 if let syn::Lit::Str(s) = l {
@@ -104,6 +108,21 @@ p.segments = rest.into_iter().collect()
 }
 }
 syn::visit_mut::visit_path_mut(self, p)
+}
+}
+fn unwrap_single_block(body &syn::Expr) Option<syn::Expr> {
+b := match body {
+syn::Expr::Block(b) if b.attrs.is_empty() && b.label.is_none() => b,
+_ => return None,
+}
+if b.block.stmts.is_empty() {
+return Some(syn::parse_quote!(()))
+}
+if b.block.stmts.len() != 1 {return None}
+match &b.block.stmts[0] {
+syn::Stmt::Expr(e, _) => Some(e.clone()),
+syn::Stmt::Macro(m) if m.semi_token.is_none() => Some(syn::Expr::Macro(syn::ExprMacro {attrs: m.attrs.clone(), mac: m.mac.clone()})),
+_ => None,
 }
 }
 fn normalize_for_compare(src &str, siblings &[String]) R<Vec<syn::Item>> {
