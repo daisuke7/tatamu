@@ -115,8 +115,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir/src/lib.rs",
   "lines": 7460,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -262,8 +262,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/expr_store/lower.rs",
   "lines": 3710,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -311,8 +311,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/hir/format_args.rs",
   "lines": 533,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `parse`"
  },
  {
   "crate": "rust-analyzer",
@@ -486,8 +486,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/nameres/collector.rs",
   "lines": 2847,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -682,8 +682,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-expand/src/lib.rs",
   "lines": 1758,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -878,8 +878,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/infer/closure/analysis.rs",
   "lines": 1678,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -934,8 +934,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/infer/opaques.rs",
   "lines": 152,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1039,8 +1039,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/lower.rs",
   "lines": 3023,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1053,8 +1053,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/method_resolution/probe.rs",
   "lines": 2127,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1116,8 +1116,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/mir/lower.rs",
   "lines": 2345,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1340,8 +1340,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/next_solver/infer/select.rs",
   "lines": 432,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1389,8 +1389,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/next_solver/inspect.rs",
   "lines": 506,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1746,8 +1746,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/inlay_hints/closing_brace.rs",
   "lines": 527,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1942,8 +1942,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/runnables.rs",
   "lines": 1715,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `test_runnables_doc_test`"
  },
  {
   "crate": "rust-analyzer",
@@ -2033,8 +2033,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/syntax_highlighting.rs",
   "lines": 613,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -3342,8 +3342,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-completion/src/context.rs",
   "lines": 1025,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -3944,15 +3944,15 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-diagnostics/src/handlers/no_such_field.rs",
   "lines": 677,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
   "file": "crates/ide-diagnostics/src/handlers/non_exhaustive_let.rs",
   "lines": 411,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4049,15 +4049,15 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-diagnostics/src/handlers/trait_impl_redundant_assoc_item.rs",
   "lines": 440,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
   "file": "crates/ide-diagnostics/src/handlers/type_mismatch.rs",
   "lines": 2023,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4217,8 +4217,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-diagnostics/src/lib.rs",
   "lines": 862,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4749,8 +4749,8 @@
   "crate": "rust-analyzer",
   "file": "crates/proc-macro-srv/src/server_impl.rs",
   "lines": 40,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4778,7 +4778,7 @@
   "file": "crates/proc-macro-srv-cli/src/main_loop.rs",
   "lines": 624,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "detail": "Error: Error(\"expected `,`\")"
  },
  {
   "crate": "rust-analyzer",
@@ -4805,8 +4805,8 @@
   "crate": "rust-analyzer",
   "file": "crates/profile/src/memory_usage.rs",
   "lines": 133,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected an expression\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4833,8 +4833,8 @@
   "crate": "rust-analyzer",
   "file": "crates/project-model/src/cargo_workspace.rs",
   "lines": 848,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",

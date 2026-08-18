@@ -129,6 +129,14 @@ fn unraw(&self) Ident;
 colon_token: Token![:] := input.parse()?
 Ok(colon_token)
 }`, contains: ["let colon_token: Token![:] = input.parse()?;"] },
+  { name: "brace pattern with typed fields let-else", src: `fn f(v V) Option<u8> {
+ProbeKind::TraitCandidate { source: victim_source, result: _ } := v.kind() else { return None }
+Some(1)
+}`, contains: ["let ProbeKind::TraitCandidate { source: victim_source, result: _ } = v.kind() else { return None };"] },
+  { name: "brace pattern let-else binding", src: `fn f(lit L) Result<u8, ()> {
+TokenKind::Literal { kind, suffix_start } := lit.kind else { return Err(()) }
+Ok(kind)
+}`, contains: ["let TokenKind::Literal { kind, suffix_start } = lit.kind else { return Err(()) };"] },
   { name: "at-bound pattern parameter", src: `fn f(ctx @ PathCtx { qualified, .. }: &PathCtx) u8 { 0 }`, contains: ["ctx @ PathCtx { qualified, .. }: &PathCtx) -> u8"] },
   { name: "multi-field destructuring parameter", src: `fn f(db &DB, FilePosition { file_id, offset }: FilePosition) u8 { 0 }`, contains: ["FilePosition { file_id, offset }: FilePosition) -> u8"] },
   { name: "struct destructuring parameter", src: `fn from(Input { input }: Input<'a>) Self { input }`, contains: ["fn from(Input { input }: Input<'a>) -> Self"] },

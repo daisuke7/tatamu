@@ -176,8 +176,8 @@ function transformBindings(seg) {
   return seg
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let mut ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let mut ${name} =`)
+    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|(?:[A-Za-z_][\w:]*)\s*\{[^=]*?\}|\[[^=]*?\])\s*:=/g, "$1let $2 =")
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
-    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|\[[^=]*?\])\s*:=/g, "$1let $2 =")
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
 
