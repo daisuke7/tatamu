@@ -160,7 +160,7 @@ function transformFnSigs(seg) {
       if (t === "" || t === "self" || t === "&self" || t === "&mut self") return attrPre + t;
       if (/^(&?\s*)?impl\b/.test(t)) return attrPre + t; // bare impl-Trait parameter type
       const mm = /^(mut\s+)?([A-Za-z_]\w*)\s+(.+)$/.exec(t);
-      if (mm && mm[3].startsWith(":")) return attrPre + t; // already Rust-shaped (`name : Type` macro tokens)
+      if (mm && /^[:{]/.test(mm[3])) return attrPre + t; // Rust-shaped or destructuring pattern param
       return attrPre + (mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t);
     }).filter((p) => p !== "").join(", ");
     // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is
@@ -174,9 +174,9 @@ function transformFnSigs(seg) {
 // S1: := bindings, with optional type ascription (v0.2): `x: Vec<_> := expr`
 function transformBindings(seg) {
   return seg
-    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let mut ${name}: ${ty} =`)
+    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let mut ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let mut ${name} =`)
-    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
+    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|\[[^=]*?\])\s*:=/g, "$1let $2 =")
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
@@ -250,7 +250,7 @@ function transformEnumHeader(line) {
 
 // const NAME Type = expr
 function transformConst(line) {
-  const m = /^const\s+([A-Z_][A-Z0-9_]*)\s+(.+?)\s*=\s*(.+?);?\s*$/.exec(line.trim());
+  const m = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+(.+?)\s*=\s*(.+?);?\s*$/.exec(line.trim());
   if (!m) return null;
   return [`const ${m[1]}: ${m[2]} = ${m[3]};`];
 }

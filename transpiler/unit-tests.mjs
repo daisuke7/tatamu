@@ -121,6 +121,15 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "lowercase const in trait", src: `trait T: Sized {
+const peek_any private::PeekFn = private::PeekFn
+fn unraw(&self) Ident;
+}`, contains: ["const peek_any: private::PeekFn = private::PeekFn;"] },
+  { name: "macro type in ascribed binding", src: `fn f(input I) R<X> {
+colon_token: Token![:] := input.parse()?
+Ok(colon_token)
+}`, contains: ["let colon_token: Token![:] = input.parse()?;"] },
+  { name: "struct destructuring parameter", src: `fn from(Input { input }: Input<'a>) Self { input }`, contains: ["fn from(Input { input }: Input<'a>) -> Self"] },
   { name: "return of struct literal gets semi", src: `fn f(num u32, semaphore S) Self {
 #[cfg(feature = "tracing")]
 return Self { node: W::new(num), semaphore, queued: false, }

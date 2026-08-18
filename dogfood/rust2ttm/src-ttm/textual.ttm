@@ -80,8 +80,13 @@ line_bare := strip_lits(t.trim())
 next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
 if lit_depth > 0 {
 lit_depth += count_of(&line_bare, &['{']) as i64 - count_of(&line_bare, &['}']) as i64
-} else if bare.ends_with('{') && looks_like_literal_body(next) && !bare.trim_start().starts_with("match ") {
+} else if bare.ends_with('{') && !bare.trim_start().starts_with("match ") {
+mut j := i + 1
+while input.get(j).map(|l| l.trim().starts_with("#[")).unwrap_or(false) {j += 1}
+probe := input.get(j).map(|l| l.trim()).unwrap_or("")
+if looks_like_literal_body(next) || (next.starts_with("#[") && looks_like_literal_body(probe)) {
 lit_depth = 1
+}
 }
 if lit_depth > 0 {continue}
 depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
@@ -103,7 +108,7 @@ while i < bytes.len() {
 if bytes[i] == b',' {
 mut j := i + 1
 while j < bytes.len() && (bytes[j] == b' ') {j += 1}
-if j < bytes.len() && (bytes[j] == b')' || bytes[j] == b']' || bytes[j] == b'>') {
+if j < bytes.len() && (bytes[j] == b')' || bytes[j] == b']') {
 for k in i..j {keep[k] = false}
 }
 }
@@ -193,11 +198,11 @@ static FIELDRE: OnceLock<regex::Regex> = OnceLock::new()
 static PUBRE: OnceLock<regex::Regex> = OnceLock::new()
 mut t := raw.trim().to_string()
 t = re(r"^pub(\([^)]*\))?\s+", &PUBRE).replace(&t, "").to_string()
-t = re(r"^let\s+mut\s+(\w+)(:\s*[^=]+?)?\s*=\s*", &LETMUT).replace(&t, |c: &regex::Captures| {
+t = re(r"^let\s+mut\s+(\w+)(:\s*(?:[^=\[]|\[[^\]]*\])+?)?\s*=\s*", &LETMUT).replace(&t, |c: &regex::Captures| {
 ty := c.get(2).map(|m| m.as_str().trim_end().to_string()).unwrap_or_default()
 format!("mut {}{} := ", &c[1], ty)
 }).to_string()
-t = re(r"^let\s+(\([^)]*\)|\w+)(:\s*[^=]+?)?\s*=\s*([^=])", &LETPLAIN).replace(&t, |c: &regex::Captures| {
+t = re(r"^let\s+(\([^)]*\)|\w+)(:\s*(?:[^=\[]|\[[^\]]*\])+?)?\s*=\s*([^=])", &LETPLAIN).replace(&t, |c: &regex::Captures| {
 ty := c.get(2).map(|m| m.as_str().trim_end().to_string()).unwrap_or_default()
 format!("{}{} := {}", &c[1], ty, &c[3])
 }).to_string()
