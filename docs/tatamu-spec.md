@@ -1,6 +1,6 @@
-# Tatamu 言語仕様(v0.6)
+# Tatamu 言語仕様(v0.6.1)
 
-> 2026-08-18 版(v0.6: priv / macro_rules / ネストモジュール / enum 判別子 / async 検証)。docs/00〜25 の設計・実験・改定を1ファイルに統合した正式リファレンス。
+> 2026-08-18 版(v0.6: priv / macro_rules / ネストモジュール / enum 判別子 / async 検証。v0.6.1: コメント台帳)。docs/00〜25 の設計・実験・改定を1ファイルに統合した正式リファレンス。
 > LLM のコンテキスト常駐用の圧縮版仕様は `experiments/llm-generation/prompt-tatamu.md`(few-shot 例付き)。
 
 ## 1. 概要
@@ -115,7 +115,8 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 ```
 
 - アンカーは行番号ではなく**項目名**(コード編集で壊れない)
-- `--doc-check` が orphan(error)/ stale-signature(warning・diff付き)/ missing(info)を検出、`--doc-sync` が記録更新とスタブ追記を行う
+- **インラインコメント台帳**: 移行元 Rust の行内コメントは `~ above|tail \`アンカー行\`: テキスト` 形式で節内に退避される(rust2ttm が自動抽出)。アンカーは .ttm の行テキスト(同文が複数あれば `#n` の出現序数付き)。`--docs` 展開時に生成 Rust の元位置へ再挿入される
+- `--doc-check` が orphan(error)/ stale-signature(warning・diff付き)/ missing(info)/ **comment-orphan**(台帳アンカー消失 — warning、`SAFETY:` コメントは **error**)を検出、`--doc-sync` が記録更新とスタブ追記を行う
 - 通常タスクの LLM コンテキストには `.ttm` のみを載せる(コメント分のトークンコスト = 0)
 
 ## 11. 型エイリアスと FFI
@@ -187,7 +188,7 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 
 v0.6 で従来の制限(可視性 / サブディレクトリ / macro_rules / async / enum 判別子)はすべて解消した。残るのは意図的なものと C ABI の性質のみ:
 
-- **インラインコメント** — 設計上の禁止。ドキュメントはサイドカー(§10)が正式な置き場で、`--check` が `no-comments` で誘導する
+- **インラインコメント** — 設計上の禁止。ドキュメントはサイドカー(§10)が正式な置き場で、`--check` が `no-comments` で誘導する。既存 Rust 由来のコメントは**コメント台帳**(§10)が位置ごと保全・復元する
 - **FFI でのジェネリック型・可変長ネスト型の受け渡し** — Tatamu の制限ではなく C ABI の性質(Rust の extern "C" でも同様)。モノモーフィックなラッパ関数を書いて渡すのが正道
 - FFI バインディングのデータ enum タグは 32bit(`#[repr(C, i32)]` / `u32`)のみ対応
 

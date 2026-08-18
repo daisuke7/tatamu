@@ -75,6 +75,35 @@ const DOC_CASES = [
     sidecar: "## Config\n\n`struct Config +Debug {host String, port u16}`\n\nConfig.",
     expect: ["doc-stale-signature"],
   },
+  // --- comment ledger ---
+  {
+    name: "ledgered comment with live anchor is quiet",
+    ttm: "fn f() u8 {\nx := compute()\nx + 1\n}",
+    sidecar: "## f\n\n`fn f() u8`\n\nDocs.\n\n~ tail `x := compute()`: cached upstream",
+    expect: [],
+    ok: true,
+  },
+  {
+    name: "broken anchor is comment-orphan warning",
+    ttm: "fn f() u8 {\ny := compute()\ny + 1\n}",
+    sidecar: "## f\n\n~ tail `x := compute()`: cached upstream",
+    expect: ["comment-orphan"],
+    ok: true,
+  },
+  {
+    name: "SAFETY orphan is an error",
+    ttm: "fn f() u8 {\ny := 1\ny\n}",
+    sidecar: "## f\n\n~ above `x := deref(p)`: SAFETY: p is non-null by contract",
+    expect: ["comment-orphan"],
+    ok: false,
+  },
+  {
+    name: "ordinal anchor requires nth occurrence",
+    ttm: "fn f() {\ni += 1\n}",
+    sidecar: "## f\n\n~ tail `i += 1`#3: only fires on the third",
+    expect: ["comment-orphan"],
+    ok: true,
+  },
 ];
 
 // ---------- transform cases (contains / excludes on transpile output) ----------

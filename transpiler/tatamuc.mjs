@@ -1088,6 +1088,7 @@ export function mergeDocs(rust, sidecarMd) {
     (sections[current] ??= []).push(line);
   }
   const trim = (ls) => {
+    ls = ls.filter((l) => !INLINE_ENTRY.test(l.trim())); // ledger entries are not doc text
     while (ls.length && ls[0].trim() === "") ls.shift();
     // a leading backtick line is the recorded signature (doc-freshness metadata), not doc text
     if (ls.length && /^`.+`$/.test(ls[0].trim())) ls.shift();
@@ -1151,21 +1152,59 @@ function topLevelItems(ttmSrc) {
   return items;
 }
 
+// inline-comment ledger entry: `~ above \`anchor\`: text` / `~ tail \`anchor\`: text`
+const INLINE_ENTRY = /^~\s+(above|tail)\s+`([^`]+)`(?:#(\d+))?:\s?(.*)$/;
+
 function parseSidecar(md) {
   const intro = [];
-  const sections = {}; // name -> {sig, body: [...]}
+  const sections = {}; // name -> {sig, body: [...], inline: [{kind, anchor, text}]}
   const order = [];
   let current = null;
   for (const line of md.split("\n")) {
     const h = /^##\s+(?:`)?([A-Za-z_]\w*)(?:`)?\s*$/.exec(line);
-    if (h) { current = h[1]; sections[current] = { sig: null, body: [] }; order.push(current); continue; }
+    if (h) { current = h[1]; sections[current] = { sig: null, body: [], inline: [] }; order.push(current); continue; }
     if (current === null) { intro.push(line); continue; }
     const s = sections[current];
+    const inl = INLINE_ENTRY.exec(line.trim());
+    if (inl) { s.inline.push({ kind: inl[1], anchor: inl[2], nth: inl[3] ? parseInt(inl[3], 10) : 1, text: inl[4] }); continue; }
     const sigLine = /^`(.+)`\s*$/.exec(line.trim());
     if (sigLine && s.sig === null && s.body.every((b) => b.trim() === "")) { s.sig = sigLine[1]; continue; }
     s.body.push(line);
   }
   return { intro, sections, order };
+}
+
+// re-insert ledgered inline comments into generated Rust, using the .ttm line map
+export function attachInlineComments(rust, map, ttmSrc, sidecarMd) {
+  const { sections } = parseSidecar(sidecarMd);
+  const srcLines = ttmSrc.split("\n").map((l) => l.trim());
+  const nthIndexOf = (arr, text, nth) => {
+    let seen = 0;
+    for (let i = 0; i < arr.length; i++) if (arr[i] === text && ++seen === nth) return i;
+    return -1;
+  };
+  const rustLines = rust.split("\n");
+  const byIdx = new Map(); // rust line idx -> {above: [], tail: []}
+  for (const sec of Object.values(sections)) {
+    for (const e of sec.inline) {
+      const srcNo = nthIndexOf(srcLines, e.anchor, e.nth ?? 1) + 1;
+      if (srcNo === 0) continue; // orphan — surfaced by --doc-check
+      const outIdx = map.indexOf(srcNo);
+      if (outIdx === -1) continue;
+      const slot = byIdx.get(outIdx) ?? { above: [], tail: [] };
+      slot[e.kind === "tail" ? "tail" : "above"].push(e.text);
+      byIdx.set(outIdx, slot);
+    }
+  }
+  for (const idx of [...byIdx.keys()].sort((a, b) => b - a)) {
+    const { above, tail } = byIdx.get(idx);
+    if (tail.length) rustLines[idx] += ` // ${tail.join("; ")}`;
+    if (above.length) {
+      const indent = /^\s*/.exec(rustLines[idx])[0];
+      rustLines.splice(idx, 0, ...above.map((t) => `${indent}// ${t}`));
+    }
+  }
+  return rustLines.join("\n");
 }
 
 export function docCheck(ttmSrc, sidecarMd) {
@@ -1192,6 +1231,21 @@ export function docCheck(ttmSrc, sidecarMd) {
         suggestion: `Run --doc-sync to append a stub, or add \`## ${it.name}\` to the sidecar.` });
     }
   }
+  // inline-comment ledger: every anchor must still exist as a .ttm line
+  const srcTrimmed = ttmSrc.split("\n").map((l) => l.trim());
+  for (const [name, sec] of Object.entries(sections)) {
+    for (const e of sec.inline ?? []) {
+      if (srcTrimmed.filter((l) => l === e.anchor).length < (e.nth ?? 1)) {
+        const isSafety = /^\s*SAFETY\b/i.test(e.text);
+        diags.push({ rule: "comment-orphan", severity: isSafety ? "error" : "warning", item: name,
+          anchor: e.anchor, comment: e.text,
+          message: isSafety
+            ? `SAFETY comment lost its anchor — the unsafe contract is dangling.`
+            : `Ledgered comment lost its anchor (the code line changed or was removed).`,
+          suggestion: `Re-anchor the entry to the current line, or delete it if obsolete.` });
+      }
+    }
+  }
   return diags;
 }
 
@@ -1213,6 +1267,10 @@ export function docSync(ttmSrc, sidecarMd) {
     while (body.length && body[0].trim() === "") body.shift();
     while (body.length && body[body.length - 1].trim() === "") body.pop();
     out.push(...body);
+    if (s.inline?.length) {
+      out.push("");
+      for (const e of s.inline) out.push(`~ ${e.kind} \`${e.anchor}\`${(e.nth ?? 1) > 1 ? `#${e.nth}` : ""}: ${e.text}`);
+    }
   }
   for (const it of items) {
     if (!sections[it.name]) {
@@ -1639,7 +1697,11 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()
     console.log(JSON.stringify({ file, ok: r.status === 0, diagnostics: diags }, null, 2));
     process.exit(r.status === 0 ? 0 : 1);
   }
-  let rust = transpile(src);
-  if (docsFile) rust = mergeDocs(rust, readFileSync(docsFile, "utf8"));
-  process.stdout.write(rust);
+  if (docsFile) {
+    const sidecar = readFileSync(docsFile, "utf8");
+    const { rust: mappedRust, map } = transpileMapped(src);
+    process.stdout.write(mergeDocs(attachInlineComments(mappedRust, map, src, sidecar), sidecar));
+  } else {
+    process.stdout.write(transpile(src));
+  }
 }

@@ -26,24 +26,28 @@ function convertFile(src, modName, siblingMods = []) {
   let inTestMod = 0; // brace depth inside #[cfg(test)] mod
   let expectTestMod = false;
 
-  // pass 1: strip comments, collect docs, drop blank lines
+  // pass 1: extract comments into the ledger, collect docs, drop blank lines
   const lines = [];
   let inBlockComment = false;
+  let pendingAbove = []; // full-line comments waiting for the next code line
   for (let raw of rawLines) {
     if (inBlockComment) {
       const end = raw.indexOf("*/");
-      if (end === -1) { stats.comments++; continue; }
+      if (end === -1) { pendingAbove.push(raw.trim()); stats.comments++; continue; }
+      pendingAbove.push(raw.slice(0, end).trim());
       raw = raw.slice(end + 2);
       inBlockComment = false;
     }
     let line = raw;
-    // strip /* … */ (line-local or opening)
+    // /* … */ (line-local or opening) — captured as above-comments
     for (;;) {
       const s = line.indexOf("/*");
       if (s === -1 || inString(line, s)) break;
       const e = line.indexOf("*/", s + 2);
       stats.comments++;
-      if (e === -1) { line = line.slice(0, s); inBlockComment = true; break; }
+      if (e === -1) { pendingAbove.push(line.slice(s + 2).trim()); line = line.slice(0, s); inBlockComment = true; break; }
+      const txt = line.slice(s + 2, e).trim();
+      if (txt) pendingAbove.push(txt);
       line = line.slice(0, s) + line.slice(e + 2);
     }
     const t = line.trim();
@@ -51,10 +55,23 @@ function convertFile(src, modName, siblingMods = []) {
     if (t.startsWith("///")) { pendingDoc.push(t.slice(3).trim()); stats.docLines++; continue; }
     // inline or full-line // comment (outside strings)
     const sl = findLineComment(line);
-    if (sl !== -1) { stats.comments++; line = line.slice(0, sl); }
+    let tail = null;
+    if (sl !== -1) {
+      stats.comments++;
+      const text = line.slice(sl + 2).trim();
+      if (line.slice(0, sl).trim() === "") { if (text) pendingAbove.push(text); }
+      else if (text) tail = text;
+      line = line.slice(0, sl);
+    }
     if (line.trim() === "") continue;
-    lines.push({ line: line.replace(/\s+$/, ""), doc: pendingDoc.length ? pendingDoc : null });
+    lines.push({
+      line: line.replace(/\s+$/, ""),
+      doc: pendingDoc.length ? pendingDoc : null,
+      above: pendingAbove.length ? pendingAbove : null,
+      tail,
+    });
     if (pendingDoc.length) pendingDoc = [];
+    pendingAbove = [];
   }
 
   // pass 2: join rustfmt-wrapped statements into single lines
@@ -62,10 +79,14 @@ function convertFile(src, modName, siblingMods = []) {
   let buf = null;
   const flush = () => { if (buf) { joined.push(buf); buf = null; } };
   for (let i = 0; i < lines.length; i++) {
-    const { line, doc } = lines[i];
+    const { line, doc, above, tail } = lines[i];
     const t = line.trim();
-    if (!buf) buf = { text: t, doc };
-    else buf.text += (buf.text.endsWith("(") || t.startsWith(")") || t.startsWith(".") || t.startsWith("]") ? "" : " ") + t;
+    if (!buf) buf = { text: t, doc, above: above ? [...above] : [], tails: tail ? [tail] : [] };
+    else {
+      buf.text += (buf.text.endsWith("(") || t.startsWith(")") || t.startsWith(".") || t.startsWith("]") ? "" : " ") + t;
+      if (above) buf.above.push(...above);
+      if (tail) buf.tails.push(tail);
+    }
     const bare = squash(buf.text);
     const depth = count(bare, /[([]/g) - count(bare, /[)\]]/g);
     const next = lines[i + 1]?.line.trim() ?? "";
@@ -76,8 +97,14 @@ function convertFile(src, modName, siblingMods = []) {
 
   // pass 3: structural conversion
   let depthStack = 0;
+  let currentItem = null;
+  const inlineByItem = {}; // item -> [{kind, anchor, text}]
+  const ledger = (owner, kind, anchor, text, outIndex) => {
+    if (!owner || !anchor) { stats.commentsDropped = (stats.commentsDropped ?? 0) + 1; return; }
+    (inlineByItem[owner] ??= []).push({ kind, anchor, text, outIndex });
+  };
   for (let i = 0; i < joined.length; i++) {
-    let { text: t, doc } = joined[i];
+    let { text: t, doc, above, tails } = joined[i];
     const bare = squash(t);
 
     // test-mod flattening
@@ -109,6 +136,7 @@ function convertFile(src, modName, siblingMods = []) {
       nxt.text = nxt.text.replace(/^(\s*)(?:pub\s+)?(struct|enum)\s+(\w+(?:<[^{]*>)?)/,
         (m0, sp, kw, name) => `${kw} ${name} +${dm[1].split(",").map((d) => d.trim()).join(",")}`);
       nxt.doc = doc ?? nxt.doc;
+      if (above?.length) { nxt.above = [...(above ?? []), ...(nxt.above ?? [])]; }
       continue;
     }
 
@@ -141,18 +169,34 @@ function convertFile(src, modName, siblingMods = []) {
     // drop trailing semicolons (Tatamu newline-terminates); keep intra-line ones
     t = t.replace(/;$/, "");
 
-    if (doc) sidecar.items.push([itemName(t), doc]);
+    const decl = depthStack === 0 ? itemName(t) : null;
+    if (decl) currentItem = decl;
+    if (doc) sidecar.items.push([decl ?? currentItem, doc]);
+    const anchor = t.trim();
+    for (const a of above ?? []) ledger(decl ?? currentItem, "above", anchor, a, out.length);
+    for (const tl of tails ?? []) ledger(decl ?? currentItem, "tail", anchor, tl, out.length);
     out.push({ text: t, doc: null });
     depthStack += count(squash(t), /{/g) - count(squash(t), /}/g);
   }
 
   const ttm = out.map((l) => l.text).join("\n") + "\n";
   let doc = "";
-  if (sidecar.intro.length || sidecar.items.length) {
+  const docItems = new Map(sidecar.items.filter(([n]) => n).map(([n, d]) => [n, d]));
+  const allItems = new Set([...docItems.keys(), ...Object.keys(inlineByItem)]);
+  if (sidecar.intro.length || allItems.size) {
     const parts = [`# ${modName}`, "", ...sidecar.intro];
-    for (const [name, docLines] of sidecar.items) {
-      if (!name) continue;
-      parts.push("", `## ${name}`, "", ...docLines);
+    for (const name of allItems) {
+      parts.push("", `## ${name}`, "");
+      if (docItems.has(name)) parts.push(...docItems.get(name));
+      const entries = inlineByItem[name] ?? [];
+      if (entries.length) {
+        if (docItems.has(name)) parts.push("");
+        const ttmTrimmed = out.map((l) => l.text.trim());
+        for (const e of entries) {
+          const nth = ttmTrimmed.slice(0, e.outIndex + 1).filter((l) => l === e.anchor).length;
+          parts.push(`~ ${e.kind} \`${e.anchor}\`${nth > 1 ? `#${nth}` : ""}: ${e.text}`);
+        }
+      }
     }
     doc = parts.join("\n") + "\n";
   }
