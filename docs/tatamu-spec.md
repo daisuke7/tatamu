@@ -1,6 +1,6 @@
-# Tatamu 言語仕様(v0.5)
+# Tatamu 言語仕様(v0.6)
 
-> 2026-08-18 版。docs/00〜25 の設計・実験・改定を1ファイルに統合した正式リファレンス。
+> 2026-08-18 版(v0.6: priv / macro_rules / ネストモジュール / enum 判別子 / async 検証)。docs/00〜25 の設計・実験・改定を1ファイルに統合した正式リファレンス。
 > LLM のコンテキスト常駐用の圧縮版仕様は `experiments/llm-generation/prompt-tatamu.md`(few-shot 例付き)。
 
 ## 1. 概要
@@ -49,7 +49,18 @@ fn gcd(mut a u64, mut b u64) u64 {…}
 
 ## 5. 可視性
 
-`pub` は書かない。**すべてデフォルト公開** — ライブラリモジュールの項目・メソッド・フィールドには展開時に `pub` が自動付与される(トレイト実装内メソッドは除外)。これは Rust との唯一の意味論的差異である(非公開にしたい項目を表現できない — 必要になった時点で `#priv` 系指令を導入予定)。
+`pub` は書かない。**すべてデフォルト公開** — ライブラリモジュールの項目・メソッド・フィールドには展開時に `pub` が自動付与される(トレイト実装内メソッドは除外)。
+
+非公開にしたい項目・フィールドには **`priv` を前置**する(展開時に `pub` が付かない = Rust のモジュールプライベート):
+
+```
+priv fn helper() u8 {1}
+struct S {priv secret u8, open u8}
+priv struct Hidden {x u8}
+impl S {
+priv fn internal(&self) u8 {self.secret}
+}
+```
 
 ## 6. struct / enum
 
@@ -63,6 +74,7 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 - **フィールドは `名前 型` のカンマ区切り**(struct 本体、enum の struct-variant とも)。単一行・複数行どちらも可
 - struct **リテラル**・match **パターン**は Rust のまま(`Point {x: 1.0}`、`Shape::Rect {w, h} =>`)
 - タプル/ユニット variant、`impl` / `impl<T>` / `impl Trait for Type`、関連型(`type Err = String`)は Rust のまま
+- 明示判別子は Rust のまま書ける: `enum Msg {Ping = 10, Data {x f64} = 20}` — データ付き variant に判別子を付ける場合は Rust の要件どおり `#[repr(C, i32)]` 等の整数型併記が必要(FFI バインディングのタグ値にも反映される)
 - `const NAME 型 = 式`(`:` 省略)
 
 ## 7. import 解決
@@ -85,7 +97,7 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 
 ## 9. プロジェクト構成(`tatamuc --project`)
 
-- ディレクトリ内の各 `.ttm` が1モジュール。`main.ttm` → bin、`lib.ttm` → lib、**両方あれば bin+lib**(lib.rs がモジュールルート、main.rs はクレート経由で消費)
+- ディレクトリ内の各 `.ttm` が1モジュール。**サブディレクトリはネストモジュール**になる(`net/http.ttm` → `crate::net::http`。中間モジュールファイルは自動合成され、`.ttm` を置けば自分のコードも持てる)。`main.ttm` → bin、`lib.ttm` → lib、**両方あれば bin+lib**(lib.rs がモジュールルート、main.rs はクレート経由で消費)
 - モジュール間の項目参照は名前検出で `use crate::<mod>::*;` を自動注入。`mod` 宣言も自動生成
 - テストは `#[test]` fn をトップレベルに書く(`mod tests` 不要)。テスト専用モジュールの未使用 import lint は自動抑制
 - ライブラリクレートには C ヘッダ / JS / TypeScript / Dart の各バインディング(§11)と wasm 用サイズ最適化プロファイル(`--profile wasm`)が自動生成される
@@ -153,7 +165,7 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 | フィールド | `name: Type,`(縦) | `name Type,`(横可) | 構文 |
 | const | `const N: usize = 3;` | `const N usize = 3` | 構文 |
 | import | `use` 文を手書き | 自動解決(+ `#use` はトレイトのみ) | ツール |
-| 可視性 | `pub` を明示 | 全公開(自動 pubify) | **意味論** |
+| 可視性 | `pub` を明示 | 全公開デフォルト+`priv` 前置で非公開 | 構文(反転) |
 | モジュール | `mod x;` を手書き | ファイル=モジュール、自動 | ツール |
 | テスト | `#[cfg(test)] mod tests { use super::*; …}` | トップレベル `#[test]` fn | 構文 |
 | 依存 | Cargo.toml を手書き | `#dep` 指令 | ツール |
@@ -161,7 +173,7 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 
 ### 14.2 Rust のまま変わらないもの
 
-式・演算子・制御構文(`if`/`for`/`while`/`loop`/`match`)、パターン(`if let`/`while let` 含む)、クロージャ、マクロ呼び出し(`println!` 等)、`?`、**ジェネリクス・ライフタイム・トレイト境界・where**、トレイト定義と `impl`(関連型含む)、enum の variant 構文(フィールドのコロン以外)、struct リテラル、`unsafe`、生ポインタ、属性(`#[test]` `#[no_mangle]` `#[repr(C)]` …)、リテラル(raw string 含む)、演算子オーバーロード、スレッド/チャネル等の std API 全部。
+式・演算子・制御構文(`if`/`for`/`while`/`loop`/`match`)、パターン(`if let`/`while let` 含む)、クロージャ、マクロ呼び出し(`println!` 等)、**`macro_rules!` 定義**(本体内も Tatamu 記法で書ける — 行単位変換のため)、**`async`/`.await`/`#[tokio::main]`/`select!`**(tokio 実プログラムで検証済み)、`?`、**ジェネリクス・ライフタイム・トレイト境界・where**、トレイト定義と `impl`(関連型含む)、enum の variant 構文(フィールドのコロン以外)、struct リテラル、`unsafe`、生ポインタ、属性(`#[test]` `#[no_mangle]` `#[repr(C)]` …)、リテラル(raw string 含む)、演算子オーバーロード、スレッド/チャネル等の std API 全部。
 
 **所有権・借用・型検査は完全に Rust** — Tatamu は意味論を1ビットも変えない。エラーも rustc のものが(.ttm 座標に変換されて)そのまま返る。
 
@@ -171,12 +183,13 @@ enum Shape +Debug {Circle(f64), Rect {w f64, h f64}, Empty}
 - 削るのは「識別子の繰り返し・書式・定型文・コメント」— トークンの行き先の実測(識別子 26.8% / コメント 21.9% / 空白 21.5% / 記号 18.9%)に基づく
 - 「Rust の直感に沿わせる」ほど生成成功率が上がる — v0.1→v0.2 で Haiku の違反 37→0(docs/05)。型システム系構文を Rust のまま残した部分は全モデル・全課題でエラーゼロ(docs/06)
 
-### 14.4 現状の制限(Rust にあって Tatamu で書けない/未対応)
+### 14.4 意図的な非対応(制限ではなく設計・環境の性質)
 
-- 項目を**非公開**にする手段(全公開のみ)
-- インラインコメント(意図的な禁止)
-- `mod` の手動階層化(サブディレクトリ)、`macro_rules!` 定義、`async`(実行系含め未検証)
-- データ enum の explicit discriminant、FFI でのジェネリック型・ネスト可変長型の受け渡し
+v0.6 で従来の制限(可視性 / サブディレクトリ / macro_rules / async / enum 判別子)はすべて解消した。残るのは意図的なものと C ABI の性質のみ:
+
+- **インラインコメント** — 設計上の禁止。ドキュメントはサイドカー(§10)が正式な置き場で、`--check` が `no-comments` で誘導する
+- **FFI でのジェネリック型・可変長ネスト型の受け渡し** — Tatamu の制限ではなく C ABI の性質(Rust の extern "C" でも同様)。モノモーフィックなラッパ関数を書いて渡すのが正道
+- FFI バインディングのデータ enum タグは 32bit(`#[repr(C, i32)]` / `u32`)のみ対応
 
 ---
 

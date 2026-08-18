@@ -3,7 +3,7 @@
 //
 // run: node transpiler/unit-tests.mjs
 
-import { transpile, diagnose, docCheck } from "./tatamuc.mjs";
+import { transpile, diagnose, docCheck, buildProject } from "./tatamuc.mjs";
 
 // ---------- diagnostics cases ----------
 // expect: [rule, line] pairs that MUST be present; forbid: rules that MUST NOT fire.
@@ -131,6 +131,47 @@ const TRANSFORM_CASES = [
   { name: "multi-line struct no derive", src: `struct P {\nx f64,\ny f64,\n}`, contains: ["x: f64,", "y: f64,"] },
   { name: "unbalanced brackets inside strings don't corrupt the stack", src: `fn main() {\nassert_eq!(f("a [b"), "a [b")\nassert_eq!(f("x { y ("), "z")\n}`, excludes: ["};"] },
   { name: "char literal paren doesn't corrupt the stack", src: `fn check(c char) bool {\nif c == '(' {\nreturn true\n}\nfalse\n}`, contains: ["false\n}"], excludes: ["false;"] },
+  // --- v0.6: priv / macro_rules / arg-position blocks ---
+  { name: "priv keyword is stripped from output", src: `priv fn helper() u8 {1}\nfn main() {helper();}`, contains: ["fn helper() -> u8 {1}"], excludes: ["priv"] },
+  { name: "macro_rules inline arm keeps separator", src: `macro_rules! maxof {\n($a:expr, $b:expr) => {if $a > $b {$a} else {$b}};\n}`, contains: ["{$a} else {$b}};"] },
+  { name: "macro_rules multi-line arm closes with semicolon", src: `macro_rules! trace {\n($m:expr) => {\nv := $m\nprintln!("{v}")\n};\n}`, contains: ["let v = $m;", "    };"] },
+  { name: "arg-position async block tail is a value", src: `fn main() {\nh := tokio::spawn(async move {\nfetch(1).await\n})\nh\n}`, contains: ["fetch(1).await\n"], excludes: ["fetch(1).await;"] },
+];
+
+// ---------- project cases (buildProject output assertions) ----------
+
+const PROJECT_CASES = [
+  {
+    name: "priv items and fields stay non-pub",
+    files: { lib: `priv fn helper() u8 {1}\nfn open_fn() u8 {helper()}\nstruct S {priv secret u8, open u8}\npriv struct Hidden {x u8}\nimpl S {\npriv fn internal(&self) u8 {self.open}\nfn visible(&self) u8 {self.internal()}\n}` },
+    file: "src/lib.rs",
+    contains: ["fn helper() -> u8", "pub fn open_fn", "secret: u8,", "pub open: u8,", "struct Hidden {", "fn internal", "pub fn visible"],
+    excludes: ["pub fn helper", "pub secret", "pub struct Hidden", "pub fn internal", "priv"],
+  },
+  {
+    name: "test module gets allow(unused_imports)",
+    files: { main: `fn main() {println!("{}", one())}`, util: `fn one() u8 {1}`, tests: `#[test]\nfn t() {assert_eq!(one(), 1)}` },
+    file: "src/tests.rs",
+    contains: ["#![allow(unused_imports)]", "use crate::util::*;"],
+  },
+  {
+    name: "nested modules: main declares dirs, synthetic mod file, nested glob use",
+    files: { "main": `fn main() {println!("{}", shout("x"))}`, "util/text": `fn shout(s &str) String {s.to_uppercase()}` },
+    file: "src/main.rs",
+    contains: ["mod util;", "use crate::util::text::*;"],
+  },
+  {
+    name: "synthetic directory module lists children",
+    files: { "main": `fn main() {go()}`, "net/http": `fn go() {}` },
+    file: "src/net.rs",
+    contains: ["pub mod http;"],
+  },
+  {
+    name: "explicit discriminants reach the JS binding tags",
+    files: { lib: `#crate cdylib\n#[repr(C, i32)]\nenum Msg {Ping = 10, Data {x f64} = 20}\n#[no_mangle]\nextern "C" fn touch(m *const Msg) u8 {0}` },
+    file: "js/unit-proj.mjs",
+    contains: ['"tags":{"Ping":10,"Data":20}'],
+  },
 ];
 
 // ---------- runner ----------
@@ -181,6 +222,21 @@ for (const c of TRANSFORM_CASES) {
     }
   }
   if (errs.length) { fail++; problems.push(`XFORM ${c.name}: ${errs.join("; ")}\n--- output ---\n${out ?? ""}`); } else pass++;
+}
+
+for (const c of PROJECT_CASES) {
+  const errs = [];
+  let content;
+  try {
+    const { files } = buildProject(c.files, "unit-proj");
+    content = files[c.file];
+    if (content === undefined) errs.push(`missing output file ${c.file} (got ${Object.keys(files).join(", ")})`);
+  } catch (e) { errs.push(`buildProject threw: ${e.message}`); }
+  if (content !== undefined) {
+    for (const s of c.contains ?? []) if (!content.includes(s)) errs.push(`missing ${JSON.stringify(s)}`);
+    for (const s of c.excludes ?? []) if (content.includes(s)) errs.push(`must not contain ${JSON.stringify(s)}`);
+  }
+  if (errs.length) { fail++; problems.push(`PROJ ${c.name}: ${errs.join("; ")}\n--- ${c.file} ---\n${content ?? ""}`); } else pass++;
 }
 
 for (const p of problems) console.log(`FAIL ${p}\n`);

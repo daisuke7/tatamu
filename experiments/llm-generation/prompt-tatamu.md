@@ -6,6 +6,8 @@ Tatamu is a token-efficient dialect of Rust. It transpiles 1:1 to Rust. Rules:
 - No `use` lines — imports are auto-resolved by the transpiler (write std names directly: HashMap, HashSet, fs, env, ...).
 - Bindings: `name := expr` (immutable), `mut name := expr` (mutable). Never use `let` for bindings (`if let` / `while let` pattern matching is fine). Plain `=` is reassignment only.
 - Type annotations: exactly where Rust would need them, annotate the binding: `name: Type := expr` (e.g. `items: Vec<_> := iter.collect()`). Turbofish is also allowed when Rust needs it (`.sum::<f64>()`). Where Rust infers fine, write no types.
+- Visibility: everything is public by default; prefix `priv` to keep an item or field module-private (`priv fn helper() u8 {…}`, `struct S {priv secret u8, open u8}`).
+- `macro_rules!` definitions, `async`/`.await`, and explicit enum discriminants (`Ping = 10`, needs `#[repr(C, i32)]` when variants carry data) are written as in Rust; macro bodies may use Tatamu syntax.
 - Function signatures drop the parameter `:` and the `->`: `fn add(a i64, b i64) i64 { ... }`. Never write `pub` (everything is public by default).
 - Struct declaration: `struct Name +Derive1,Derive2 {field1 Type1, field2 Type2}` — derives as a `+List` after the name, fields as `name Type` comma-separated on one line. Struct *literals* keep normal Rust syntax: `Name {field1: value1}`.
 - `R<T>` is an alias for `Result<T, Box<dyn Error>>`.

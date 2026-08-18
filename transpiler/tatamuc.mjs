@@ -160,10 +160,13 @@ function transformBindings(seg) {
 // shared: `name Type` field list → `name: Type` (used by struct and enum variants)
 function fieldsToRust(fieldsRaw) {
   return fieldsRaw.split(/,(?![^<[]*[>\]])/).map((f) => {
-    const t = f.trim();
+    let t = f.trim();
     if (t === "") return null;
+    // `priv name Type` — field stays non-pub during pubify
+    const priv = /^priv\s+/.test(t);
+    if (priv) t = t.replace(/^priv\s+/, "");
     const fm = /^([A-Za-z_]\w*)\s+(.+)$/.exec(t);
-    return fm ? `${fm[1]}: ${fm[2]}` : t;
+    return { text: fm ? `${fm[1]}: ${fm[2]}` : t, priv };
   }).filter(Boolean);
 }
 
@@ -175,17 +178,18 @@ function transformStruct(line) {
   if (!m) return null;
   const [, name, derives, fieldsRaw] = m;
   const lines = [];
-  if (derives) lines.push(deriveAttr(derives));
-  lines.push(`struct ${name} {`);
-  for (const f of fieldsToRust(fieldsRaw)) lines.push(`${f},`);
-  lines.push(`}`);
-  return lines;
+  const privFlags = [];
+  if (derives) { lines.push(deriveAttr(derives)); privFlags.push(false); }
+  lines.push(`struct ${name} {`); privFlags.push(false);
+  for (const f of fieldsToRust(fieldsRaw)) { lines.push(`${f.text},`); privFlags.push(f.priv); }
+  lines.push(`}`); privFlags.push(false);
+  return { lines, privFlags };
 }
 
 // enum variant: struct-variants get Tatamu field shorthand (`Rect {w f64, h f64}`)
 function transformEnumVariant(line) {
   return line.replace(/([A-Za-z_]\w*)\s*\{([^{}]*)\}/g, (m0, vname, body) =>
-    `${vname} {${fieldsToRust(body).join(", ")}}`);
+    `${vname} {${fieldsToRust(body).map((f) => f.text).join(", ")}}`);
 }
 
 // enum header (single-line or multi-line open), with optional +derives
@@ -250,7 +254,8 @@ export function transpileMapped(src) {
     .filter(([l]) => l !== "");
   let lines = [];
   const lineSrc = [];
-  const push = (text, n) => { lines.push(text); lineSrc.push(n); };
+  const linePriv = [];
+  const push = (text, n, priv = false) => { lines.push(text); lineSrc.push(n); linePriv.push(priv); };
 
   const extraUses = []; // from `#use path::To::Item` directives
   let inEnumBody = false;
@@ -264,30 +269,37 @@ export function transpileMapped(src) {
     if (useM) { extraUses.push(`use ${useM[1].trim()};`); continue; }
     // `#dep` / `#crate` are project-level directives — inert in single-file mode
     if (/^#(dep|crate)\s/.test(line.trim())) continue;
+    // `priv` prefix: this item (or impl method) stays non-pub during pubify
+    let privItem = false;
+    if (/^priv\s+/.test(line)) { privItem = true; line = line.replace(/^priv\s+/, ""); }
     // multi-line handling: struct/const/enum are line-scoped rules
     const asStruct = line.startsWith("struct ") ? transformStruct(line) : null;
-    if (asStruct) { for (const l of asStruct) push(l, n); continue; }
+    if (asStruct) {
+      asStruct.lines.forEach((l, k) => push(l, n, privItem || asStruct.privFlags[k]));
+      continue;
+    }
     // multi-line struct: `struct Name +D {` header, then one field per line
     const msHeader = line.startsWith("struct ")
       ? /^struct\s+(\w+(?:<[^{]*>)?)\s*(?:\+([\w,:\s]+?))?\s*\{\s*$/.exec(line.trim())
       : null;
     if (msHeader) {
-      if (msHeader[2]) push(deriveAttr(msHeader[2]), n);
-      push(`struct ${msHeader[1]} {`, n);
+      if (msHeader[2]) push(deriveAttr(msHeader[2]), n, privItem);
+      push(`struct ${msHeader[1]} {`, n, privItem);
       inStructBody = true;
       continue;
     }
     if (inStructBody) {
       if (/^\}/.test(stripLiterals(line))) { inStructBody = false; push(line, n); continue; }
       const fields = fieldsToRust(line.replace(/,\s*$/, ""));
-      push(fields.map((f) => `${f},`).join(" "), n);
+      const anyPriv = fields.some((f) => f.priv);
+      push(fields.map((f) => `${f.text},`).join(" "), n, anyPriv);
       continue;
     }
     const asConst = line.startsWith("const ") ? transformConst(line) : null;
-    if (asConst) { for (const l of asConst) push(l, n); continue; }
+    if (asConst) { for (const l of asConst) push(l, n, privItem); continue; }
     const asEnum = line.startsWith("enum ") ? transformEnumHeader(line) : null;
     if (asEnum) {
-      for (const l of asEnum.lines) push(l, n);
+      for (const l of asEnum.lines) push(l, n, privItem);
       if (asEnum.open) { inEnumBody = true; enumDepth = 0; }
       continue;
     }
@@ -302,7 +314,7 @@ export function transpileMapped(src) {
       continue;
     }
     line = outsideStrings(line, (seg) => transformBindings(transformFnSigs(expandR(seg))));
-    push(line, n);
+    push(line, n, privItem);
   }
 
   // semicolon insertion with a block-context stack: a line before `}` is a tail
@@ -324,6 +336,9 @@ export function transpileMapped(src) {
     return false;
   };
   const blockContext = (bare, stack, i) => {
+    if (/^macro_rules!/.test(bare)) return "macro-rules";
+    // a macro arm `(pattern) => {` inside macro_rules — its closer needs `};`
+    if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
     if (/^let\b/.test(bare)) return "let-block";          // let x = match/if ... { … } needs `};`
     if (/\bfn\b[^{]*->/.test(bare)) return "fn-value";
     if (/^fn\b/.test(bare)) return "fn-unit";
@@ -365,7 +380,7 @@ export function transpileMapped(src) {
     }
     // contexts this line net-closes (beyond what it opened itself):
     const netClosed = stack.slice(simulated.length).reverse();
-    const closesLetBlock = netClosed.includes("let-block");
+    const closesLetBlock = netClosed.includes("let-block") || netClosed.includes("macro-arm");
     const closesParenStmt = netClosed.includes("paren");
     const topAfter = simulated[simulated.length - 1];
 
@@ -379,6 +394,7 @@ export function transpileMapped(src) {
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
     else if (/^#\[/.test(bare)) semi = false;                    // attribute
+    else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && /=>/.test(bare) && !/[[{(]$/.test(bare)) semi = false; // non-block match arm — never `;`
     else if (/[}\])]$/.test(bare) && (closesLetBlock || closesParenStmt)) semi = true; // closer with trailing text
     else if (/\}$/.test(bare)) semi = /^let\b/.test(bare);       // inline `let x = … {…}`
@@ -404,6 +420,7 @@ export function transpileMapped(src) {
   ])].sort();
   const full = [...uses, ...(uses.length ? [""] : []), ...out];
   const fullSrc = [...uses.map(() => null), ...(uses.length ? [null] : []), ...lineSrc];
+  const fullPriv = [...uses.map(() => false), ...(uses.length ? [false] : []), ...linePriv];
 
   // indentation by brace depth
   let depth = 0;
@@ -417,7 +434,7 @@ export function transpileMapped(src) {
     return line === "" ? "" : "    ".repeat(d) + line;
   });
 
-  return { rust: indented.join("\n") + "\n", map: fullSrc };
+  return { rust: indented.join("\n") + "\n", map: fullSrc, privLines: new Set(fullPriv.flatMap((p, i) => (p ? [i] : []))) };
 }
 
 export function transpile(src) {
@@ -462,7 +479,11 @@ export function parseCAbi(rust) {
   const dataEnumNames = new Set();
   const enumNames = new Set();
   for (let i = 0; i < lines.length; i++) {
-    if (!/^\s*#\[repr\(C\)\]/.test(lines[i])) continue;
+    // #[repr(C)] or #[repr(C, i32)] (int repr is required by Rust for data enums
+    // with explicit discriminants; only 32-bit tags are supported by the bindings)
+    const reprM = /^\s*#\[repr\(C(?:\s*,\s*(\w+))?\)\]/.exec(lines[i]);
+    if (!reprM) continue;
+    if (reprM[1] && reprM[1] !== "i32" && reprM[1] !== "u32") continue; // unsupported tag width
     let j = i + 1;
     while (j < lines.length && /^\s*#\[/.test(lines[j])) j++;
     const em = /^\s*(?:pub\s+)?enum\s+([A-Za-z_]\w*)\s*\{(.*)$/.exec(lines[j] ?? "");
@@ -488,17 +509,21 @@ export function parseCAbi(rust) {
       let unparseable = false;
       for (const v of parts.map((v) => v.trim()).filter(Boolean)) {
         let m2;
-        if ((m2 = /^([A-Za-z_]\w*)\s*\(([^)]*)\)$/.exec(v))) {
+        if ((m2 = /^([A-Za-z_]\w*)\s*\(([^)]*)\)(?:\s*=\s*(-?\d+))?$/.exec(v))) {
           hasPayload = true;
           const fields = m2[2].split(/,(?![^<[]*[>\]])/).map((t, i) => [t.trim(), `_${i}`]).filter(([t]) => t);
-          variants.push({ name: m2[1], value: next++, fields });
-        } else if ((m2 = /^([A-Za-z_]\w*)\s*\{([^}]*)\}$/.exec(v))) {
+          const val = m2[3] !== undefined ? parseInt(m2[3], 10) : next;
+          variants.push({ name: m2[1], value: val, fields });
+          next = val + 1;
+        } else if ((m2 = /^([A-Za-z_]\w*)\s*\{([^}]*)\}(?:\s*=\s*(-?\d+))?$/.exec(v))) {
           hasPayload = true;
           const fields = m2[2].split(/,(?![^<[]*[>\]])/).map((f) => {
             const fm = /^([A-Za-z_]\w*):\s*(.+)$/.exec(f.trim());
             return fm ? [fm[2].trim(), fm[1]] : null;
           }).filter(Boolean);
-          variants.push({ name: m2[1], value: next++, fields });
+          const val = m2[3] !== undefined ? parseInt(m2[3], 10) : next;
+          variants.push({ name: m2[1], value: val, fields });
+          next = val + 1;
         } else if ((m2 = /^([A-Za-z_]\w*)(?:\s*=\s*(-?\d+))?$/.exec(v))) {
           const val = m2[2] !== undefined ? parseInt(m2[2], 10) : next;
           variants.push({ name: m2[1], value: val, fields: [] });
@@ -1292,17 +1317,17 @@ export function diagnose(src) {
 //   `use crate::<m>::*;`
 // - `#dep name version` lines anywhere become [dependencies] in Cargo.toml
 
-function pubify(rust) {
+function pubify(rust, privLines = new Set()) {
   let depth = 0;
   const traitImplAt = [];
   const structAt = [];
-  return rust.split("\n").map((line) => {
+  return rust.split("\n").map((line, lineIdx) => {
     const bare = stripLiterals(line);
     const opens = (bare.match(/{/g) ?? []).length;
     const closes = (bare.match(/}/g) ?? []).length;
     const t = line.trimStart();
     let outLine = line;
-    if (traitImplAt.length === 0 && !/^pub\b/.test(t)) {
+    if (traitImplAt.length === 0 && !/^pub\b/.test(t) && !privLines.has(lineIdx)) {
       if (depth === 0 && /^(fn|struct|enum|trait|const|extern\s+"[^"]*"\s+fn)\b/.test(t)) outLine = line.replace(t, "pub " + t);
       else if (depth === 1 && /^fn\b/.test(t)) outLine = line.replace(/^(\s*)fn\b/, "$1pub fn");
       else if (depth === 1 && structAt.length && /^[a-z_]\w*:/.test(t)) outLine = line.replace(t, "pub " + t);
@@ -1342,7 +1367,7 @@ export function buildProject(srcFiles, projectName) {
         keptNums.push(i);
       }
     }
-    modules[name] = { rust: mapped.rust, map: mapped.map.map((n) => (n === null ? null : keptNums[n - 1])) };
+    modules[name] = { rust: mapped.rust, map: mapped.map.map((n) => (n === null ? null : keptNums[n - 1])), privLines: mapped.privLines };
   }
   // lib.ttm makes a library crate; if main.ttm is ALSO present, the project is
   // bin+lib: lib.rs is the module root (pub mods) and main.rs consumes the lib.
@@ -1358,29 +1383,53 @@ export function buildProject(srcFiles, projectName) {
     items[name] = [...rust.matchAll(/^(?:pub\s+)?(?:fn|struct|enum|trait|const)\s+([A-Za-z_]\w*)/gm)].map((m) => m[1]);
   }
 
+  // module tree: keys may be nested paths ("net/http"). Each directory needs a
+  // Rust module file declaring its children; missing ones are synthesized.
+  const modKeys = Object.keys(modules);
+  const childrenOf = {}; // dirPath ("" = root) -> Set of immediate child segments
+  const addChild = (dir, seg) => ((childrenOf[dir] ??= new Set()).add(seg));
+  for (const key of modKeys) {
+    const segs = key.split("/");
+    for (let d = 0; d < segs.length; d++) addChild(segs.slice(0, d).join("/"), segs[d]);
+  }
   const out = {};
   const maps = {};
-  for (const [name, { rust, map }] of Object.entries(modules)) {
+  for (const [name, { rust, map, privLines }] of Object.entries(modules)) {
     const uses = [];
     // a test module's imports are unused outside cfg(test) — silence that lint
     if (/#\[test\]/.test(rust)) uses.push("#![allow(unused_imports)]");
     const usePrefix = hasBoth && name === "main" ? crateIdent : "crate";
     for (const [other, names] of Object.entries(items)) {
       if (other === name || other === root || other === "main") continue;
-      if (names.some((n) => new RegExp(`\\b${n}\\b`).test(rust))) uses.push(`use ${usePrefix}::${other}::*;`);
+      if (names.some((n) => new RegExp(`\\b${n}\\b`).test(rust))) {
+        uses.push(`use ${usePrefix}::${other.replace(/\//g, "::")}::*;`);
+      }
     }
     // items in library modules must be pub for cross-module access (S3: public by default);
     // methods inside `impl Trait for Type` blocks must NOT be pub. A lib.rs root is
     // pubified too — its items are the crate's public API.
-    const body = name === "main" ? rust : pubify(rust);
-    const header = name === root
-      ? Object.keys(modules)
-          .filter((m) => m !== root && !(isLib && m === "main"))
-          .map((m) => (hasBoth ? `pub mod ${m};` : `mod ${m};`))
-      : [];
+    const body = name === "main" ? rust : pubify(rust, privLines);
+    const header = [];
+    if (name === root) {
+      for (const seg of childrenOf[""] ?? []) {
+        if (seg === root || (isLib && seg === "main")) continue;
+        header.push(hasBoth ? `pub mod ${seg};` : `mod ${seg};`);
+      }
+    }
+    // a module that is also a directory declares its children
+    if (childrenOf[name]) {
+      for (const seg of childrenOf[name]) header.push(`pub mod ${seg};`);
+    }
     const prefix = [...header, ...uses, ...(header.length || uses.length ? [""] : [])];
     out[`src/${name}.rs`] = [...prefix, body].join("\n");
     maps[`src/${name}.rs`] = [...prefix.map(() => null), ...map];
+  }
+  // synthesize module files for directories that have no .ttm of their own
+  for (const [dir, kids] of Object.entries(childrenOf)) {
+    if (dir === "" || modules[dir]) continue;
+    const content = [...kids].map((seg) => `pub mod ${seg};`).join("\n") + "\n";
+    out[`src/${dir}.rs`] = content;
+    maps[`src/${dir}.rs`] = content.split("\n").map(() => null);
   }
 
   const depLines = Object.entries(deps).map(([n, v]) =>
@@ -1434,10 +1483,15 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()
     if (!srcDir || !outDir) { console.error("usage: tatamuc --project <srcdir> <outdir>"); process.exit(1); }
     const { readdirSync, mkdirSync, writeFileSync } = await import("node:fs");
     const { join, basename } = await import("node:path");
-    const srcFiles = {};
-    for (const f of readdirSync(srcDir).filter((f) => f.endsWith(".ttm"))) {
-      srcFiles[f.replace(/\.ttm$/, "")] = readFileSync(join(srcDir, f), "utf8");
-    }
+    const walkTtm = (dir, base = "") => {
+      const found = {};
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        if (e.isDirectory()) Object.assign(found, walkTtm(join(dir, e.name), base ? `${base}/${e.name}` : e.name));
+        else if (e.name.endsWith(".ttm")) found[(base ? base + "/" : "") + e.name.replace(/\.ttm$/, "")] = readFileSync(join(dir, e.name), "utf8");
+      }
+      return found;
+    };
+    const srcFiles = walkTtm(srcDir);
     const { files } = buildProject(srcFiles, basename(outDir));
     for (const [rel, content] of Object.entries(files)) {
       const dest = join(outDir, rel);
@@ -1509,10 +1563,15 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()
     const { tmpdir } = await import("node:os");
     const { join, basename } = await import("node:path");
     const { readdirSync, writeFileSync, mkdtempSync, mkdirSync } = await import("node:fs");
-    const srcFiles = {};
-    for (const f of readdirSync(file).filter((f) => f.endsWith(".ttm"))) {
-      srcFiles[f.replace(/\.ttm$/, "")] = readFileSync(join(file, f), "utf8");
-    }
+    const walkTtm = (dir, base = "") => {
+      const found = {};
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        if (e.isDirectory()) Object.assign(found, walkTtm(join(dir, e.name), base ? `${base}/${e.name}` : e.name));
+        else if (e.name.endsWith(".ttm")) found[(base ? base + "/" : "") + e.name.replace(/\.ttm$/, "")] = readFileSync(join(dir, e.name), "utf8");
+      }
+      return found;
+    };
+    const srcFiles = walkTtm(file);
     const { files, maps } = buildProject(srcFiles, basename(file));
     const dir = mkdtempSync(join(process.env.TMPDIR ?? tmpdir(), "tatamuc-proj-"));
     for (const [rel, content] of Object.entries(files)) {
@@ -1533,7 +1592,7 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()
       let ttmFile = null, ttmLine = null, found = null;
       if (span) {
         const rel = span.file_name.replace(/^.*src\//, "src/");
-        const mod = /^src\/(\w+)\.rs$/.exec(rel)?.[1];
+        const mod = /^src\/([\w/]+)\.rs$/.exec(rel)?.[1];
         if (mod && maps[rel]) {
           ttmFile = `${mod}.ttm`;
           ttmLine = maps[rel][span.line_start - 1] ?? null;
