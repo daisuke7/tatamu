@@ -171,7 +171,7 @@ lines.push(convert_line(l, siblings, fields_here))
 }
 if let Some(d) = derives {
 if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
-if first.ends_with(',') {
+if first.ends_with(',') || first.starts_with("union") {
 lines.insert(0, format!("#[derive({d})]"))
 } else {
 static WHERE_RE: OnceLock<regex::Regex> = OnceLock::new()
@@ -231,6 +231,7 @@ fn extract_derives(item &syn::Item) Option<String> {
 match item {
 syn::Item::Struct(s) => derive_list(&s.attrs),
 syn::Item::Enum(e) => derive_list(&e.attrs),
+syn::Item::Union(u) => derive_list(&u.attrs),
 _ => None,
 }
 }

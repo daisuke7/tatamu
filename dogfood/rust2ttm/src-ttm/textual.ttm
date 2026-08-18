@@ -224,7 +224,8 @@ pipes = 0
 has_arrow = false
 closure_open = false
 } else if open_string {
-if buf.ends_with('\\') {
+trailing_bs := buf.chars().rev().take_while(|c| *c == '\\').count()
+if trailing_bs % 2 == 1 {
 buf.pop()
 buf.push_str(t.trim_start())
 } else {

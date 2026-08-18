@@ -127,13 +127,15 @@ function transformFnSigs(seg) {
       else if (seg[j] === ")") { depth--; if (depth === 0) break; }
     }
     const params = seg.slice(parenOpen + 1, j);
-    // return type = text between `)` and the next `{` (or end / `;`)
+    // return type = text between `)` and the next `{` or `;` (declaration)
     let k = j + 1;
     let braceAt = -1;
-    for (let d = 0; k < seg.length; k++) {
-      if (seg[k] === "{") { braceAt = k; break; }
+    let stopAt = seg.length;
+    for (; k < seg.length; k++) {
+      if (seg[k] === "{") { braceAt = k; stopAt = k; break; }
+      if (seg[k] === ";") { stopAt = k; break; }
     }
-    let retRaw = (braceAt === -1 ? seg.slice(j + 1) : seg.slice(j + 1, braceAt)).trim();
+    let retRaw = seg.slice(j + 1, stopAt).trim();
     // a where clause is not a return type: `fn f(..) where A: ..` / `fn f(..) T where ..`
     let wherePart = "";
     const wm = /^(.*?)\s*\bwhere\b([\s\S]*)$/.exec(retRaw);
@@ -166,7 +168,7 @@ function transformFnSigs(seg) {
     // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is
     const ret = retRaw ? (retRaw.startsWith("->") ? ` ${retRaw}` : ` -> ${retRaw}`) : "";
     out += `fn ${m[1]}${generics}(${newParams})${ret}${wherePart}${braceAt === -1 ? "" : " "}`;
-    i = braceAt === -1 ? seg.length : braceAt;
+    i = braceAt === -1 ? stopAt : braceAt;
   }
   return out;
 }
@@ -183,14 +185,32 @@ function transformBindings(seg) {
 
 // shared: `name Type` field list → `name: Type` (used by struct and enum variants)
 function fieldsToRust(fieldsRaw) {
-  return fieldsRaw.split(/,(?![^<[]*[>\]])/).map((f) => {
+  // depth-aware split: commas inside <>, (), [], {} (incl. attribute args) stay put
+  const parts = [];
+  {
+    let d = 0, cur = "";
+    for (let i = 0; i < fieldsRaw.length; i++) {
+      const ch = fieldsRaw[i];
+      if ("<([{".includes(ch)) d++;
+      else if ((ch === ">" && fieldsRaw[i - 1] !== "-") || ")]}".includes(ch)) d--;
+      if (ch === "," && d === 0) { parts.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    if (cur.trim() !== "") parts.push(cur);
+  }
+  return parts.map((f) => {
     let t = f.trim();
     if (t === "") return null;
+    // a leading attribute stays put; convert the field after it
+    const am = /^((?:#\[[\s\S]*?\]\s*)+)([\s\S]*)$/.exec(t);
+    const attrPre = am ? am[1] : "";
+    if (am) t = am[2].trim();
     // `priv name Type` — field stays non-pub during pubify
     const priv = /^priv\s+/.test(t);
     if (priv) t = t.replace(/^priv\s+/, "");
     const fm = /^([A-Za-z_]\w*)\s+(.+)$/.exec(t);
-    return { text: fm ? `${fm[1]}: ${fm[2]}` : t, priv };
+    if (fm && /^[=:]/.test(fm[2])) return { text: attrPre + t, priv };
+    return { text: attrPre + (fm ? `${fm[1]}: ${fm[2]}` : t), priv };
   }).filter(Boolean);
 }
 
@@ -390,6 +410,13 @@ export function transpileMapped(src) {
       for (const ch of bare) {
         if (ch === "{") enumDepth++;
         else if (ch === "}") enumDepth--;
+      }
+      if (enumDepth < 0) {
+        // the enum's own closer was folded into this line
+        inEnumBody = false;
+        enumDepth = 0;
+        push(transformEnumVariant(line), n);
+        continue;
       }
       if (inVariantBody && !/^[}\])]/.test(bare)) {
         // field line of a multi-line struct variant
