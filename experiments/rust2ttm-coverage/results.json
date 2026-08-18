@@ -654,8 +654,8 @@
   "crate": "serde",
   "file": "serde_core/src/de/impls.rs",
   "lines": 3174,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `;`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "serde",
@@ -745,8 +745,8 @@
   "crate": "serde",
   "file": "serde_core/src/ser/impls.rs",
   "lines": 1046,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `;`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "serde",
@@ -787,8 +787,8 @@
   "crate": "serde",
   "file": "serde_derive/src/de/enum_adjacently.rs",
   "lines": 325,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",

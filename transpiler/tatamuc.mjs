@@ -505,8 +505,17 @@ export function transpileMapped(src) {
     else if (/^#\[/.test(bare)) semi = false;                    // attribute
     else if (/^use\b/.test(bare)) semi = true;                   // in-body use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
-    else if (!/^let\b/.test(bare) && /=>/.test(bare) && !/[[{(]$/.test(bare) &&
-             bare.indexOf("=>") < (bare.indexOf("{") === -1 ? Infinity : bare.indexOf("{"))) semi = false; // match arm: `pat => …` (arrow before any block)
+    else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
+      // match arm: a TOP-LEVEL `=>` before any block — `mac!(a => b)` is not an arm
+      let d = 0;
+      for (let k = 0; k < bare.length - 1; k++) {
+        const ch = bare[k];
+        if ("([{".includes(ch)) { if (ch === "{") return false; d++; }
+        else if (")]}".includes(ch)) d--;
+        else if (ch === "=" && bare[k + 1] === ">" && d === 0) return true;
+      }
+      return false;
+    })()) semi = false;
     else if (/[}\])]$/.test(bare) && (closesLetBlock || closesParenStmt)) {
       // closer with trailing text (`}).to_string()`): statement — unless it is
       // itself the tail expression of a value block
