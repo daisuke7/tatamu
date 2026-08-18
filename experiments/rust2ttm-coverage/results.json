@@ -1249,8 +1249,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/arg_matcher.rs",
   "lines": 239,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected an expression\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
