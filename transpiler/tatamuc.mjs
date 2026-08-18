@@ -294,6 +294,7 @@ export function transpileMapped(src) {
   let enumDepth = 0;
   let inStructBody = false;
   let macroDepth = 0;
+  let mrDepth = 0;
   for (const [raw, n] of rawLines) {
     // inside a macro invocation body: a token stream, not Tatamu — verbatim
     if (macroDepth > 0) {
@@ -308,8 +309,27 @@ export function transpileMapped(src) {
       } else push(raw, n, false, true);
       continue;
     }
+    // inside macro_rules bodies keep token-stream semicolons verbatim
+    const inMacroRules = mrDepth > 0;
+    {
+      const b = stripLiterals(raw);
+      if (mrDepth > 0) {
+        for (const ch of b) {
+          if ("{([".includes(ch)) mrDepth++;
+          else if ("})]".includes(ch)) mrDepth--;
+        }
+        if (mrDepth < 0) mrDepth = 0;
+      } else if (/^macro_rules!/.test(b.trim())) {
+        let d = 0;
+        for (const ch of b) {
+          if ("{([".includes(ch)) d++;
+          else if ("})]".includes(ch)) d--;
+        }
+        if (d > 0) mrDepth = d;
+      }
+    }
     // lenient: strip an existing trailing semicolon (re-added consistently later)
-    let line = raw.replace(/;\s*$/, "");
+    let line = inMacroRules ? raw : raw.replace(/;\s*$/, "");
     // `#use` directive: explicit import escape hatch (mainly for traits)
     const useM = /^#use\s+(.+)$/.exec(line.trim());
     if (useM) { extraUses.push(`use ${useM[1].trim()};`); continue; }
@@ -506,7 +526,7 @@ export function transpileMapped(src) {
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
     else if (/^#\[/.test(bare) && /\]$/.test(bare)) semi = false; // attribute-only line
-    else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare)) semi = true; // use statements (verbatim Rust)
+    else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare) && netClosed.length === 0) semi = true; // use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
       // match arm: a TOP-LEVEL `=>` before any block — `mac!(a => b)` is not an arm

@@ -22,6 +22,10 @@ re(r"^(\.\.|\w+\s*:[^:]|\w+\s*,\s*$|\w+\s*$)", &RE_FIELD).is_match(next.trim())
 }
 fn macro_open_depth(bare &str) i64 {
 static MACSTART: OnceLock<regex::Regex> = OnceLock::new()
+if bare.trim_start().starts_with("macro_rules!") {
+d := count_of(bare, &['{', '(', '[']) as i64 - count_of(bare, &['}', ')', ']']) as i64
+return if d > 0 {d} else {0}
+}
 rx := re(r"(^|[^\w!])\w+!\s*[({\[]", &MACSTART)
 mut pos := 0usize
 while let Some(m) = rx.find(&bare[pos..]) {
