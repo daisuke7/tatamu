@@ -655,14 +655,14 @@
   "file": "serde_core/src/de/impls.rs",
   "lines": 3174,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "detail": "Error: Error(\"expected `;`\")"
  },
  {
   "crate": "serde",
   "file": "serde_core/src/de/mod.rs",
   "lines": 2393,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "serde",
@@ -703,8 +703,8 @@
   "crate": "serde",
   "file": "serde_core/src/private/doc.rs",
   "lines": 166,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -746,7 +746,7 @@
   "file": "serde_core/src/ser/impls.rs",
   "lines": 1046,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "detail": "Error: Error(\"expected `;`\")"
  },
  {
   "crate": "serde",
@@ -759,8 +759,8 @@
   "crate": "serde",
   "file": "serde_core/src/ser/mod.rs",
   "lines": 2011,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "serde",
@@ -815,22 +815,22 @@
   "crate": "serde",
   "file": "serde_derive/src/de/identifier.rs",
   "lines": 478,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
   "file": "serde_derive/src/de/struct_.rs",
   "lines": 698,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `deserialize_in_place`"
  },
  {
   "crate": "serde",
   "file": "serde_derive/src/de/tuple.rs",
   "lines": 284,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -955,8 +955,8 @@
   "crate": "serde",
   "file": "serde_derive/src/ser.rs",
   "lines": 1370,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `get_member`"
  },
  {
   "crate": "serde",
@@ -1536,8 +1536,8 @@
   "crate": "clap",
   "file": "clap_derive/src/derives/into_app.rs",
   "lines": 118,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1558,7 +1558,7 @@
   "file": "clap_derive/src/derives/subcommand.rs",
   "lines": 676,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
  },
  {
   "crate": "clap",
@@ -1579,7 +1579,7 @@
   "file": "clap_derive/src/item.rs",
   "lines": 1493,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "detail": "Error: Error(\"expected `;`\")"
  },
  {
   "crate": "clap",

@@ -115,7 +115,7 @@ function transformFnSigs(seg) {
     // require an opening paren next; otherwise not a signature
     const parenRel = seg.slice(afterName).search(/\S/);
     if (parenRel === -1 || seg[afterName + parenRel] !== "(") {
-      out += seg.slice(fnStart, afterName);
+      out += seg.slice(i, afterName);
       i = afterName;
       continue;
     }
@@ -155,7 +155,8 @@ function transformFnSigs(seg) {
       const mm = /^(mut\s+)?([A-Za-z_]\w*)\s+(.+)$/.exec(t);
       return mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t;
     }).filter((p) => p !== "").join(", ");
-    const ret = retRaw ? ` -> ${retRaw}` : "";
+    // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is
+    const ret = retRaw ? (retRaw.startsWith("->") ? ` ${retRaw}` : ` -> ${retRaw}`) : "";
     out += `fn ${m[1]}${generics}(${newParams})${ret}${braceAt === -1 ? "" : " "}`;
     i = braceAt === -1 ? seg.length : braceAt;
   }

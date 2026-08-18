@@ -121,6 +121,9 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "single-line macro keeps its fn tokens intact", src: `fn g() TokenStream {
+Ok(quote! { impl X for Y { fn command <'b > () -> clap::Command { body() } fn other() -> u8 { 1 } } })
+}`, contains: ["fn command <'b > () -> clap::Command { body() }", "fn other() -> u8 { 1 }"], excludes: ["-> ->", "commandfn"] },
   { name: "closed macro then if-block is not verbatim", src: `fn f(mat M, args A) R<()> {
 value := if matches!(mat.kind, K::Negated) {
 V::Switch(false)
