@@ -221,7 +221,7 @@ const deriveAttr = (derives) => `#[derive(${derives.split(",").map((d) => d.trim
 // `struct Wrap(u8) +Debug,Clone`.
 function transformStruct(line) {
   const unit = /^struct\s+(\w+(?:<[^{(]*>)?)\s*(\(.*\))?\s*(?:\+([\w,:\s]+?))?\s*(where\b[^;{]*?)?\s*;?\s*$/.exec(line.trim());
-  if (unit && !line.includes("{") && (!unit[4] || !/,\s*$/.test(line.trim()))) {
+  if (unit && !line.includes("{") && (!/\bwhere\b/.test(line) || unit[4]) && (!unit[4] || !/,\s*$/.test(line.trim()))) {
     const lines = [];
     const privFlags = [];
     if (unit[3]) { lines.push(deriveAttr(unit[3])); privFlags.push(false); }
@@ -618,7 +618,13 @@ export function transpileMapped(src) {
       const valueTail = nextBare !== undefined && /^\}/.test(nextBare) && VALUE_CONTEXTS.includes(topAfter);
       semi = !valueTail;
     }
-    else if (/\}$/.test(bare)) semi = /^(let|return|break|continue)\b/.test(bare) || topLevelAssign(bare); // inline let/assign/return of a braced expr
+    else if (/\}$/.test(bare)) {
+      // inline let/assign/return of a braced expr — but only if the line's
+      // braces balance (an open closure body continues instead)
+      let open = 0;
+      for (const ch of bare) { if ("{([".includes(ch)) open++; else if ("})]".includes(ch)) open--; }
+      semi = open <= 0 && (/^(let|return|break|continue)\b/.test(bare) || topLevelAssign(bare));
+    }
     else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {
       // let/static/const/use statements are never tail expressions

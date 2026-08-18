@@ -150,7 +150,9 @@ printed := match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| print_
 Ok(p) => p,
 Err(_) => quote::ToTokens::to_token_stream(&cleaned).to_string(),
 }
-raw_lines: Vec<String> := printed.lines().map(String::from).collect()
+static PP_RANGE_FIX: OnceLock<regex::Regex> = OnceLock::new()
+printed_fixed := crate::textual::re(r"(\d\.)\.\.", &PP_RANGE_FIX).replace_all(&printed, "$1 ..").to_string()
+raw_lines: Vec<String> := printed_fixed.lines().map(String::from).collect()
 joined := join_wrapped(&raw_lines)
 in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))
 mut lines := Vec::new()

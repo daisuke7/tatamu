@@ -230,6 +230,15 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "closure opening with inline struct continues", src: `fn make() P {
+event_loop_waker := || { struct Dummy {}
+impl Dummy { fn new() -> Self { Self } }
+w(Dummy)
+}
+event_loop_waker()
+}`, contains: ["let event_loop_waker = || { struct Dummy {}"], excludes: ["struct Dummy {};"] },
+  { name: "hrtb where struct header is not a unit struct", src: `struct GenericReceiver<T> where T: for<'de> Deserialize<'de> + Serialize,
+{ receiver: R<T>, chan: C, }`, contains: ["struct GenericReceiver<T> where T: for<'de> Deserialize<'de> + Serialize,"], excludes: ["#[derive(Serialize, )]", "Serialize,;"] },
   { name: "const fn with attr params is not an initializer", src: `const fn to_u64(#[cfg(feature = "bigidx")] val u64) u64 {
 val
 }

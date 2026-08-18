@@ -233,7 +233,7 @@ buf.push_str("\\n")
 buf.push_str(t)
 }
 } else {
-glue := if buf.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.starts_with(']') {""} else {" "}
+glue := if buf.ends_with('(') || t.starts_with(')') || (t.starts_with('.') && !t.starts_with("..")) || t.starts_with(']') {""} else {" "}
 buf.push_str(glue)
 buf.push_str(t)
 }

@@ -57,6 +57,16 @@ t.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 sort_attrs(&mut t.attrs)
 syn::visit_mut::visit_trait_item_type_mut(self, t)
 }
+fn visit_impl_item_macro_mut(&mut self, m &mut syn::ImplItemMacro) {
+m.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
+sort_attrs(&mut m.attrs)
+syn::visit_mut::visit_impl_item_macro_mut(self, m)
+}
+fn visit_trait_item_macro_mut(&mut self, m &mut syn::TraitItemMacro) {
+m.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
+sort_attrs(&mut m.attrs)
+syn::visit_mut::visit_trait_item_macro_mut(self, m)
+}
 fn visit_local_mut(&mut self, l &mut syn::Local) {
 l.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 syn::visit_mut::visit_local_mut(self, l)
