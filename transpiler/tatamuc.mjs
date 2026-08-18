@@ -174,11 +174,11 @@ function transformFnSigs(seg) {
 // S1: := bindings, with optional type ascription (v0.2): `x: Vec<_> := expr`
 function transformBindings(seg) {
   return seg
-    .replace(/\bmut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, "let mut $1: $2 =")
-    .replace(/\bmut\s+([A-Za-z_]\w*)\s*:=/g, "let mut $1 =")
-    .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
+    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let mut ${name}: ${ty} =`)
+    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let mut ${name} =`)
+    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|\[[^=]*?\])\s*:=/g, "$1let $2 =")
-    .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
+    .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
 
 // shared: `name Type` field list → `name: Type` (used by struct and enum variants)
@@ -200,12 +200,12 @@ const deriveAttr = (derives) => `#[derive(${derives.split(",").map((d) => d.trim
 // Unit and tuple structs take the derive suffix too: `struct Marker +Debug`,
 // `struct Wrap(u8) +Debug,Clone`.
 function transformStruct(line) {
-  const unit = /^struct\s+(\w+(?:<[^{(]*>)?)\s*(\(.*\))?\s*(?:\+([\w,:\s]+?))?\s*;?\s*$/.exec(line.trim());
-  if (unit && !line.includes("{")) {
+  const unit = /^struct\s+(\w+(?:<[^{(]*>)?)\s*(\(.*\))?\s*(?:\+([\w,:\s]+?))?\s*(where\b[^;{]*?)?\s*;?\s*$/.exec(line.trim());
+  if (unit && !line.includes("{") && (!unit[4] || !/,\s*$/.test(line.trim()))) {
     const lines = [];
     const privFlags = [];
     if (unit[3]) { lines.push(deriveAttr(unit[3])); privFlags.push(false); }
-    lines.push(`struct ${unit[1]}${unit[2] ?? ""};`); privFlags.push(false);
+    lines.push(`struct ${unit[1]}${unit[2] ?? ""}${unit[4] ? " " + unit[4].trim() : ""};`); privFlags.push(false);
     return { lines, privFlags };
   }
   const m = /^struct\s+(\w+(?:<[^{]*>)?)\s*(?:\+([\w,:\s]+?))?\s*\{(.*)\}\s*$/.exec(line.trim());

@@ -121,6 +121,16 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "raw pointer type ascription binding", src: `fn f(&mut self) {
+self_ptr: *mut F := self.boxed.as_ptr() as *mut F
+use_ptr(self_ptr)
+}`, contains: ["let self_ptr: *mut F = self.boxed.as_ptr() as *mut F;"], excludes: ["*let"] },
+  { name: "multi-line where struct header is not a unit struct", src: `struct MapDeserializer<'de, I, E> where I: Iterator,
+I::Item: Pair,
+{
+iter iter::Fuse<I>,
+}`, contains: ["struct MapDeserializer<'de, I, E> where I: Iterator,", "I::Item: Pair,"], excludes: ["Iterator,;"] },
+  { name: "unit struct with where clause and derives", src: `struct Reaper<W, Q, S>(W) +Debug where W: Wait;`, contains: ["#[derive(Debug)]", "struct Reaper<W, Q, S>(W) where W: Wait;"] },
   { name: "string ending in r before another string", src: `fn t() {
 args := parse_low_raw(["-r", "foo"]).unwrap()
 check(args)

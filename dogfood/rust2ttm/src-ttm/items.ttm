@@ -151,9 +151,11 @@ joined := join_wrapped(&raw_lines)
 in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))
 mut lines := Vec::new()
 mut mac_depth := 0i64
+mut seen_brace := false
 for (i, l) in joined.iter().enumerate() {
-fields_here := in_fields && i > 0
 bare := strip_lits(l)
+fields_here := in_fields && i > 0 && (seen_brace || bare.contains('{'))
+if bare.contains('{') {seen_brace = true}
 if mac_depth > 0 {
 mac_depth += count_of(&bare, &['{', '(', '[']) as i64 - count_of(&bare, &['}', ')', ']']) as i64
 lines.push(l.trim_end().to_string())
@@ -165,10 +167,21 @@ lines.push(convert_line(l, siblings, fields_here))
 }
 if let Some(d) = derives {
 if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
-if let Some(pos) = first.find(" {") {
-first.insert_str(pos, &format!(" +{d}"))
+if first.ends_with(',') {
+lines.insert(0, format!("#[derive({d})]"))
+} else {
+pos := first.find(" where").or_else(|| first.find(" {"))
+match pos {
+Some(p) => first.insert_str(p, &format!(" +{d}")),
+None => {
+if first.ends_with(';') {
+first.pop()
+first.push_str(&format!(" +{d};"))
 } else {
 first.push_str(&format!(" +{d}"))
+}
+}
+}
 }
 }
 }
