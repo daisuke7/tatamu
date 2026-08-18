@@ -1,1814 +1,3662 @@
 [
  {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/decompress.rs",
-  "lines": 533,
+  "crate": "tokio",
+  "file": "src/blocking.rs",
+  "lines": 64,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/escape.rs",
-  "lines": 160,
+  "crate": "tokio",
+  "file": "src/doc/mod.rs",
+  "lines": 48,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/hostname.rs",
-  "lines": 86,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/human.rs",
-  "lines": 150,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/lib.rs",
-  "lines": 296,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/pattern.rs",
-  "lines": 182,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/process.rs",
-  "lines": 317,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/cli/src/wtr.rs",
-  "lines": 150,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/complete/bash.rs",
-  "lines": 108,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/complete/fish.rs",
-  "lines": 76,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/complete/mod.rs",
-  "lines": 11,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/complete/powershell.rs",
-  "lines": 86,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/complete/zsh.rs",
-  "lines": 33,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/config.rs",
-  "lines": 177,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/defs.rs",
-  "lines": 8162,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/doc/help.rs",
-  "lines": 278,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/doc/man.rs",
-  "lines": 117,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/doc/mod.rs",
-  "lines": 39,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/doc/version.rs",
-  "lines": 174,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/hiargs.rs",
-  "lines": 1517,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/lowargs.rs",
-  "lines": 736,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/mod.rs",
-  "lines": 310,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/flags/parse.rs",
-  "lines": 477,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/haystack.rs",
-  "lines": 161,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/index/disabled.rs",
-  "lines": 10,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/index/enabled.rs",
-  "lines": 17,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/index/mod.rs",
-  "lines": 9,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/logger.rs",
-  "lines": 73,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/main.rs",
-  "lines": 490,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/messages.rs",
-  "lines": 140,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/core/search.rs",
-  "lines": 450,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/globset/src/fnv.rs",
-  "lines": 31,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/globset/src/glob.rs",
-  "lines": 1687,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/globset/src/lib.rs",
-  "lines": 1308,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/globset/src/pathutil.rs",
-  "lines": 142,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/globset/src/serde_impl.rs",
-  "lines": 129,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/grep/src/lib.rs",
-  "lines": 22,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/default_types.rs",
-  "lines": 379,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/dir.rs",
-  "lines": 1614,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/gitignore.rs",
-  "lines": 886,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/incremental.rs",
-  "lines": 1287,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/lib.rs",
-  "lines": 550,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/overrides.rs",
-  "lines": 294,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/pathutil.rs",
-  "lines": 172,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/types.rs",
-  "lines": 589,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/ignore/src/walk.rs",
-  "lines": 2741,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/index/src/index.rs",
-  "lines": 218,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/index/src/lib.rs",
-  "lines": 7,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/index/src/literal.rs",
-  "lines": 1001,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/matcher/src/interpolate.rs",
-  "lines": 332,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/matcher/src/lib.rs",
-  "lines": 1380,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/pcre2/src/error.rs",
-  "lines": 49,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/pcre2/src/lib.rs",
-  "lines": 17,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/pcre2/src/matcher.rs",
-  "lines": 506,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/color.rs",
-  "lines": 397,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/counter.rs",
-  "lines": 98,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/hyperlink/aliases.rs",
-  "lines": 93,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/hyperlink/mod.rs",
-  "lines": 1166,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/json.rs",
-  "lines": 1058,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/jsont.rs",
-  "lines": 295,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/lib.rs",
-  "lines": 104,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/macros.rs",
-  "lines": 25,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/path.rs",
-  "lines": 177,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/standard.rs",
-  "lines": 3988,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/stats.rs",
-  "lines": 172,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/summary.rs",
-  "lines": 1151,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/printer/src/util.rs",
-  "lines": 609,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/ast.rs",
-  "lines": 217,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/ban.rs",
-  "lines": 84,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/config.rs",
-  "lines": 357,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/error.rs",
-  "lines": 95,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/lib.rs",
-  "lines": 19,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/literal.rs",
-  "lines": 1017,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/matcher.rs",
-  "lines": 671,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/non_matching.rs",
-  "lines": 160,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/regex/src/strip.rs",
-  "lines": 171,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/lib.rs",
-  "lines": 107,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/line_buffer.rs",
-  "lines": 966,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/lines.rs",
-  "lines": 467,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/macros.rs",
-  "lines": 26,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/searcher/core.rs",
-  "lines": 714,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/searcher/glue.rs",
-  "lines": 1550,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/searcher/mmap.rs",
-  "lines": 125,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/searcher/mod.rs",
-  "lines": 1089,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/sink.rs",
-  "lines": 664,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "ripgrep",
-  "file": "crates/searcher/src/testutil.rs",
-  "lines": 798,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde/src/integer128.rs",
-  "lines": 15,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde/src/lib.rs",
-  "lines": 286,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde/src/private/de.rs",
-  "lines": 3502,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde/src/private/mod.rs",
-  "lines": 19,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde/src/private/ser.rs",
-  "lines": 1383,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/crate_root.rs",
-  "lines": 172,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/de/ignored_any.rs",
-  "lines": 239,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/de/impls.rs",
-  "lines": 3174,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/de/mod.rs",
-  "lines": 2393,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/de/value.rs",
-  "lines": 1896,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/format.rs",
-  "lines": 31,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/lib.rs",
-  "lines": 122,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/macros.rs",
-  "lines": 231,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/private/content.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/private/doc.rs",
-  "lines": 166,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/private/mod.rs",
-  "lines": 22,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/private/seed.rs",
-  "lines": 21,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/private/size_hint.rs",
-  "lines": 31,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/private/string.rs",
-  "lines": 24,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/ser/fmt.rs",
-  "lines": 171,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/ser/impls.rs",
-  "lines": 1046,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/ser/impossible.rs",
-  "lines": 217,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/ser/mod.rs",
-  "lines": 2011,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_core/src/std_error.rs",
-  "lines": 49,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/bound.rs",
-  "lines": 432,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/enum_.rs",
-  "lines": 97,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/enum_adjacently.rs",
-  "lines": 325,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/enum_externally.rs",
-  "lines": 214,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/enum_internally.rs",
-  "lines": 107,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/enum_untagged.rs",
-  "lines": 136,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/identifier.rs",
-  "lines": 478,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/struct_.rs",
-  "lines": 698,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/tuple.rs",
-  "lines": 284,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de/unit.rs",
-  "lines": 53,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/de.rs",
-  "lines": 977,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/deprecated.rs",
-  "lines": 57,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/dummy.rs",
-  "lines": 32,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/fragment.rs",
-  "lines": 75,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/ast.rs",
-  "lines": 226,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/attr.rs",
-  "lines": 1819,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/case.rs",
-  "lines": 201,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/check.rs",
-  "lines": 478,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/ctxt.rs",
-  "lines": 68,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/mod.rs",
-  "lines": 29,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/name.rs",
-  "lines": 114,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/receiver.rs",
-  "lines": 294,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/respan.rs",
-  "lines": 17,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/internals/symbol.rs",
-  "lines": 72,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/lib.rs",
-  "lines": 128,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/pretend.rs",
-  "lines": 189,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/ser.rs",
-  "lines": 1370,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive/src/this.rs",
-  "lines": 33,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "serde_derive_internals/lib.rs",
-  "lines": 55,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "serde",
-  "file": "test_suite/no_std/src/main.rs",
-  "lines": 43,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_bench/src/lib.rs",
-  "lines": 5,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/action.rs",
-  "lines": 462,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/app_settings.rs",
-  "lines": 89,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/arg.rs",
-  "lines": 5209,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/arg_group.rs",
-  "lines": 616,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/arg_predicate.rs",
-  "lines": 20,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/arg_settings.rs",
-  "lines": 92,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/command.rs",
-  "lines": 5300,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/debug_asserts.rs",
-  "lines": 833,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/ext.rs",
-  "lines": 47,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/mod.rs",
-  "lines": 72,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/os_str.rs",
-  "lines": 365,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/possible_value.rs",
-  "lines": 236,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/range.rs",
-  "lines": 306,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/resettable.rs",
-  "lines": 213,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/str.rs",
-  "lines": 350,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/styled_str.rs",
-  "lines": 288,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/styling.rs",
-  "lines": 221,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/tests.rs",
-  "lines": 59,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/value_hint.rs",
-  "lines": 94,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/builder/value_parser.rs",
-  "lines": 2700,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/derive.rs",
-  "lines": 454,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/error/context.rs",
-  "lines": 115,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/error/format.rs",
-  "lines": 495,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/error/kind.rs",
-  "lines": 366,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/error/mod.rs",
-  "lines": 947,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/lib.rs",
-  "lines": 54,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/macros.rs",
-  "lines": 604,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/mkeymap.rs",
-  "lines": 189,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/fmt.rs",
-  "lines": 84,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/help.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/help_template.rs",
-  "lines": 1192,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/mod.rs",
-  "lines": 24,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/textwrap/core.rs",
-  "lines": 159,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/textwrap/mod.rs",
-  "lines": 123,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/textwrap/word_separators.rs",
-  "lines": 93,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/output/textwrap/wrap_algorithms.rs",
+  "crate": "tokio",
+  "file": "src/doc/os.rs",
   "lines": 69,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_builder/src/output/usage.rs",
-  "lines": 495,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/arg_matcher.rs",
-  "lines": 239,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/error.rs",
-  "lines": 67,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/features/mod.rs",
-  "lines": 2,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/features/suggestions.rs",
-  "lines": 179,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/matches/arg_matches.rs",
-  "lines": 2046,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/matches/matched_arg.rs",
-  "lines": 222,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/matches/mod.rs",
-  "lines": 14,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/matches/value_source.rs",
-  "lines": 18,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/mod.rs",
-  "lines": 26,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/parser.rs",
-  "lines": 1686,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/parser/validator.rs",
-  "lines": 538,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/util/any_value.rs",
-  "lines": 128,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/util/color.rs",
-  "lines": 104,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/util/escape.rs",
-  "lines": 30,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/util/flat_map.rs",
-  "lines": 260,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/util/flat_set.rs",
-  "lines": 112,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_builder/src/util/graph.rs",
+  "crate": "tokio",
+  "file": "src/fs/canonicalize.rs",
   "lines": 50,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_builder/src/util/id.rs",
-  "lines": 196,
+  "crate": "tokio",
+  "file": "src/fs/copy.rs",
+  "lines": 25,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_builder/src/util/mod.rs",
-  "lines": 41,
+  "crate": "tokio",
+  "file": "src/fs/create_dir.rs",
+  "lines": 51,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_builder/src/util/str_to_bool.rs",
-  "lines": 22,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/generator/mod.rs",
-  "lines": 297,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/generator/utils.rs",
-  "lines": 290,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/mod.rs",
+  "crate": "tokio",
+  "file": "src/fs/create_dir_all.rs",
   "lines": 55,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/bash.rs",
-  "lines": 310,
+  "crate": "tokio",
+  "file": "src/fs/dir_builder.rs",
+  "lines": 130,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/elvish.rs",
-  "lines": 149,
+  "crate": "tokio",
+  "file": "src/fs/file/tests.rs",
+  "lines": 979,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/fish.rs",
-  "lines": 325,
+  "crate": "tokio",
+  "file": "src/fs/file.rs",
+  "lines": 1169,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/mod.rs",
-  "lines": 16,
+  "crate": "tokio",
+  "file": "src/fs/hard_link.rs",
+  "lines": 45,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/powershell.rs",
-  "lines": 156,
+  "crate": "tokio",
+  "file": "src/fs/metadata.rs",
+  "lines": 47,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/shell.rs",
-  "lines": 164,
+  "crate": "tokio",
+  "file": "src/fs/mocks.rs",
+  "lines": 190,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/aot/shells/zsh.rs",
-  "lines": 705,
+  "crate": "tokio",
+  "file": "src/fs/mod.rs",
+  "lines": 333,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/engine/candidate.rs",
-  "lines": 114,
+  "crate": "tokio",
+  "file": "src/fs/open_options/mock_open_options.rs",
+  "lines": 40,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/engine/complete.rs",
-  "lines": 733,
+  "crate": "tokio",
+  "file": "src/fs/open_options/uring_open_options.rs",
+  "lines": 129,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/engine/custom.rs",
-  "lines": 464,
+  "crate": "tokio",
+  "file": "src/fs/open_options.rs",
+  "lines": 860,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/engine/mod.rs",
-  "lines": 19,
+  "crate": "tokio",
+  "file": "src/fs/read.rs",
+  "lines": 95,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/env/mod.rs",
-  "lines": 412,
+  "crate": "tokio",
+  "file": "src/fs/read_dir.rs",
+  "lines": 358,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete/src/env/shells.rs",
-  "lines": 617,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_complete/src/lib.rs",
-  "lines": 110,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_complete/src/macros.rs",
+  "crate": "tokio",
+  "file": "src/fs/read_link.rs",
   "lines": 13,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_complete_nushell/src/lib.rs",
-  "lines": 261,
+  "crate": "tokio",
+  "file": "src/fs/read_to_string.rs",
+  "lines": 31,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/attr.rs",
-  "lines": 224,
+  "crate": "tokio",
+  "file": "src/fs/read_uring.rs",
+  "lines": 152,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/derives/args.rs",
-  "lines": 790,
+  "crate": "tokio",
+  "file": "src/fs/remove_dir.rs",
+  "lines": 13,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/derives/into_app.rs",
-  "lines": 118,
+  "crate": "tokio",
+  "file": "src/fs/remove_dir_all.rs",
+  "lines": 15,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/derives/mod.rs",
-  "lines": 24,
+  "crate": "tokio",
+  "file": "src/fs/remove_file.rs",
+  "lines": 17,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/derives/parser.rs",
-  "lines": 128,
+  "crate": "tokio",
+  "file": "src/fs/rename.rs",
+  "lines": 47,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/derives/subcommand.rs",
-  "lines": 676,
+  "crate": "tokio",
+  "file": "src/fs/set_permissions.rs",
+  "lines": 16,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/derives/value_enum.rs",
-  "lines": 134,
+  "crate": "tokio",
+  "file": "src/fs/symlink.rs",
+  "lines": 17,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/dummies.rs",
-  "lines": 100,
+  "crate": "tokio",
+  "file": "src/fs/symlink_dir.rs",
+  "lines": 20,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/item.rs",
-  "lines": 1493,
+  "crate": "tokio",
+  "file": "src/fs/symlink_file.rs",
+  "lines": 20,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/lib.rs",
-  "lines": 119,
+  "crate": "tokio",
+  "file": "src/fs/symlink_metadata.rs",
+  "lines": 16,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/macros.rs",
-  "lines": 22,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_derive/src/utils/doc_comments.rs",
-  "lines": 411,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_derive/src/utils/error.rs",
-  "lines": 23,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_derive/src/utils/mod.rs",
-  "lines": 14,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "clap",
-  "file": "clap_derive/src/utils/spanned.rs",
+  "crate": "tokio",
+  "file": "src/fs/try_exists.rs",
   "lines": 90,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_derive/src/utils/ty.rs",
+  "crate": "tokio",
+  "file": "src/fs/write.rs",
+  "lines": 100,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/future/block_on.rs",
+  "lines": 23,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/future/maybe_done.rs",
+  "lines": 124,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/future/mod.rs",
+  "lines": 29,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/future/trace.rs",
+  "lines": 12,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/future/try_join.rs",
+  "lines": 83,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/fuzz.rs",
+  "lines": 2,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/async_buf_read.rs",
+  "lines": 122,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/async_fd.rs",
+  "lines": 1440,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/async_read.rs",
+  "lines": 136,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/async_seek.rs",
+  "lines": 99,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/async_write.rs",
+  "lines": 428,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/blocking.rs",
+  "lines": 340,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/bsd/poll_aio.rs",
+  "lines": 219,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/interest.rs",
+  "lines": 346,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/join.rs",
+  "lines": 131,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/mod.rs",
+  "lines": 309,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/poll_evented.rs",
+  "lines": 320,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/read_buf.rs",
+  "lines": 345,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/ready.rs",
+  "lines": 323,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/seek.rs",
+  "lines": 58,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/split.rs",
   "lines": 167,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_lex/src/ext.rs",
-  "lines": 285,
+  "crate": "tokio",
+  "file": "src/io/stderr.rs",
+  "lines": 149,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_lex/src/lib.rs",
-  "lines": 527,
+  "crate": "tokio",
+  "file": "src/io/stdin.rs",
+  "lines": 99,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_mangen/src/lib.rs",
-  "lines": 354,
+  "crate": "tokio",
+  "file": "src/io/stdio_common.rs",
+  "lines": 223,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "clap_mangen/src/render.rs",
-  "lines": 527,
+  "crate": "tokio",
+  "file": "src/io/stdout.rs",
+  "lines": 237,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_concepts.rs",
-  "lines": 109,
+  "crate": "tokio",
+  "file": "src/io/uring/mod.rs",
+  "lines": 7,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/cargo_example.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/uring/open.rs",
+  "lines": 60,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/cargo_example_derive.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/uring/read.rs",
+  "lines": 115,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/escaped_positional.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/uring/rename.rs",
+  "lines": 61,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/escaped_positional_derive.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/uring/statx.rs",
+  "lines": 162,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/find.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/uring/utils.rs",
+  "lines": 32,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/git.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/uring/write.rs",
+  "lines": 56,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/git_derive.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/util/async_buf_read_ext.rs",
+  "lines": 358,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/mod.rs",
-  "lines": 66,
+  "crate": "tokio",
+  "file": "src/io/util/async_read_ext.rs",
+  "lines": 1455,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/multicall_busybox.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/util/async_seek_ext.rs",
+  "lines": 97,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/multicall_hostname.rs",
-  "lines": 8,
+  "crate": "tokio",
+  "file": "src/io/util/async_write_ext.rs",
+  "lines": 1333,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/pacman.rs",
-  "lines": 11,
+  "crate": "tokio",
+  "file": "src/io/util/buf_reader.rs",
+  "lines": 312,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/repl.rs",
-  "lines": 6,
+  "crate": "tokio",
+  "file": "src/io/util/buf_stream.rs",
+  "lines": 208,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/repl_derive.rs",
+  "crate": "tokio",
+  "file": "src/io/util/buf_writer.rs",
+  "lines": 311,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/chain.rs",
+  "lines": 147,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/copy.rs",
+  "lines": 304,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/copy_bidirectional.rs",
+  "lines": 138,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/copy_buf.rs",
+  "lines": 118,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/empty.rs",
+  "lines": 165,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/fill_buf.rs",
+  "lines": 60,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/flush.rs",
+  "lines": 48,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/lines.rs",
+  "lines": 146,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/mem.rs",
+  "lines": 442,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/mod.rs",
+  "lines": 113,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read.rs",
+  "lines": 56,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_buf.rs",
+  "lines": 72,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_exact.rs",
+  "lines": 70,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_int.rs",
+  "lines": 159,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_line.rs",
+  "lines": 120,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_to_end.rs",
+  "lines": 144,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_to_string.rs",
+  "lines": 79,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/read_until.rs",
+  "lines": 81,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/repeat.rs",
+  "lines": 75,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/shutdown.rs",
+  "lines": 47,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/sink.rs",
+  "lines": 95,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/split.rs",
+  "lines": 122,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/take.rs",
+  "lines": 139,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/vec_with_initialized.rs",
+  "lines": 143,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/write.rs",
+  "lines": 47,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/write_all.rs",
+  "lines": 56,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/write_all_buf.rs",
+  "lines": 65,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/write_buf.rs",
+  "lines": 65,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/write_int.rs",
+  "lines": 152,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/io/util/write_vectored.rs",
+  "lines": 48,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/lib.rs",
+  "lines": 710,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/mocked.rs",
+  "lines": 79,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/mod.rs",
+  "lines": 15,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u16.rs",
+  "lines": 48,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u32.rs",
+  "lines": 48,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u64.rs",
+  "lines": 20,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u64_as_mutex.rs",
+  "lines": 77,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u64_native.rs",
   "lines": 5,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_cookbook/typed_derive.rs",
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u64_static_const_new.rs",
+  "lines": 13,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_u64_static_once_cell.rs",
+  "lines": 58,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/atomic_usize.rs",
+  "lines": 60,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/barrier.rs",
+  "lines": 224,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/mod.rs",
+  "lines": 125,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/mutex.rs",
+  "lines": 37,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/parking_lot.rs",
+  "lines": 196,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/rwlock.rs",
+  "lines": 49,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/loom/std/unsafe_cell.rs",
+  "lines": 19,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/addr_of.rs",
+  "lines": 28,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/cfg.rs",
+  "lines": 771,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/join.rs",
+  "lines": 280,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/loom.rs",
+  "lines": 9,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/mod.rs",
+  "lines": 37,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/pin.rs",
+  "lines": 145,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/select.rs",
+  "lines": 1415,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/support.rs",
+  "lines": 34,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/thread_local.rs",
+  "lines": 19,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/trace.rs",
+  "lines": 27,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/macros/try_join.rs",
+  "lines": 281,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/addr.rs",
+  "lines": 334,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/lookup_host.rs",
+  "lines": 39,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/mod.rs",
+  "lines": 65,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/tcp/listener.rs",
+  "lines": 460,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/tcp/mod.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/tcp/socket.rs",
+  "lines": 1065,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/tcp/split.rs",
+  "lines": 424,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/tcp/split_owned.rs",
+  "lines": 508,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/tcp/stream.rs",
+  "lines": 1583,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/udp.rs",
+  "lines": 2359,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/datagram/mod.rs",
+  "lines": 4,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/datagram/socket.rs",
+  "lines": 1622,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/listener.rs",
+  "lines": 264,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/mod.rs",
+  "lines": 40,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/pipe.rs",
+  "lines": 1557,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/socket.rs",
+  "lines": 274,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/socketaddr.rs",
+  "lines": 67,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/split.rs",
+  "lines": 332,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/split_owned.rs",
+  "lines": 420,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/stream.rs",
+  "lines": 1124,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/unix/ucred.rs",
+  "lines": 452,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/windows/mod.rs",
+  "lines": 4,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/net/windows/named_pipe.rs",
+  "lines": 2700,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/kill.rs",
+  "lines": 14,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/mod.rs",
+  "lines": 1855,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/unix/mod.rs",
+  "lines": 375,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/unix/orphan.rs",
+  "lines": 335,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/unix/pidfd_reaper.rs",
+  "lines": 313,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/unix/reap.rs",
+  "lines": 299,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/process/windows.rs",
+  "lines": 286,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/blocking/mod.rs",
+  "lines": 29,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/blocking/pool.rs",
+  "lines": 768,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/blocking/schedule.rs",
+  "lines": 67,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/blocking/sharded.rs",
+  "lines": 354,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/blocking/shutdown.rs",
+  "lines": 72,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/blocking/task.rs",
+  "lines": 45,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/builder.rs",
+  "lines": 2216,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/config.rs",
+  "lines": 67,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/context/blocking.rs",
+  "lines": 122,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/context/current.rs",
+  "lines": 98,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/context/runtime.rs",
+  "lines": 100,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/context/runtime_mt.rs",
+  "lines": 37,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/context/scoped.rs",
+  "lines": 57,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/context.rs",
+  "lines": 212,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/driver/op.rs",
+  "lines": 241,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/driver.rs",
+  "lines": 377,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/dump.rs",
+  "lines": 342,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/handle.rs",
+  "lines": 748,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/id.rs",
+  "lines": 43,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/driver/signal.rs",
+  "lines": 23,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/driver/uring.rs",
+  "lines": 330,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/driver.rs",
+  "lines": 347,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/metrics.rs",
+  "lines": 25,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/mod.rs",
+  "lines": 23,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/registration.rs",
+  "lines": 260,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/registration_set.rs",
+  "lines": 150,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/io/scheduled_io.rs",
+  "lines": 581,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected `;`\")"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/local_runtime/mod.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/local_runtime/options.rs",
+  "lines": 19,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/local_runtime/runtime.rs",
+  "lines": 407,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/batch.rs",
+  "lines": 402,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/histogram/h2_histogram.rs",
+  "lines": 527,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/histogram.rs",
+  "lines": 630,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/io.rs",
+  "lines": 26,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/mock.rs",
+  "lines": 16,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/mod.rs",
+  "lines": 51,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/runtime.rs",
+  "lines": 1304,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/schedule_latency.rs",
+  "lines": 62,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/schedule_latency_mock.rs",
+  "lines": 23,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/metrics/scheduler.rs",
   "lines": 36,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_derive/_tutorial.rs",
-  "lines": 258,
+  "crate": "tokio",
+  "file": "src/runtime/metrics/worker.rs",
+  "lines": 123,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_derive/mod.rs",
-  "lines": 542,
+  "crate": "tokio",
+  "file": "src/runtime/mod.rs",
+  "lines": 653,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_faq.rs",
-  "lines": 96,
+  "crate": "tokio",
+  "file": "src/runtime/park.rs",
+  "lines": 363,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_features.rs",
-  "lines": 30,
+  "crate": "tokio",
+  "file": "src/runtime/process.rs",
+  "lines": 45,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/_tutorial.rs",
-  "lines": 247,
+  "crate": "tokio",
+  "file": "src/runtime/runtime.rs",
+  "lines": 594,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/bin/stdio-fixture.rs",
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/block_in_place.rs",
+  "lines": 10,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/current_thread/mod.rs",
+  "lines": 926,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/defer.rs",
+  "lines": 44,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/inject/metrics.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/inject/pop.rs",
+  "lines": 56,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/inject/rt_multi_thread.rs",
+  "lines": 123,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/inject/shared.rs",
+  "lines": 122,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/inject/synced.rs",
+  "lines": 38,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/inject.rs",
+  "lines": 71,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/lock.rs",
+  "lines": 7,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/mod.rs",
+  "lines": 325,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/counters.rs",
+  "lines": 63,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/handle/metrics.rs",
+  "lines": 56,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/handle/taskdump.rs",
+  "lines": 27,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/handle.rs",
+  "lines": 142,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/idle.rs",
+  "lines": 241,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/mod.rs",
   "lines": 109,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "clap",
-  "file": "src/lib.rs",
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/overflow.rs",
+  "lines": 27,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/park.rs",
+  "lines": 317,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/queue.rs",
+  "lines": 603,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/stats.rs",
+  "lines": 150,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/trace.rs",
+  "lines": 62,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/trace_mock.rs",
+  "lines": 12,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/worker/metrics.rs",
+  "lines": 16,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/worker/taskdump.rs",
+  "lines": 80,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/worker/taskdump_mock.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/multi_thread/worker.rs",
+  "lines": 1603,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/util/mod.rs",
+  "lines": 3,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/scheduler/util/time_alt.rs",
+  "lines": 180,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/signal/mod.rs",
+  "lines": 144,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/abort.rs",
+  "lines": 106,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/core.rs",
+  "lines": 594,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/error.rs",
+  "lines": 199,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/harness.rs",
+  "lines": 570,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/id.rs",
+  "lines": 92,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/join.rs",
+  "lines": 378,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/list.rs",
+  "lines": 369,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/mod.rs",
+  "lines": 688,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/raw.rs",
+  "lines": 385,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/state.rs",
+  "lines": 658,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/trace/mod.rs",
+  "lines": 480,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/trace/symbol.rs",
+  "lines": 94,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/trace/trace_impl.rs",
+  "lines": 31,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/trace/tree.rs",
+  "lines": 127,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task/waker.rs",
+  "lines": 125,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/task_hooks.rs",
+  "lines": 115,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/thread_id.rs",
+  "lines": 38,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time/entry.rs",
+  "lines": 618,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time/handle.rs",
+  "lines": 69,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time/mod.rs",
+  "lines": 493,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time/source.rs",
+  "lines": 46,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time/wheel/level.rs",
+  "lines": 194,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time/wheel/mod.rs",
+  "lines": 331,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/cancellation_queue/tests.rs",
+  "lines": 96,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/cancellation_queue.rs",
+  "lines": 91,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/context.rs",
+  "lines": 46,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/entry.rs",
+  "lines": 282,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/mod.rs",
+  "lines": 24,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/registration_queue/tests.rs",
+  "lines": 52,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/registration_queue.rs",
+  "lines": 42,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/tests.rs",
+  "lines": 270,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/timer.rs",
+  "lines": 130,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/wake_queue/tests.rs",
+  "lines": 71,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/wake_queue.rs",
+  "lines": 49,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/wheel/level.rs",
+  "lines": 197,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/runtime/time_alt/wheel/mod.rs",
+  "lines": 275,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/ctrl_c.rs",
+  "lines": 63,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/mod.rs",
+  "lines": 90,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/registry.rs",
+  "lines": 276,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/reusable_box.rs",
+  "lines": 231,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/unix.rs",
+  "lines": 551,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/windows/stub.rs",
+  "lines": 26,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/windows/sys.rs",
+  "lines": 258,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/signal/windows.rs",
+  "lines": 539,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/barrier.rs",
+  "lines": 214,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/batch_semaphore.rs",
+  "lines": 781,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/broadcast.rs",
+  "lines": 1798,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mod.rs",
+  "lines": 525,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/block.rs",
+  "lines": 473,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/bounded.rs",
+  "lines": 1966,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/chan.rs",
+  "lines": 632,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/error.rs",
+  "lines": 169,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/list.rs",
+  "lines": 458,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/mod.rs",
+  "lines": 147,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mpsc/unbounded.rs",
+  "lines": 727,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/mutex.rs",
+  "lines": 1397,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/notify.rs",
+  "lines": 1413,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/once_cell.rs",
+  "lines": 513,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/oneshot.rs",
+  "lines": 1610,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock/owned_read_guard.rs",
+  "lines": 209,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock/owned_write_guard.rs",
+  "lines": 461,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock/owned_write_guard_mapped.rs",
+  "lines": 231,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock/read_guard.rs",
+  "lines": 192,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock/write_guard.rs",
+  "lines": 458,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock/write_guard_mapped.rs",
+  "lines": 214,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/rwlock.rs",
+  "lines": 1131,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/semaphore.rs",
+  "lines": 1405,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/set_once.rs",
+  "lines": 389,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/task/atomic_waker.rs",
+  "lines": 384,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/task/mod.rs",
+  "lines": 5,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/sync/watch.rs",
+  "lines": 1557,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/blocking.rs",
+  "lines": 228,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/builder.rs",
+  "lines": 236,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/coop/consume_budget.rs",
+  "lines": 40,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/coop/mod.rs",
+  "lines": 574,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/coop/unconstrained.rs",
+  "lines": 46,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/join_set.rs",
+  "lines": 852,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/local.rs",
+  "lines": 1348,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/mod.rs",
+  "lines": 336,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/spawn.rs",
+  "lines": 217,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/task_local.rs",
+  "lines": 489,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/task/yield_now.rs",
+  "lines": 61,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/clock.rs",
+  "lines": 383,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/error.rs",
+  "lines": 124,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/instant.rs",
+  "lines": 224,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/interval.rs",
+  "lines": 639,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/mod.rs",
   "lines": 111,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/sleep.rs",
+  "lines": 471,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/time/timeout.rs",
+  "lines": 250,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/as_ref.rs",
+  "lines": 39,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/atomic_cell.rs",
+  "lines": 52,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/bit.rs",
+  "lines": 65,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/blocking_check.rs",
+  "lines": 30,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/cacheline.rs",
+  "lines": 90,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/error.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/idle_notified_set.rs",
+  "lines": 513,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/linked_list.rs",
+  "lines": 795,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/markers.rs",
+  "lines": 10,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/memchr.rs",
+  "lines": 103,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/metric_atomics.rs",
+  "lines": 82,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/mod.rs",
+  "lines": 111,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/ptr_expose.rs",
+  "lines": 75,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/rand/rt.rs",
+  "lines": 62,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/rand/rt_unstable.rs",
+  "lines": 21,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/rand.rs",
+  "lines": 110,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/rc_cell.rs",
+  "lines": 58,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/sharded_list.rs",
+  "lines": 160,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/sync_wrapper.rs",
+  "lines": 38,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/trace.rs",
+  "lines": 192,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/try_lock.rs",
+  "lines": 81,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/typeid.rs",
+  "lines": 46,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/wake.rs",
+  "lines": 79,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "tokio",
+  "file": "src/util/wake_list.rs",
+  "lines": 84,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/accel.rs",
+  "lines": 518,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/automaton.rs",
+  "lines": 2261,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/dense.rs",
+  "lines": 5283,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/determinize.rs",
+  "lines": 600,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/minimize.rs",
+  "lines": 464,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/mod.rs",
+  "lines": 361,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/onepass.rs",
+  "lines": 3209,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/regex.rs",
+  "lines": 871,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/remapper.rs",
+  "lines": 243,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/search.rs",
+  "lines": 653,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/sparse.rs",
+  "lines": 2674,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/special.rs",
+  "lines": 495,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/dfa/start.rs",
+  "lines": 75,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/hybrid/dfa.rs",
+  "lines": 4435,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/hybrid/error.rs",
+  "lines": 242,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/hybrid/id.rs",
+  "lines": 355,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/hybrid/mod.rs",
+  "lines": 145,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/hybrid/regex.rs",
+  "lines": 896,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/hybrid/search.rs",
+  "lines": 809,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/lib.rs",
+  "lines": 652,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/macros.rs",
+  "lines": 21,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/error.rs",
+  "lines": 242,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/limited.rs",
+  "lines": 252,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/literal.rs",
+  "lines": 82,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/mod.rs",
+  "lines": 65,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/prefix.rs",
+  "lines": 237,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/regex.rs",
+  "lines": 3782,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/reverse_inner.rs",
+  "lines": 304,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/reverse_suffix.rs",
+  "lines": 271,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/stopat.rs",
+  "lines": 213,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/strategy.rs",
+  "lines": 2389,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/meta/wrappers.rs",
+  "lines": 1337,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/mod.rs",
+  "lines": 56,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/backtrack.rs",
+  "lines": 1909,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/builder.rs",
+  "lines": 1338,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/compiler.rs",
+  "lines": 2369,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/error.rs",
+  "lines": 183,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/literal_trie.rs",
+  "lines": 529,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/map.rs",
+  "lines": 297,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/mod.rs",
+  "lines": 82,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/nfa.rs",
+  "lines": 2099,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/pikevm.rs",
+  "lines": 2360,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/nfa/thompson/range_trie.rs",
+  "lines": 1052,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/alphabet.rs",
+  "lines": 1140,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/captures.rs",
+  "lines": 2552,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/determinize/mod.rs",
+  "lines": 683,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/determinize/state.rs",
+  "lines": 908,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/empty.rs",
+  "lines": 266,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/escape.rs",
+  "lines": 85,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/int.rs",
+  "lines": 247,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/interpolate.rs",
+  "lines": 577,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/iter.rs",
+  "lines": 1023,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/lazy.rs",
+  "lines": 462,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/look.rs",
+  "lines": 2547,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/memchr.rs",
+  "lines": 94,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/mod.rs",
+  "lines": 58,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/pool.rs",
+  "lines": 1270,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/prefilter/aho_corasick.rs",
+  "lines": 154,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/prefilter/byteset.rs",
+  "lines": 63,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/prefilter/memchr.rs",
+  "lines": 199,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/prefilter/memmem.rs",
+  "lines": 93,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/prefilter/mod.rs",
+  "lines": 727,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/prefilter/teddy.rs",
+  "lines": 165,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/primitives.rs",
+  "lines": 776,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/search.rs",
+  "lines": 1998,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/sparse_set.rs",
+  "lines": 240,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/start.rs",
+  "lines": 480,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/syntax.rs",
+  "lines": 483,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/unicode_data/mod.rs",
+  "lines": 18,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/unicode_data/perl_word.rs",
+  "lines": 807,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/utf8.rs",
+  "lines": 192,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-automata/src/util/wire.rs",
+  "lines": 948,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-capi/src/error.rs",
+  "lines": 79,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-capi/src/lib.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-capi/src/macros.rs",
+  "lines": 37,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-capi/src/rure.rs",
+  "lines": 630,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/api.rs",
+  "lines": 137,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/backtrack.rs",
+  "lines": 72,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/common.rs",
+  "lines": 76,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/dfa.rs",
+  "lines": 243,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/flags.rs",
+  "lines": 205,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/haystack.rs",
+  "lines": 141,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/hybrid.rs",
+  "lines": 232,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/input.rs",
+  "lines": 161,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/lite.rs",
+  "lines": 85,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/meta.rs",
+  "lines": 284,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/mod.rs",
+  "lines": 288,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/onepass.rs",
+  "lines": 100,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/overlapping.rs",
+  "lines": 47,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/patterns.rs",
+  "lines": 189,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/pikevm.rs",
+  "lines": 52,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/syntax.rs",
+  "lines": 270,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/args/thompson.rs",
+  "lines": 157,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/compile_test.rs",
+  "lines": 865,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/debug/dfa.rs",
+  "lines": 327,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/debug/literal.rs",
+  "lines": 233,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/debug/mod.rs",
+  "lines": 245,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/capture/dfa.rs",
+  "lines": 85,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/capture/mod.rs",
+  "lines": 465,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/capture/nfa.rs",
+  "lines": 163,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/half/dfa.rs",
+  "lines": 315,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/half/mod.rs",
+  "lines": 336,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/match/dfa.rs",
+  "lines": 320,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/match/mod.rs",
+  "lines": 323,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/match/nfa.rs",
+  "lines": 157,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/mod.rs",
+  "lines": 95,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/which/dfa.rs",
+  "lines": 213,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/which/mod.rs",
+  "lines": 242,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/find/which/nfa.rs",
+  "lines": 78,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/generate/fowler.rs",
+  "lines": 422,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/generate/mod.rs",
+  "lines": 29,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/generate/serialize/dfa.rs",
+  "lines": 865,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/generate/serialize/mod.rs",
+  "lines": 23,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/generate/unicode.rs",
+  "lines": 207,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/cmd/mod.rs",
+  "lines": 29,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/logger.rs",
+  "lines": 69,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/main.rs",
+  "lines": 32,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-cli/util.rs",
+  "lines": 74,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/error.rs",
+  "lines": 29,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/hir/mod.rs",
+  "lines": 810,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/hir/parse.rs",
+  "lines": 2241,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/int.rs",
+  "lines": 57,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/interpolate.rs",
+  "lines": 537,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/lib.rs",
+  "lines": 888,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/nfa.rs",
+  "lines": 714,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/pikevm.rs",
+  "lines": 917,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/pool.rs",
+  "lines": 120,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/string.rs",
+  "lines": 2977,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-lite/src/utf8.rs",
+  "lines": 241,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/ast/mod.rs",
+  "lines": 1808,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/ast/parse.rs",
+  "lines": 6378,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/ast/print.rs",
+  "lines": 578,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/ast/visitor.rs",
+  "lines": 523,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/debug.rs",
+  "lines": 108,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/either.rs",
+  "lines": 9,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/error.rs",
+  "lines": 312,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/hir/interval.rs",
+  "lines": 592,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/hir/literal.rs",
+  "lines": 3215,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/hir/mod.rs",
+  "lines": 3874,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/hir/print.rs",
+  "lines": 609,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/hir/translate.rs",
+  "lines": 3745,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/hir/visitor.rs",
+  "lines": 216,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/lib.rs",
+  "lines": 434,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/parser.rs",
+  "lines": 255,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/rank.rs",
+  "lines": 259,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode.rs",
+  "lines": 1042,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/age.rs",
+  "lines": 1847,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/case_folding_simple.rs",
+  "lines": 2949,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/general_category.rs",
+  "lines": 6718,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/grapheme_cluster_break.rs",
+  "lines": 1421,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/mod.rs",
+  "lines": 58,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/perl_decimal.rs",
+  "lines": 85,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/perl_space.rs",
+  "lines": 24,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/perl_word.rs",
+  "lines": 807,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/property_bool.rs",
+  "lines": 12096,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/property_names.rs",
+  "lines": 282,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/property_values.rs",
+  "lines": 957,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/script.rs",
+  "lines": 1301,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/script_extension.rs",
+  "lines": 1719,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/sentence_break.rs",
+  "lines": 2531,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/unicode_tables/word_break.rs",
+  "lines": 1153,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-syntax/src/utf8.rs",
+  "lines": 593,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "regex-test/lib.rs",
+  "lines": 1794,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/builders.rs",
+  "lines": 2540,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/bytes.rs",
+  "lines": 96,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/error.rs",
+  "lines": 102,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/find_byte.rs",
+  "lines": 18,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/lib.rs",
+  "lines": 1387,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/pattern.rs",
+  "lines": 68,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/regex/bytes.rs",
+  "lines": 2776,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/regex/mod.rs",
+  "lines": 3,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/regex/string.rs",
+  "lines": 2675,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/regexset/bytes.rs",
+  "lines": 729,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/regexset/mod.rs",
+  "lines": 3,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "regex-crate",
+  "file": "src/regexset/string.rs",
+  "lines": 725,
   "stage": "equivalent",
   "detail": ""
  }

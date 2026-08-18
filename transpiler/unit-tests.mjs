@@ -121,6 +121,16 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "string ending in r before another string", src: `fn t() {
+args := parse_low_raw(["-r", "foo"]).unwrap()
+check(args)
+}`, contains: ["[\"-r\", \"foo\"]).unwrap();", "check(args);"] },
+  { name: "escaped backslash-r is not a raw string", src: `fn t() Vec<(&str, u8)> {
+vec![("\\\\r", 13u8), ("\\\\v", 11u8)]
+}`, contains: ["(\"\\\\r\", 13u8), (\"\\\\v\", 11u8)"] },
+  { name: "cfg attribute with string on a parameter", src: `fn new_header(state State, #[cfg(all(unstable, feature = "tracing"))] tid Option<Id>) Header {
+h(state, tid)
+}`, contains: ["#[cfg(all(unstable, feature = \"tracing\"))] tid: Option<Id>) -> Header {"] },
   { name: "macro_rules body keeps token semicolons", src: `macro_rules! cr {
 () => {
 mod lib { pub use x::Y; pub use z::W; }

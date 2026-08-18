@@ -61,11 +61,11 @@ function outsideStrings(line, fn) {
 
 // string-literal contents squashed to empty — for counting/matching passes that
 // must never see delimiters or keywords inside strings
+const LIT_RE = /(?<![A-Za-z0-9_"\\])b?r(#*)"[\s\S]*?"\1|(?:(?<![A-Za-z0-9_])b)?"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])'/g;
 function stripLiterals(line) {
-  return line
-    .replace(/(?<![A-Za-z0-9_"])b?r(#*)"[\s\S]*?"\1/g, '""')
-    .replace(/(?:(?<![A-Za-z0-9_])b)?"(\\.|[^"\\])*"/g, '""')
-    .replace(/'(\\.|[^'\\])'/g, "''");
+  // one alternation, leftmost-first: a string opener always beats a bogus
+  // raw-string prefix seen later in the line
+  return line.replace(LIT_RE, (m) => (m.startsWith("'") ? "''" : '""'));
 }
 
 function stripStringsForTest(line) {
@@ -153,12 +153,15 @@ function transformFnSigs(seg) {
       if (cur.trim() !== "") parts.push(cur);
     }
     const newParams = parts.map((p) => {
-      const t = p.trim();
-      if (t === "" || t === "self" || t === "&self" || t === "&mut self") return t;
-      if (/^(&?\s*)?impl\b/.test(t)) return t; // bare impl-Trait parameter type
+      let t = p.trim();
+      const am = /^((?:#\[[^\]]*\]\s*)+)([\s\S]*)$/.exec(t); // parameter attributes
+      const attrPre = am ? am[1] : "";
+      if (am) t = am[2];
+      if (t === "" || t === "self" || t === "&self" || t === "&mut self") return attrPre + t;
+      if (/^(&?\s*)?impl\b/.test(t)) return attrPre + t; // bare impl-Trait parameter type
       const mm = /^(mut\s+)?([A-Za-z_]\w*)\s+(.+)$/.exec(t);
-      if (mm && mm[3].startsWith(":")) return t; // already Rust-shaped (`name : Type` macro tokens)
-      return mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t;
+      if (mm && mm[3].startsWith(":")) return attrPre + t; // already Rust-shaped (`name : Type` macro tokens)
+      return attrPre + (mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t);
     }).filter((p) => p !== "").join(", ");
     // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is
     const ret = retRaw ? (retRaw.startsWith("->") ? ` ${retRaw}` : ` -> ${retRaw}`) : "";
@@ -399,7 +402,14 @@ export function transpileMapped(src) {
         }
       }
     }
-    line = outsideStrings(line, (seg) => transformBindings(transformFnSigs(expandR(seg))));
+    // mask literals as placeholders so transforms see them as single opaque
+    // tokens (paren scanning inside signatures must not split on them)
+    {
+      const lits = [];
+      const masked = line.replace(LIT_RE, (m) => { lits.push(m); return `\u0000${lits.length - 1}\u0000`; });
+      line = transformBindings(transformFnSigs(expandR(masked)))
+        .replace(/\u0000(\d+)\u0000/g, (_, k) => lits[Number(k)]);
+    }
     push(line, n, privItem);
   }
 
