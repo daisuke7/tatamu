@@ -396,6 +396,27 @@ export function transpileMapped(src) {
     }
     return false;
   };
+  // `x = if c { … }` / `x.y += match … {` — a top-level assignment whose value
+  // is the opened block: its closer needs `;` and its tail is a value
+  const assignsValue = (bare) => {
+    if (!/\{$/.test(bare)) return false;
+    if (/^(if|while|for|match|loop|else|return|pub|struct|enum|union|trait|impl|mod|async|unsafe|extern|static|const|type|where)\b/.test(bare)) return false;
+    if (/\bfn\b/.test(bare)) return false;      // fn headers carry `Item = T` bindings
+    let d = 0;
+    for (let i = 0; i < bare.length - 1; i++) {
+      const ch = bare[i];
+      if ("([{<".includes(ch)) d++;              // `<` guards `Foo<Item = T>` bindings
+      else if (")]}".includes(ch)) d = Math.max(0, d - 1);
+      else if (ch === ">" && bare[i - 1] !== "-" && bare[i - 1] !== "=") d = Math.max(0, d - 1);
+      else if (ch === "=" && d === 0) {
+        const prev = bare[i - 1], next = bare[i + 1];
+        if (next === "=" || next === ">") { i++; continue; }
+        if (prev === "=" || prev === "!" || prev === "<" || prev === ">") continue;
+        return true;
+      }
+    }
+    return false;
+  };
   const blockContext = (bare, stack, i) => {
     // `} else {` / `} else if … {` closes and reopens the same construct —
     // the new block inherits the context of the one just closed
@@ -403,7 +424,7 @@ export function transpileMapped(src) {
     if (/^macro_rules!/.test(bare)) return "macro-rules";
     // a macro arm `(pattern) => {` inside macro_rules — its closer needs `};`
     if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
-    if (/^let\b/.test(bare)) return "let-block";          // let x = match/if ... { … } needs `};`
+    if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
     if (/\bfn\b[^{]*->/.test(bare)) return "fn-value";
     if (/^fn\b/.test(bare)) return "fn-unit";
     // a match-arm block in value position (`… => {`) produces a value iff its parent does

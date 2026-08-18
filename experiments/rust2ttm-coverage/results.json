@@ -102,7 +102,7 @@
   "file": "crates/core/flags/defs.rs",
   "lines": 8162,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "detail": "Error: Error(\"expected `;`\")"
  },
  {
   "crate": "ripgrep",
@@ -220,8 +220,8 @@
   "crate": "ripgrep",
   "file": "crates/globset/src/fnv.rs",
   "lines": 31,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -403,7 +403,7 @@
   "file": "crates/printer/src/hyperlink/mod.rs",
   "lines": 1166,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "detail": "Error: Error(\"expected one of: identifier, `::`, `<`, `_`, literal, `const`, `ref`, `mut`, `&`, parentheses, square brac"
  },
  {
   "crate": "ripgrep",
@@ -444,8 +444,8 @@
   "crate": "ripgrep",
   "file": "crates/printer/src/standard.rs",
   "lines": 3988,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -486,8 +486,8 @@
   "crate": "ripgrep",
   "file": "crates/regex/src/config.rs",
   "lines": 357,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -1004,8 +1004,8 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/arg.rs",
   "lines": 5209,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1123,8 +1123,8 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/value_parser.rs",
   "lines": 2700,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1277,8 +1277,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/matches/arg_matches.rs",
   "lines": 2046,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `Occurrences`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1312,8 +1312,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/parser.rs",
   "lines": 1686,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "clap",

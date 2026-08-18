@@ -99,6 +99,55 @@ c.args = args.into_iter().collect()
 }
 syn::visit_mut::visit_expr_method_call_mut(self, c)
 }
+fn visit_angle_bracketed_generic_arguments_mut(&mut self, a &mut syn::AngleBracketedGenericArguments) {
+if a.args.trailing_punct() {
+items: Vec<syn::GenericArgument> := a.args.iter().cloned().collect()
+a.args = items.into_iter().collect()
+}
+syn::visit_mut::visit_angle_bracketed_generic_arguments_mut(self, a)
+}
+fn visit_generics_mut(&mut self, g &mut syn::Generics) {
+if g.params.trailing_punct() {
+items: Vec<syn::GenericParam> := g.params.iter().cloned().collect()
+g.params = items.into_iter().collect()
+}
+syn::visit_mut::visit_generics_mut(self, g)
+}
+fn visit_signature_mut(&mut self, s &mut syn::Signature) {
+if s.inputs.trailing_punct() {
+items: Vec<syn::FnArg> := s.inputs.iter().cloned().collect()
+s.inputs = items.into_iter().collect()
+}
+syn::visit_mut::visit_signature_mut(self, s)
+}
+fn visit_type_tuple_mut(&mut self, t &mut syn::TypeTuple) {
+if t.elems.len() > 1 && t.elems.trailing_punct() {
+items: Vec<syn::Type> := t.elems.iter().cloned().collect()
+t.elems = items.into_iter().collect()
+}
+syn::visit_mut::visit_type_tuple_mut(self, t)
+}
+fn visit_expr_struct_mut(&mut self, e &mut syn::ExprStruct) {
+if e.fields.trailing_punct() && e.rest.is_none() {
+items: Vec<syn::FieldValue> := e.fields.iter().cloned().collect()
+e.fields = items.into_iter().collect()
+}
+syn::visit_mut::visit_expr_struct_mut(self, e)
+}
+fn visit_expr_array_mut(&mut self, e &mut syn::ExprArray) {
+if e.elems.trailing_punct() {
+items: Vec<syn::Expr> := e.elems.iter().cloned().collect()
+e.elems = items.into_iter().collect()
+}
+syn::visit_mut::visit_expr_array_mut(self, e)
+}
+fn visit_expr_tuple_mut(&mut self, e &mut syn::ExprTuple) {
+if e.elems.len() > 1 && e.elems.trailing_punct() {
+items: Vec<syn::Expr> := e.elems.iter().cloned().collect()
+e.elems = items.into_iter().collect()
+}
+syn::visit_mut::visit_expr_tuple_mut(self, e)
+}
 fn visit_path_mut(&mut self, p &mut syn::Path) {
 if p.segments.len() > 1 {
 first := p.segments[0].ident.to_string()
