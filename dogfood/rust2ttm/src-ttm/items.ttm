@@ -1,4 +1,5 @@
 #use quote::ToTokens
+#use std::sync::OnceLock
 struct Converted {ttm Vec<String>, doc_intro Vec<String>, doc_items Vec<(String, Vec<String>)>, uses_kept Vec<String>}
 fn is_pub(v &syn::Visibility) bool {
 matches!(v, syn::Visibility::Public(_))
@@ -170,7 +171,8 @@ if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
 if first.ends_with(',') {
 lines.insert(0, format!("#[derive({d})]"))
 } else {
-pos := first.find(" where").or_else(|| first.find(" {"))
+static WHERE_RE: OnceLock<regex::Regex> = OnceLock::new()
+pos := re(r"\swhere\s", &WHERE_RE).find(first).map(|m| m.start()).or_else(|| first.find(" {"))
 match pos {
 Some(p) => first.insert_str(p, &format!(" +{d}")),
 None => {

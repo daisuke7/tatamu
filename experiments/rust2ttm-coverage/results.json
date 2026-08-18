@@ -318,8 +318,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/hir/generics.rs",
   "lines": 430,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "rust-analyzer",
@@ -598,8 +598,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-expand/src/builtin/derive_macro.rs",
   "lines": 1657,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -2411,8 +2411,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-assists/src/handlers/extract_function.rs",
   "lines": 6725,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5225,8 +5225,8 @@
   "crate": "rust-analyzer",
   "file": "crates/rust-analyzer/src/session.rs",
   "lines": 213,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
