@@ -403,7 +403,7 @@
   "file": "crates/printer/src/hyperlink/mod.rs",
   "lines": 1166,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
  },
  {
   "crate": "ripgrep",
@@ -788,14 +788,14 @@
   "file": "serde_derive/src/de/enum_adjacently.rs",
   "lines": 325,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
  },
  {
   "crate": "serde",
   "file": "serde_derive/src/de/enum_externally.rs",
   "lines": 214,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `deserialize`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -836,15 +836,15 @@
   "crate": "serde",
   "file": "serde_derive/src/de/unit.rs",
   "lines": 53,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `deserialize`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
   "file": "serde_derive/src/de.rs",
   "lines": 977,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -1571,8 +1571,8 @@
   "crate": "clap",
   "file": "clap_derive/src/dummies.rs",
   "lines": 100,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"cannot parse string into token stream\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",

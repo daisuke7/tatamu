@@ -113,8 +113,17 @@ raw_lines: Vec<String> := printed.lines().map(String::from).collect()
 joined := join_wrapped(&raw_lines)
 in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))
 mut lines := Vec::new()
+mut mac_depth := 0i64
 for (i, l) in joined.iter().enumerate() {
 fields_here := in_fields && i > 0
+bare := strip_lits(l)
+if mac_depth > 0 {
+mac_depth += count_of(&bare, &['{', '(', '[']) as i64 - count_of(&bare, &['}', ')', ']']) as i64
+lines.push(l.trim_end().to_string())
+continue
+}
+d := macro_open_depth(&bare)
+if d > 0 {mac_depth = d}
 lines.push(convert_line(l, siblings, fields_here))
 }
 if let Some(d) = derives {

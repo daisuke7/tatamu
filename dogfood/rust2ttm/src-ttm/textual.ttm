@@ -20,6 +20,31 @@ fn looks_like_literal_body(next &str) bool {
 static RE_FIELD: OnceLock<regex::Regex> = OnceLock::new()
 re(r"^(\.\.|\w+\s*:[^:]|\w+\s*,\s*$|\w+\s*$)", &RE_FIELD).is_match(next.trim())
 }
+fn macro_open_depth(bare &str) i64 {
+static MACSTART: OnceLock<regex::Regex> = OnceLock::new()
+if bare.trim_start().starts_with("macro_rules!") {return 0}
+rx := re(r"(^|[^\w!])\w+!\s*[({\[]", &MACSTART)
+mut pos := 0usize
+while let Some(m) = rx.find(&bare[pos..]) {
+start := pos + m.end() - 1
+mut d := 0i64
+mut end := bare.len()
+for (i, ch) in bare[start..].char_indices() {
+match ch {
+'{' | '(' | '[' => d += 1,
+'}' | ')' | ']' => d -= 1,
+_ => {}
+}
+if d == 0 {
+end = start + i + 1
+break
+}
+}
+if d > 0 {return d}
+pos = end
+}
+0
+}
 fn join_wrapped(input &[String]) Vec<String> {
 mut out := Vec::new()
 mut buf := String::new()

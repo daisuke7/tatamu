@@ -280,13 +280,28 @@ export function transpileMapped(src) {
   let lines = [];
   const lineSrc = [];
   const linePriv = [];
-  const push = (text, n, priv = false) => { lines.push(text); lineSrc.push(n); linePriv.push(priv); };
+  const lineVerbatim = [];
+  const push = (text, n, priv = false, verbatim = false) => { lines.push(text); lineSrc.push(n); linePriv.push(priv); lineVerbatim.push(verbatim); };
 
   const extraUses = []; // from `#use path::To::Item` directives
   let inEnumBody = false;
   let enumDepth = 0;
   let inStructBody = false;
+  let macroDepth = 0;
   for (const [raw, n] of rawLines) {
+    // inside a macro invocation body: a token stream, not Tatamu — verbatim
+    if (macroDepth > 0) {
+      for (const ch of stripLiterals(raw)) {
+        if ("{([".includes(ch)) macroDepth++;
+        else if ("})]".includes(ch)) macroDepth--;
+      }
+      if (macroDepth <= 0) {
+        // the closer rejoins normal semicolon logic (let-bound macros get `;`)
+        macroDepth = 0;
+        push(raw.replace(/;\s*$/, ""), n, false, false);
+      } else push(raw, n, false, true);
+      continue;
+    }
     // lenient: strip an existing trailing semicolon (re-added consistently later)
     let line = raw.replace(/;\s*$/, "");
     // `#use` directive: explicit import escape hatch (mainly for traits)
@@ -339,6 +354,24 @@ export function transpileMapped(src) {
       }
       push(transformEnumVariant(line), n);
       continue;
+    }
+    // a macro invocation whose own delimiter stays open enters verbatim mode
+    {
+      const b = stripLiterals(line);
+      if (!/^macro_rules!/.test(b.trim())) {
+        const mre = /(^|[^\w!])\w+!\s*[({[]/g;
+        let m;
+        while ((m = mre.exec(b))) {
+          let d = 0, i = m.index + m[0].length - 1;
+          for (; i < b.length; i++) {
+            const ch = b[i];
+            if ("{([".includes(ch)) d++;
+            else if ("})]".includes(ch)) d--;
+            if (d === 0) { mre.lastIndex = i + 1; break; }
+          }
+          if (d > 0) { macroDepth = d; break; }
+        }
+      }
     }
     line = outsideStrings(line, (seg) => transformBindings(transformFnSigs(expandR(seg))));
     push(line, n, privItem);
@@ -394,6 +427,16 @@ export function transpileMapped(src) {
   const stack = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (lineVerbatim[i]) {
+      // macro-body token stream: no semicolon logic, but keep the stack balanced
+      for (const ch of stripLiterals(line)) {
+        if (ch === "{" || ch === "[") stack.push("other");
+        else if (ch === "(") stack.push("paren");
+        else if (ch === "}" || ch === "]" || ch === ")") stack.pop();
+      }
+      out.push(line);
+      continue;
+    }
     const bare = stripLiterals(line);
     const next = lines[i + 1];
     const nextBare = next === undefined ? undefined : stripLiterals(next);

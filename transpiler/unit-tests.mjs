@@ -121,6 +121,27 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "closed macro then if-block is not verbatim", src: `fn f(mat M, args A) R<()> {
+value := if matches!(mat.kind, K::Negated) {
+V::Switch(false)
+} else {
+V::Switch(true)
+}
+mat.flag.update(value, args)?
+Ok(())
+}`, contains: ["let value = if matches!(mat.kind, K::Negated) {", "V::Switch(false)", "};", "mat.flag.update(value, args)?;"] },
+  { name: "macro invocation body is verbatim", src: `fn f() proc_macro2::TokenStream {
+quote! {
+impl Foo for Bar { fn baz() -> u32 { 1 } }
+let x = 1;
+}
+}`, contains: ["fn baz() -> u32", "let x = 1;"], excludes: ["let x = 1;;", "baz() u32", "x := 1"] },
+  { name: "let-bound multi-line macro keeps its closer semi", src: `fn g() u32 {
+t := quote! {
+fn q() -> u32;
+};
+1
+}`, contains: ["let t = quote! {", "fn q() -> u32;", "};"] },
   { name: "impl Trait nested tuple params", src: `fn f(mut self, ifs impl IntoIterator<Item = (impl Into<Id>, impl Into<Pred>)>) Self {self}`, contains: ["ifs: impl IntoIterator<Item = (impl Into<Id>, impl Into<Pred>)>"], excludes: ["impl:"] },
   { name: "fn pointer param type", src: `fn g(cb fn(u8) -> u8, x u8) u8 {cb(x)}`, contains: ["cb: fn(u8) -> u8, x: u8"] },
   { name: "extern C fn", src: `#[no_mangle]\nextern "C" fn add(a i64, b i64) i64 {a + b}`, contains: [`extern "C" fn add(a: i64, b: i64) -> i64`] },
