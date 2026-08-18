@@ -150,6 +150,11 @@ _ => None,
 }
 fn not_trivia() {}
 }`, contains: ["n.find(not_trivia)", "};"], excludes: ["find(not_trivia);"] },
+  { name: "const with closure initializer", src: `const _ fn() = || {
+fn is_sync<T: Sync>() {}
+is_sync::<Summary>();
+}
+fn next_fn() {}`, contains: ["const _: fn() = || {", "};", "fn next_fn() {}"] },
   { name: "const with block initializer", src: `const _ () = {
 const fn is_copy<T: Copy>() {}
 is_copy::<X>();

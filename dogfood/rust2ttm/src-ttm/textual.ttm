@@ -242,7 +242,7 @@ depth += count_of(&lb, &['(', '[']) as i64 - count_of(&lb, &[')', ']']) as i64
 ang += angle_delta(&lb)
 pipes += count_of(&lb, &['|'])
 if lb.contains("=>") {has_arrow = true}
-if re(r"[=(,]\s*\|($|[^|])", &RE_CLOSURE_OPEN).is_match(&lb) {closure_open = true}
+if re(r"[=(,]\s*(move\s+)?\|($|[^|])", &RE_CLOSURE_OPEN).is_match(&lb) {closure_open = true}
 if str_open {continue}
 line_bare := lb
 next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
@@ -378,13 +378,30 @@ out.push_str(&after)
 }
 out
 }
+fn mask_lits(line &str) (String, Vec<String>) {
+static RE: OnceLock<regex::Regex> = OnceLock::new()
+mut lits: Vec<String> := Vec::new()
+masked := re(r####"b?r#"(?s).*?"#|b?r"[^"]*"|b?"(\\.|[^"\\])*"|'(\\.|[^'\\])'"####, &RE).replace_all(line, |c: &regex::Captures| {
+lits.push(c[0].to_string())
+format!("\0{}\0", lits.len() - 1)
+}).to_string()
+(masked, lits)
+}
+fn restore_lits(line &str, lits &[String]) String {
+mut out := line.to_string()
+for (i, l) in lits.iter().enumerate() {
+out = out.replace(&format!("\0{i}\0"), l)
+}
+out
+}
 fn convert_line(raw &str, siblings &[String], in_fields bool) String {
 static LETMUT: OnceLock<regex::Regex> = OnceLock::new()
 static LETPLAIN: OnceLock<regex::Regex> = OnceLock::new()
 static CONSTRE: OnceLock<regex::Regex> = OnceLock::new()
 static FIELDRE: OnceLock<regex::Regex> = OnceLock::new()
 static PUBRE: OnceLock<regex::Regex> = OnceLock::new()
-mut t := raw.trim().to_string()
+(masked, lits) := mask_lits(raw.trim())
+mut t := masked
 t = re(r"^pub(\([^)]*\))?\s+", &PUBRE).replace(&t, "").to_string()
 t = re(r"^let\s+mut\s+(\w+)(:\s*(?:[^=\[]|\[[^\]]*\])+?)?\s*=\s*", &LETMUT).replace(&t, |c: &regex::Captures| {
 ty := c.get(2).map(|m| m.as_str().trim_end().to_string()).unwrap_or_default()
@@ -424,5 +441,5 @@ break
 t = stripped
 }
 if t.ends_with(';') {t.pop();}
-t.trim_end().to_string()
+restore_lits(t.trim_end(), &lits)
 }

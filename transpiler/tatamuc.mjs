@@ -176,7 +176,7 @@ function transformBindings(seg) {
   return seg
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let mut ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)mut\s+([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let mut ${name} =`)
-    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|(?:[A-Za-z_][\w:]*)\s*\{.*?\}|\[[^=]*?\])\s*:=/g, "$1let $2 =")
+    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|(?:[A-Za-z_][\w:]*)\s*\{.*?\}|[A-Za-z_]\w*(?:::[A-Za-z_]\w*)+|\[[^=]*?\])\s*:=/g, "$1let $2 =")
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:\[]|::|\[[^\]]*\])+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
     .replace(/(^|[{;]\s*|(?<![\w*&:])\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
@@ -298,7 +298,8 @@ export function transpileMapped(src) {
   const lineSrc = [];
   const linePriv = [];
   const lineVerbatim = [];
-  const push = (text, n, priv = false, verbatim = false) => { lines.push(text); lineSrc.push(n); linePriv.push(priv); lineVerbatim.push(verbatim); };
+  const lineMrSoft = [];
+  const push = (text, n, priv = false, verbatim = false, mrSoft = false) => { lines.push(text); lineSrc.push(n); linePriv.push(priv); lineVerbatim.push(verbatim); lineMrSoft.push(mrSoft); };
 
   const extraUses = []; // from `#use path::To::Item` directives
   let inEnumBody = false;
@@ -412,13 +413,14 @@ export function transpileMapped(src) {
     }
     // mask literals as placeholders so transforms see them as single opaque
     // tokens (paren scanning inside signatures must not split on them)
+    const beforeTransforms = line;
     {
       const lits = [];
       const masked = line.replace(LIT_RE, (m) => { lits.push(m); return `\u0000${lits.length - 1}\u0000`; });
       line = transformBindings(transformFnSigs(expandR(masked)))
         .replace(/\u0000(\d+)\u0000/g, (_, k) => lits[Number(k)]);
     }
-    push(line, n, privItem);
+    push(line, n, privItem, inMacroRules && line === beforeTransforms, inMacroRules && line !== beforeTransforms);
   }
 
   // semicolon insertion with a block-context stack: a line before `}` is a tail
@@ -473,6 +475,7 @@ export function transpileMapped(src) {
     if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare)) return "use-block"; // multi-line `use x::{…}` closer needs `};`
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
     if (/^(return|break)\b/.test(bare) && /\{$/.test(bare)) return "let-block"; // `return match … {` — value block, closer gets `;`
+    if (/^(const|static)\b/.test(bare) && /=[^=].*\{$/.test(bare)) return "let-block"; // `const _: fn() = || {` — initializer block
     // lone `{`: opener of a multi-line signature (wrapped where clause) — scan
     // back past continuation lines to find the fn header
     if (/^\{$/.test(bare) && i !== undefined) {
@@ -517,6 +520,18 @@ export function transpileMapped(src) {
       continue;
     }
     const bare = stripLiterals(line);
+    if (lineMrSoft[i]) {
+      // macro_rules body: token soup with Rust semicolons preserved — only
+      // freshly expanded Tatamu bindings get one; keep the stack balanced
+      const semi = /^(let|use|const|static)\b/.test(bare) && !/[;{,([]$/.test(bare);
+      for (const ch of bare) {
+        if (ch === "{" || ch === "[") stack.push("other");
+        else if (ch === "(") stack.push("paren");
+        else if (ch === "}" || ch === "]" || ch === ")") stack.pop();
+      }
+      out.push(semi ? line + ";" : line);
+      continue;
+    }
     const next = lines[i + 1];
     const nextBare = next === undefined ? undefined : stripLiterals(next);
 
