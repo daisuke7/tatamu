@@ -251,9 +251,14 @@ function transformEnumHeader(line) {
 // const NAME Type = expr
 function transformConst(line) {
   const m = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+(.+?)\s*=\s*(.+?);?\s*$/.exec(line.trim());
-  if (!m) return null;
-  // a multi-line initializer block gets its ';' from the closer (let-block context)
-  return [`const ${m[1]}: ${m[2]} = ${m[3]}${/\{$/.test(m[3]) ? "" : ";"}`];
+  if (m) {
+    // a multi-line initializer block gets its ';' from the closer (let-block context)
+    return [`const ${m[1]}: ${m[2]} = ${m[3]}${/\{$/.test(m[3]) ? "" : ";"}`];
+  }
+  // valueless declaration (trait interface): `const VALUE Self;`
+  const d = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+([^={]+?);?\s*$/.exec(line.trim());
+  if (!d) return null;
+  return [`const ${d[1]}: ${d[2]};`];
 }
 
 // ---------- use-injection prelude map (S6) ----------

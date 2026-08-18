@@ -178,8 +178,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/attrs/docs.rs",
   "lines": 766,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -206,8 +206,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/dyn_map.rs",
   "lines": 200,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -395,8 +395,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/lib.rs",
   "lines": 1565,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1907,8 +1907,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/navigation_target.rs",
   "lines": 1137,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `:`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -2054,8 +2054,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/typing.rs",
   "lines": 1676,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `on_eq_typed`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -3517,8 +3517,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-db/src/imports/merge_imports.rs",
   "lines": 1032,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4315,15 +4315,15 @@
   "crate": "rust-analyzer",
   "file": "crates/intern/src/intern.rs",
   "lines": 373,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `:`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
   "file": "crates/intern/src/intern_slice.rs",
   "lines": 331,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `:`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4651,8 +4651,8 @@
   "crate": "rust-analyzer",
   "file": "crates/proc-macro-api/src/lib.rs",
   "lines": 280,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5288,8 +5288,8 @@
   "crate": "rust-analyzer",
   "file": "crates/span/src/hygiene.rs",
   "lines": 579,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `_`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5386,8 +5386,8 @@
   "crate": "rust-analyzer",
   "file": "crates/stdx/src/variance.rs",
   "lines": 271,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `:`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5463,8 +5463,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax/src/ast/prec.rs",
   "lines": 590,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",

@@ -121,6 +121,9 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "valueless const declaration in trait", src: `trait Sealed {
+const VALUE Self;
+}`, contains: ["const VALUE: Self;"] },
   { name: "lowercase const in trait", src: `trait T: Sized {
 const peek_any private::PeekFn = private::PeekFn
 fn unraw(&self) Ident;
