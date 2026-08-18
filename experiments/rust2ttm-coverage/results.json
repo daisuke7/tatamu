@@ -283,8 +283,8 @@
   "crate": "ripgrep",
   "file": "crates/ignore/src/incremental.rs",
   "lines": 1287,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -570,8 +570,8 @@
   "crate": "ripgrep",
   "file": "crates/searcher/src/searcher/glue.rs",
   "lines": 1550,
-  "stage": "equivalent",
-  "detail": ""
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
  },
  {
   "crate": "ripgrep",
@@ -773,8 +773,8 @@
   "crate": "serde",
   "file": "serde_derive/src/bound.rs",
   "lines": 432,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -1067,15 +1067,15 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/possible_value.rs",
   "lines": 236,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
   "file": "clap_builder/src/builder/range.rs",
   "lines": 306,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier or integer\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1459,8 +1459,8 @@
   "crate": "clap",
   "file": "clap_complete/src/engine/candidate.rs",
   "lines": 114,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
