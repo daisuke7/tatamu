@@ -144,8 +144,8 @@ function transformFnSigs(seg) {
       let d = 0, cur = "";
       for (let ci = 0; ci < params.length; ci++) {
         const ch = params[ci];
-        if (ch === "<" || ch === "(" || ch === "[") d++;
-        else if (ch === ")" || ch === "]") d--;
+        if (ch === "<" || ch === "(" || ch === "[" || ch === "{") d++;
+        else if (ch === ")" || ch === "]" || ch === "}") d--;
         else if (ch === ">" && params[ci - 1] !== "-") d--;
         if (ch === "," && d === 0) { parts.push(cur); cur = ""; }
         else cur += ch;
@@ -160,7 +160,7 @@ function transformFnSigs(seg) {
       if (t === "" || t === "self" || t === "&self" || t === "&mut self") return attrPre + t;
       if (/^(&?\s*)?impl\b/.test(t)) return attrPre + t; // bare impl-Trait parameter type
       const mm = /^(mut\s+)?([A-Za-z_]\w*)\s+(.+)$/.exec(t);
-      if (mm && /^[:{]/.test(mm[3])) return attrPre + t; // Rust-shaped or destructuring pattern param
+      if (mm && /^[:{@]/.test(mm[3])) return attrPre + t; // Rust-shaped, destructuring, or @-bound pattern param
       return attrPre + (mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t);
     }).filter((p) => p !== "").join(", ");
     // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is

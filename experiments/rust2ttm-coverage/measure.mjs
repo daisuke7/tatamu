@@ -18,7 +18,7 @@ function walk(dir) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, e.name);
     if (e.isDirectory()) {
-      if (["target", ".git", "tests", "benches", "examples", "fuzz"].includes(e.name)) continue;
+      if (["target", ".git", "tests", "benches", "examples", "fuzz", "test_data", "testdata", "test-data", "fixtures"].includes(e.name)) continue;
       out.push(...walk(p));
     } else if (e.name.endsWith(".rs") && e.name !== "build.rs") out.push(p);
   }
