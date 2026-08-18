@@ -62,6 +62,8 @@ Staged plan ([docs/00](docs/00-concept.md)): dialect → own semantics → own c
 
 The round-trip **Rust → Tatamu → Rust** was measured on 18 real crates (~7,900 files, ~3.4M lines) with the strictest available criterion: normalized-AST equivalence **including visibility** (pub/priv round-trip is machine-verified). Throughput 40–80k lines/s.
 
+> **Measured on 2026-08-18**, against each repository's default-branch HEAD as of that date. Upstream crates evolve daily, so these exact numbers are a snapshot — re-run `experiments/rust2ttm-coverage/measure.mjs` against a fresh clone to reproduce current figures.
+
 | Crate | Files equivalent | Crate | Files equivalent |
 |---|---|---|---|
 | ripgrep | 86/86 | cargo | 335/335 |
@@ -141,6 +143,8 @@ node transpiler/tatamuc.mjs --project src out    # cargo プロジェクト + FF
 ## 既存著名クレートに対する検証結果
 
 **Rust → Tatamu → Rust** の往復を、実在の18クレート(約7,900ファイル・約340万行)で、最も厳しい基準 — **可視性込み**の正規化 AST 同値(pub/priv の往復も機械検証)— で測定した。スループット 40〜80k 行/秒。
+
+> **測定日: 2026-08-18**(各リポジトリの同日時点デフォルトブランチ HEAD が対象)。上流クレートは日々更新されるため、この数値はスナップショットである。最新値は `experiments/rust2ttm-coverage/measure.mjs` を新規 clone に対して再実行することで再現できる。
 
 | クレート | 同値 | クレート | 同値 |
 |---|---|---|---|
