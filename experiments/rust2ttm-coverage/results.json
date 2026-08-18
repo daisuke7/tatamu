@@ -319,7 +319,7 @@
   "file": "crates/ignore/src/walk.rs",
   "lines": 2741,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
  },
  {
   "crate": "ripgrep",
@@ -346,15 +346,15 @@
   "crate": "ripgrep",
   "file": "crates/matcher/src/interpolate.rs",
   "lines": 332,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
   "file": "crates/matcher/src/lib.rs",
   "lines": 1380,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -1130,8 +1130,8 @@
   "crate": "clap",
   "file": "clap_builder/src/derive.rs",
   "lines": 454,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1179,8 +1179,8 @@
   "crate": "clap",
   "file": "clap_builder/src/mkeymap.rs",
   "lines": 189,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1354,8 +1354,8 @@
   "crate": "clap",
   "file": "clap_builder/src/util/flat_set.rs",
   "lines": 112,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1389,8 +1389,8 @@
   "crate": "clap",
   "file": "clap_complete/src/aot/generator/mod.rs",
   "lines": 297,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",

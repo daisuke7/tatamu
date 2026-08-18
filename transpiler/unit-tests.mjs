@@ -121,6 +121,14 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "fn with where clause (no return type)", src: `fn interp<A>(mut ap A, dst &mut Vec<u8>) where A: FnMut(usize, &mut Vec<u8>),
+{
+ap(1, dst)
+}`, contains: ["fn interp<A>(mut ap: A, dst: &mut Vec<u8>) where A: FnMut(usize, &mut Vec<u8>),", "ap(1, dst);"], excludes: ["-> where"] },
+  { name: "fn with return type and where clause across lines", src: `fn pick<T>(v Vec<T>) T where T: Clone,
+{
+v[0].clone()
+}`, contains: ["fn pick<T>(v: Vec<T>) -> T where T: Clone,", "v[0].clone()"], excludes: ["clone();"] },
   { name: "assignment of multi-line if gets closer semi", src: `fn f(v V, args &mut A) R<()> {
 args.binary = if v.unwrap_switch() {
 B::SearchAndSuppress

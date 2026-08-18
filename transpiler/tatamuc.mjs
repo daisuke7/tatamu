@@ -133,7 +133,11 @@ function transformFnSigs(seg) {
     for (let d = 0; k < seg.length; k++) {
       if (seg[k] === "{") { braceAt = k; break; }
     }
-    const retRaw = (braceAt === -1 ? seg.slice(j + 1) : seg.slice(j + 1, braceAt)).trim();
+    let retRaw = (braceAt === -1 ? seg.slice(j + 1) : seg.slice(j + 1, braceAt)).trim();
+    // a where clause is not a return type: `fn f(..) where A: ..` / `fn f(..) T where ..`
+    let wherePart = "";
+    const wm = /^(.*?)\s*\bwhere\b([\s\S]*)$/.exec(retRaw);
+    if (wm) { retRaw = wm[1].trim(); wherePart = ` where${wm[2]}`; }
     // depth-aware split (nested generics/tuples/fn-pointers keep their commas)
     const parts = [];
     {
@@ -157,7 +161,7 @@ function transformFnSigs(seg) {
     }).filter((p) => p !== "").join(", ");
     // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is
     const ret = retRaw ? (retRaw.startsWith("->") ? ` ${retRaw}` : ` -> ${retRaw}`) : "";
-    out += `fn ${m[1]}${generics}(${newParams})${ret}${braceAt === -1 ? "" : " "}`;
+    out += `fn ${m[1]}${generics}(${newParams})${ret}${wherePart}${braceAt === -1 ? "" : " "}`;
     i = braceAt === -1 ? seg.length : braceAt;
   }
   return out;
@@ -425,6 +429,15 @@ export function transpileMapped(src) {
     // a macro arm `(pattern) => {` inside macro_rules — its closer needs `};`
     if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
+    // lone `{`: opener of a multi-line signature (wrapped where clause) — scan
+    // back past continuation lines to find the fn header
+    if (/^\{$/.test(bare) && i !== undefined) {
+      for (let k = i - 1; k >= 0 && k >= i - 12; k--) {
+        const b = allBare[k];
+        if (/[;{}]$/.test(b) || /^\}/.test(b)) break;
+        if (/\bfn\b/.test(b)) return /->/.test(b) ? "fn-value" : "fn-unit";
+      }
+    }
     if (/\bfn\b[^{]*->/.test(bare)) return "fn-value";
     if (/^fn\b/.test(bare)) return "fn-unit";
     // a match-arm block in value position (`… => {`) produces a value iff its parent does
