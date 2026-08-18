@@ -146,7 +146,10 @@ docs := strip_and_collect(&mut cleaned)
 collect_member_docs(&cleaned, out)
 vis_info := collect_vis(&cleaned)
 syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, &mut cleaned)
-printed := print_item(&cleaned)
+printed := match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| print_item(&cleaned))) {
+Ok(p) => p,
+Err(_) => quote::ToTokens::to_token_stream(&cleaned).to_string(),
+}
 raw_lines: Vec<String> := printed.lines().map(String::from).collect()
 joined := join_wrapped(&raw_lines)
 in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))

@@ -386,11 +386,16 @@ export function transpileMapped(src) {
       const bare = stripLiterals(line);
       if (enumDepth === 0 && /^\}/.test(bare)) { inEnumBody = false; push(line, n); continue; }
       if (/^#\[/.test(line.trim())) { push(line.trim(), n, privItem); continue; } // variant attribute
+      const inVariantBody = enumDepth > 0;
       for (const ch of bare) {
         if (ch === "{") enumDepth++;
         else if (ch === "}") enumDepth--;
       }
-      push(transformEnumVariant(line), n);
+      if (inVariantBody && !/^[}\])]/.test(bare)) {
+        // field line of a multi-line struct variant
+        const fields = fieldsToRust(line.replace(/,\s*$/, ""));
+        push(fields.map((f) => `${f.text},`).join(" "), n, fields.some((f) => f.priv));
+      } else push(transformEnumVariant(line), n);
       continue;
     }
     // a macro invocation whose own delimiter stays open enters verbatim mode
@@ -565,11 +570,12 @@ export function transpileMapped(src) {
     else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare) && netClosed.length === 0) semi = true; // use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
-      // match arm: a TOP-LEVEL `=>` before any block — `mac!(a => b)` is not an arm
+      // match arm: a TOP-LEVEL `=>` — pattern braces/parens cancel out;
+      // `mac!(a => b)` arrows sit at depth > 0
       let d = 0;
       for (let k = 0; k < bare.length - 1; k++) {
         const ch = bare[k];
-        if ("([{".includes(ch)) { if (ch === "{") return false; d++; }
+        if ("([{".includes(ch)) d++;
         else if (")]}".includes(ch)) d--;
         else if (ch === "=" && bare[k + 1] === ">" && d === 0) return true;
       }

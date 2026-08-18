@@ -57,6 +57,20 @@ t.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 sort_attrs(&mut t.attrs)
 syn::visit_mut::visit_trait_item_type_mut(self, t)
 }
+fn visit_foreign_item_mut(&mut self, f &mut syn::ForeignItem) {
+attrs := match f {
+syn::ForeignItem::Fn(x) => Some(&mut x.attrs),
+syn::ForeignItem::Static(x) => Some(&mut x.attrs),
+syn::ForeignItem::Type(x) => Some(&mut x.attrs),
+syn::ForeignItem::Macro(x) => Some(&mut x.attrs),
+_ => None,
+}
+if let Some(a) = attrs {
+a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
+sort_attrs(a)
+}
+syn::visit_mut::visit_foreign_item_mut(self, f)
+}
 fn visit_trait_item_fn_mut(&mut self, f &mut syn::TraitItemFn) {
 sort_attrs(&mut f.attrs)
 syn::visit_mut::visit_trait_item_fn_mut(self, f)
@@ -79,6 +93,10 @@ for st in b.stmts.iter_mut() {
 if let syn::Stmt::Expr(e, semi) = st {
 if matches!(e, syn::Expr::If(_) | syn::Expr::Match(_) | syn::Expr::While(_) | syn::Expr::ForLoop(_) | syn::Expr::Loop(_) | syn::Expr::Block(_) | syn::Expr::Unsafe(_) | syn::Expr::TryBlock(_) | syn::Expr::Const(_)) {
 *semi = None
+}
+} else if let syn::Stmt::Macro(m) = st {
+if matches!(m.mac.delimiter, syn::MacroDelimiter::Brace(_)) {
+m.semi_token = None
 }
 }
 }

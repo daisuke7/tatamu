@@ -230,6 +230,18 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "multi-line struct variant with field attribute", src: `enum TraceInfo +Debug {
+Array {
+#[cfg_attr(not(feature = "gc-drc"), allow(dead_code))]
+gc_ref_elems bool,
+},
+}`, contains: ["gc_ref_elems: bool,"] },
+  { name: "struct-pattern arm folded to one line", src: `fn cb(state &mut State) u32 {
+match state {
+&mut State::S0 { stream, future, } => { g(stream); *state = State::S1 { stream, future, }; YIELD }
+_ => DONE,
+}
+}`, contains: ["YIELD }"], excludes: ["YIELD };"] },
   { name: "item-position macro with arrow tokens gets semi", src: `impl Foo {
 tuple_impl_body!(1 => (0 T))
 }`, contains: ["tuple_impl_body!(1 => (0 T));"] },
