@@ -121,6 +121,13 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "let statement before fn closer keeps semi", src: `fn f(&self) u8 {
+g := || {
+_ := self.x.update(|c| c + 1)
+}
+g();
+1
+}`, contains: ["let _ = self.x.update(|c| c + 1);"] },
   { name: "raw pointer type ascription binding", src: `fn f(&mut self) {
 self_ptr: *mut F := self.boxed.as_ptr() as *mut F
 use_ptr(self_ptr)

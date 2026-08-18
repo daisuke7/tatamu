@@ -558,7 +558,8 @@ export function transpileMapped(src) {
     else if (/\}$/.test(bare)) semi = /^let\b/.test(bare) || topLevelAssign(bare); // inline `let x = … {…}` / `x.y = if … {…}`
     else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {
-      semi = !VALUE_CONTEXTS.includes(stack[stack.length - 1]); // tail expr only in value blocks
+      // a let/use statement is never a tail expression
+      semi = /^let\b/.test(bare) || !VALUE_CONTEXTS.includes(stack[stack.length - 1]);
     } else semi = true;
 
     out.push(semi ? line + ";" : line);

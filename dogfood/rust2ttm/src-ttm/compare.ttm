@@ -217,6 +217,14 @@ if p.as_char() == '#' && i + 1 < tts.len() && is_doc_group(&tts[i + 1]) {
 i += 2
 continue
 }
+if p.as_char() == '#' && i + 2 < tts.len() && is_doc_group(&tts[i + 2]) {
+if let proc_macro2::TokenTree::Punct(b) = &tts[i + 1] {
+if b.as_char() == '!' {
+i += 3
+continue
+}
+}
+}
 }
 match &tts[i] {
 proc_macro2::TokenTree::Group(g) => {
