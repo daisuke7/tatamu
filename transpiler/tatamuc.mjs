@@ -300,6 +300,7 @@ export function transpileMapped(src) {
     }
     if (inStructBody) {
       if (/^\}/.test(stripLiterals(line))) { inStructBody = false; push(line, n); continue; }
+      if (/^#\[/.test(line.trim())) { push(line.trim(), n, privItem); continue; } // field attribute
       const fields = fieldsToRust(line.replace(/,\s*$/, ""));
       const anyPriv = fields.some((f) => f.priv);
       push(fields.map((f) => `${f.text},`).join(" "), n, anyPriv);
@@ -316,6 +317,7 @@ export function transpileMapped(src) {
     if (inEnumBody) {
       const bare = stripLiterals(line);
       if (enumDepth === 0 && /^\}/.test(bare)) { inEnumBody = false; push(line, n); continue; }
+      if (/^#\[/.test(line.trim())) { push(line.trim(), n, privItem); continue; } // variant attribute
       for (const ch of bare) {
         if (ch === "{") enumDepth++;
         else if (ch === "}") enumDepth--;

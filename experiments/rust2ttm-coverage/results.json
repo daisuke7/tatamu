@@ -319,7 +319,7 @@
   "file": "crates/ignore/src/walk.rs",
   "lines": 2741,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
  },
  {
   "crate": "ripgrep",
@@ -360,8 +360,8 @@
   "crate": "ripgrep",
   "file": "crates/pcre2/src/error.rs",
   "lines": 49,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ErrorKind`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -465,8 +465,8 @@
   "crate": "ripgrep",
   "file": "crates/printer/src/util.rs",
   "lines": 609,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -493,8 +493,8 @@
   "crate": "ripgrep",
   "file": "crates/regex/src/error.rs",
   "lines": 95,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ErrorKind`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -584,15 +584,15 @@
   "crate": "ripgrep",
   "file": "crates/searcher/src/searcher/mod.rs",
   "lines": 1089,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ConfigError`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
   "file": "crates/searcher/src/sink.rs",
   "lines": 664,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -990,15 +990,15 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/action.rs",
   "lines": 462,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ArgAction`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
   "file": "clap_builder/src/builder/app_settings.rs",
   "lines": 89,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `AppSettings`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1018,22 +1018,22 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/arg_predicate.rs",
   "lines": 20,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ArgPredicate`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
   "file": "clap_builder/src/builder/arg_settings.rs",
   "lines": 92,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ArgSettings`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
   "file": "clap_builder/src/builder/command.rs",
   "lines": 5300,
   "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
  },
  {
   "crate": "clap",
@@ -1116,15 +1116,15 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/value_hint.rs",
   "lines": 94,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ValueHint`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
   "file": "clap_builder/src/builder/value_parser.rs",
   "lines": 2700,
   "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `StringValueParser`"
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "clap",
@@ -1137,8 +1137,8 @@
   "crate": "clap",
   "file": "clap_builder/src/error/context.rs",
   "lines": 115,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ContextKind`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1151,15 +1151,15 @@
   "crate": "clap",
   "file": "clap_builder/src/error/kind.rs",
   "lines": 366,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ErrorKind`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
   "file": "clap_builder/src/error/mod.rs",
   "lines": 947,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1186,8 +1186,8 @@
   "crate": "clap",
   "file": "clap_builder/src/output/fmt.rs",
   "lines": 84,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1256,8 +1256,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/error.rs",
   "lines": 67,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `MatchesError`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1277,8 +1277,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/matches/arg_matches.rs",
   "lines": 2046,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `Occurrences`"
  },
  {
   "crate": "clap",
@@ -1298,8 +1298,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/matches/value_source.rs",
   "lines": 18,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `ValueSource`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1326,8 +1326,8 @@
   "crate": "clap",
   "file": "clap_builder/src/util/any_value.rs",
   "lines": 128,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1445,8 +1445,8 @@
   "crate": "clap",
   "file": "clap_complete/src/aot/shells/shell.rs",
   "lines": 164,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `Shell`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1473,8 +1473,8 @@
   "crate": "clap",
   "file": "clap_complete/src/engine/custom.rs",
   "lines": 464,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",

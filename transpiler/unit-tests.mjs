@@ -162,6 +162,8 @@ const TRANSFORM_CASES = [
   { name: "raw string with quotes protected", src: `fn main() {\ns := r#"He said "hi" := x"#\n}`, contains: [`let s = r#"He said "hi" := x"#;`] },
   { name: "raw string simple protected", src: `fn main() {\ns := r"a := b"\n}`, contains: [`let s = r"a := b";`] },
   { name: "multi-line struct", src: `struct Link +Debug {\ntext String,\nurl String,\nend usize,\n}`, contains: ["#[derive(Debug)]", "text: String,", "url: String,", "end: usize,"] },
+  { name: "field attribute passes through", src: `struct Arg {\n#[cfg(feature = "env")]\nenv String,\nname String,\n}`, contains: ["#[cfg(feature = \"env\")]", "env: String,", "name: String,"], excludes: ["#[cfg(feature = \"env\")],"] },
+  { name: "variant attribute passes through", src: `enum E {\n#[cfg(test)]\nA {x u8},\nB,\n}`, contains: ["#[cfg(test)]", "A {x: u8},"] },
   { name: "multi-line struct no derive", src: `struct P {\nx f64,\ny f64,\n}`, contains: ["x: f64,", "y: f64,"] },
   { name: "unbalanced brackets inside strings don't corrupt the stack", src: `fn main() {\nassert_eq!(f("a [b"), "a [b")\nassert_eq!(f("x { y ("), "z")\n}`, excludes: ["};"] },
   { name: "char literal paren doesn't corrupt the stack", src: `fn check(c char) bool {\nif c == '(' {\nreturn true\n}\nfalse\n}`, contains: ["false\n}"], excludes: ["false;"] },

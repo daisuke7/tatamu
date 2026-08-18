@@ -20,8 +20,31 @@ trees.pop();
 }
 trees.into_iter().collect()
 }
+fn sort_attrs(attrs &mut Vec<syn::Attribute>) {
+attrs.sort_by_key(|a| quote::ToTokens::to_token_stream(a).to_string())
+}
 priv struct PathNormalizer {siblings Vec<String>}
 impl syn::visit_mut::VisitMut for PathNormalizer {
+fn visit_item_mut(&mut self, it &mut syn::Item) {
+if let Some(a) = item_attrs_mut(it) {sort_attrs(a)}
+syn::visit_mut::visit_item_mut(self, it)
+}
+fn visit_impl_item_fn_mut(&mut self, f &mut syn::ImplItemFn) {
+sort_attrs(&mut f.attrs)
+syn::visit_mut::visit_impl_item_fn_mut(self, f)
+}
+fn visit_trait_item_fn_mut(&mut self, f &mut syn::TraitItemFn) {
+sort_attrs(&mut f.attrs)
+syn::visit_mut::visit_trait_item_fn_mut(self, f)
+}
+fn visit_field_mut(&mut self, f &mut syn::Field) {
+sort_attrs(&mut f.attrs)
+syn::visit_mut::visit_field_mut(self, f)
+}
+fn visit_variant_mut(&mut self, v &mut syn::Variant) {
+sort_attrs(&mut v.attrs)
+syn::visit_mut::visit_variant_mut(self, v)
+}
 fn visit_block_mut(&mut self, b &mut syn::Block) {
 match b.stmts.last_mut() {
 Some(syn::Stmt::Expr(_, semi)) => *semi = None,
