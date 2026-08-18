@@ -121,6 +121,12 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "multi-line use block in fn body", src: `fn f() u8 {
+use self::T::{
+A, B,
+}
+g(A)
+}`, contains: ["A, B,", "};", "g(A)"], excludes: ["}\n    g"] },
   { name: "fn with where clause (no return type)", src: `fn interp<A>(mut ap A, dst &mut Vec<u8>) where A: FnMut(usize, &mut Vec<u8>),
 {
 ap(1, dst)

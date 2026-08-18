@@ -428,6 +428,7 @@ export function transpileMapped(src) {
     if (/^macro_rules!/.test(bare)) return "macro-rules";
     // a macro arm `(pattern) => {` inside macro_rules — its closer needs `};`
     if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
+    if (/^use\b/.test(bare)) return "use-block";         // multi-line `use x::{…}` closer needs `};`
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
     // lone `{`: opener of a multi-line signature (wrapped where clause) — scan
     // back past continuation lines to find the fn header
@@ -488,7 +489,7 @@ export function transpileMapped(src) {
     }
     // contexts this line net-closes (beyond what it opened itself):
     const netClosed = stack.slice(simulated.length).reverse();
-    const closesLetBlock = netClosed.includes("let-block") || netClosed.includes("macro-arm");
+    const closesLetBlock = netClosed.includes("let-block") || netClosed.includes("macro-arm") || netClosed.includes("use-block");
     const closesParenStmt = netClosed.includes("paren");
     const topAfter = simulated[simulated.length - 1];
 
