@@ -51,6 +51,13 @@ Some(syn::Stmt::Expr(_, semi)) => *semi = None,
 Some(syn::Stmt::Macro(m)) => m.semi_token = None,
 _ => {}
 }
+for st in b.stmts.iter_mut() {
+if let syn::Stmt::Expr(e, semi) = st {
+if matches!(e, syn::Expr::If(_) | syn::Expr::Match(_) | syn::Expr::While(_) | syn::Expr::ForLoop(_) | syn::Expr::Loop(_) | syn::Expr::Block(_) | syn::Expr::Unsafe(_) | syn::Expr::TryBlock(_)) {
+*semi = None
+}
+}
+}
 syn::visit_mut::visit_block_mut(self, b)
 }
 fn visit_arm_mut(&mut self, a &mut syn::Arm) {

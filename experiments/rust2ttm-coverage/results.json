@@ -136,8 +136,8 @@
   "crate": "ripgrep",
   "file": "crates/core/flags/hiargs.rs",
   "lines": 1517,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -479,8 +479,8 @@
   "crate": "ripgrep",
   "file": "crates/regex/src/ban.rs",
   "lines": 84,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `check`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -1452,8 +1452,8 @@
   "crate": "clap",
   "file": "clap_complete/src/aot/shells/zsh.rs",
   "lines": 705,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `arg_conflicts`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1655,8 +1655,8 @@
   "crate": "clap",
   "file": "clap_mangen/src/render.rs",
   "lines": 527,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `options`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
