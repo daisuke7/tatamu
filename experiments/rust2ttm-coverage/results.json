@@ -570,8 +570,8 @@
   "crate": "ripgrep",
   "file": "crates/searcher/src/searcher/glue.rs",
   "lines": 1550,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",

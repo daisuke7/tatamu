@@ -70,6 +70,7 @@ glue := if buf.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.s
 buf.push_str(glue)
 buf.push_str(t)
 }
+if in_open_string(&buf) {continue}
 bare := strip_lits(&buf)
 line_bare := strip_lits(t.trim())
 next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
