@@ -252,7 +252,8 @@ function transformEnumHeader(line) {
 function transformConst(line) {
   const m = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+(.+?)\s*=\s*(.+?);?\s*$/.exec(line.trim());
   if (!m) return null;
-  return [`const ${m[1]}: ${m[2]} = ${m[3]};`];
+  // a multi-line initializer block gets its ';' from the closer (let-block context)
+  return [`const ${m[1]}: ${m[2]} = ${m[3]}${/\{$/.test(m[3]) ? "" : ";"}`];
 }
 
 // ---------- use-injection prelude map (S6) ----------
@@ -434,7 +435,8 @@ export function transpileMapped(src) {
   // `x = if c { … }` / `x.y += match … {` — a top-level assignment whose value
   // is the opened block: its closer needs `;` and its tail is a value
   const topLevelAssign = (bare) => {
-    if (/^(if|while|for|match|loop|else|return|pub|struct|enum|union|trait|impl|mod|async|unsafe|extern|static|const|type|where|use|let)\b/.test(bare)) return false;
+    if (/^(if|while|for|match|loop|else|return|pub|struct|enum|union|trait|impl|mod|async|unsafe|extern|type|where|use|let)\b/.test(bare)) return false;
+    if (/^(static|const)\b/.test(bare) && !/=/.test(bare)) return false;
     if (/\bfn\b/.test(bare)) return false;      // fn headers carry `Item = T` bindings
     let d = 0;
     for (let i = 0; i < bare.length - 1; i++) {

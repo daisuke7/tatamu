@@ -129,6 +129,10 @@ fn unraw(&self) Ident;
 colon_token: Token![:] := input.parse()?
 Ok(colon_token)
 }`, contains: ["let colon_token: Token![:] = input.parse()?;"] },
+  { name: "const with block initializer", src: `const _ () = {
+const fn is_copy<T: Copy>() {}
+is_copy::<X>();
+}`, contains: ["const _: () = {", "};"], excludes: ["= {;"] },
   { name: "brace pattern with typed fields let-else", src: `fn f(v V) Option<u8> {
 ProbeKind::TraitCandidate { source: victim_source, result: _ } := v.kind() else { return None }
 Some(1)
