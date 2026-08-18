@@ -311,8 +311,8 @@ export function transpileMapped(src) {
     // inside a macro invocation body: a token stream, not Tatamu — verbatim
     if (macroDepth > 0) {
       for (const ch of stripLiterals(raw)) {
-        if ("{([".includes(ch)) macroDepth++;
-        else if ("})]".includes(ch)) macroDepth--;
+        if ("{([".includes(ch)) { macroDepth++; if (mrDepth > 0) mrDepth++; }
+        else if ("})]".includes(ch)) { macroDepth--; if (mrDepth > 0) mrDepth--; }
       }
       if (macroDepth <= 0) {
         // the closer rejoins normal semicolon logic (let-bound macros get `;`)

@@ -1,6084 +1,862 @@
 [
  {
-  "crate": "rust-analyzer",
-  "file": "crates/base-db/src/change.rs",
-  "lines": 100,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/base-db/src/editioned_file_id.rs",
-  "lines": 72,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/base-db/src/input.rs",
-  "lines": 1209,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/base-db/src/lib.rs",
-  "lines": 438,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/base-db/src/target.rs",
-  "lines": 51,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/cfg/src/cfg_expr.rs",
-  "lines": 242,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/cfg/src/dnf.rs",
-  "lines": 351,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/cfg/src/lib.rs",
-  "lines": 288,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/cfg/src/tests.rs",
-  "lines": 264,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/edition/src/lib.rs",
-  "lines": 95,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/attrs.rs",
-  "lines": 585,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/db.rs",
-  "lines": 8,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/diagnostics.rs",
-  "lines": 1411,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/display.rs",
-  "lines": 1017,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/from_id.rs",
-  "lines": 313,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/has_source.rs",
-  "lines": 368,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/lib.rs",
-  "lines": 7460,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/semantics/child_by_source.rs",
-  "lines": 353,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/semantics/source_to_def.rs",
-  "lines": 779,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/semantics.rs",
-  "lines": 2940,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/source_analyzer.rs",
-  "lines": 2239,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/symbols.rs",
-  "lines": 586,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/term_search/expr.rs",
-  "lines": 399,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/term_search/tactics.rs",
-  "lines": 749,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir/src/term_search.rs",
-  "lines": 302,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/attrs/docs.rs",
-  "lines": 766,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/attrs.rs",
-  "lines": 1450,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/builtin_derive.rs",
-  "lines": 178,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/builtin_type.rs",
-  "lines": 240,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/dyn_map.rs",
-  "lines": 200,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/body.rs",
-  "lines": 190,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/expander.rs",
-  "lines": 236,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/lower/asm.rs",
-  "lines": 297,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/lower/format_args.rs",
-  "lines": 497,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/lower/generics.rs",
-  "lines": 308,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/lower/path/tests.rs",
-  "lines": 133,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/lower/path.rs",
-  "lines": 339,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/lower.rs",
-  "lines": 3710,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/path.rs",
-  "lines": 312,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/pretty.rs",
-  "lines": 1415,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/scope.rs",
-  "lines": 887,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store/tests.rs",
-  "lines": 3,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/expr_store.rs",
-  "lines": 1267,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/find_path.rs",
-  "lines": 2294,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/hir/format_args.rs",
-  "lines": 533,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/hir/generics.rs",
-  "lines": 430,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/hir/type_ref.rs",
-  "lines": 209,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/hir.rs",
-  "lines": 838,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/import_map.rs",
-  "lines": 1116,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/item_scope.rs",
-  "lines": 984,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/item_tree/attrs.rs",
-  "lines": 261,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/item_tree/lower.rs",
-  "lines": 564,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/item_tree/pretty.rs",
-  "lines": 322,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/item_tree/tests.rs",
-  "lines": 289,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/item_tree.rs",
-  "lines": 814,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/lang_item.rs",
-  "lines": 744,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/lib.rs",
-  "lines": 1565,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/builtin_derive_macro.rs",
-  "lines": 922,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/builtin_fn_macro.rs",
-  "lines": 631,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mbe/matching.rs",
-  "lines": 260,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mbe/meta_syntax.rs",
-  "lines": 159,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mbe/metavar_expr.rs",
-  "lines": 461,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mbe/regression.rs",
-  "lines": 1208,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mbe/tt_conversion.rs",
-  "lines": 220,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mbe.rs",
-  "lines": 2065,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/mod.rs",
-  "lines": 491,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/macro_expansion_tests/proc_macros.rs",
-  "lines": 363,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/assoc.rs",
-  "lines": 386,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/attr_resolution.rs",
-  "lines": 166,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/collector.rs",
-  "lines": 2847,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/diagnostics.rs",
-  "lines": 126,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/mod_resolution.rs",
-  "lines": 157,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/path_resolution.rs",
-  "lines": 776,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/proc_macro.rs",
-  "lines": 97,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres/tests.rs",
-  "lines": 981,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/nameres.rs",
-  "lines": 938,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/per_ns.rs",
-  "lines": 175,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/resolver.rs",
-  "lines": 1532,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/signatures.rs",
-  "lines": 1164,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/src.rs",
-  "lines": 189,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/test_db.rs",
-  "lines": 341,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/unstable_features.rs",
-  "lines": 95,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-def/src/visibility.rs",
-  "lines": 375,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/attrs.rs",
-  "lines": 456,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/builtin/attr_macro.rs",
-  "lines": 161,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/builtin/derive_macro.rs",
-  "lines": 1657,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/builtin/fn_macro.rs",
-  "lines": 1012,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/builtin/quote.rs",
-  "lines": 330,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/builtin.rs",
-  "lines": 16,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/cfg_process.rs",
-  "lines": 317,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/change.rs",
-  "lines": 43,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/declarative.rs",
-  "lines": 187,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/eager.rs",
-  "lines": 309,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/files.rs",
-  "lines": 540,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/fixup.rs",
-  "lines": 902,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/hygiene.rs",
-  "lines": 144,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/inert_attr_macro.rs",
-  "lines": 713,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/lib.rs",
-  "lines": 1758,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/mod_path.rs",
-  "lines": 465,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/name.rs",
-  "lines": 292,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/prettify_macro_expansion_.rs",
-  "lines": 60,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/proc_macro.rs",
-  "lines": 370,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-expand/src/span_map.rs",
-  "lines": 122,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/autoderef.rs",
-  "lines": 430,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/builtin_derive.rs",
-  "lines": 693,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/consteval/tests.rs",
-  "lines": 2973,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/consteval.rs",
-  "lines": 583,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/db.rs",
-  "lines": 583,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/decl_check/case_conv.rs",
-  "lines": 156,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/decl_check.rs",
-  "lines": 779,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/expr.rs",
-  "lines": 771,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/match_check/pat_analysis.rs",
-  "lines": 519,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/match_check/pat_util.rs",
-  "lines": 63,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/match_check.rs",
-  "lines": 442,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics/unsafe_check.rs",
-  "lines": 448,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/diagnostics.rs",
-  "lines": 17,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/display.rs",
-  "lines": 2846,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/drop.rs",
-  "lines": 177,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/dyn_compatibility/tests.rs",
-  "lines": 402,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/dyn_compatibility.rs",
-  "lines": 533,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/generics.rs",
-  "lines": 405,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/autoderef.rs",
-  "lines": 58,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/callee.rs",
-  "lines": 592,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/cast.rs",
-  "lines": 585,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/closure/analysis/expr_use_visitor.rs",
-  "lines": 1765,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/closure/analysis.rs",
-  "lines": 1678,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/closure.rs",
-  "lines": 1167,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/coerce.rs",
-  "lines": 1688,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/diagnostics.rs",
-  "lines": 195,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/expr.rs",
-  "lines": 2190,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/fallback.rs",
-  "lines": 439,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/mutability.rs",
-  "lines": 227,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/op.rs",
-  "lines": 480,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/opaques.rs",
-  "lines": 152,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/pat.rs",
-  "lines": 1731,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/path.rs",
-  "lines": 424,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/place_op.rs",
-  "lines": 338,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer/unify.rs",
-  "lines": 791,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/infer.rs",
-  "lines": 2863,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/inhabitedness.rs",
-  "lines": 179,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/lang_items.rs",
-  "lines": 55,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/layout/adt.rs",
-  "lines": 152,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/layout/target.rs",
-  "lines": 48,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/layout/tests.rs",
-  "lines": 660,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/layout.rs",
-  "lines": 574,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/lib.rs",
-  "lines": 655,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/lower/diagnostics.rs",
-  "lines": 92,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/lower/path.rs",
-  "lines": 1413,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/lower.rs",
-  "lines": 3023,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/method_resolution/confirm.rs",
-  "lines": 631,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/method_resolution/probe.rs",
-  "lines": 2127,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/method_resolution.rs",
-  "lines": 934,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/eval/shim/simd.rs",
-  "lines": 174,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/eval/shim.rs",
-  "lines": 1641,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/eval/tests.rs",
-  "lines": 1282,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/eval.rs",
-  "lines": 3443,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/lower/as_place.rs",
-  "lines": 348,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/lower/pattern_matching.rs",
-  "lines": 745,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/lower/tests.rs",
-  "lines": 52,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/lower.rs",
-  "lines": 2345,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/monomorphization.rs",
-  "lines": 285,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir/pretty.rs",
-  "lines": 524,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/mir.rs",
-  "lines": 1351,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/abi.rs",
-  "lines": 84,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/allocation.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/binder.rs",
-  "lines": 134,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/consts/valtree.rs",
-  "lines": 753,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/consts.rs",
-  "lines": 415,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/def_id.rs",
-  "lines": 682,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/fold.rs",
-  "lines": 239,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/format_proof_tree.rs",
-  "lines": 111,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/fulfill.rs",
-  "lines": 346,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/generic_arg.rs",
-  "lines": 850,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/generics.rs",
-  "lines": 108,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/at.rs",
-  "lines": 315,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/canonical/canonicalizer.rs",
-  "lines": 746,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/canonical/instantiate.rs",
-  "lines": 516,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/canonical/mod.rs",
-  "lines": 166,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/context.rs",
-  "lines": 358,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/errors.rs",
-  "lines": 719,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/mod.rs",
-  "lines": 1371,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/opaque_types/mod.rs",
-  "lines": 29,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/opaque_types/table.rs",
-  "lines": 163,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/outlives/mod.rs",
-  "lines": 2,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/outlives/obligations.rs",
-  "lines": 69,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/region_constraints/mod.rs",
-  "lines": 707,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/relate/generalize.rs",
-  "lines": 723,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/relate/higher_ranked.rs",
-  "lines": 78,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/relate/lattice.rs",
-  "lines": 280,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/relate/mod.rs",
-  "lines": 15,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/resolve.rs",
-  "lines": 108,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/select.rs",
-  "lines": 432,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/snapshot/fudge.rs",
-  "lines": 265,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/snapshot/mod.rs",
-  "lines": 126,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/snapshot/undo_log.rs",
-  "lines": 208,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/traits.rs",
-  "lines": 243,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/type_variable.rs",
-  "lines": 366,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/infer/unify_key.rs",
-  "lines": 180,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/inspect.rs",
-  "lines": 506,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/interner.rs",
-  "lines": 2701,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/ir_print.rs",
-  "lines": 255,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/normalize.rs",
-  "lines": 281,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/obligation_ctxt.rs",
-  "lines": 191,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/opaques.rs",
-  "lines": 141,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/predicate.rs",
-  "lines": 893,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/region.rs",
-  "lines": 317,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/solver.rs",
-  "lines": 382,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/structural_normalize.rs",
-  "lines": 58,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/ty.rs",
-  "lines": 1504,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver/util.rs",
-  "lines": 726,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/next_solver.rs",
-  "lines": 323,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/opaques.rs",
-  "lines": 211,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/primitive.rs",
-  "lines": 36,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/representability.rs",
-  "lines": 136,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/solver_errors.rs",
-  "lines": 97,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/specialization.rs",
-  "lines": 160,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/target_feature.rs",
-  "lines": 253,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/test_db.rs",
-  "lines": 214,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/tests.rs",
-  "lines": 750,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/traits.rs",
-  "lines": 397,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/upvars.rs",
-  "lines": 403,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/utils.rs",
-  "lines": 187,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/hir-ty/src/variance.rs",
-  "lines": 980,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/annotations/fn_references.rs",
-  "lines": 104,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/annotations.rs",
-  "lines": 1088,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/call_hierarchy.rs",
-  "lines": 756,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/child_modules.rs",
-  "lines": 124,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/doc_links/intra_doc_links.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/doc_links/tests.rs",
-  "lines": 891,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/doc_links.rs",
-  "lines": 765,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/expand_macro.rs",
-  "lines": 868,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/extend_selection.rs",
-  "lines": 674,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/fetch_crates.rs",
-  "lines": 44,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/file_structure.rs",
-  "lines": 1032,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/fixture.rs",
-  "lines": 99,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/folding_ranges.rs",
-  "lines": 923,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/goto_declaration.rs",
-  "lines": 251,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/goto_definition.rs",
-  "lines": 4227,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/goto_implementation.rs",
-  "lines": 467,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/goto_type_definition.rs",
-  "lines": 384,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/highlight_related.rs",
-  "lines": 2579,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/hover/render.rs",
-  "lines": 1439,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/hover/tests.rs",
-  "lines": 11951,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/hover.rs",
-  "lines": 751,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/adjustment.rs",
-  "lines": 767,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/bind_pat.rs",
-  "lines": 1474,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/binding_mode.rs",
-  "lines": 230,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/bounds.rs",
-  "lines": 159,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/chaining.rs",
-  "lines": 777,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/closing_brace.rs",
-  "lines": 527,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/closure_captures.rs",
-  "lines": 372,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/closure_ret.rs",
-  "lines": 110,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/discriminant.rs",
-  "lines": 245,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/extern_block.rs",
-  "lines": 146,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/generic_param.rs",
-  "lines": 344,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/implicit_drop.rs",
-  "lines": 259,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/implicit_static.rs",
-  "lines": 86,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/implied_dyn_trait.rs",
-  "lines": 178,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/lifetime.rs",
-  "lines": 583,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/param_name.rs",
-  "lines": 831,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/placeholders.rs",
-  "lines": 95,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/ra_fixture.rs",
-  "lines": 33,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints/range_exclusive.rs",
-  "lines": 124,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/inlay_hints.rs",
-  "lines": 1175,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/interpret.rs",
-  "lines": 80,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/join_lines.rs",
-  "lines": 1087,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/lib.rs",
-  "lines": 984,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/markdown_remove.rs",
-  "lines": 164,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/markup.rs",
-  "lines": 46,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/matching_brace.rs",
-  "lines": 97,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/moniker.rs",
-  "lines": 614,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/move_item.rs",
-  "lines": 894,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/navigation_target.rs",
-  "lines": 1137,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/parent_module.rs",
-  "lines": 171,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/predicate_eval.rs",
-  "lines": 166,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/references.rs",
-  "lines": 3380,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/rename.rs",
-  "lines": 4175,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/runnables.rs",
-  "lines": 1715,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/signature_help.rs",
-  "lines": 2746,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/ssr.rs",
-  "lines": 278,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/static_index.rs",
-  "lines": 607,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/status.rs",
-  "lines": 79,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/escape.rs",
-  "lines": 91,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/format.rs",
-  "lines": 72,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/highlight.rs",
-  "lines": 891,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/highlights.rs",
-  "lines": 99,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/html.rs",
-  "lines": 128,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/inject.rs",
-  "lines": 248,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/tags.rs",
-  "lines": 371,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting/tests.rs",
-  "lines": 1669,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/syntax_highlighting.rs",
-  "lines": 613,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/test_explorer.rs",
-  "lines": 197,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/typing/on_enter.rs",
-  "lines": 706,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/typing.rs",
-  "lines": 1676,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/view_crate_graph.rs",
-  "lines": 99,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/view_hir.rs",
-  "lines": 20,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/view_item_tree.rs",
-  "lines": 19,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/view_memory_layout.rs",
-  "lines": 401,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/view_mir.rs",
-  "lines": 29,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide/src/view_syntax_tree.rs",
-  "lines": 256,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/assist_config.rs",
-  "lines": 55,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/assist_context.rs",
-  "lines": 240,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_braces.rs",
-  "lines": 331,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_explicit_dot_deref.rs",
-  "lines": 215,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_explicit_enum_discriminant.rs",
-  "lines": 231,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_explicit_type.rs",
-  "lines": 341,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_label_to_loop.rs",
-  "lines": 267,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_lifetime_to_type.rs",
-  "lines": 238,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_missing_impl_members.rs",
-  "lines": 2927,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_missing_match_arms.rs",
-  "lines": 2590,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_return_type.rs",
-  "lines": 483,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/add_turbo_fish.rs",
-  "lines": 490,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/apply_demorgan.rs",
-  "lines": 752,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/auto_import.rs",
-  "lines": 2097,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/bind_unused_param.rs",
-  "lines": 195,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/change_visibility.rs",
-  "lines": 291,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_bool_then.rs",
-  "lines": 611,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_bool_to_enum.rs",
-  "lines": 1940,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_char_literal.rs",
-  "lines": 98,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_closure_to_fn.rs",
-  "lines": 1344,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_comment_block.rs",
-  "lines": 411,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_comment_from_or_to_doc.rs",
-  "lines": 686,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_for_to_while_let.rs",
-  "lines": 477,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_from_to_tryfrom.rs",
-  "lines": 244,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_integer_literal.rs",
-  "lines": 280,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_into_to_from.rs",
-  "lines": 382,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_iter_for_each_to_for.rs",
-  "lines": 576,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_let_else_to_match.rs",
-  "lines": 633,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_match_to_let_else.rs",
-  "lines": 591,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_named_struct_to_tuple_struct.rs",
-  "lines": 1309,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_nested_function_to_closure.rs",
-  "lines": 210,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_range_for_to_while.rs",
-  "lines": 406,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_to_guarded_return.rs",
-  "lines": 1699,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_tuple_return_type_to_struct.rs",
-  "lines": 894,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_tuple_struct_to_named_struct.rs",
-  "lines": 1415,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_two_arm_bool_match_to_matches_macro.rs",
-  "lines": 346,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/convert_while_to_loop.rs",
-  "lines": 454,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/destructure_struct_binding.rs",
-  "lines": 1041,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/destructure_tuple_binding.rs",
-  "lines": 2163,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/desugar_doc_comment.rs",
-  "lines": 313,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/desugar_try_expr.rs",
-  "lines": 294,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/expand_glob_import.rs",
-  "lines": 1261,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/expand_rest_pattern.rs",
-  "lines": 751,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/extract_expressions_from_format_string.rs",
-  "lines": 366,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/extract_function.rs",
-  "lines": 6725,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/extract_module.rs",
-  "lines": 1884,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/extract_struct_from_enum_variant.rs",
-  "lines": 1216,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/extract_type_alias.rs",
-  "lines": 489,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/extract_variable.rs",
-  "lines": 3125,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/fix_visibility.rs",
-  "lines": 489,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/flip_binexpr.rs",
-  "lines": 239,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/flip_comma.rs",
-  "lines": 168,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/flip_or_pattern.rs",
-  "lines": 76,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/flip_trait_bound.rs",
-  "lines": 124,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_blanket_trait_impl.rs",
-  "lines": 1716,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_constant.rs",
-  "lines": 267,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_default_from_enum_variant.rs",
-  "lines": 283,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_default_from_new.rs",
-  "lines": 715,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_delegate_methods.rs",
-  "lines": 766,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_delegate_trait.rs",
-  "lines": 1991,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_deref.rs",
-  "lines": 422,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_derive.rs",
-  "lines": 222,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_documentation_template.rs",
-  "lines": 1397,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_enum_is_method.rs",
-  "lines": 416,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_enum_projection_method.rs",
-  "lines": 484,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_enum_variant.rs",
-  "lines": 535,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_fn_type_alias.rs",
-  "lines": 463,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_from_impl_for_enum.rs",
-  "lines": 405,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_function.rs",
-  "lines": 3466,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_getter_or_setter.rs",
-  "lines": 1102,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_impl.rs",
-  "lines": 831,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_is_empty_from_len.rs",
-  "lines": 292,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_mut_trait_impl.rs",
-  "lines": 510,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_new.rs",
-  "lines": 1082,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_single_field_struct_from.rs",
-  "lines": 1024,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/generate_trait_from_impl.rs",
-  "lines": 615,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/inline_call.rs",
-  "lines": 2005,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/inline_const_as_literal.rs",
-  "lines": 714,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/inline_local_variable.rs",
-  "lines": 1197,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/inline_macro.rs",
-  "lines": 450,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/inline_type_alias.rs",
-  "lines": 1205,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/into_to_qualified_from.rs",
-  "lines": 271,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/introduce_named_lifetime.rs",
-  "lines": 411,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/introduce_named_type_parameter.rs",
-  "lines": 212,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/invert_if.rs",
-  "lines": 178,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/merge_imports.rs",
-  "lines": 853,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/merge_match_arms.rs",
-  "lines": 960,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/merge_nested_if.rs",
-  "lines": 247,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/move_bounds.rs",
-  "lines": 152,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/move_const_to_impl.rs",
-  "lines": 455,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/move_from_mod_rs.rs",
-  "lines": 128,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/move_guard.rs",
-  "lines": 1316,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/move_module_to_file.rs",
-  "lines": 405,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/move_to_mod_rs.rs",
-  "lines": 149,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/normalize_import.rs",
-  "lines": 246,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/number_representation.rs",
-  "lines": 175,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/promote_local_to_const.rs",
-  "lines": 334,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/pull_assignment_up.rs",
-  "lines": 585,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/qualify_method_call.rs",
-  "lines": 552,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/qualify_path.rs",
-  "lines": 1389,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/raw_string.rs",
-  "lines": 696,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_dbg.rs",
-  "lines": 452,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_else_branches.rs",
-  "lines": 91,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_mut.rs",
-  "lines": 34,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_parentheses.rs",
-  "lines": 380,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_underscore.rs",
-  "lines": 223,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_unused_imports.rs",
-  "lines": 1149,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/remove_unused_param.rs",
-  "lines": 446,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/reorder_fields.rs",
-  "lines": 222,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/reorder_impl_items.rs",
-  "lines": 328,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_arith_op.rs",
-  "lines": 412,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_derive_with_manual_impl.rs",
-  "lines": 1490,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_if_let_with_match.rs",
-  "lines": 2638,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_is_method_with_if_let_method.rs",
-  "lines": 388,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_let_with_if_let.rs",
-  "lines": 231,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_method_eager_lazy.rs",
-  "lines": 512,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_named_generic_with_impl.rs",
-  "lines": 366,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_qualified_name_with_use.rs",
-  "lines": 598,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_string_with_char.rs",
-  "lines": 453,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/replace_turbofish_with_explicit_type.rs",
-  "lines": 365,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/sort_items.rs",
-  "lines": 678,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/split_import.rs",
-  "lines": 83,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/term_search.rs",
-  "lines": 340,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/toggle_async_sugar.rs",
-  "lines": 594,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/toggle_ignore.rs",
-  "lines": 110,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/toggle_macro_delimiter.rs",
-  "lines": 454,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unmerge_imports.rs",
-  "lines": 257,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unmerge_match_arm.rs",
-  "lines": 302,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unnecessary_async.rs",
-  "lines": 269,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unqualify_method_call.rs",
-  "lines": 342,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unwrap_branch.rs",
-  "lines": 1316,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unwrap_return_type.rs",
-  "lines": 2404,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unwrap_tuple.rs",
-  "lines": 184,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/unwrap_type_to_generic_arg.rs",
-  "lines": 160,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/wrap_return_type.rs",
-  "lines": 2561,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/handlers/wrap_unwrap_cfg_attr.rs",
-  "lines": 576,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/lib.rs",
-  "lines": 418,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/tests.rs",
-  "lines": 1225,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/utils/gen_trait_fn_body.rs",
-  "lines": 707,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/utils/ref_field_expr.rs",
-  "lines": 150,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-assists/src/utils.rs",
-  "lines": 1193,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/cfg.rs",
-  "lines": 142,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/derive.rs",
-  "lines": 117,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/diagnostic.rs",
-  "lines": 59,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/feature.rs",
-  "lines": 31,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/lint.rs",
-  "lines": 63,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/macro_use.rs",
-  "lines": 37,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute/repr.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/attribute.rs",
-  "lines": 425,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/dot.rs",
-  "lines": 1833,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/env_vars.rs",
-  "lines": 204,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/expr.rs",
-  "lines": 519,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/extern_abi.rs",
-  "lines": 111,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/extern_crate.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/field.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/flyimport.rs",
-  "lines": 467,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/fn_param.rs",
-  "lines": 243,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/format_string.rs",
-  "lines": 289,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/item_list/trait_impl.rs",
-  "lines": 1817,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/item_list.rs",
-  "lines": 184,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/keyword.rs",
-  "lines": 848,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/lifetime.rs",
-  "lines": 330,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/macro_def.rs",
-  "lines": 32,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/mod_.rs",
-  "lines": 373,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/pattern.rs",
-  "lines": 208,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/postfix/format_like.rs",
-  "lines": 118,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/postfix.rs",
-  "lines": 1767,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/ra_fixture.rs",
-  "lines": 114,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/record.rs",
-  "lines": 511,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/snippet.rs",
-  "lines": 195,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/type.rs",
-  "lines": 242,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/use_.rs",
-  "lines": 131,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions/vis.rs",
+  "crate": "syn-crate",
+  "file": "codegen/src/cfg.rs",
   "lines": 42,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/completions.rs",
-  "lines": 824,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/config.rs",
-  "lines": 87,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/context/analysis.rs",
-  "lines": 2123,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/context/tests.rs",
-  "lines": 849,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/context.rs",
-  "lines": 1025,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/item.rs",
-  "lines": 878,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/lib.rs",
-  "lines": 322,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/const_.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/function.rs",
-  "lines": 997,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/literal.rs",
-  "lines": 206,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/macro_.rs",
-  "lines": 420,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/pattern.rs",
-  "lines": 242,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/type_alias.rs",
-  "lines": 63,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/union_literal.rs",
-  "lines": 109,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render/variant.rs",
-  "lines": 138,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/render.rs",
-  "lines": 4502,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/snippet.rs",
-  "lines": 208,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-completion/src/tests.rs",
-  "lines": 390,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/active_parameter.rs",
-  "lines": 184,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/apply_change.rs",
-  "lines": 165,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/assists.rs",
-  "lines": 180,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/defs.rs",
-  "lines": 1059,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/documentation.rs",
-  "lines": 115,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/famous_defs.rs",
-  "lines": 247,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/generated/lints.rs",
-  "lines": 24329,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/helpers.rs",
-  "lines": 154,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/imports/import_assets.rs",
-  "lines": 1079,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/imports/insert_use/tests.rs",
-  "lines": 1599,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/imports/insert_use.rs",
-  "lines": 578,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/imports/merge_imports.rs",
-  "lines": 1032,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/items_locator.rs",
-  "lines": 153,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/label.rs",
-  "lines": 51,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/lib.rs",
-  "lines": 426,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/path_transform.rs",
-  "lines": 750,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/prime_caches.rs",
-  "lines": 342,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/ra_fixture.rs",
-  "lines": 551,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/range_mapper.rs",
-  "lines": 66,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/rename.rs",
-  "lines": 840,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/rust_doc.rs",
-  "lines": 200,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/search.rs",
-  "lines": 1453,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/source_change.rs",
-  "lines": 407,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/symbol_index.rs",
-  "lines": 1203,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/syntax_helpers/format_string.rs",
-  "lines": 300,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/syntax_helpers/format_string_exprs.rs",
-  "lines": 255,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/syntax_helpers/node_ext.rs",
-  "lines": 583,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/syntax_helpers/suggest_name.rs",
-  "lines": 1189,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/syntax_helpers/tree_diff.rs",
-  "lines": 560,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/text_edit.rs",
-  "lines": 332,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/traits.rs",
-  "lines": 377,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/ty_filter.rs",
-  "lines": 95,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-db/src/use_trivial_constructor.rs",
-  "lines": 71,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/array_pattern_without_fixed_length.rs",
-  "lines": 66,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/await_outside_of_async.rs",
-  "lines": 106,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/bad_rtn.rs",
-  "lines": 54,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/break_outside_of_loop.rs",
-  "lines": 160,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/cannot_be_dereferenced.rs",
-  "lines": 75,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/cannot_implicitly_deref_trait_object.rs",
-  "lines": 54,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/cannot_index_into.rs",
-  "lines": 78,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/duplicate_field.rs",
-  "lines": 124,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/elided_lifetimes_in_path.rs",
-  "lines": 111,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/expected_array_or_slice_pat.rs",
-  "lines": 51,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/expected_function.rs",
-  "lines": 61,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/explicit_drop_method_use.rs",
-  "lines": 427,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/field_shorthand.rs",
-  "lines": 244,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/fru_in_destructuring_assignment.rs",
-  "lines": 68,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/functional_record_update_on_non_struct.rs",
-  "lines": 56,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/generic_args_prohibited.rs",
-  "lines": 642,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/generic_default_refers_to_self.rs",
-  "lines": 44,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/inactive_code.rs",
-  "lines": 329,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/incoherent_impl.rs",
-  "lines": 89,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/incorrect_case.rs",
-  "lines": 1123,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/incorrect_generics_len.rs",
-  "lines": 245,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/incorrect_generics_order.rs",
-  "lines": 82,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/infer_vars_not_allowed.rs",
-  "lines": 50,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/invalid_cast.rs",
-  "lines": 1224,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/invalid_derive_target.rs",
-  "lines": 39,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/invalid_lhs_of_assignment.rs",
-  "lines": 104,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/invalid_range_pat_type.rs",
-  "lines": 56,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/json_is_not_rust.rs",
-  "lines": 362,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/macro_error.rs",
-  "lines": 389,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/malformed_derive.rs",
-  "lines": 38,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/method_call_illegal_sized_bound.rs",
-  "lines": 79,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/mismatched_arg_count.rs",
-  "lines": 593,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/mismatched_array_pat_len.rs",
-  "lines": 126,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/missing_fields.rs",
-  "lines": 1002,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/missing_lifetime.rs",
-  "lines": 135,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/missing_match_arms.rs",
-  "lines": 1218,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/missing_unsafe.rs",
-  "lines": 1069,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/mut_ref_in_imm_ref_pat.rs",
-  "lines": 38,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/mutable_ref.rs",
-  "lines": 65,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/no_such_field.rs",
-  "lines": 677,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/non_exhaustive_let.rs",
-  "lines": 411,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/non_exhaustive_record_expr.rs",
-  "lines": 47,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/non_exhaustive_record_pat.rs",
-  "lines": 80,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/parenthesized_generic_args_without_fn_trait.rs",
-  "lines": 61,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/pattern_arg_in_extern_fn.rs",
-  "lines": 105,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/private_assoc_item.rs",
-  "lines": 156,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/private_field.rs",
-  "lines": 425,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/remove_trailing_return.rs",
-  "lines": 400,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/remove_unnecessary_else.rs",
-  "lines": 520,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/replace_filter_map_next_with_find_map.rs",
-  "lines": 189,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/return_outside_function.rs",
-  "lines": 99,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/trait_impl_incorrect_safety.rs",
-  "lines": 141,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/trait_impl_missing_assoc_item.rs",
-  "lines": 186,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/trait_impl_orphan.rs",
-  "lines": 152,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/trait_impl_redundant_assoc_item.rs",
-  "lines": 440,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/type_mismatch.rs",
-  "lines": 2023,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/type_must_be_known.rs",
-  "lines": 174,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/typed_hole.rs",
-  "lines": 471,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unary_operator_cannot_be_applied.rs",
-  "lines": 159,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/undeclared_label.rs",
-  "lines": 144,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unimplemented_builtin_macro.rs",
-  "lines": 18,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unimplemented_trait.rs",
-  "lines": 116,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/union_expr_must_have_exactly_one_field.rs",
-  "lines": 43,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/union_pat_has_rest.rs",
-  "lines": 42,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/union_pat_must_have_exactly_one_field.rs",
-  "lines": 44,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unlinked_file.rs",
-  "lines": 660,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unreachable_label.rs",
-  "lines": 94,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_assoc_item.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_extern_crate.rs",
-  "lines": 52,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_field.rs",
-  "lines": 558,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_ident.rs",
-  "lines": 75,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_import.rs",
-  "lines": 91,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_macro_call.rs",
-  "lines": 109,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_method.rs",
-  "lines": 372,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unresolved_module.rs",
-  "lines": 87,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/unused_must_use.rs",
-  "lines": 268,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/useless_braces.rs",
-  "lines": 183,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/handlers/yield_outside_coroutine.rs",
-  "lines": 35,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/lib.rs",
-  "lines": 862,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-diagnostics/src/tests.rs",
-  "lines": 338,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/errors.rs",
-  "lines": 30,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/fragments.rs",
-  "lines": 64,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/from_comment.rs",
-  "lines": 35,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/lib.rs",
-  "lines": 363,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/matching.rs",
-  "lines": 834,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/nester.rs",
-  "lines": 100,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/parsing.rs",
-  "lines": 407,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/replacing.rs",
-  "lines": 257,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/resolving.rs",
-  "lines": 307,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/search.rs",
-  "lines": 288,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/ide-ssr/src/tests.rs",
-  "lines": 1458,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/intern/src/gc.rs",
-  "lines": 354,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/intern/src/intern.rs",
-  "lines": 373,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/intern/src/intern_slice.rs",
-  "lines": 331,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/intern/src/lib.rs",
-  "lines": 16,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/intern/src/symbol/symbols.rs",
-  "lines": 687,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/intern/src/symbol.rs",
-  "lines": 302,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/load-cargo/src/lib.rs",
-  "lines": 967,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/macros/src/lib.rs",
-  "lines": 238,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/benchmark.rs",
-  "lines": 247,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/expander/matcher.rs",
-  "lines": 1013,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/expander/transcriber.rs",
-  "lines": 600,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/expander.rs",
-  "lines": 175,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/lib.rs",
-  "lines": 449,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/macro_call_style.rs",
-  "lines": 33,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/parser.rs",
-  "lines": 479,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/mbe/src/tests.rs",
-  "lines": 476,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/event.rs",
-  "lines": 146,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/frontmatter.rs",
-  "lines": 353,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/attributes.rs",
-  "lines": 181,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/expressions/atom.rs",
-  "lines": 1030,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/expressions.rs",
-  "lines": 807,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/generic_args.rs",
-  "lines": 184,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/generic_params.rs",
-  "lines": 318,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/items/adt.rs",
-  "lines": 233,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/items/consts.rs",
-  "lines": 72,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/items/traits.rs",
-  "lines": 142,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/items/use_item.rs",
-  "lines": 109,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/items.rs",
-  "lines": 529,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/params.rs",
-  "lines": 210,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/paths.rs",
-  "lines": 214,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/patterns.rs",
-  "lines": 582,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar/types.rs",
-  "lines": 446,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/grammar.rs",
-  "lines": 472,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/input.rs",
-  "lines": 104,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/lexed_str.rs",
-  "lines": 468,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/lib.rs",
-  "lines": 209,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/output.rs",
-  "lines": 122,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/parser.rs",
-  "lines": 426,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/shortcuts.rs",
-  "lines": 288,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/syntax_kind/generated.rs",
-  "lines": 1256,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/syntax_kind.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/tests.rs",
-  "lines": 197,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/parser/src/token_set.rs",
-  "lines": 57,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/paths/src/lib.rs",
-  "lines": 438,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/bidirectional_protocol/msg.rs",
-  "lines": 207,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/bidirectional_protocol.rs",
-  "lines": 215,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/legacy_protocol/msg/flat.rs",
-  "lines": 980,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/legacy_protocol/msg.rs",
-  "lines": 416,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/legacy_protocol.rs",
-  "lines": 170,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/lib.rs",
-  "lines": 280,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/pool.rs",
-  "lines": 90,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/process.rs",
-  "lines": 440,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/transport/json.rs",
-  "lines": 49,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/transport/postcard.rs",
-  "lines": 31,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-api/src/transport.rs",
-  "lines": 4,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/proc-macro-test/imp/src/lib.rs",
-  "lines": 160,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/proc-macro-test/src/lib.rs",
-  "lines": 4,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/bridge.rs",
-  "lines": 13,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/dylib/proc_macros.rs",
-  "lines": 88,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/dylib.rs",
-  "lines": 125,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/lib.rs",
-  "lines": 385,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/server_impl/rust_analyzer_span.rs",
-  "lines": 279,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/server_impl/token_id.rs",
-  "lines": 195,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/server_impl.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv/src/token_stream.rs",
-  "lines": 768,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv-cli/src/lib.rs",
-  "lines": 11,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv-cli/src/main.rs",
-  "lines": 106,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv-cli/src/main_loop.rs",
-  "lines": 624,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/proc-macro-srv-cli/src/version.rs",
-  "lines": 59,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/profile/src/google_cpu_profiler.rs",
-  "lines": 45,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/profile/src/lib.rs",
-  "lines": 97,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/profile/src/memory_usage.rs",
-  "lines": 133,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/profile/src/stop_watch.rs",
-  "lines": 118,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/build_dependencies.rs",
-  "lines": 575,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/cargo_config_file.rs",
-  "lines": 284,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/cargo_workspace.rs",
-  "lines": 848,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/env.rs",
-  "lines": 217,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/lib.rs",
-  "lines": 290,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/manifest_path.rs",
-  "lines": 92,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/project_json.rs",
-  "lines": 595,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/sysroot.rs",
-  "lines": 593,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/tests.rs",
-  "lines": 291,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/toolchain_info/rustc_cfg.rs",
-  "lines": 124,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/toolchain_info/target_data.rs",
-  "lines": 111,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/toolchain_info/target_tuple.rs",
-  "lines": 132,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/toolchain_info/version.rs",
-  "lines": 58,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/project-model/src/workspace.rs",
-  "lines": 2005,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/bin/main.rs",
-  "lines": 199,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/bin/rustc_wrapper.rs",
-  "lines": 58,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/analysis_stats.rs",
-  "lines": 1672,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/diagnostics.rs",
-  "lines": 142,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/flags.rs",
-  "lines": 413,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/highlight.rs",
-  "lines": 18,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/lsif/vendored.rs",
-  "lines": 339,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/lsif.rs",
-  "lines": 343,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/parse.rs",
-  "lines": 102,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/prime_caches.rs",
-  "lines": 71,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/progress_report.rs",
-  "lines": 168,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/run_tests.rs",
-  "lines": 94,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/rustc_tests.rs",
-  "lines": 330,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/scip.rs",
-  "lines": 1016,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/ssr.rs",
-  "lines": 96,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/symbols.rs",
-  "lines": 25,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli/unresolved_references.rs",
-  "lines": 176,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/cli.rs",
-  "lines": 93,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/command.rs",
-  "lines": 225,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/config/patch_old_style.rs",
-  "lines": 171,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/config.rs",
-  "lines": 4495,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/diagnostics/flycheck_to_proto.rs",
-  "lines": 1851,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/diagnostics.rs",
-  "lines": 372,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/discover.rs",
-  "lines": 171,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/flycheck.rs",
-  "lines": 1214,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/global_state.rs",
-  "lines": 1009,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/handlers/dispatch.rs",
-  "lines": 444,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/handlers/notification.rs",
-  "lines": 573,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/handlers/request.rs",
-  "lines": 2780,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/integrated_benchmarks.rs",
-  "lines": 349,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lib.rs",
-  "lines": 100,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/line_index.rs",
-  "lines": 110,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp/capabilities.rs",
-  "lines": 571,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp/ext.rs",
-  "lines": 1056,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp/from_proto.rs",
-  "lines": 157,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp/semantic_tokens.rs",
-  "lines": 451,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp/to_proto.rs",
-  "lines": 3181,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp/utils.rs",
-  "lines": 474,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/lsp.rs",
-  "lines": 147,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/main_loop.rs",
-  "lines": 1481,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/mem_docs.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/op_queue.rs",
-  "lines": 77,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/priming_scope.rs",
-  "lines": 167,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/reload.rs",
-  "lines": 1072,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/session.rs",
-  "lines": 213,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/target_spec.rs",
-  "lines": 424,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/task_pool.rs",
-  "lines": 56,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/test_runner.rs",
-  "lines": 162,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/tracing/config.rs",
-  "lines": 134,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/tracing/hprof.rs",
-  "lines": 267,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/tracing/json.rs",
-  "lines": 92,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/rust-analyzer/src/version.rs",
-  "lines": 58,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/span/src/ast_id.rs",
-  "lines": 1046,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/span/src/hygiene.rs",
-  "lines": 579,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/span/src/lib.rs",
-  "lines": 242,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/span/src/map.rs",
-  "lines": 243,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/anymap.rs",
-  "lines": 294,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/assert.rs",
-  "lines": 116,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/lib.rs",
-  "lines": 463,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/macros.rs",
-  "lines": 146,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/non_empty_vec.rs",
-  "lines": 40,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/panic_context.rs",
-  "lines": 48,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/process.rs",
-  "lines": 274,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/rand.rs",
-  "lines": 20,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/thread/intent.rs",
-  "lines": 289,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/thread/pool.rs",
-  "lines": 152,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/thread.rs",
-  "lines": 115,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/stdx/src/variance.rs",
-  "lines": 271,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/algo.rs",
-  "lines": 151,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/edit.rs",
-  "lines": 417,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/expr_ext.rs",
-  "lines": 537,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/generated/nodes.rs",
-  "lines": 10994,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/generated/tokens.rs",
-  "lines": 309,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/generated.rs",
-  "lines": 42,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/make/quote.rs",
-  "lines": 192,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/make.rs",
-  "lines": 1559,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/node_ext.rs",
-  "lines": 1236,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/operators.rs",
-  "lines": 123,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/prec.rs",
-  "lines": 590,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/syntax_factory/constructors.rs",
-  "lines": 2431,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/syntax_factory.rs",
-  "lines": 47,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/token_ext.rs",
-  "lines": 670,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast/traits.rs",
-  "lines": 172,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ast.rs",
-  "lines": 437,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/fuzz.rs",
-  "lines": 74,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/hacks.rs",
-  "lines": 23,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/lib.rs",
-  "lines": 445,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/parsing/reparsing.rs",
-  "lines": 466,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/parsing.rs",
-  "lines": 62,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/ptr.rs",
-  "lines": 129,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/syntax_editor/edit_algo.rs",
-  "lines": 812,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/syntax_editor/edits.rs",
-  "lines": 643,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/syntax_editor/mapping.rs",
-  "lines": 234,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/syntax_editor.rs",
-  "lines": 942,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/syntax_error.rs",
-  "lines": 37,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/syntax_node.rs",
-  "lines": 77,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/tests.rs",
-  "lines": 201,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/utils.rs",
-  "lines": 29,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/validation/block.rs",
-  "lines": 27,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax/src/validation.rs",
-  "lines": 477,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax-bridge/src/lib.rs",
-  "lines": 1051,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax-bridge/src/prettify_macro_expansion.rs",
-  "lines": 474,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax-bridge/src/tests.rs",
-  "lines": 149,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/syntax-bridge/src/to_parser_input.rs",
-  "lines": 117,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/test-fixture/src/lib.rs",
-  "lines": 1225,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/test-utils/src/assert_linear.rs",
-  "lines": 113,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/test-utils/src/bench_fixture.rs",
-  "lines": 46,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/test-utils/src/fixture.rs",
-  "lines": 593,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/test-utils/src/lib.rs",
-  "lines": 513,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/test-utils/src/minicore.rs",
-  "lines": 2520,
-  "stage": "convert-fail",
-  "detail": "Error: Error(\"expected identifier or `_`\")"
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/toolchain/src/lib.rs",
-  "lines": 176,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/tt/src/buffer.rs",
-  "lines": 118,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/tt/src/iter.rs",
-  "lines": 286,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/tt/src/lib.rs",
-  "lines": 911,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/tt/src/storage.rs",
-  "lines": 993,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/anchored_path.rs",
-  "lines": 50,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/file_set/tests.rs",
-  "lines": 86,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/file_set.rs",
-  "lines": 228,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/lib.rs",
-  "lines": 330,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/loader.rs",
-  "lines": 238,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/path_interner.rs",
-  "lines": 44,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/vfs_path/tests.rs",
-  "lines": 39,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs/src/vfs_path.rs",
-  "lines": 435,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "crates/vfs-notify/src/lib.rs",
-  "lines": 389,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/la-arena/src/lib.rs",
-  "lines": 525,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/la-arena/src/map.rs",
-  "lines": 307,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/line-index/src/lib.rs",
-  "lines": 512,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/line-index/src/tests.rs",
-  "lines": 221,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/lsp-server/src/error.rs",
-  "lines": 66,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/lsp-server/src/lib.rs",
-  "lines": 444,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/lsp-server/src/msg.rs",
-  "lines": 391,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/lsp-server/src/req_queue.rs",
-  "lines": 82,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/lsp-server/src/socket.rs",
-  "lines": 60,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/lsp-server/src/stdio.rs",
-  "lines": 92,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/smol_str/src/borsh.rs",
-  "lines": 41,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/smol_str/src/lib.rs",
-  "lines": 1167,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/smol_str/src/serde.rs",
-  "lines": 95,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/text-size/src/lib.rs",
-  "lines": 33,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/text-size/src/range.rs",
-  "lines": 447,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/text-size/src/serde_impls.rs",
-  "lines": 46,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/text-size/src/size.rs",
-  "lines": 173,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/text-size/src/traits.rs",
-  "lines": 37,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/ungrammar/src/error.rs",
-  "lines": 48,
-  "stage": "equivalent",
-  "detail": ""
- },
- {
-  "crate": "rust-analyzer",
-  "file": "lib/ungrammar/src/lexer.rs",
+  "crate": "syn-crate",
+  "file": "codegen/src/clone.rs",
   "lines": 130,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "lib/ungrammar/src/lib.rs",
-  "lines": 127,
+  "crate": "syn-crate",
+  "file": "codegen/src/css.rs",
+  "lines": 93,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "lib/ungrammar/src/parser.rs",
-  "lines": 208,
+  "crate": "syn-crate",
+  "file": "codegen/src/debug.rs",
+  "lines": 207,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "lib/ungrammar/ungrammar2json/src/main.rs",
-  "lines": 79,
+  "crate": "syn-crate",
+  "file": "codegen/src/eq.rs",
+  "lines": 168,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/assists_doc_tests.rs",
-  "lines": 208,
+  "crate": "syn-crate",
+  "file": "codegen/src/file.rs",
+  "lines": 29,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/diagnostics_docs.rs",
-  "lines": 81,
+  "crate": "syn-crate",
+  "file": "codegen/src/fold.rs",
+  "lines": 266,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/feature_docs.rs",
-  "lines": 84,
+  "crate": "syn-crate",
+  "file": "codegen/src/full.rs",
+  "lines": 91,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/grammar/ast_src.rs",
-  "lines": 297,
+  "crate": "syn-crate",
+  "file": "codegen/src/hash.rs",
+  "lines": 170,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/grammar.rs",
-  "lines": 1172,
+  "crate": "syn-crate",
+  "file": "codegen/src/json.rs",
+  "lines": 18,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/lints.rs",
-  "lines": 582,
+  "crate": "syn-crate",
+  "file": "codegen/src/lookup.rs",
+  "lines": 11,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen/parser_inline_tests.rs",
+  "crate": "syn-crate",
+  "file": "codegen/src/main.rs",
+  "lines": 60,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/operand.rs",
+  "lines": 39,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/parse.rs",
+  "lines": 675,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/snapshot.rs",
+  "lines": 372,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/util.rs",
+  "lines": 41,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/version.rs",
+  "lines": 20,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/visit.rs",
+  "lines": 241,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/visit_mut.rs",
+  "lines": 257,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "codegen/src/workspace_path.rs",
+  "lines": 9,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "dev/main.rs",
+  "lines": 5,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "dev/parse.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "json/src/lib.rs",
+  "lines": 238,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/attr.rs",
+  "lines": 842,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/bigint.rs",
+  "lines": 69,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/buffer.rs",
+  "lines": 463,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/classify.rs",
+  "lines": 312,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/custom_keyword.rs",
+  "lines": 261,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/custom_punctuation.rs",
+  "lines": 306,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/data.rs",
+  "lines": 490,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/derive.rs",
+  "lines": 261,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/discouraged.rs",
+  "lines": 234,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/drops.rs",
+  "lines": 59,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/error.rs",
+  "lines": 553,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/export.rs",
+  "lines": 74,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/expr.rs",
+  "lines": 4238,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/ext.rs",
+  "lines": 181,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/file.rs",
+  "lines": 137,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/fixup.rs",
+  "lines": 774,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/clone.rs",
+  "lines": 2395,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/debug.rs",
+  "lines": 3400,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/eq.rs",
+  "lines": 2460,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/fold.rs",
+  "lines": 3935,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/hash.rs",
+  "lines": 3041,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/visit.rs",
+  "lines": 4038,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/gen/visit_mut.rs",
+  "lines": 3825,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/generics.rs",
+  "lines": 1491,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/group.rs",
+  "lines": 295,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/ident.rs",
+  "lines": 110,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/item.rs",
+  "lines": 3923,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/lib.rs",
+  "lines": 1133,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/lifetime.rs",
+  "lines": 194,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/lit.rs",
+  "lines": 1881,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/lookahead.rs",
+  "lines": 351,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/mac.rs",
   "lines": 226,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/codegen.rs",
-  "lines": 214,
+  "crate": "syn-crate",
+  "file": "src/macros.rs",
+  "lines": 152,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/dist.rs",
-  "lines": 263,
+  "crate": "syn-crate",
+  "file": "src/meta.rs",
+  "lines": 428,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/flags.rs",
-  "lines": 353,
+  "crate": "syn-crate",
+  "file": "src/op.rs",
+  "lines": 220,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/install.rs",
-  "lines": 190,
+  "crate": "syn-crate",
+  "file": "src/parse.rs",
+  "lines": 1421,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/main.rs",
-  "lines": 99,
+  "crate": "syn-crate",
+  "file": "src/parse_macro_input.rs",
+  "lines": 129,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/metrics.rs",
+  "crate": "syn-crate",
+  "file": "src/parse_quote.rs",
+  "lines": 262,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/pat.rs",
+  "lines": 995,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/path.rs",
+  "lines": 973,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/precedence.rs",
+  "lines": 211,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/print.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/punctuated.rs",
+  "lines": 1181,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/restriction.rs",
+  "lines": 161,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/scan_expr.rs",
+  "lines": 271,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/sealed.rs",
+  "lines": 5,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/span.rs",
+  "lines": 64,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/spanned.rs",
+  "lines": 119,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/stmt.rs",
+  "lines": 537,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/thread.rs",
+  "lines": 61,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/token.rs",
+  "lines": 1104,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/tt.rs",
+  "lines": 98,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/ty.rs",
+  "lines": 1348,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/verbatim.rs",
+  "lines": 33,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "syn-crate",
+  "file": "src/whitespace.rs",
+  "lines": 66,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "assets/theme_preview.rs",
+  "lines": 6,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "build/application.rs",
+  "lines": 85,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "build/main.rs",
+  "lines": 18,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "build/syntax_mapping.rs",
+  "lines": 369,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "build/util.rs",
+  "lines": 22,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/assets/assets_metadata.rs",
+  "lines": 83,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/assets/build_assets/acknowledgements.rs",
   "lines": 227,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/pgo.rs",
-  "lines": 102,
+  "crate": "bat",
+  "file": "src/assets/build_assets.rs",
+  "lines": 171,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/publish/notes.rs",
-  "lines": 632,
+  "crate": "bat",
+  "file": "src/assets/lazy_theme_set.rs",
+  "lines": 104,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/publish.rs",
-  "lines": 122,
+  "crate": "bat",
+  "file": "src/assets/serialized_syntax_set.rs",
+  "lines": 28,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/release/changelog.rs",
-  "lines": 187,
+  "crate": "bat",
+  "file": "src/assets.rs",
+  "lines": 866,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/release.rs",
-  "lines": 55,
+  "crate": "bat",
+  "file": "src/bin/bat/app.rs",
+  "lines": 733,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/tidy.rs",
-  "lines": 370,
+  "crate": "bat",
+  "file": "src/bin/bat/assets.rs",
+  "lines": 58,
   "stage": "equivalent",
   "detail": ""
  },
  {
-  "crate": "rust-analyzer",
-  "file": "xtask/src/util.rs",
-  "lines": 44,
+  "crate": "bat",
+  "file": "src/bin/bat/clap_app.rs",
+  "lines": 822,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/bin/bat/completions.rs",
+  "lines": 7,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/bin/bat/config.rs",
+  "lines": 269,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/bin/bat/directories.rs",
+  "lines": 52,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/bin/bat/input.rs",
+  "lines": 21,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/bin/bat/main.rs",
+  "lines": 476,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/config.rs",
+  "lines": 243,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/controller.rs",
+  "lines": 354,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/decorations.rs",
+  "lines": 167,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/diff.rs",
+  "lines": 198,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/error.rs",
+  "lines": 81,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/input.rs",
+  "lines": 595,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/less.rs",
+  "lines": 132,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/lessopen.rs",
+  "lines": 496,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/lib.rs",
+  "lines": 65,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/line_range.rs",
+  "lines": 769,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/macros.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/nonprintable_notation.rs",
+  "lines": 25,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/output.rs",
+  "lines": 269,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/pager.rs",
+  "lines": 139,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/paging.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/preprocessor.rs",
+  "lines": 532,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/pretty_printer.rs",
+  "lines": 415,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/printer.rs",
+  "lines": 1026,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/style.rs",
+  "lines": 365,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/syntax_mapping/builtin.rs",
+  "lines": 92,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/syntax_mapping/ignored_suffixes.rs",
+  "lines": 110,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/syntax_mapping.rs",
+  "lines": 316,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/terminal.rs",
+  "lines": 83,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/theme.rs",
+  "lines": 571,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/vscreen.rs",
+  "lines": 1144,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "bat",
+  "file": "src/wrapping.rs",
+  "lines": 14,
   "stage": "equivalent",
   "detail": ""
  }

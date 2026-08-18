@@ -394,6 +394,26 @@ out = out.replace(&format!("\0{i}\0"), l)
 }
 out
 }
+fn in_macro_call(ctx &str) bool {
+mut stack: Vec<bool> := Vec::new()
+mut after_bang := false
+for ch in ctx.chars() {
+match ch {
+'!' => after_bang = true,
+'(' | '[' | '{' => {
+stack.push(after_bang)
+after_bang = false
+}
+')' | ']' | '}' => {
+stack.pop();
+after_bang = false
+}
+' ' => {}
+_ => after_bang = false,
+}
+}
+stack.iter().any(|m| *m)
+}
 fn convert_line(raw &str, siblings &[String], in_fields bool) String {
 static LETMUT: OnceLock<regex::Regex> = OnceLock::new()
 static LETPLAIN: OnceLock<regex::Regex> = OnceLock::new()
@@ -424,7 +444,8 @@ found := siblings.iter().filter_map(|s| rest.find(&format!("{s}::")).map(|i| (i,
 match found {
 Some((i, len)) => {
 before := &rest[..i]
-if strip_lits(before).len() == before.len() || !before.contains('"') {
+ctx := format!("{stripped}{before}")
+if !in_macro_call(&ctx) {
 stripped.push_str(before)
 rest = &rest[i + len..]
 } else {
