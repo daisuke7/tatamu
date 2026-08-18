@@ -230,6 +230,13 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "user-defined R type disables the alias", src: `struct R<const I: usize>;
+fn f(x Res<R<3>>) {
+g(x)
+}`, contains: ["Res<R<3>>"], excludes: ["Result<3"] },
+  { name: "impl for fn-pointer type is not a value context", src: `impl<R> FnRet for fn() -> R {
+type Output = R
+}`, contains: ["type Output = R;"] },
   { name: "macro call closer inside macro_rules stays verbatim", src: `macro_rules! m {
 () => {
 $crate::helper! { left = [],

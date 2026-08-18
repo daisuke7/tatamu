@@ -334,6 +334,9 @@ export function transpileMapped(src) {
   const lineMrSoft = [];
   const push = (text, n, priv = false, verbatim = false, mrSoft = false) => { lines.push(text); lineSrc.push(n); linePriv.push(priv); lineVerbatim.push(verbatim); lineMrSoft.push(mrSoft); };
 
+  // a user-defined type named `R` disables the R<T> alias for this file
+  const rDefined = /\b(struct|enum|type|union|trait)\s+R\b|\bas\s+R\b/.test(src);
+  const expandRIfEnabled = rDefined ? ((s) => s) : expandR;
   const extraUses = []; // from `#use path::To::Item` directives
   let inEnumBody = false;
   let enumDepth = 0;
@@ -386,7 +389,7 @@ export function transpileMapped(src) {
     let privItem = false;
     if (/^priv\s+/.test(line)) { privItem = true; line = line.replace(/^priv\s+/, ""); }
     // multi-line handling: struct/const/enum are line-scoped rules
-    const asStruct = line.startsWith("struct ") ? transformStruct(line) : null;
+    const asStruct = !inMacroRules && line.startsWith("struct ") ? transformStruct(line) : null;
     if (asStruct) {
       asStruct.lines.forEach((l, k) => push(l, n, privItem || asStruct.privFlags[k]));
       continue;
@@ -409,9 +412,9 @@ export function transpileMapped(src) {
       push(fields.map((f) => `${f.text},`).join(" "), n, anyPriv);
       continue;
     }
-    const asConst = line.startsWith("const ") ? transformConst(line) : null;
+    const asConst = !inMacroRules && line.startsWith("const ") ? transformConst(line) : null;
     if (asConst) { for (const l of asConst) push(l, n, privItem); continue; }
-    const asEnum = line.startsWith("enum ") ? transformEnumHeader(line) : null;
+    const asEnum = !inMacroRules && line.startsWith("enum ") ? transformEnumHeader(line) : null;
     if (asEnum) {
       for (const l of asEnum.lines) push(l, n, privItem);
       if (asEnum.open) { inEnumBody = true; enumDepth = 0; }
@@ -464,7 +467,7 @@ export function transpileMapped(src) {
     {
       const lits = [];
       const masked = line.replace(LIT_RE, (m) => { lits.push(m); return `\u0000${lits.length - 1}\u0000`; });
-      line = transformBindings(transformFnSigs(expandR(masked)))
+      line = transformBindings(transformFnSigs(expandRIfEnabled(masked)))
         .replace(/\u0000(\d+)\u0000/g, (_, k) => lits[Number(k)]);
     }
     push(line, n, privItem, inMacroRules && line === beforeTransforms, inMacroRules && line !== beforeTransforms);
@@ -532,7 +535,7 @@ export function transpileMapped(src) {
         if (/\bfn\b/.test(b)) return /->/.test(b) ? "fn-value" : "fn-unit";
       }
     }
-    if (/\bfn\b[^{]*->/.test(bare)) return "fn-value";
+    if (/\bfn\s+[A-Za-z_]\w*[^{]*->/.test(bare)) return "fn-value"; // named fn (not a fn-pointer type)
     if (/^fn\b/.test(bare)) return "fn-unit";
     // a match-arm block in value position (`… => {`) produces a value iff its parent does
     if (/=>\s*\{$/.test(bare) && VALUE_CONTEXTS.includes(stack[stack.length - 1])) return "value-arm";
@@ -570,7 +573,7 @@ export function transpileMapped(src) {
     if (lineMrSoft[i]) {
       // macro_rules body: token soup with Rust semicolons preserved — only
       // freshly expanded Tatamu bindings get one; keep the stack balanced
-      const semi = /^(let|use|const|static)\b/.test(bare) && !/[;{,([]$/.test(bare);
+      const semi = /^(let|use|const|static)\b/.test(bare) && !/[;{,(\[\])}]$/.test(bare);
       for (const ch of bare) {
         if (ch === "{" || ch === "[") stack.push("other");
         else if (ch === "(") stack.push("paren");

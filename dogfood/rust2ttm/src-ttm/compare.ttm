@@ -1,3 +1,4 @@
+#use std::sync::OnceLock
 fn strip_macro_trailing_commas(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
 mut trees: Vec<proc_macro2::TokenTree> := ts.into_iter().map(|t| {
 match t {
@@ -187,6 +188,7 @@ c.args = args.into_iter().collect()
 syn::visit_mut::visit_expr_method_call_mut(self, c)
 }
 fn visit_angle_bracketed_generic_arguments_mut(&mut self, a &mut syn::AngleBracketedGenericArguments) {
+a.colon2_token = None
 if a.args.trailing_punct() {
 items: Vec<syn::GenericArgument> := a.args.iter().cloned().collect()
 a.args = items.into_iter().collect()
@@ -278,15 +280,30 @@ out.push(tt)
 out.into_iter().collect()
 }
 fn flatten_spacing(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
-ts.into_iter().map(|tt| match tt {
+static FLOAT_RE: OnceLock<regex::Regex> = OnceLock::new()
+mut out: Vec<proc_macro2::TokenTree> := Vec::new()
+for tt in ts {
+match tt {
 proc_macro2::TokenTree::Group(g) => {
-proc_macro2::TokenTree::Group(proc_macro2::Group::new(g.delimiter(), flatten_spacing(g.stream())))
+out.push(proc_macro2::TokenTree::Group(proc_macro2::Group::new(g.delimiter(), flatten_spacing(g.stream()))))
 }
 proc_macro2::TokenTree::Punct(p) => {
-proc_macro2::TokenTree::Punct(proc_macro2::Punct::new(p.as_char(), proc_macro2::Spacing::Alone))
+out.push(proc_macro2::TokenTree::Punct(proc_macro2::Punct::new(p.as_char(), proc_macro2::Spacing::Alone)))
 }
-other => other,
-}).collect()
+proc_macro2::TokenTree::Literal(l) => {
+s := l.to_string()
+if let Some(c) = crate::textual::re(r"^(\d+)\.(\d+)$", &FLOAT_RE).captures(&s) {
+out.push(proc_macro2::TokenTree::Literal(proc_macro2::Literal::u64_unsuffixed(c[1].parse().unwrap_or(0))))
+out.push(proc_macro2::TokenTree::Punct(proc_macro2::Punct::new('.', proc_macro2::Spacing::Alone)))
+out.push(proc_macro2::TokenTree::Literal(proc_macro2::Literal::u64_unsuffixed(c[2].parse().unwrap_or(0))))
+} else {
+out.push(proc_macro2::TokenTree::Literal(l))
+}
+}
+other => out.push(other),
+}
+}
+out.into_iter().collect()
 }
 fn merge_derives(attrs &mut Vec<syn::Attribute>) {
 mut names: Vec<String> := Vec::new()
