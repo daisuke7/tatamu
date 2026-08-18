@@ -1,0 +1,19 @@
+#use std::fmt::Write
+enum Format {Table, Json {pretty bool}}
+fn render(stats &[FileStat], fmt &Format) R<String> {
+match fmt {
+Format::Table => {
+mut out := String::new()
+writeln!(out, "{:<44} {:>6} {:>4} {:>4} {:>4} {:>7}", "file", "lines", "fns", "strs", "enms", "tokens")?
+for s in stats {
+writeln!(out, "{:<44} {:>6} {:>4} {:>4} {:>4} {:>7}", s.path, s.lines, s.fns, s.structs, s.enums, s.tokens)?
+}
+total: usize := stats.iter().map(|s| s.tokens).sum()
+writeln!(out, "{} files, total tokens: {}", stats.len(), total)?
+Ok(out)
+}
+Format::Json {pretty} => {
+if *pretty {Ok(serde_json::to_string_pretty(stats)?)} else {Ok(serde_json::to_string(stats)?)}
+}
+}
+}

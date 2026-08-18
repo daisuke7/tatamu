@@ -1,0 +1,42 @@
+#use std::fmt::Write
+fn render(blocks &[Block]) String {
+mut out := String::new()
+for b in blocks {
+match b {
+Block::Heading {level, text} => {
+writeln!(out, "<h{level}>{}</h{level}>", render_inline(text)).unwrap()
+}
+Block::Para(text) => {
+writeln!(out, "<p>{}</p>", render_inline(text)).unwrap()
+}
+Block::Code {lang, body} => {
+cls := if lang.is_empty() {String::new()} else {format!(" class=\"lang-{lang}\"")}
+writeln!(out, "<pre><code{cls}>{}</code></pre>", escape(body)).unwrap()
+}
+Block::List(items) => {
+writeln!(out, "<ul>").unwrap()
+for item in items {
+writeln!(out, "<li>{}</li>", render_inline(item)).unwrap()
+}
+writeln!(out, "</ul>").unwrap()
+}
+Block::OList(items) => {
+writeln!(out, "<ol>").unwrap()
+for item in items {
+writeln!(out, "<li>{}</li>", render_inline(item)).unwrap()
+}
+writeln!(out, "</ol>").unwrap()
+}
+Block::Quote(text) => {
+writeln!(out, "<blockquote>{}</blockquote>", render_inline(text)).unwrap()
+}
+Block::Rule => {
+writeln!(out, "<hr>").unwrap()
+}
+}
+}
+out
+}
+fn to_html(src &str) String {
+render(&parse_blocks(src))
+}

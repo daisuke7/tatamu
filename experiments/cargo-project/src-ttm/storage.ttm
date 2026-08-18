@@ -1,0 +1,15 @@
+fn save(path &str, items &[Item]) R<()> {
+lines: Vec<String> := items.iter().map(|i| format!("{},{},{}", i.name, i.qty, i.price)).collect()
+fs::write(path, lines.join("\n"))?
+Ok(())
+}
+fn load(path &str) R<Vec<Item>> {
+text := fs::read_to_string(path)?
+mut items := Vec::new()
+for line in text.lines() {
+parts: Vec<_> := line.split(',').collect()
+if parts.len() != 3 {continue}
+items.push(Item {name: parts[0].to_string(), qty: parts[1].parse()?, price: parts[2].parse()?})
+}
+Ok(items)
+}

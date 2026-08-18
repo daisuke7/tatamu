@@ -1,0 +1,21 @@
+struct Config +Debug,Clone {host String, port u16, verbose bool}
+fn parse(text &str) R<Config> {
+mut map := HashMap::new()
+for line in text.lines() {
+line := line.trim()
+if line.is_empty() || line.starts_with('#') {continue}
+(key, value) := line.split_once('=').ok_or("missing '='")?
+map.insert(key.trim().to_string(), value.trim().to_string())
+}
+Ok(Config {
+host: map.get("host").cloned().unwrap_or_else(|| "localhost".into()),
+port: map.get("port").map(|v| v.parse()).transpose()?.unwrap_or(8080),
+verbose: map.get("verbose").map(|v| v == "true").unwrap_or(false),
+})
+}
+fn main() R<()> {
+text := fs::read_to_string("app.conf")?
+config := parse(&text)?
+println!("{config:?}")
+Ok(())
+}

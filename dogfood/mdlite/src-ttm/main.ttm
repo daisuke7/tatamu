@@ -1,0 +1,6 @@
+fn main() R<()> {
+path := env::args().nth(1).ok_or("usage: mdlite <file.md>")?
+src := fs::read_to_string(&path)?
+print!("{}", to_html(&src))
+Ok(())
+}

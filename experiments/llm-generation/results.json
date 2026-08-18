@@ -1,0 +1,311 @@
+{
+  "fable": {
+    "rust": {
+      "tasks": {
+        "anagram": {
+          "tokens": 153
+        },
+        "csvavg": {
+          "tokens": 209
+        },
+        "inventory": {
+          "tokens": 263
+        },
+        "dedup": {
+          "tokens": 111
+        },
+        "fib": {
+          "tokens": 141
+        },
+        "rpn": {
+          "tokens": 297
+        }
+      },
+      "totalTokens": 1174,
+      "missing": []
+    },
+    "tatamu": {
+      "tasks": {
+        "anagram": {
+          "tokens": 90,
+          "violations": {},
+          "violationCount": 0
+        },
+        "csvavg": {
+          "tokens": 115,
+          "violations": {},
+          "violationCount": 0
+        },
+        "inventory": {
+          "tokens": 204,
+          "violations": {},
+          "violationCount": 0
+        },
+        "dedup": {
+          "tokens": 68,
+          "violations": {},
+          "violationCount": 0
+        },
+        "fib": {
+          "tokens": 109,
+          "violations": {},
+          "violationCount": 0
+        },
+        "rpn": {
+          "tokens": 176,
+          "violations": {},
+          "violationCount": 0
+        }
+      },
+      "totalTokens": 762,
+      "missing": []
+    }
+  },
+  "haiku": {
+    "rust": {
+      "tasks": {
+        "anagram": {
+          "tokens": 146
+        },
+        "csvavg": {
+          "tokens": 247
+        },
+        "inventory": {
+          "tokens": 259
+        },
+        "dedup": {
+          "tokens": 134
+        },
+        "fib": {
+          "tokens": 155
+        },
+        "rpn": {
+          "tokens": 299
+        }
+      },
+      "totalTokens": 1240,
+      "missing": []
+    },
+    "tatamu": {
+      "tasks": {
+        "anagram": {
+          "tokens": 108,
+          "violations": {
+            "S7:no-turbofish": [
+              "args := env::args().collect::<Vec<_>>();",
+              "mut chars1 := word1.chars().collect::<Vec<_>>();",
+              "mut chars2 := word2.chars().collect::<Vec<_>>();"
+            ],
+            "F2:no-trailing-semicolon": [
+              "args := env::args().collect::<Vec<_>>();",
+              "word1 := args[1].to_lowercase();",
+              "word2 := args[2].to_lowercase();",
+              "mut chars1 := word1.chars().collect::<Vec<_>>();",
+              "mut chars2 := word2.chars().collect::<Vec<_>>();",
+              "chars1.sort();",
+              "chars2.sort();",
+              "println!(\"{}\", chars1 == chars2);"
+            ]
+          },
+          "violationCount": 11
+        },
+        "csvavg": {
+          "tokens": 125,
+          "violations": {
+            "S7:no-turbofish": [
+              "parts := line.split(',').collect::<Vec<_>>();",
+              "if parts.len() > 1 {val := parts[1].trim().parse::<f64>()?; sum += val; count += 1}"
+            ],
+            "F2:no-trailing-semicolon": [
+              "path := env::args().nth(1).ok_or(\"usage: csvavg <file>\")?;",
+              "text := fs::read_to_string(&path)?;",
+              "mut lines := text.lines();",
+              "lines.next();",
+              "mut sum := 0.0;",
+              "mut count := 0;",
+              "parts := line.split(',').collect::<Vec<_>>();",
+              "println!(\"{:.2}\", sum / count as f64);"
+            ]
+          },
+          "violationCount": 10
+        },
+        "inventory": {
+          "tokens": 206,
+          "violations": {
+            "F2:no-trailing-semicolon": [
+              "mut items := vec![Item {name: \"apple\".into(), qty: 10, price: 1.5}, Item {name: \"banana\".into(), qty: 20, price: 0.5}, Item {name: \"cherry\".into(), qty: 5, price: 3.0}, Item {name: \"date\".into(), qty: 8, price: 2.0}, Item {name: \"elderberry\".into(), qty: 12, price: 4.0}];",
+              "items.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap_or(std::cmp::Ordering::Equal));"
+            ]
+          },
+          "violationCount": 2
+        },
+        "dedup": {
+          "tokens": 67,
+          "violations": {
+            "F2:no-trailing-semicolon": [
+              "path := env::args().nth(1).ok_or(\"usage: dedup <file>\")?;",
+              "text := fs::read_to_string(&path)?;",
+              "mut seen := HashSet::new();"
+            ]
+          },
+          "violationCount": 3
+        },
+        "fib": {
+          "tokens": 112,
+          "violations": {
+            "F2:no-trailing-semicolon": [
+              "result := if n <= 1 {n} else {fib(n - 1, memo) + fib(n - 2, memo)};",
+              "memo.insert(n, result);",
+              "mut memo := HashMap::new();"
+            ]
+          },
+          "violationCount": 3
+        },
+        "rpn": {
+          "tokens": 186,
+          "violations": {
+            "S7:no-turbofish": [
+              "if let Ok(num) = token.parse::<f64>() {stack.push(num)} else {"
+            ],
+            "F2:no-trailing-semicolon": [
+              "input := env::args().nth(1).ok_or(\"usage: rpn <expression>\")?;",
+              "mut stack := Vec::new();",
+              "b := stack.pop().unwrap();",
+              "a := stack.pop().unwrap();",
+              "result := match token {\"+\" => a + b, \"-\" => a - b, \"*\" => a * b, \"/\" => if b == 0.0 {return Err(\"division by zero\".into())} else {a / b}, _ => return Err(\"unknown operator\".into()),};",
+              "stack.push(result);",
+              "println!(\"{}\", stack[0]);"
+            ]
+          },
+          "violationCount": 8
+        }
+      },
+      "totalTokens": 804,
+      "missing": []
+    }
+  },
+  "opus": {
+    "rust": {
+      "tasks": {
+        "anagram": {
+          "tokens": 140
+        },
+        "csvavg": {
+          "tokens": 285
+        },
+        "inventory": {
+          "tokens": 234
+        },
+        "dedup": {
+          "tokens": 139
+        },
+        "fib": {
+          "tokens": 140
+        },
+        "rpn": {
+          "tokens": 337
+        }
+      },
+      "totalTokens": 1275,
+      "missing": []
+    },
+    "tatamu": {
+      "tasks": {
+        "anagram": {
+          "tokens": 93,
+          "violations": {},
+          "violationCount": 0
+        },
+        "csvavg": {
+          "tokens": 144,
+          "violations": {},
+          "violationCount": 0
+        },
+        "inventory": {
+          "tokens": 207,
+          "violations": {},
+          "violationCount": 0
+        },
+        "dedup": {
+          "tokens": 68,
+          "violations": {},
+          "violationCount": 0
+        },
+        "fib": {
+          "tokens": 110,
+          "violations": {},
+          "violationCount": 0
+        },
+        "rpn": {
+          "tokens": 201,
+          "violations": {},
+          "violationCount": 0
+        }
+      },
+      "totalTokens": 823,
+      "missing": []
+    }
+  },
+  "sonnet": {
+    "rust": {
+      "tasks": {
+        "anagram": {
+          "tokens": 132
+        },
+        "csvavg": {
+          "tokens": 329
+        },
+        "inventory": {
+          "tokens": 261
+        },
+        "dedup": {
+          "tokens": 171
+        },
+        "fib": {
+          "tokens": 151
+        },
+        "rpn": {
+          "tokens": 345
+        }
+      },
+      "totalTokens": 1389,
+      "missing": []
+    },
+    "tatamu": {
+      "tasks": {
+        "anagram": {
+          "tokens": 63,
+          "violations": {},
+          "violationCount": 0
+        },
+        "csvavg": {
+          "tokens": 115,
+          "violations": {},
+          "violationCount": 0
+        },
+        "inventory": {
+          "tokens": 210,
+          "violations": {},
+          "violationCount": 0
+        },
+        "dedup": {
+          "tokens": 70,
+          "violations": {},
+          "violationCount": 0
+        },
+        "fib": {
+          "tokens": 110,
+          "violations": {},
+          "violationCount": 0
+        },
+        "rpn": {
+          "tokens": 194,
+          "violations": {},
+          "violationCount": 0
+        }
+      },
+      "totalTokens": 762,
+      "missing": []
+    }
+  }
+}

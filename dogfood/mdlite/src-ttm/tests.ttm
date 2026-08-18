@@ -1,0 +1,52 @@
+#[test]
+fn heading() {
+assert_eq!(to_html("# Hi"), "<h1>Hi</h1>\n")
+assert_eq!(to_html("### Deep"), "<h3>Deep</h3>\n")
+}
+#[test]
+fn not_a_heading_without_space() {
+assert_eq!(to_html("#nope"), "<p>#nope</p>\n")
+}
+#[test]
+fn paragraph_joins_lines() {
+assert_eq!(to_html("one\ntwo"), "<p>one two</p>\n")
+}
+#[test]
+fn inline_styles() {
+assert_eq!(to_html("a **b** *c* `d`"), "<p>a <strong>b</strong> <em>c</em> <code>d</code></p>\n")
+}
+#[test]
+fn links() {
+assert_eq!(to_html("see [docs](https://x.dev)"), "<p>see <a href=\"https://x.dev\">docs</a></p>\n")
+}
+#[test]
+fn escaping() {
+assert_eq!(to_html("a < b & c"), "<p>a &lt; b &amp; c</p>\n")
+assert_eq!(to_html("`<tag>`"), "<p><code>&lt;tag&gt;</code></p>\n")
+}
+#[test]
+fn unordered_list() {
+assert_eq!(to_html("- a\n- b"), "<ul>\n<li>a</li>\n<li>b</li>\n</ul>\n")
+}
+#[test]
+fn ordered_list() {
+assert_eq!(to_html("1. a\n2. b"), "<ol>\n<li>a</li>\n<li>b</li>\n</ol>\n")
+}
+#[test]
+fn quote_merges() {
+assert_eq!(to_html("> a\n> b"), "<blockquote>a b</blockquote>\n")
+}
+#[test]
+fn code_block() {
+assert_eq!(to_html("```rs\nlet x = 1;\n```"), "<pre><code class=\"lang-rs\">let x = 1;\n</code></pre>\n")
+}
+#[test]
+fn rule_and_mixed() {
+md := "# T\n\npara\n\n---\n\n- i"
+assert_eq!(to_html(md), "<h1>T</h1>\n<p>para</p>\n<hr>\n<ul>\n<li>i</li>\n</ul>\n")
+}
+#[test]
+fn unclosed_markers_are_literal() {
+assert_eq!(to_html("a **b"), "<p>a **b</p>\n")
+assert_eq!(to_html("a `b"), "<p>a `b</p>\n")
+}

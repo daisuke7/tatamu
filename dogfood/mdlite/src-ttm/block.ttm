@@ -1,0 +1,97 @@
+enum Block +Debug,Clone,PartialEq {
+Heading {level usize, text String},
+Para(String),
+Code {lang String, body String},
+List(Vec<String>),
+OList(Vec<String>),
+Quote(String),
+Rule,
+}
+fn parse_blocks(src &str) Vec<Block> {
+mut blocks := Vec::new()
+mut lines := src.lines().peekable()
+while let Some(line) = lines.next() {
+t := line.trim_end()
+if t.trim().is_empty() {continue}
+if t.starts_with("```") {
+lang := t.trim_start_matches("```").trim().to_string()
+mut body := String::new()
+while let Some(l) = lines.next() {
+if l.trim_end().starts_with("```") {break}
+body.push_str(l)
+body.push('\n')
+}
+blocks.push(Block::Code {lang, body})
+continue
+}
+if t == "---" {
+blocks.push(Block::Rule)
+continue
+}
+if t.starts_with('#') {
+level := t.chars().take_while(|c| *c == '#').count()
+if level <= 6 && t.chars().nth(level) == Some(' ') {
+blocks.push(Block::Heading {level, text: t[level + 1..].trim().to_string()})
+continue
+}
+}
+if t.starts_with("> ") {
+mut quote := t[2..].to_string()
+while let Some(&next) = lines.peek() {
+n := next.trim_end()
+if n.starts_with("> ") {
+quote.push(' ')
+quote.push_str(&n[2..])
+lines.next()
+} else {break}
+}
+blocks.push(Block::Quote(quote))
+continue
+}
+if t.starts_with("- ") {
+blocks.push(Block::List(collect_items(t, &mut lines, "- ")))
+continue
+}
+if is_ordered(t) {
+mut items := vec![after_marker(t).to_string()]
+while let Some(&next) = lines.peek() {
+n := next.trim_end()
+if is_ordered(n) {
+items.push(after_marker(n).to_string())
+lines.next()
+} else {break}
+}
+blocks.push(Block::OList(items))
+continue
+}
+mut para := t.trim().to_string()
+while let Some(&next) = lines.peek() {
+n := next.trim()
+if n.is_empty() || n.starts_with('#') || n.starts_with("- ") || n.starts_with("```") || n.starts_with("> ") || n == "---" || is_ordered(n) {break}
+para.push(' ')
+para.push_str(n)
+lines.next()
+}
+blocks.push(Block::Para(para))
+}
+blocks
+}
+fn collect_items<'a>(first &str, lines &mut std::iter::Peekable<std::str::Lines<'a>>, marker &str) Vec<String> {
+mut items := vec![first[marker.len()..].to_string()]
+while let Some(&next) = lines.peek() {
+n := next.trim_end()
+if n.starts_with(marker) {
+items.push(n[marker.len()..].to_string())
+lines.next()
+} else {break}
+}
+items
+}
+fn is_ordered(t &str) bool {
+digits := t.chars().take_while(|c| c.is_ascii_digit()).count()
+digits > 0 && t[digits..].starts_with(". ")
+}
+fn after_marker(t &str) &str {
+digits := t.chars().take_while(|c| c.is_ascii_digit()).count()
+&t[digits + 2..]
+}

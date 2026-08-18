@@ -1,0 +1,9 @@
+struct Item +Debug,Clone {name String, qty u32, price f64}
+impl Item {
+fn value(&self) f64 {self.qty as f64 * self.price}
+}
+impl fmt::Display for Item {
+fn fmt(&self, f &mut fmt::Formatter) fmt::Result {
+write!(f, "{} x{} = {:.2}", self.name, self.qty, self.value())
+}
+}

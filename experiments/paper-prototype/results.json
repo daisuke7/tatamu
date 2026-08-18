@@ -1,0 +1,104 @@
+[
+  {
+    "name": "config_parse",
+    "o200k": {
+      "rust": 272,
+      "rust_min": 238,
+      "ori": 192,
+      "ori_vs_rust_pct": 29.4,
+      "ori_vs_min_pct": 19.3
+    },
+    "claude": {
+      "rust": 328,
+      "rust_min": 309,
+      "ori": 251,
+      "ori_vs_rust_pct": 23.5,
+      "ori_vs_min_pct": 18.8
+    }
+  },
+  {
+    "name": "geometry",
+    "o200k": {
+      "rust": 220,
+      "rust_min": 192,
+      "ori": 163,
+      "ori_vs_rust_pct": 25.9,
+      "ori_vs_min_pct": 15.1
+    },
+    "claude": {
+      "rust": 249,
+      "rust_min": 231,
+      "ori": 180,
+      "ori_vs_rust_pct": 27.7,
+      "ori_vs_min_pct": 22.1
+    }
+  },
+  {
+    "name": "stats",
+    "o200k": {
+      "rust": 275,
+      "rust_min": 241,
+      "ori": 228,
+      "ori_vs_rust_pct": 17.1,
+      "ori_vs_min_pct": 5.4
+    },
+    "claude": {
+      "rust": 304,
+      "rust_min": 279,
+      "ori": 260,
+      "ori_vs_rust_pct": 14.5,
+      "ori_vs_min_pct": 6.8
+    }
+  },
+  {
+    "name": "todo",
+    "o200k": {
+      "rust": 222,
+      "rust_min": 198,
+      "ori": 176,
+      "ori_vs_rust_pct": 20.7,
+      "ori_vs_min_pct": 11.1
+    },
+    "claude": {
+      "rust": 263,
+      "rust_min": 257,
+      "ori": 210,
+      "ori_vs_rust_pct": 20.2,
+      "ori_vs_min_pct": 18.3
+    }
+  },
+  {
+    "name": "wordcount",
+    "o200k": {
+      "rust": 221,
+      "rust_min": 173,
+      "ori": 138,
+      "ori_vs_rust_pct": 37.6,
+      "ori_vs_min_pct": 20.2
+    },
+    "claude": {
+      "rust": 242,
+      "rust_min": 204,
+      "ori": 161,
+      "ori_vs_rust_pct": 33.5,
+      "ori_vs_min_pct": 21.1
+    }
+  },
+  {
+    "name": "TOTAL",
+    "o200k": {
+      "rust": 1210,
+      "rust_min": 1042,
+      "ori": 897,
+      "ori_vs_rust_pct": 25.9,
+      "ori_vs_min_pct": 13.9
+    },
+    "claude": {
+      "rust": 1386,
+      "rust_min": 1280,
+      "ori": 1062,
+      "ori_vs_rust_pct": 23.4,
+      "ori_vs_min_pct": 17
+    }
+  }
+]

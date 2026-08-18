@@ -1,0 +1,21 @@
+# deps / build artifacts
+node_modules/
+target/
+build/
+.dart_tool/
+
+# binaries (regenerate: see dogfood/mdlite/flutter-kit/README.md)
+*.a
+*.so
+*.dylib
+*.wasm
+dogfood/mdlite/flutter-kit/flutter-project/ios/libs/
+
+# third-party source samples for the token experiments
+# (re-fetch: git clone --depth 1 BurntSushi/ripgrep serde-rs/serde clap-rs/clap,
+#  then copy 2-60KB non-test .rs files — see docs/01-token-analysis.md)
+experiments/token-analysis/samples/
+
+# misc
+.DS_Store
+*.log

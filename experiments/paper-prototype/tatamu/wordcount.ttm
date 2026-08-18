@@ -1,0 +1,12 @@
+fn main() {
+path := env::args().nth(1).expect("usage: wordcount <file>")
+text := fs::read_to_string(&path).expect("failed to read file")
+mut counts := HashMap::new()
+for word in text.split_whitespace() {
+key := word.to_lowercase()
+*counts.entry(key).or_insert(0) += 1
+}
+mut items: Vec<_> := counts.into_iter().collect()
+items.sort_by(|a, b| b.1.cmp(&a.1))
+for (word, count) in items.iter().take(10) {println!("{count:>6}  {word}")}
+}

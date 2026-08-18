@@ -1,0 +1,27 @@
+fn mean(data: &[f64]) -> f64 {
+    data.iter().sum::<f64>() / data.len() as f64
+}
+
+fn median(data: &mut Vec<f64>) -> f64 {
+    // Sort, then take the middle element (or average of the two middles).
+    data.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    let mid = data.len() / 2;
+    if data.len() % 2 == 0 {
+        (data[mid - 1] + data[mid]) / 2.0
+    } else {
+        data[mid]
+    }
+}
+
+fn stddev(data: &[f64]) -> f64 {
+    let m = mean(data);
+    let variance = data.iter().map(|x| (x - m).powi(2)).sum::<f64>() / data.len() as f64;
+    variance.sqrt()
+}
+
+fn main() {
+    let mut data = vec![2.0, 9.0, 4.0, 7.0, 5.0, 1.0, 8.0];
+    println!("mean   = {:.3}", mean(&data));
+    println!("stddev = {:.3}", stddev(&data));
+    println!("median = {:.3}", median(&mut data));
+}

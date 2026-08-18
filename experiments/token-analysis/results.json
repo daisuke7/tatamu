@@ -1,0 +1,459 @@
+{
+  "generatedNote": "fractional token attribution; see analyze.mjs",
+  "tokenizers": {
+    "o200k": {
+      "files": 90,
+      "chars": 1115664,
+      "tokens": 264843,
+      "mismatchedFiles": 0,
+      "tokensPer100Chars": 23.7,
+      "categorySharePct": {
+        "keyword": 4.6,
+        "ident": 26.8,
+        "punct": 18.9,
+        "whitespace": 21.5,
+        "comment": 21.9,
+        "string": 6.1,
+        "number": 0.3
+      },
+      "keyword": {
+        "occurrences": 15048,
+        "avgTokensPerKeyword": 0.81,
+        "sharePct": 4.6
+      },
+      "identifier": {
+        "occurrences": 53039,
+        "avgTokensPerIdent": 1.34,
+        "sharePct": 26.8
+      },
+      "lineTypeSharePct": {
+        "attribute": 3.1,
+        "import_mod": 1.9,
+        "blank": 0.3,
+        "comment": 23.6,
+        "code": 67.8,
+        "closing_delim": 3.3
+      },
+      "topIdentifiersByTotalCost": [
+        {
+          "name": "_serde",
+          "occurrences": 543,
+          "totalTokens": 816,
+          "tokensPerOcc": 1.5
+        },
+        {
+          "name": "de",
+          "occurrences": 596,
+          "totalTokens": 548.3,
+          "tokensPerOcc": 0.92
+        },
+        {
+          "name": "Error",
+          "occurrences": 547,
+          "totalTokens": 519.8,
+          "tokensPerOcc": 0.95
+        },
+        {
+          "name": "new",
+          "occurrences": 502,
+          "totalTokens": 483.3,
+          "tokensPerOcc": 0.96
+        },
+        {
+          "name": "Some",
+          "occurrences": 590,
+          "totalTokens": 479,
+          "tokensPerOcc": 0.81
+        },
+        {
+          "name": "path",
+          "occurrences": 526,
+          "totalTokens": 438.4,
+          "tokensPerOcc": 0.83
+        },
+        {
+          "name": "arg",
+          "occurrences": 520,
+          "totalTokens": 430.5,
+          "tokensPerOcc": 0.83
+        },
+        {
+          "name": "'",
+          "occurrences": 839,
+          "totalTokens": 417,
+          "tokensPerOcc": 0.5
+        },
+        {
+          "name": "cfg",
+          "occurrences": 420,
+          "totalTokens": 407.8,
+          "tokensPerOcc": 0.97
+        },
+        {
+          "name": "feature",
+          "occurrences": 446,
+          "totalTokens": 390.9,
+          "tokensPerOcc": 0.88
+        },
+        {
+          "name": "private",
+          "occurrences": 393,
+          "totalTokens": 387.1,
+          "tokensPerOcc": 0.99
+        },
+        {
+          "name": "Result",
+          "occurrences": 383,
+          "totalTokens": 354.4,
+          "tokensPerOcc": 0.93
+        },
+        {
+          "name": "std",
+          "occurrences": 443,
+          "totalTokens": 338.5,
+          "tokensPerOcc": 0.76
+        },
+        {
+          "name": "cmd",
+          "occurrences": 405,
+          "totalTokens": 318,
+          "tokensPerOcc": 0.79
+        },
+        {
+          "name": "assert_eq",
+          "occurrences": 166,
+          "totalTokens": 308.3,
+          "tokensPerOcc": 1.86
+        },
+        {
+          "name": "_",
+          "occurrences": 611,
+          "totalTokens": 307.6,
+          "tokensPerOcc": 0.5
+        },
+        {
+          "name": "None",
+          "occurrences": 367,
+          "totalTokens": 306.8,
+          "tokensPerOcc": 0.84
+        },
+        {
+          "name": "Ok",
+          "occurrences": 368,
+          "totalTokens": 292.3,
+          "tokensPerOcc": 0.79
+        },
+        {
+          "name": "name",
+          "occurrences": 339,
+          "totalTokens": 289,
+          "tokensPerOcc": 0.85
+        },
+        {
+          "name": "field",
+          "occurrences": 321,
+          "totalTokens": 289,
+          "tokensPerOcc": 0.9
+        },
+        {
+          "name": "a",
+          "occurrences": 319,
+          "totalTokens": 287.5,
+          "tokensPerOcc": 0.9
+        },
+        {
+          "name": "bool",
+          "occurrences": 352,
+          "totalTokens": 282.8,
+          "tokensPerOcc": 0.8
+        },
+        {
+          "name": "err",
+          "occurrences": 353,
+          "totalTokens": 279.3,
+          "tokensPerOcc": 0.79
+        },
+        {
+          "name": "str",
+          "occurrences": 309,
+          "totalTokens": 273,
+          "tokensPerOcc": 0.88
+        },
+        {
+          "name": "fmt",
+          "occurrences": 279,
+          "totalTokens": 251.3,
+          "tokensPerOcc": 0.9
+        }
+      ],
+      "perRepo": {
+        "clap": {
+          "files": 30,
+          "tokensPer100Chars": 23.8,
+          "categorySharePct": {
+            "keyword": 5.4,
+            "ident": 24.3,
+            "punct": 17.5,
+            "whitespace": 22.4,
+            "comment": 23.2,
+            "string": 6.9,
+            "number": 0.3
+          }
+        },
+        "ripgrep": {
+          "files": 30,
+          "tokensPer100Chars": 23.7,
+          "categorySharePct": {
+            "keyword": 3.9,
+            "ident": 22.3,
+            "punct": 16.2,
+            "whitespace": 19.3,
+            "comment": 29.7,
+            "string": 8.4,
+            "number": 0.2
+          }
+        },
+        "serde": {
+          "files": 30,
+          "tokensPer100Chars": 23.7,
+          "categorySharePct": {
+            "keyword": 4.7,
+            "ident": 34.1,
+            "punct": 23.1,
+            "whitespace": 23,
+            "comment": 11.9,
+            "string": 2.7,
+            "number": 0.4
+          }
+        }
+      }
+    },
+    "claude_legacy": {
+      "files": 90,
+      "chars": 1115664,
+      "tokens": 302050,
+      "mismatchedFiles": 4,
+      "tokensPer100Chars": 27.1,
+      "categorySharePct": {
+        "keyword": 4.1,
+        "ident": 26.8,
+        "punct": 21.6,
+        "whitespace": 16.3,
+        "comment": 20.4,
+        "string": 5.1,
+        "number": 0.2
+      },
+      "keyword": {
+        "occurrences": 14118,
+        "avgTokensPerKeyword": 0.88,
+        "sharePct": 4.1
+      },
+      "identifier": {
+        "occurrences": 50185,
+        "avgTokensPerIdent": 1.61,
+        "sharePct": 26.8
+      },
+      "lineTypeSharePct": {
+        "attribute": 3.4,
+        "import_mod": 2,
+        "blank": 0.5,
+        "comment": 22.8,
+        "code": 67.7,
+        "closing_delim": 3.6
+      },
+      "topIdentifiersByTotalCost": [
+        {
+          "name": "_serde",
+          "occurrences": 543,
+          "totalTokens": 1359,
+          "tokensPerOcc": 2.5
+        },
+        {
+          "name": "'",
+          "occurrences": 788,
+          "totalTokens": 742,
+          "tokensPerOcc": 0.94
+        },
+        {
+          "name": "de",
+          "occurrences": 596,
+          "totalTokens": 551.7,
+          "tokensPerOcc": 0.93
+        },
+        {
+          "name": "Error",
+          "occurrences": 547,
+          "totalTokens": 521.8,
+          "tokensPerOcc": 0.95
+        },
+        {
+          "name": "path",
+          "occurrences": 525,
+          "totalTokens": 489,
+          "tokensPerOcc": 0.93
+        },
+        {
+          "name": "new",
+          "occurrences": 490,
+          "totalTokens": 472,
+          "tokensPerOcc": 0.96
+        },
+        {
+          "name": "Some",
+          "occurrences": 553,
+          "totalTokens": 454.8,
+          "tokensPerOcc": 0.82
+        },
+        {
+          "name": "assert_eq",
+          "occurrences": 151,
+          "totalTokens": 431.4,
+          "tokensPerOcc": 2.86
+        },
+        {
+          "name": "feature",
+          "occurrences": 424,
+          "totalTokens": 414.6,
+          "tokensPerOcc": 0.98
+        },
+        {
+          "name": "cfg",
+          "occurrences": 395,
+          "totalTokens": 392.8,
+          "tokensPerOcc": 0.99
+        },
+        {
+          "name": "private",
+          "occurrences": 393,
+          "totalTokens": 387.9,
+          "tokensPerOcc": 0.99
+        },
+        {
+          "name": "arg",
+          "occurrences": 440,
+          "totalTokens": 378.3,
+          "tokensPerOcc": 0.86
+        },
+        {
+          "name": "Result",
+          "occurrences": 383,
+          "totalTokens": 354.4,
+          "tokensPerOcc": 0.93
+        },
+        {
+          "name": "is_none",
+          "occurrences": 115,
+          "totalTokens": 344.7,
+          "tokensPerOcc": 3
+        },
+        {
+          "name": "std",
+          "occurrences": 430,
+          "totalTokens": 338.8,
+          "tokensPerOcc": 0.79
+        },
+        {
+          "name": "name",
+          "occurrences": 333,
+          "totalTokens": 315,
+          "tokensPerOcc": 0.95
+        },
+        {
+          "name": "get_id",
+          "occurrences": 104,
+          "totalTokens": 311.8,
+          "tokensPerOcc": 3
+        },
+        {
+          "name": "usize",
+          "occurrences": 177,
+          "totalTokens": 304.5,
+          "tokensPerOcc": 1.72
+        },
+        {
+          "name": "err",
+          "occurrences": 353,
+          "totalTokens": 303,
+          "tokensPerOcc": 0.86
+        },
+        {
+          "name": "is_empty",
+          "occurrences": 101,
+          "totalTokens": 301.3,
+          "tokensPerOcc": 2.98
+        },
+        {
+          "name": "None",
+          "occurrences": 350,
+          "totalTokens": 295,
+          "tokensPerOcc": 0.84
+        },
+        {
+          "name": "styled",
+          "occurrences": 161,
+          "totalTokens": 295,
+          "tokensPerOcc": 1.83
+        },
+        {
+          "name": "Ok",
+          "occurrences": 368,
+          "totalTokens": 292.3,
+          "tokensPerOcc": 0.79
+        },
+        {
+          "name": "cmd",
+          "occurrences": 322,
+          "totalTokens": 285.8,
+          "tokensPerOcc": 0.89
+        },
+        {
+          "name": "StyledStr",
+          "occurrences": 117,
+          "totalTokens": 280.5,
+          "tokensPerOcc": 2.4
+        }
+      ],
+      "perRepo": {
+        "clap": {
+          "files": 30,
+          "tokensPer100Chars": 27.5,
+          "categorySharePct": {
+            "keyword": 4.5,
+            "ident": 21.9,
+            "punct": 18.3,
+            "whitespace": 15.1,
+            "comment": 21,
+            "string": 5.1,
+            "number": 0.1
+          }
+        },
+        "ripgrep": {
+          "files": 30,
+          "tokensPer100Chars": 26.4,
+          "categorySharePct": {
+            "keyword": 3.8,
+            "ident": 23.4,
+            "punct": 20.5,
+            "whitespace": 15.8,
+            "comment": 28.4,
+            "string": 7.9,
+            "number": 0.2
+          }
+        },
+        "serde": {
+          "files": 30,
+          "tokensPer100Chars": 27.4,
+          "categorySharePct": {
+            "keyword": 4.1,
+            "ident": 34.9,
+            "punct": 25.7,
+            "whitespace": 17.8,
+            "comment": 11.2,
+            "string": 2,
+            "number": 0.3
+          }
+        }
+      }
+    }
+  }
+}

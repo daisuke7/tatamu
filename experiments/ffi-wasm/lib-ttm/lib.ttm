@@ -1,0 +1,99 @@
+#crate staticlib,cdylib
+#[repr(C)]
+struct Segment {a Point, b Point}
+#[repr(C)]
+struct Point {x f64, y f64}
+#[repr(C)]
+enum Unit {Meters, Feet}
+#[repr(C)]
+enum Op {Nop, Scale {factor f64}, Translate {dx f64, dy f64}}
+#[no_mangle]
+extern "C" fn tatamu_apply(p *mut Point, op *const Op) {
+unsafe {
+match &*op {
+Op::Nop => {}
+Op::Scale {factor} => {
+(*p).x *= factor
+(*p).y *= factor
+}
+Op::Translate {dx, dy} => {
+(*p).x += dx
+(*p).y += dy
+}
+}
+}
+}
+#[repr(C)]
+struct Path {kind Unit, points [Point; 3], count u32}
+#[no_mangle]
+extern "C" fn tatamu_path_len(p *const Path) f64 {
+path := unsafe {&*p}
+n := (path.count as usize).min(3)
+mut total := 0.0
+for i in 1..n {
+dx := path.points[i].x - path.points[i - 1].x
+dy := path.points[i].y - path.points[i - 1].y
+total += (dx * dx + dy * dy).sqrt()
+}
+if matches!(path.kind, Unit::Feet) {total * 0.3048} else {total}
+}
+#[no_mangle]
+extern "C" fn tatamu_seg_len(s *const Segment) f64 {
+unsafe {
+dx := (*s).b.x - (*s).a.x
+dy := (*s).b.y - (*s).a.y
+(dx * dx + dy * dy).sqrt()
+}
+}
+#[no_mangle]
+extern "C" fn tatamu_add(a i64, b i64) i64 {a + b}
+#[no_mangle]
+extern "C" fn tatamu_dot(a Point, b Point) f64 {a.x * b.x + a.y * b.y}
+#[no_mangle]
+extern "C" fn tatamu_fib(n u32) u64 {
+mut a: u64 := 0
+mut b: u64 := 1
+for _ in 0..n {
+t := a + b
+a = b
+b = t
+}
+a
+}
+#[no_mangle]
+extern "C" fn tatamu_gcd(mut a u64, mut b u64) u64 {
+while b != 0 {
+t := b
+b = a % b
+a = t
+}
+a
+}
+#[no_mangle]
+extern "C" fn tatamu_alloc(len usize) *mut u8 {
+mut buf := Vec::with_capacity(len)
+ptr := buf.as_mut_ptr()
+mem::forget(buf)
+ptr
+}
+#[no_mangle]
+extern "C" fn tatamu_free(ptr *mut u8, cap usize) {
+unsafe {drop(Vec::from_raw_parts(ptr, 0, cap))}
+}
+#[no_mangle]
+extern "C" fn tatamu_upper(ptr *const u8, len usize) u64 {
+s := unsafe {std::str::from_utf8_unchecked(std::slice::from_raw_parts(ptr, len))}
+mut out := s.to_uppercase().into_bytes()
+out.shrink_to_fit()
+out_len := out.len() as u64
+out_ptr := out.as_ptr() as u64
+mem::forget(out)
+(out_ptr << 32) | out_len
+}
+#[no_mangle]
+extern "C" fn tatamu_midpoint(a *const Point, b *const Point, out *mut Point) {
+unsafe {
+(*out).x = ((*a).x + (*b).x) / 2.0
+(*out).y = ((*a).y + (*b).y) / 2.0
+}
+}

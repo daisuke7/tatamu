@@ -1,0 +1,4 @@
+#include "Generated.xcconfig"
+
+OTHER_LDFLAGS[sdk=iphoneos*] = $(inherited) -force_load "$(PROJECT_DIR)/libs/device/libmdlite.a"
+OTHER_LDFLAGS[sdk=iphonesimulator*] = $(inherited) -force_load "$(PROJECT_DIR)/libs/sim/libmdlite.a"

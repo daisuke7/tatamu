@@ -1,0 +1,188 @@
+// tatamuc unit-test corpus: diagnostics (--check / --doc-check) and transform
+// assertions. Fast (no rustc) — every historical bug gets a minimal case here.
+//
+// run: node transpiler/unit-tests.mjs
+
+import { transpile, diagnose, docCheck } from "./tatamuc.mjs";
+
+// ---------- diagnostics cases ----------
+// expect: [rule, line] pairs that MUST be present; forbid: rules that MUST NOT fire.
+
+const DIAG_CASES = [
+  // --- positives: each rule fires where it should ---
+  { name: "let binding", src: `fn main() {\nlet x = 5;\n}`, expect: [["no-let-binding", 2]] },
+  { name: "let mut binding", src: `fn main() {\nlet mut n = 0;\n}`, expect: [["no-let-binding", 2]] },
+  { name: "mut without walrus (opus bug)", src: `fn main() {\nmut stack = Vec::new()\n}`, expect: [["mut-binding-needs-walrus", 2]] },
+  { name: "use line", src: `use std::fs;\nfn main() {}`, expect: [["no-use-lines", 1]] },
+  { name: "arrow in signature", src: `fn area(r f64) -> f64 {r * r}`, expect: [["no-arrow", 1]] },
+  { name: "derive attribute", src: `#[derive(Debug, Clone)]\nstruct P {x f64}`, expect: [["derive-shorthand", 1]] },
+  { name: "pub keyword", src: `pub fn get() u8 {1}`, expect: [["no-pub", 1]] },
+  { name: "indentation", src: `fn main() {\n    x := 1\n}`, expect: [["no-indentation", 2]] },
+  { name: "trailing semicolon is info only", src: `fn main() {\nx := 1;\n}`, expect: [["trailing-semicolon", 2]], ok: true },
+  { name: "unbalanced braces", src: `fn main() {\nx := 1\n`, expect: [["unbalanced-delimiters", 3]] },
+
+  // --- negatives: rules must NOT fire (false-positive guards) ---
+  { name: "let inside string (mdlite bug)", src: `fn main() {\nassert_eq!(f("x"), "let x = 1;")\n}`, forbid: ["no-let-binding"], ok: true },
+  { name: "use inside string", src: `fn main() {\ns := "use std::fs;"\n}`, forbid: ["no-use-lines"], ok: true },
+  { name: "arrow inside string", src: `fn main() {\ns := "a -> b"\n}`, forbid: ["no-arrow"], ok: true },
+  { name: "pub inside string", src: `fn main() {\ns := "pub fn x"\n}`, forbid: ["no-pub"], ok: true },
+  { name: "if let is allowed", src: `fn main() {\nif let Some(v) = opt {use_it(v)}\n}`, forbid: ["no-let-binding"], ok: true },
+  { name: "while let is allowed", src: `fn main() {\nwhile let Some(v) = it.next() {go(v)}\n}`, forbid: ["no-let-binding"], ok: true },
+  { name: "else if let is allowed", src: `fn main() {\nif a {b()} else if let Some(v) = c {d(v)}\n}`, forbid: ["no-let-binding"], ok: true },
+  { name: "ident containing let", src: `fn main() {\ncompleted := 1\noutlet := 2\n}`, forbid: ["no-let-binding"], ok: true },
+  { name: "#use directive is not a use line", src: `#use std::fmt::Write\nfn main() {}`, forbid: ["no-use-lines"], ok: true },
+  { name: "char literal quotes do not break squashing", src: `fn main() {\nc := 'a'\nd := '"'\ns := "let x = 1;"\n}`, forbid: ["no-let-binding"], ok: true },
+  { name: "clean tatamu is clean", src: `struct P +Debug {x f64}\nfn area(p &P) f64 {p.x * p.x}\nfn main() {\np := P {x: 2.0}\nprintln!("{}", area(&p))\n}`, expect: [], ok: true },
+  // --- adversarial round 2 (found by probing) ---
+  { name: "line comment flagged", src: `fn main() {\nx := 1 // temp\n}`, expect: [["no-comments", 2]], ok: true },
+  { name: "block comment flagged", src: `fn main() {\n/* note */ x := 1\n}`, expect: [["no-comments", 2]], ok: true },
+  { name: "url in string is not a comment", src: `fn main() {\nu := "https://x.dev"\n}`, forbid: ["no-comments"], ok: true },
+  { name: "raw string contents squashed", src: `fn main() {\ns := r#"let x = 1; // and "quotes" too"#\n}`, forbid: ["no-let-binding", "no-comments"], ok: true },
+];
+
+// ---------- doc freshness cases ----------
+
+const DOC_CASES = [
+  {
+    name: "orphan section",
+    ttm: `fn run() {}`,
+    sidecar: `## gone\n\nOld docs.`,
+    expect: ["doc-orphan", "doc-missing"],
+  },
+  {
+    name: "stale signature",
+    ttm: `fn parse(s &str, strict bool) R<u8> {Ok(1)}`,
+    sidecar: "## parse\n\n`fn parse(s &str) R<u8>`\n\nParses.",
+    expect: ["doc-stale-signature"],
+  },
+  {
+    name: "missing doc is info",
+    ttm: `fn undocumented() {}`,
+    sidecar: ``,
+    expect: ["doc-missing"],
+    ok: true,
+  },
+  {
+    name: "matching signature is quiet",
+    ttm: `fn parse(s &str) R<u8> {Ok(1)}`,
+    sidecar: "## parse\n\n`fn parse(s &str) R<u8>`\n\nParses.",
+    expect: [],
+    ok: true,
+  },
+  {
+    name: "struct field change is stale",
+    ttm: `struct Config +Debug {host String, port u16, tls bool}`,
+    sidecar: "## Config\n\n`struct Config +Debug {host String, port u16}`\n\nConfig.",
+    expect: ["doc-stale-signature"],
+  },
+];
+
+// ---------- transform cases (contains / excludes on transpile output) ----------
+
+const TRANSFORM_CASES = [
+  // bindings
+  { name: "walrus", src: `fn main() {\nx := 5\n}`, contains: ["let x = 5;"] },
+  { name: "mut walrus", src: `fn main() {\nmut x := 5\n}`, contains: ["let mut x = 5;"] },
+  { name: "tuple walrus", src: `fn main() {\n(a, b) := f()\n}`, contains: ["let (a, b) = f();"] },
+  { name: "annotated walrus", src: `fn main() {\nxs: Vec<_> := it.collect()\n}`, contains: ["let xs: Vec<_> = it.collect();"] },
+  { name: "reassignment untouched", src: `fn main() {\nmut x := 1\nx = 2\n}`, contains: ["x = 2;"], excludes: ["let x = 2"] },
+  // signatures
+  { name: "fn signature", src: `fn add(a i64, b i64) i64 {a + b}`, contains: ["fn add(a: i64, b: i64) -> i64 {a + b}"] },
+  { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
+  { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
+  { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "extern C fn", src: `#[no_mangle]\nextern "C" fn add(a i64, b i64) i64 {a + b}`, contains: [`extern "C" fn add(a: i64, b: i64) -> i64`] },
+  { name: "trait method decl gets semicolon", src: `trait Area {\nfn area(&self) f64\n}`, contains: ["fn area(&self) -> f64;"] },
+  { name: "extern block decl", src: `extern "C" {\nfn c_mul(a i64, b i64) i64\n}`, contains: ["fn c_mul(a: i64, b: i64) -> i64;"] },
+  // structs / enums / const
+  { name: "struct shorthand", src: `struct P +Debug,Clone {x f64, y f64}`, contains: ["#[derive(Debug, Clone)]", "x: f64,", "y: f64,"] },
+  { name: "generic struct", src: `struct S<T> {v Vec<T>}`, contains: ["struct S<T> {", "v: Vec<T>,"] },
+  { name: "enum shorthand single line", src: `enum E +Clone {A(u8), B {x i32, y i32}}`, contains: ["#[derive(Clone)]", "enum E {A(u8), B {x: i32, y: i32}}"] },
+  { name: "enum shorthand multi line", src: `enum E {\nA(u8),\nB {x i32},\n}`, contains: ["B {x: i32},"] },
+  { name: "match pattern not colonized", src: `fn f(e &E) i32 {\nmatch e {\nE::B {x} => *x,\nE::A(_) => 0,\n}\n}`, contains: ["E::B {x} => *x,"] },
+  { name: "const", src: `const N usize = 3`, contains: ["const N: usize = 3;"] },
+  // aliases / imports
+  { name: "R alias", src: `fn m() R<()> {Ok(())}`, contains: ["-> Result<(), Box<dyn Error>>", "use std::error::Error;"] },
+  { name: "nested R alias", src: `fn m() R<Vec<u8>> {Ok(vec![])}`, contains: ["Result<Vec<u8>, Box<dyn Error>>"] },
+  { name: "prelude injection", src: `fn main() {\nm := HashMap::new()\nm.insert(1, 2)\n}`, contains: ["use std::collections::HashMap;"] },
+  { name: "#use injection", src: `#use std::fmt::Write\nfn main() {\nmut s := String::new()\nwrite!(s, "x").unwrap()\n}`, contains: ["use std::fmt::Write;"] },
+  { name: "no duplicate use", src: `#use std::fs\nfn main() {\nt := fs::read_to_string("x")\n}`, counts: [["use std::fs;", 1]] },
+  // semicolon heuristics — one case per historical hole
+  { name: "for-block statement gets semicolon", src: `fn main() {\nmut m := HashMap::new()\nfor k in 0..3 {\nm.insert(k, k)\n}\n}`, contains: ["m.insert(k, k);"] },
+  { name: "value-fn tail keeps no semicolon", src: `fn f() i32 {\nx := 1\nx + 1\n}`, contains: ["x + 1\n"], excludes: ["x + 1;"] },
+  { name: "unit-fn tail gets semicolon", src: `fn main() {\nprintln!("hi")\n}`, contains: [`println!("hi");`] },
+  { name: "inline let-if gets semicolon", src: `fn main() {\nr := if c {1} else {2}\nuse_it(r)\n}`, contains: ["let r = if c {1} else {2};"] },
+  { name: "multiline let-match closer", src: `fn main() {\nr := match t {\nA => 1,\nB => 2,\n}\nuse_it(r)\n}`, contains: ["};"] },
+  { name: "multiline vec closer", src: `fn main() {\nmut v := vec![\n1,\n2,\n]\nv.push(3)\n}`, contains: ["];"] },
+  { name: "multiline call-closure closer", src: `fn main() {\nfor i in 0..2 {\nthread::spawn(move || {\nwork(i)\n})\n}\n}`, contains: ["});"] },
+  { name: "unsafe tail block keeps value", src: `fn f(p *const u8) u8 {\nunsafe {\nx := *p\nx + 1\n}\n}`, contains: ["x + 1\n"], excludes: ["x + 1;", "};"] },
+  { name: "match tail in value fn", src: `fn f(e &E) i32 {\nmatch e {\nE::A => 1,\nE::B => 2,\n}\n}`, excludes: ["};"] },
+  { name: "value match arm block tail", src: `fn main() {\nr := match t {\nA => {\nx := f()\nx + 1\n}\nB => 0,\n}\nuse_it(r)\n}`, contains: ["x + 1\n"], excludes: ["x + 1;"] },
+  { name: "statement match arm gets semicolons", src: `fn main() {\nmatch t {\nA => {\nlog()\ndone()\n}\nB => other(),\n}\n}`, contains: ["log();", "done();"] },
+  // leniency & protection
+  { name: "lenient trailing semicolon", src: `fn main() {\nx := 1;\n}`, contains: ["let x = 1;"], excludes: [";;"] },
+  { name: "turbofish passthrough", src: `fn main() {\nv := xs.collect::<Vec<_>>()\n}`, contains: [".collect::<Vec<_>>()"] },
+  { name: "strings fully protected", src: `fn main() {\ns := "let x = 5; fn a() -> b {}"\n}`, contains: [`let s = "let x = 5; fn a() -> b {}";`] },
+  { name: "array repeat literal", src: `fn main() {\nmut v := [0u32; 3]\nv[0] = 1\n}`, contains: ["let mut v = [0u32; 3];"] },
+  // --- adversarial round 2 ---
+  { name: "raw string with quotes protected", src: `fn main() {\ns := r#"He said "hi" := x"#\n}`, contains: [`let s = r#"He said "hi" := x"#;`] },
+  { name: "raw string simple protected", src: `fn main() {\ns := r"a := b"\n}`, contains: [`let s = r"a := b";`] },
+  { name: "multi-line struct", src: `struct Link +Debug {\ntext String,\nurl String,\nend usize,\n}`, contains: ["#[derive(Debug)]", "text: String,", "url: String,", "end: usize,"] },
+  { name: "multi-line struct no derive", src: `struct P {\nx f64,\ny f64,\n}`, contains: ["x: f64,", "y: f64,"] },
+  { name: "unbalanced brackets inside strings don't corrupt the stack", src: `fn main() {\nassert_eq!(f("a [b"), "a [b")\nassert_eq!(f("x { y ("), "z")\n}`, excludes: ["};"] },
+  { name: "char literal paren doesn't corrupt the stack", src: `fn check(c char) bool {\nif c == '(' {\nreturn true\n}\nfalse\n}`, contains: ["false\n}"], excludes: ["false;"] },
+];
+
+// ---------- runner ----------
+
+let pass = 0, fail = 0;
+const problems = [];
+
+for (const c of DIAG_CASES) {
+  const diags = diagnose(c.src);
+  const errs = [];
+  for (const [rule, line] of c.expect ?? []) {
+    if (!diags.some((d) => d.rule === rule && (line === undefined || d.line === line))) {
+      errs.push(`expected ${rule}@${line} — got ${diags.map((d) => `${d.rule}@${d.line}`).join(", ") || "none"}`);
+    }
+  }
+  for (const rule of c.forbid ?? []) {
+    if (diags.some((d) => d.rule === rule)) errs.push(`forbidden rule ${rule} fired`);
+  }
+  if (c.ok !== undefined) {
+    const ok = !diags.some((d) => d.severity === "error");
+    if (ok !== c.ok) errs.push(`ok=${ok}, expected ${c.ok}`);
+  }
+  if (errs.length) { fail++; problems.push(`DIAG ${c.name}: ${errs.join("; ")}`); } else pass++;
+}
+
+for (const c of DOC_CASES) {
+  const diags = docCheck(c.ttm, c.sidecar);
+  const errs = [];
+  for (const rule of c.expect) {
+    if (!diags.some((d) => d.rule === rule)) errs.push(`expected ${rule} — got ${diags.map((d) => d.rule).join(", ") || "none"}`);
+  }
+  for (const d of diags) {
+    if (!c.expect.includes(d.rule)) errs.push(`unexpected ${d.rule}`);
+  }
+  if (errs.length) { fail++; problems.push(`DOC ${c.name}: ${errs.join("; ")}`); } else pass++;
+}
+
+for (const c of TRANSFORM_CASES) {
+  let out;
+  const errs = [];
+  try { out = transpile(c.src); } catch (e) { errs.push(`transpile threw: ${e.message}`); }
+  if (out !== undefined) {
+    for (const s of c.contains ?? []) if (!out.includes(s)) errs.push(`missing ${JSON.stringify(s)}`);
+    for (const s of c.excludes ?? []) if (out.includes(s)) errs.push(`must not contain ${JSON.stringify(s)}`);
+    for (const [s, n] of c.counts ?? []) {
+      const got = out.split(s).length - 1;
+      if (got !== n) errs.push(`${JSON.stringify(s)} appears ${got}x, expected ${n}`);
+    }
+  }
+  if (errs.length) { fail++; problems.push(`XFORM ${c.name}: ${errs.join("; ")}\n--- output ---\n${out ?? ""}`); } else pass++;
+}
+
+for (const p of problems) console.log(`FAIL ${p}\n`);
+console.log(`${pass}/${pass + fail} unit cases passed`);
+process.exit(fail ? 1 : 0);

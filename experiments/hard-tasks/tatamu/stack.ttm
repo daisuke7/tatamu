@@ -1,0 +1,19 @@
+struct Stack<T> {items Vec<T>}
+impl<T> Stack<T> {
+fn new() Self {Stack {items: Vec::new()}}
+fn push(&mut self, item T) {self.items.push(item)}
+fn pop(&mut self) Option<T> {self.items.pop()}
+fn peek(&self) Option<&T> {self.items.last()}
+}
+fn main() {
+mut ints := Stack::new()
+ints.push(1)
+ints.push(2)
+println!("{:?}", ints.peek())
+println!("{:?}", ints.pop())
+mut words := Stack::new()
+words.push("hello".to_string())
+words.push("world".to_string())
+println!("{:?}", words.peek())
+println!("{:?}", words.pop())
+}

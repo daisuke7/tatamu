@@ -1,0 +1,22 @@
+#use std::fmt::Write
+enum Shape +Debug,Clone {
+Circle(f64),
+Rect {w f64, h f64},
+Empty,
+}
+enum Tiny +Debug {A(u8), B {x i32, y i32}}
+fn area(s &Shape) f64 {
+match s {
+Shape::Circle(r) => PI * r * r,
+Shape::Rect {w, h} => w * h,
+Shape::Empty => 0.0,
+}
+}
+fn main() {
+shapes := vec![Shape::Circle(1.0), Shape::Rect {w: 2.0, h: 3.0}, Shape::Empty]
+mut out := String::new()
+for s in &shapes {
+write!(out, "{:?}: {:.2}\n", s, area(s)).unwrap()
+}
+print!("{out}")
+}

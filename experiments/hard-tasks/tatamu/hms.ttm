@@ -1,0 +1,22 @@
+struct Hms +Debug {h u32, m u32, s u32}
+impl fmt::Display for Hms {
+fn fmt(&self, f &mut fmt::Formatter) fmt::Result {
+write!(f, "{:02}:{:02}:{:02}", self.h, self.m, self.s)
+}
+}
+impl FromStr for Hms {
+type Err = String
+fn from_str(s &str) Result<Self, Self::Err> {
+parts: Vec<_> := s.split(':').collect()
+if parts.len() != 3 {return Err("expected h:m:s".to_string())}
+h := parts[0].parse().map_err(|_| "bad hours")?
+m := parts[1].parse().map_err(|_| "bad minutes")?
+sec := parts[2].parse().map_err(|_| "bad seconds")?
+Ok(Hms {h, m, s: sec})
+}
+}
+fn main() {
+arg := env::args().nth(1).expect("usage: hms <h:m:s>")
+hms: Hms := arg.parse().expect("parse failed")
+println!("{hms}")
+}

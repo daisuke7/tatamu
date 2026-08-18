@@ -1,0 +1,15 @@
+fn main() {
+data: Vec<i64> := (1..=1000).collect()
+(tx, rx) := mpsc::channel()
+for chunk in data.chunks(250) {
+tx := tx.clone()
+chunk := chunk.to_vec()
+thread::spawn(move || {
+sum: i64 := chunk.iter().sum()
+tx.send(sum).unwrap()
+})
+}
+drop(tx)
+total: i64 := rx.iter().sum()
+println!("{total}")
+}

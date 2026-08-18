@@ -1,0 +1,59 @@
+fn escape(s &str) String {
+s.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
+}
+fn render_inline(s &str) String {
+mut out := String::new()
+mut rest := s
+loop {
+if rest.is_empty() {break}
+if rest.starts_with("**") {
+if let Some(end) = rest[2..].find("**") {
+out.push_str("<strong>")
+out.push_str(&escape(&rest[2..2 + end]))
+out.push_str("</strong>")
+rest = &rest[end + 4..]
+continue
+}
+}
+if rest.starts_with('*') && !rest.starts_with("**") {
+if let Some(end) = rest[1..].find('*') {
+out.push_str("<em>")
+out.push_str(&escape(&rest[1..1 + end]))
+out.push_str("</em>")
+rest = &rest[end + 2..]
+continue
+}
+}
+if rest.starts_with('`') {
+if let Some(end) = rest[1..].find('`') {
+out.push_str("<code>")
+out.push_str(&escape(&rest[1..1 + end]))
+out.push_str("</code>")
+rest = &rest[end + 2..]
+continue
+}
+}
+if rest.starts_with('[') {
+if let Some(close) = rest.find(']') {
+if rest[close + 1..].starts_with('(') {
+if let Some(paren) = rest[close + 2..].find(')') {
+text := &rest[1..close]
+url := &rest[close + 2..close + 2 + paren]
+out.push_str(&format!("<a href=\"{}\">{}</a>", escape(url), escape(text)))
+rest = &rest[close + 3 + paren..]
+continue
+}
+}
+}
+}
+ch := rest.chars().next().unwrap()
+match ch {
+'&' => out.push_str("&amp;"),
+'<' => out.push_str("&lt;"),
+'>' => out.push_str("&gt;"),
+_ => out.push(ch),
+}
+rest = &rest[ch.len_utf8()..]
+}
+out
+}

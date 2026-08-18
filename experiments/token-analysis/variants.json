@@ -1,0 +1,54 @@
+{
+  "o200k": {
+    "original": {
+      "tokens": 264843,
+      "savingsPct": 0
+    },
+    "no_indent": {
+      "tokens": 237933,
+      "savingsPct": 10.2
+    },
+    "tab_indent": {
+      "tokens": 269209,
+      "savingsPct": -1.6
+    },
+    "no_comments": {
+      "tokens": 199217,
+      "savingsPct": 24.8
+    },
+    "minified": {
+      "tokens": 177221,
+      "savingsPct": 33.1
+    },
+    "joined": {
+      "tokens": 177140,
+      "savingsPct": 33.1
+    }
+  },
+  "claude_legacy": {
+    "original": {
+      "tokens": 302050,
+      "savingsPct": 0
+    },
+    "no_indent": {
+      "tokens": 303776,
+      "savingsPct": -0.6
+    },
+    "tab_indent": {
+      "tokens": 326483,
+      "savingsPct": -8.1
+    },
+    "no_comments": {
+      "tokens": 229986,
+      "savingsPct": 23.9
+    },
+    "minified": {
+      "tokens": 229839,
+      "savingsPct": 23.9
+    },
+    "joined": {
+      "tokens": 205665,
+      "savingsPct": 31.9
+    }
+  }
+}

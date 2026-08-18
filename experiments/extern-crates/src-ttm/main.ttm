@@ -1,0 +1,16 @@
+#dep serde 1 features=derive
+#dep serde_json 1
+struct Item +Debug,Clone,serde::Serialize,serde::Deserialize {name String, qty u32, price f64}
+fn main() R<()> {
+items := vec![
+Item {name: "hammer".to_string(), qty: 3, price: 12.5},
+Item {name: "nails".to_string(), qty: 500, price: 0.05},
+Item {name: "tatami mat".to_string(), qty: 6, price: 89.0},
+]
+json := serde_json::to_string_pretty(&items)?
+println!("{json}")
+back: Vec<Item> := serde_json::from_str(&json)?
+total: f64 := back.iter().map(|i| i.qty as f64 * i.price).sum()
+println!("total = {total:.2}")
+Ok(())
+}

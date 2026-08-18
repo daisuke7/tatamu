@@ -1,0 +1,10 @@
+extern "C" {
+fn c_mul(a i64, b i64) i64
+fn c_hypot(a f64, b f64) f64
+}
+fn main() {
+product := unsafe {c_mul(6, 7)}
+hyp := unsafe {c_hypot(3.0, 4.0)}
+println!("c_mul(6, 7) = {product}")
+println!("c_hypot(3, 4) = {hyp}")
+}

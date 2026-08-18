@@ -1,0 +1,9 @@
+fn main() R<()> {
+items := vec![Item {name: "hammer".to_string(), qty: 3, price: 12.5}, Item {name: "nails".to_string(), qty: 500, price: 0.05}]
+save("inventory.csv", &items)?
+loaded := load("inventory.csv")?
+for item in &loaded {println!("{item}")}
+total: f64 := loaded.iter().map(|i| i.value()).sum()
+println!("total = {total:.2}")
+Ok(())
+}

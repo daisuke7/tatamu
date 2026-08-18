@@ -1,0 +1,26 @@
+struct FileStat +Debug,Clone,serde::Serialize {path String, lines usize, fns usize, structs usize, enums usize, tokens usize}
+fn scan_file(path &str, bpe &tiktoken_rs::CoreBPE) R<FileStat> {
+text := fs::read_to_string(path)?
+mut fns := 0
+mut structs := 0
+mut enums := 0
+for line in text.lines() {
+t := line.trim_start()
+if t.starts_with("fn ") {fns += 1}
+if t.starts_with("struct ") {structs += 1}
+if t.starts_with("enum ") {enums += 1}
+}
+tokens := bpe.encode_with_special_tokens(&text).len()
+Ok(FileStat {path: path.to_string(), lines: text.lines().count(), fns, structs, enums, tokens})
+}
+fn scan_dir(dir &str, bpe &tiktoken_rs::CoreBPE) R<Vec<FileStat>> {
+mut out := Vec::new()
+for entry in fs::read_dir(dir)? {
+p := entry?.path()
+if p.extension().map(|e| e == "ttm").unwrap_or(false) {
+out.push(scan_file(p.to_str().ok_or("non-utf8 path")?, bpe)?)
+}
+}
+out.sort_by(|a, b| b.tokens.cmp(&a.tokens))
+Ok(out)
+}

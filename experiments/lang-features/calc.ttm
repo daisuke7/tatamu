@@ -1,0 +1,18 @@
+#use std::fmt::Write
+enum Expr {Num(f64), Add {l Box<Expr>, r Box<Expr>}, Mul {l Box<Expr>, r Box<Expr>}, Neg(Box<Expr>)}
+fn eval(e &Expr) f64 {
+match e {
+Expr::Num(n) => *n,
+Expr::Add {l, r} => eval(l) + eval(r),
+Expr::Mul {l, r} => eval(l) * eval(r),
+Expr::Neg(x) => -eval(x),
+}
+}
+fn main() {
+expr := Expr::Mul {l: Box::new(Expr::Add {l: Box::new(Expr::Num(2.0)), r: Box::new(Expr::Num(3.0))}), r: Box::new(Expr::Neg(Box::new(Expr::Num(4.0))))}
+result := eval(&expr)
+println!("{result}")
+mut report := String::new()
+write!(report, "result = {result}").unwrap()
+println!("{report}")
+}

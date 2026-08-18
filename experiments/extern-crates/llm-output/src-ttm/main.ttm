@@ -1,0 +1,20 @@
+#dep serde 1.0 features=derive
+#dep serde_json 1.0
+struct Expense +Debug,Clone,serde::Serialize,serde::Deserialize {name String, category String, amount f64}
+fn main() R<()> {
+path := env::args().nth(1).ok_or("usage: csv2json <file>")?
+text := fs::read_to_string(&path)?
+mut expenses: Vec<Expense> := Vec::new()
+for line in text.lines().skip(1) {
+line := line.trim()
+if line.is_empty() {continue}
+parts: Vec<&str> := line.split(',').collect()
+if parts.len() != 3 {return Err(format!("malformed row: {line}").into())}
+amount: f64 := parts[2].trim().parse().map_err(|_| format!("invalid amount: {line}"))?
+expenses.push(Expense {name: parts[0].trim().to_string(), category: parts[1].trim().to_string(), amount})
+}
+json := serde_json::to_string_pretty(&expenses)?
+println!("{json}")
+println!("count = {}", expenses.len())
+Ok(())
+}
