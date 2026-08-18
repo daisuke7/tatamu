@@ -50,4 +50,3 @@ node transpiler/compile-test.mjs [dir]          # rustc 型検査コーパス(�
 - ターゲット: CLI / wasm(gzip 17.9KB でブラウザ実行)/ iOS・Android(Flutter 実起動)
 - FFI: C 双方向、JS/TS/Dart バインディング自動生成、レイアウトは Rust `offset_of` const assert とパリティ証明
 - Rust → Tatamu: プロトタイプで idiomatic Rust 393行 → 変換 → テスト 17/17 通過(−31.4%)
->>>>>>> a507e45 (Tatamu PoC: AI-first Rust-transpiled language — spec v0.5, toolchain, experiments, dogfooding)
