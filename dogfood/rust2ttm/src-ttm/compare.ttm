@@ -170,7 +170,7 @@ return Some(syn::parse_quote!(()))
 if b.block.stmts.len() != 1 {return None}
 match &b.block.stmts[0] {
 syn::Stmt::Expr(e, _) => Some(e.clone()),
-syn::Stmt::Macro(m) if m.semi_token.is_none() => Some(syn::Expr::Macro(syn::ExprMacro {attrs: m.attrs.clone(), mac: m.mac.clone()})),
+syn::Stmt::Macro(m) => Some(syn::Expr::Macro(syn::ExprMacro {attrs: m.attrs.clone(), mac: m.mac.clone()})),
 _ => None,
 }
 }

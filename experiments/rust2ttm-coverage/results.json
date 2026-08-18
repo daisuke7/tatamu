@@ -955,8 +955,8 @@
   "crate": "serde",
   "file": "serde_derive/src/ser.rs",
   "lines": 1370,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `get_member`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -1039,8 +1039,8 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/debug_asserts.rs",
   "lines": 833,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `detect_duplicate_flags`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1312,8 +1312,8 @@
   "crate": "clap",
   "file": "clap_builder/src/parser/parser.rs",
   "lines": 1686,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1578,8 +1578,8 @@
   "crate": "clap",
   "file": "clap_derive/src/item.rs",
   "lines": 1493,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1599,8 +1599,8 @@
   "crate": "clap",
   "file": "clap_derive/src/utils/doc_comments.rs",
   "lines": 411,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
