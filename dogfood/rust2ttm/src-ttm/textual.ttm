@@ -89,7 +89,20 @@ lit_depth = 1
 }
 }
 if lit_depth > 0 {continue}
-depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
+mut depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
+if bare.ends_with(',') && !bare.contains('=') {
+mut ang := 0i64
+mut prev_ch := ' '
+for ch in bare.chars() {
+match ch {
+'<' => ang += 1,
+'>' if prev_ch != '-' => ang -= 1,
+_ => {}
+}
+prev_ch = ch
+}
+if ang > 0 {depth += ang}
+}
 static RE_CLOSURE_OPEN: OnceLock<regex::Regex> = OnceLock::new()
 open_pipes := count_of(&bare, &['|']) % 2 == 1 && re(r"[=(,]\s*\|[^|]", &RE_CLOSURE_OPEN).is_match(&bare) && !bare.contains("=>") && !bare.ends_with(';')
 terminated := (ends_terminated(&bare) || next.starts_with('}') || next.is_empty()) && !open_pipes
@@ -183,7 +196,15 @@ if ch == ',' && d == 0 {parts.push(std::mem::take(&mut cur))} else {cur.push(ch)
 prev = ch
 }
 if !cur.trim().is_empty() {parts.push(cur)}
-converted: Vec<String> := parts.iter().map(|p| param_re.replace(p.trim(), "$1$2 ").to_string()).collect()
+converted: Vec<String> := parts.iter().map(|p| {
+t := p.trim()
+match param_re.captures(t) {
+Some(c) if !t[c.get(0).unwrap().end()..].starts_with(':') => {
+format!("{}{} {}", c.get(1).map(|m| m.as_str()).unwrap_or(""), &c[2], &t[c.get(0).unwrap().end()..])
+}
+_ => t.to_string(),
+}
+}).collect()
 mut out := t[..start].to_string()
 out.push_str(&format!("fn {name}{generics}({})", converted.join(", ")))
 if !after.is_empty() {

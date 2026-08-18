@@ -206,8 +206,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/dyn_map.rs",
   "lines": 200,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `:`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1683,8 +1683,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/highlight_related.rs",
   "lines": 2579,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4392,8 +4392,8 @@
   "crate": "rust-analyzer",
   "file": "crates/mbe/src/lib.rs",
   "lines": 449,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `:`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4777,8 +4777,8 @@
   "crate": "rust-analyzer",
   "file": "crates/proc-macro-srv-cli/src/main_loop.rs",
   "lines": 624,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5064,8 +5064,8 @@
   "crate": "rust-analyzer",
   "file": "crates/rust-analyzer/src/diagnostics/flycheck_to_proto.rs",
   "lines": 1851,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5113,8 +5113,8 @@
   "crate": "rust-analyzer",
   "file": "crates/rust-analyzer/src/handlers/request.rs",
   "lines": 2780,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5169,8 +5169,8 @@
   "crate": "rust-analyzer",
   "file": "crates/rust-analyzer/src/lsp/to_proto.rs",
   "lines": 3181,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `,`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `calling_function_with_ignored_code_in_signature`"
  },
  {
   "crate": "rust-analyzer",
