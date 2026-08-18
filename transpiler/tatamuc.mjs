@@ -157,6 +157,7 @@ function transformFnSigs(seg) {
       if (t === "" || t === "self" || t === "&self" || t === "&mut self") return t;
       if (/^(&?\s*)?impl\b/.test(t)) return t; // bare impl-Trait parameter type
       const mm = /^(mut\s+)?([A-Za-z_]\w*)\s+(.+)$/.exec(t);
+      if (mm && mm[3].startsWith(":")) return t; // already Rust-shaped (`name : Type` macro tokens)
       return mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t;
     }).filter((p) => p !== "").join(", ");
     // already Rust-shaped (macro token streams, idempotent re-runs): keep as-is
@@ -430,7 +431,7 @@ export function transpileMapped(src) {
     if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
     // an arm opening a block (`pat => {`) is never an assignment context
     if (/=>\s*\{$/.test(bare)) return VALUE_CONTEXTS.includes(stack[stack.length - 1]) ? "value-arm" : "other";
-    if (/^use\b/.test(bare)) return "use-block";         // multi-line `use x::{…}` closer needs `};`
+    if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare)) return "use-block"; // multi-line `use x::{…}` closer needs `};`
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
     // lone `{`: opener of a multi-line signature (wrapped where clause) — scan
     // back past continuation lines to find the fn header
@@ -505,7 +506,7 @@ export function transpileMapped(src) {
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
     else if (/^#\[/.test(bare) && /\]$/.test(bare)) semi = false; // attribute-only line
-    else if (/^use\b/.test(bare)) semi = true;                   // in-body use statements (verbatim Rust)
+    else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare)) semi = true; // use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
       // match arm: a TOP-LEVEL `=>` before any block — `mac!(a => b)` is not an arm

@@ -121,6 +121,11 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "pub use with brace list gets semi", src: `mod lib {
+pub use self::core::result
+#[cfg(feature = "std")] pub use std::borrow:: { Cow, ToOwned }
+pub use x::Y
+}`, contains: ["pub use self::core::result;", "{ Cow, ToOwned };", "pub use x::Y;"] },
   { name: "attribute-prefixed statement gets semi", src: `fn f(&self, debug &mut D) R<()> {
 #[cfg(any(feature = "std", feature = "alloc"))] debug.field(&self.err)
 debug.finish()

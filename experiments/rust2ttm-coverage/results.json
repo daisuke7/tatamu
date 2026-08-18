@@ -612,8 +612,8 @@
   "crate": "serde",
   "file": "serde/src/lib.rs",
   "lines": 286,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -654,22 +654,22 @@
   "crate": "serde",
   "file": "serde_core/src/de/impls.rs",
   "lines": 3174,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
   "file": "serde_core/src/de/mod.rs",
   "lines": 2393,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
   "file": "serde_core/src/de/value.rs",
   "lines": 1896,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -822,8 +822,8 @@
   "crate": "serde",
   "file": "serde_derive/src/de/struct_.rs",
   "lines": 698,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `deserialize_in_place`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "serde",
@@ -1529,8 +1529,8 @@
   "crate": "clap",
   "file": "clap_derive/src/derives/args.rs",
   "lines": 790,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `gen_for_struct`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
@@ -1557,8 +1557,8 @@
   "crate": "clap",
   "file": "clap_derive/src/derives/subcommand.rs",
   "lines": 676,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `gen_for_enum`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
