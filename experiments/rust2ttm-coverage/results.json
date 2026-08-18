@@ -318,8 +318,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/hir/generics.rs",
   "lines": 430,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -794,8 +794,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/diagnostics/match_check.rs",
   "lines": 442,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -3349,8 +3349,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-completion/src/item.rs",
   "lines": 878,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5862,8 +5862,8 @@
   "crate": "rust-analyzer",
   "file": "lib/smol_str/src/lib.rs",
   "lines": 1167,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",

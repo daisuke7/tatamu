@@ -544,6 +544,7 @@ export function transpileMapped(src) {
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
     else if (/^#\[/.test(bare) && /\]$/.test(bare)) semi = false; // attribute-only line
+    else if (/\.\.$/.test(bare)) semi = false;                   // rest pattern / open range continues
     else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare) && netClosed.length === 0) semi = true; // use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
