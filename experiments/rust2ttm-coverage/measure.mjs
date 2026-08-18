@@ -7,7 +7,8 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, cpSync, 
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-import { transpile } from "../../transpiler/tatamuc.mjs";
+import { transpileMapped, pubify } from "../../transpiler/tatamuc.mjs";
+const transpile = (s) => { const m = transpileMapped(s); return pubify(m.rust, m.privLines); };
 
 const R2T = "/tmp/claude-501/rust2ttm-syn/target/release/rust2ttm-syn";
 const WORK = "/tmp/claude-501/coverage-work";

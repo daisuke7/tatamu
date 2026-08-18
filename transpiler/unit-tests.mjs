@@ -230,6 +230,7 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "dollar chars survive pubify", src: `const CURRENCY &'static [(char, char)] = &[ ('\$', '\$'), ('a', 'b')]`, contains: ["('\$', '\$')"] },
   { name: "user-defined R type disables the alias", src: `struct R<const I: usize>;
 fn f(x Res<R<3>>) {
 g(x)

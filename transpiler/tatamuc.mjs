@@ -212,15 +212,36 @@ function fieldsToRust(fieldsRaw) {
     let t = f.trim();
     if (t === "") return null;
     // a leading attribute stays put; convert the field after it
-    const am = /^((?:#\[[\s\S]*?\]\s*)+)([\s\S]*)$/.exec(t);
-    const attrPre = am ? am[1] : "";
-    if (am) t = am[2].trim();
+    // (scan, literal- and bracket-aware: attr args may contain ']' or vec![])
+    const aspans = [];
+    LIT_RE.lastIndex = 0;
+    let alm;
+    while ((alm = LIT_RE.exec(t))) aspans.push([alm.index, alm.index + alm[0].length]);
+    const ainLit = (i) => aspans.some(([a, b]) => i >= a && i < b);
+    let ai = 0;
+    while (t.slice(ai).startsWith("#[")) {
+      let d = 0, j = ai;
+      for (; j < t.length; j++) {
+        if (ainLit(j)) continue;
+        if (t[j] === "[") d++;
+        else if (t[j] === "]") { d--; if (d === 0) { j++; break; } }
+      }
+      if (d !== 0) break;
+      ai = j;
+      while (t[ai] === " ") ai++;
+    }
+    const attrPre = t.slice(0, ai);
+    t = t.slice(ai).trim();
     // `priv name Type` — field stays non-pub during pubify
     const priv = /^priv\s+/.test(t);
     if (priv) t = t.replace(/^priv\s+/, "");
+    // an explicit Rust `pub` (verbatim visibility, e.g. inside fn-local items)
+    const pm = /^pub(\([^)]*\))?\s+/.exec(t);
+    const pubPre = pm ? pm[0] : "";
+    if (pm) t = t.slice(pubPre.length);
     const fm = /^([A-Za-z_]\w*)\s+(.+)$/.exec(t);
-    if (fm && /^[=:]/.test(fm[2])) return { text: attrPre + t, priv };
-    return { text: attrPre + (fm ? `${fm[1]}: ${fm[2]}` : t), priv };
+    if (fm && /^[=:]/.test(fm[2])) return { text: attrPre + pubPre + t, priv };
+    return { text: attrPre + pubPre + (fm ? `${fm[1]}: ${fm[2]}` : t), priv };
   }).filter(Boolean);
 }
 
@@ -391,7 +412,7 @@ export function transpileMapped(src) {
     // multi-line handling: struct/const/enum are line-scoped rules
     const asStruct = !inMacroRules && line.startsWith("struct ") ? transformStruct(line) : null;
     if (asStruct) {
-      asStruct.lines.forEach((l, k) => push(l, n, privItem || asStruct.privFlags[k]));
+      asStruct.lines.forEach((l, k) => push(l, n, (privItem && /^struct\b/.test(l)) || asStruct.privFlags[k]));
       continue;
     }
     // multi-line struct: `struct Name +D {` header, then one field per line
@@ -408,7 +429,7 @@ export function transpileMapped(src) {
       if (/^\}/.test(stripLiterals(line))) { inStructBody = false; push(line, n); continue; }
       if (/^#\[/.test(line.trim())) { push(line.trim(), n, privItem); continue; } // field attribute
       const fields = fieldsToRust(line.replace(/,\s*$/, ""));
-      const anyPriv = fields.some((f) => f.priv);
+      const anyPriv = privItem || fields.some((f) => f.priv);
       push(fields.map((f) => `${f.text},`).join(" "), n, anyPriv);
       continue;
     }
@@ -1617,9 +1638,13 @@ export function diagnose(src) {
 //   `use crate::<m>::*;`
 // - `#dep name version` lines anywhere become [dependencies] in Cargo.toml
 
-function pubify(rust, privLines = new Set()) {
+export function pubify(rust, privLines = new Set()) {
   let depth = 0;
-  const traitImplAt = [];
+  const traitImplAt = [];   // `impl Trait for X` — no visibility inside
+  const suppressAt = [];    // trait defs, inline mods, fn bodies: never inject
+  const implAt = [];        // inherent impls: methods/assoc items get pub
+  let pendingImpl = null;   // wrapped impl header awaiting its `{`
+  let pendingFn = false;    // wrapped fn header awaiting its `{`
   const structAt = [];
   return rust.split("\n").map((line, lineIdx) => {
     const bare = stripLiterals(line);
@@ -1627,16 +1652,64 @@ function pubify(rust, privLines = new Set()) {
     const closes = (bare.match(/}/g) ?? []).length;
     const t = line.trimStart();
     let outLine = line;
-    if (traitImplAt.length === 0 && !/^pub\b/.test(t) && !privLines.has(lineIdx)) {
-      if (depth === 0 && /^(fn|struct|enum|trait|const|extern\s+"[^"]*"\s+fn)\b/.test(t)) outLine = line.replace(t, "pub " + t);
-      else if (depth === 1 && /^fn\b/.test(t)) outLine = line.replace(/^(\s*)fn\b/, "$1pub fn");
-      else if (depth === 1 && structAt.length && /^[a-z_]\w*:/.test(t)) outLine = line.replace(t, "pub " + t);
+    const FN_HEAD = /^(?:(?:unsafe|async|const)\s+)*(?:extern\s+"[^"]*"\s+)?fn\b/;
+    if (traitImplAt.length === 0 && suppressAt.length === 0 && !/^pub\b/.test(t) && !privLines.has(lineIdx)) {
+      // (pub(crate) etc. are caught by the ^pub test above)
+      const inInherentImpl = implAt.length && depth === implAt[implAt.length - 1] + 1;
+      if (depth === 0 && (FN_HEAD.test(t) || /^(?:unsafe\s+)?(struct|enum|trait|const|static|type)\b/.test(t)))
+        outLine = line.replace(t, () => "pub " + t);
+      else if (inInherentImpl && (FN_HEAD.test(t) || /^(const|type)\s/.test(t)))
+        outLine = line.replace(t, () => "pub " + t);
+      else if (depth === 1 && structAt.length) {
+        // skip leading attributes (string-aware: attr args may contain ']')
+        const spans = [];
+        LIT_RE.lastIndex = 0;
+        let lm;
+        while ((lm = LIT_RE.exec(t))) spans.push([lm.index, lm.index + lm[0].length]);
+        const inLit = (i) => spans.some(([a, b]) => i >= a && i < b);
+        let ai = 0;
+        while (t.slice(ai).startsWith("#[")) {
+          let d = 0, j = ai;
+          for (; j < t.length; j++) {
+            if (inLit(j)) continue;
+            if (t[j] === "[") d++;
+            else if (t[j] === "]") { d--; if (d === 0) { j++; break; } }
+          }
+          if (d !== 0) break;
+          ai = j;
+          while (t[ai] === " ") ai++;
+        }
+        if (/^(?:r#)?[a-z_]\w*:/.test(t.slice(ai))) {
+          outLine = line.replace(t, () => t.slice(0, ai) + "pub " + t.slice(ai));
+        }
+      }
     }
-    if (/^(pub\s+)?struct\b/.test(t) && opens > closes) structAt.push(depth);
+    if (/^(pub(\([^)]*\))?\s+)?struct\b/.test(t) && opens > closes) structAt.push(depth);
     if (structAt.length && depth + opens - closes <= structAt[structAt.length - 1]) structAt.pop();
-    if (/^impl\b.*\bfor\b/.test(t) && opens > closes) traitImplAt.push(depth);
+    if (/^(pub(\([^)]*\))?\s+)?(?:unsafe\s+)?impl\b/.test(t)) {
+      const kind = /\bfor\b(?!\s*<)/.test(bare) ? "trait" : "inherent"; // for<'a> is an HRTB, not a trait impl
+      if (opens > closes) (kind === "trait" ? traitImplAt : implAt).push(depth);
+      else if (opens === 0 && !/;\s*$/.test(bare)) pendingImpl = kind; // wrapped header, `{` on a later line
+    } else if (pendingImpl !== null) {
+      if (/\bfor\b(?!\s*<)/.test(bare)) pendingImpl = "trait";
+      if (opens > closes) {
+        (pendingImpl === "trait" ? traitImplAt : implAt).push(depth);
+        pendingImpl = null;
+      } else if (opens > 0 || /;\s*$/.test(bare)) pendingImpl = null; // `{}` one-line body ends the header
+    }
+    // regions where visibility must never be injected
+    const headish = FN_HEAD.test(t.replace(/^pub(\([^)]*\))?\s+/, ""));
+    if (opens > closes && (/^(pub(\([^)]*\))?\s+)?(?:unsafe\s+)?trait\b/.test(t) || /^(pub(\([^)]*\))?\s+)?mod\b/.test(t) || /[A-Za-z_]\w*!\s*[({[]/.test(bare) || headish))
+      suppressAt.push(depth);
+    else if (headish && opens === 0 && !/;\s*$/.test(bare)) pendingFn = true;
+    else if (pendingFn) {
+      if (opens > closes) { suppressAt.push(depth); pendingFn = false; }
+      else if (opens > 0 || /;\s*$/.test(bare)) pendingFn = false;
+    }
     depth += opens - closes;
     if (traitImplAt.length && depth <= traitImplAt[traitImplAt.length - 1]) traitImplAt.pop();
+    if (implAt.length && depth <= implAt[implAt.length - 1]) implAt.pop();
+    if (suppressAt.length && depth <= suppressAt[suppressAt.length - 1]) suppressAt.pop();
     return outLine;
   }).join("\n");
 }

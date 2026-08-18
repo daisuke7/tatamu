@@ -40,6 +40,25 @@ file := syn::File {shebang: None, attrs: vec![], items: vec![item.clone()]}
 prettyplease::unparse(&file)
 }
 struct Clearer;
+priv struct VisClearer;
+impl syn::visit_mut::VisitMut for VisClearer {
+fn visit_block_mut(&mut self, _b &mut syn::Block) {}
+fn visit_item_mut(&mut self, it &mut syn::Item) {
+match it {
+syn::Item::Mod(_) | syn::Item::Union(_) | syn::Item::ForeignMod(_) | syn::Item::ExternCrate(_) | syn::Item::Use(_) => {}
+syn::Item::Struct(s) if s.generics.where_clause.is_some() => {
+s.vis = syn::Visibility::Inherited
+}
+syn::Item::Struct(s) if matches!(s.fields, syn::Fields::Unnamed(_)) => {
+s.vis = syn::Visibility::Inherited
+}
+_ => syn::visit_mut::visit_item_mut(self, it),
+}
+}
+fn visit_visibility_mut(&mut self, v &mut syn::Visibility) {
+*v = syn::Visibility::Inherited
+}
+}
 fn drop_docs(attrs &mut Vec<syn::Attribute>) {
 attrs.retain(|a| !a.path().is_ident("doc"))
 }
@@ -65,9 +84,6 @@ other => other,
 }).collect()
 }
 impl syn::visit_mut::VisitMut for Clearer {
-fn visit_visibility_mut(&mut self, v &mut syn::Visibility) {
-*v = syn::Visibility::Inherited
-}
 fn visit_lit_mut(&mut self, l &mut syn::Lit) {
 if let syn::Lit::Str(s) = l {
 if s.token().to_string().starts_with('r') {
@@ -145,10 +161,11 @@ derives := extract_derives(&cleaned)
 docs := strip_and_collect(&mut cleaned)
 collect_member_docs(&cleaned, out)
 vis_info := collect_vis(&cleaned)
+syn::visit_mut::VisitMut::visit_item_mut(&mut VisClearer, &mut cleaned)
 syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, &mut cleaned)
 printed := match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| print_item(&cleaned))) {
 Ok(p) => p,
-Err(_) => quote::ToTokens::to_token_stream(&cleaned).to_string(),
+Err(_) => quote::ToTokens::to_token_stream(item).to_string(),
 }
 static PP_RANGE_FIX: OnceLock<regex::Regex> = OnceLock::new()
 rx := crate::textual::re(r"(\d\.)\.\.", &PP_RANGE_FIX)
@@ -161,7 +178,7 @@ l.to_string()
 }
 }).collect()
 joined := join_wrapped(&raw_lines)
-in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))
+in_fields := matches!(item, syn::Item::Struct(s) if s.generics.where_clause.is_none()) || matches!(item, syn::Item::Enum(_))
 mut lines := Vec::new()
 mut mac_depth := 0i64
 mut seen_brace := false
@@ -180,7 +197,8 @@ lines.push(convert_line(l, siblings, fields_here))
 }
 if let Some(d) = derives {
 if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
-if first.ends_with(',') || first.starts_with("union") {
+static UNION_RE: OnceLock<regex::Regex> = OnceLock::new()
+if first.ends_with(',') || crate::textual::re(r"^(pub(\([^)]*\))?\s+)?union\b", &UNION_RE).is_match(first) {
 lines.insert(0, format!("#[derive({d})]"))
 } else {
 static WHERE_RE: OnceLock<regex::Regex> = OnceLock::new()
@@ -271,6 +289,9 @@ match item {
 syn::Item::Fn(f) => info.item_pub = is_pub(&f.vis),
 syn::Item::Struct(s) => {
 info.item_pub = is_pub(&s.vis)
+if s.generics.where_clause.is_some() {
+return info
+}
 if let syn::Fields::Named(named) = &s.fields {
 for f in &named.named {
 if let Some(id) = &f.ident {
@@ -283,11 +304,16 @@ syn::Item::Enum(e) => info.item_pub = is_pub(&e.vis),
 syn::Item::Trait(t) => info.item_pub = is_pub(&t.vis),
 syn::Item::Const(c) => info.item_pub = is_pub(&c.vis),
 syn::Item::Static(s) => info.item_pub = is_pub(&s.vis),
+syn::Item::Type(t) => info.item_pub = is_pub(&t.vis),
+syn::Item::TraitAlias(t) => info.item_pub = is_pub(&t.vis),
 syn::Item::Impl(i) => {
 info.is_impl_for = i.trait_.is_some()
 for it in &i.items {
-if let syn::ImplItem::Fn(m) = it {
-info.methods.push((m.sig.ident.to_string(), is_pub(&m.vis)))
+match it {
+syn::ImplItem::Fn(m) => info.methods.push((format!("fn {}", m.sig.ident), is_pub(&m.vis))),
+syn::ImplItem::Const(c) => info.methods.push((format!("const {}", c.ident), is_pub(&c.vis))),
+syn::ImplItem::Type(t) => info.methods.push((format!("type {}", t.ident), is_pub(&t.vis))),
+_ => {}
 }
 }
 }
@@ -302,23 +328,123 @@ first.insert_str(0, "priv ")
 }
 }
 if !info.is_impl_for {
-for (name, is_p) in &info.methods {
-if *is_p {continue}
-prefix := format!("fn {name}(")
+mut remaining: Vec<(String, bool)> := info.methods.iter().filter(|(_, p)| !*p).cloned().collect()
+mut depth := 0i64
 for l in lines.iter_mut() {
-if l.starts_with(&prefix) {
+if depth == 1 && !remaining.is_empty() {
+mut head := l.as_str()
+loop {
+if let Some(r) = head.strip_prefix("async ") {head = r}
+else if let Some(r) = head.strip_prefix("unsafe ") {head = r}
+else if head.starts_with("const ") && head.contains(" fn ") {head = &head[6..]}
+else if head.starts_with("const fn ") {head = &head[6..]}
+else if head.starts_with("extern \"") {
+match head[8..].find('"') {
+Some(e) => head = head[8 + e + 1..].trim_start(),
+None => break,
+}
+}
+else if head.starts_with("#[") {
+match head.find(']') {
+Some(e) => head = head[e + 1..].trim_start(),
+None => break,
+}
+}
+else {break}
+}
+hit := remaining.iter().position(|(name, _)| {
+p1 := format!("{name}(")
+p2 := format!("{name}<")
+p3 := format!("{name} ")
+p4 := format!("{name}:")
+head.starts_with(&p1) || head.starts_with(&p2) || l.starts_with(&p3) || l.starts_with(&p4)
+})
+if let Some(hi) = hit {
 l.insert_str(0, "priv ")
-break
+remaining.remove(hi);
 }
 }
+b := crate::textual::strip_lits(l)
+depth += crate::textual::count_of(&b, &['{']) as i64 - crate::textual::count_of(&b, &['}']) as i64
 }
 }
 for (name, is_p) in &info.fields {
 if *is_p {continue}
 prefix := format!("{name} ")
+colon_prefix := format!("{name}:")
+mut done := false
 for l in lines.iter_mut() {
-if l.starts_with(&prefix) && l.ends_with(',') {
+if (l.starts_with(&prefix) || l.starts_with(&colon_prefix)) && l.ends_with(',') {
 l.insert_str(0, "priv ")
+done = true
+break
+}
+}
+if !done {
+for l in lines.iter_mut() {
+mut ip := 0usize
+loop {
+rest := &l[ip..]
+ws := rest.len() - rest.trim_start().len()
+if !rest.trim_start().starts_with("#[") {break}
+attr_start := ip + ws
+mut depth := 0i64
+mut end := None
+mut esc_state := false
+mut in_str := false
+mut in_char := false
+for (bi, ch) in l[attr_start..].char_indices() {
+if esc_state {esc_state = false; continue}
+if ch == '\\' {esc_state = true; continue}
+if in_str {
+if ch == '"' {in_str = false}
+continue
+}
+if in_char {
+if ch == '\'' {in_char = false}
+continue
+}
+match ch {
+'"' => in_str = true,
+'\'' => in_char = true,
+'[' => depth += 1,
+']' => {
+depth -= 1
+if depth == 0 {
+end = Some(attr_start + bi + 1)
+break
+}
+}
+_ => {}
+}
+}
+match end {
+Some(e) => {
+ip = e
+while l[ip..].starts_with(' ') {ip += 1}
+}
+None => break,
+}
+}
+if ip > 0 && (l[ip..].starts_with(&prefix) || l[ip..].starts_with(&format!("{name}:"))) {
+l.insert_str(ip, "priv ")
+done = true
+break
+}
+}
+}
+if done {continue}
+pats := [format!("{{ {name} "), format!(", {name} "), format!("{{ {name}: "), format!(", {name}: "), format!("] {name} "), format!("] {name}: ")]
+for l in lines.iter_mut() {
+mut pos := None
+for pat in &pats {
+if let Some(i) = l.find(pat.as_str()) {
+pos = Some(i + 2)
+break
+}
+}
+if let Some(pp) = pos {
+l.insert_str(pp, "priv ")
 break
 }
 }

@@ -1,146 +1,356 @@
 [
   {
-    "id": "fable/largest",
+    "id": "hand/config_parse",
     "kind": "tatamu",
-    "src": "fn largest<T: PartialOrd + Copy>(list &[T]) T {\nmut max := list[0]\nfor &item in list {if item > max {max = item}}\nmax\n}\nfn main() {\nints := [3, 7, 2, 9, 4]\nfloats := [1.5, 0.3, 2.7]\nchars := ['m', 'z', 'a']\nprintln!(\"{}\", largest(&ints))\nprintln!(\"{}\", largest(&floats))\nprintln!(\"{}\", largest(&chars))\n}\n",
+    "src": "struct Config +Debug,Clone {host String, port u16, verbose bool}\nfn parse(text &str) R<Config> {\nmut map := HashMap::new()\nfor line in text.lines() {\nline := line.trim()\nif line.is_empty() || line.starts_with('#') {continue}\n(key, value) := line.split_once('=').ok_or(\"missing '='\")?\nmap.insert(key.trim().to_string(), value.trim().to_string())\n}\nOk(Config {\nhost: map.get(\"host\").cloned().unwrap_or_else(|| \"localhost\".into()),\nport: map.get(\"port\").map(|v| v.parse()).transpose()?.unwrap_or(8080),\nverbose: map.get(\"verbose\").map(|v| v == \"true\").unwrap_or(false),\n})\n}\nfn main() R<()> {\ntext := fs::read_to_string(\"app.conf\")?\nconfig := parse(&text)?\nprintln!(\"{config:?}\")\nOk(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "fable/longest",
+    "id": "hand/geometry",
     "kind": "tatamu",
-    "src": "fn longest<'a>(x &'a str, y &'a str) &'a str {\nif x.len() > y.len() {x} else {y}\n}\nfn main() {\na := env::args().nth(1).expect(\"usage: longest <a> <b>\")\nb := env::args().nth(2).expect(\"usage: longest <a> <b>\")\nprintln!(\"{}\", longest(&a, &b))\n}\n",
+    "src": "trait Area {\nfn area(&self) f64\nfn describe(&self) String {format!(\"area = {:.2}\", self.area())}\n}\nstruct Circle +Debug,Clone,Copy {radius f64}\nstruct Rect +Debug,Clone,Copy {width f64, height f64}\nimpl Area for Circle {fn area(&self) f64 {PI * self.radius * self.radius}}\nimpl Area for Rect {fn area(&self) f64 {self.width * self.height}}\nfn main() {\nshapes: Vec<Box<dyn Area>> := vec![Box::new(Circle {radius: 1.5}), Box::new(Rect {width: 3.0, height: 4.0})]\nfor shape in &shapes {println!(\"{}\", shape.describe())}\n}\n",
     "status": "ok"
   },
   {
-    "id": "fable/shapes",
+    "id": "hand/stats",
     "kind": "tatamu",
-    "src": "enum Shape {Circle(f64), Rect(f64, f64)}\nimpl Shape {\nfn area(&self) f64 {\nmatch self {\nShape::Circle(r) => PI * r * r,\nShape::Rect(w, h) => w * h,\n}\n}\n}\nfn main() {\nshapes := vec![Shape::Circle(1.5), Shape::Rect(3.0, 4.0), Shape::Circle(0.5)]\ntotal: f64 := shapes.iter().map(|s| s.area()).sum()\nprintln!(\"total area = {total:.2}\")\n}\n",
+    "src": "fn mean(data &[f64]) f64 {data.iter().sum::<f64>() / data.len() as f64}\nfn median(data &mut Vec<f64>) f64 {\ndata.sort_by(|a, b| a.partial_cmp(b).unwrap())\nmid := data.len() / 2\nif data.len() % 2 == 0 {(data[mid - 1] + data[mid]) / 2.0} else {data[mid]}\n}\nfn stddev(data &[f64]) f64 {\nm := mean(data)\nvariance := data.iter().map(|x| (x - m).powi(2)).sum::<f64>() / data.len() as f64\nvariance.sqrt()\n}\nfn main() {\nmut data := vec![2.0, 9.0, 4.0, 7.0, 5.0, 1.0, 8.0]\nprintln!(\"mean   = {:.3}\", mean(&data))\nprintln!(\"stddev = {:.3}\", stddev(&data))\nprintln!(\"median = {:.3}\", median(&mut data))\n}\n",
     "status": "ok"
   },
   {
-    "id": "fable/hms",
+    "id": "hand/todo",
     "kind": "tatamu",
-    "src": "struct Hms +Debug,Clone,Copy {h u32, m u32, s u32}\nimpl Display for Hms {\nfn fmt(&self, f &mut Formatter<'_>) fmt::Result {\nwrite!(f, \"{:02}:{:02}:{:02}\", self.h, self.m, self.s)\n}\n}\nimpl FromStr for Hms {\ntype Err = String\nfn from_str(s &str) Result<Self, Self::Err> {\nparts: Vec<_> := s.split(':').collect()\nif parts.len() != 3 {return Err(\"expected h:m:s\".to_string())}\nh := parts[0].parse().map_err(|e| format!(\"bad hours: {e}\"))?\nm := parts[1].parse().map_err(|e| format!(\"bad minutes: {e}\"))?\ns := parts[2].parse().map_err(|e| format!(\"bad seconds: {e}\"))?\nOk(Hms {h, m, s})\n}\n}\nfn main() {\narg := env::args().nth(1).expect(\"usage: hms <h:m:s>\")\nhms: Hms := arg.parse().expect(\"invalid time\")\nprintln!(\"{hms}\")\n}\n",
+    "src": "const FILE &str = \"todo.txt\"\nfn load() Vec<String> {fs::read_to_string(FILE).map(|t| t.lines().map(String::from).collect()).unwrap_or_default()}\nfn save(items &[String]) {fs::write(FILE, items.join(\"\\n\")).expect(\"failed to save\")}\nfn main() {\nargs: Vec<_> := env::args().skip(1).collect()\nmut items := load()\nmatch args.first().map(String::as_str) {\nSome(\"add\") => {items.push(args[1..].join(\" \")); save(&items)}\nSome(\"done\") => {index := args[1].parse().expect(\"done <index>\"); items.remove(index); save(&items)}\n_ => for (i, item) in items.iter().enumerate() {println!(\"{i}: {item}\")}\n}\n}\n",
     "status": "ok"
   },
   {
-    "id": "fable/threads",
+    "id": "hand/wordcount",
     "kind": "tatamu",
-    "src": "fn main() {\nnumbers: Vec<i64> := (1..=1000).collect()\n(tx, rx) := mpsc::channel()\nmut handles := Vec::new()\nfor chunk in numbers.chunks(250) {\ntx := tx.clone()\nchunk := chunk.to_vec()\nhandles.push(thread::spawn(move || tx.send(chunk.iter().sum::<i64>()).unwrap()))\n}\ndrop(tx)\nmut total := 0\nfor partial in rx {total += partial}\nfor handle in handles {handle.join().unwrap()}\nprintln!(\"total = {total}\")\n}\n",
+    "src": "fn main() {\npath := env::args().nth(1).expect(\"usage: wordcount <file>\")\ntext := fs::read_to_string(&path).expect(\"failed to read file\")\nmut counts := HashMap::new()\nfor word in text.split_whitespace() {\nkey := word.to_lowercase()\n*counts.entry(key).or_insert(0) += 1\n}\nmut items: Vec<_> := counts.into_iter().collect()\nitems.sort_by(|a, b| b.1.cmp(&a.1))\nfor (word, count) in items.iter().take(10) {println!(\"{count:>6}  {word}\")}\n}\n",
     "status": "ok"
   },
   {
-    "id": "fable/stack",
-    "kind": "tatamu",
-    "src": "struct Stack<T> {items Vec<T>}\nimpl<T> Stack<T> {\nfn new() Self {Stack {items: Vec::new()}}\nfn push(&mut self, item T) {self.items.push(item)}\nfn pop(&mut self) Option<T> {self.items.pop()}\nfn peek(&self) Option<&T> {self.items.last()}\n}\nfn main() {\nmut ints := Stack::new()\nints.push(1)\nints.push(2)\nints.push(3)\nprintln!(\"peek: {:?}\", ints.peek())\nwhile let Some(n) = ints.pop() {println!(\"pop: {n}\")}\nmut words := Stack::new()\nwords.push(\"hello\".to_string())\nwords.push(\"world\".to_string())\nprintln!(\"peek: {:?}\", words.peek())\nwhile let Some(w) = words.pop() {println!(\"pop: {w}\")}\n}\n",
+    "id": "fable/anagram",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::process;\n\nfn is_anagram(a: &str, b: &str) -> bool {\n    let mut a: Vec<char> = a.to_lowercase().chars().collect();\n    let mut b: Vec<char> = b.to_lowercase().chars().collect();\n    a.sort_unstable();\n    b.sort_unstable();\n    a == b\n}\n\nfn main() {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 3 {\n        eprintln!(\"usage: {} <word1> <word2>\", args[0]);\n        process::exit(1);\n    }\n    println!(\"{}\", is_anagram(&args[1], &args[2]));\n}\n",
     "status": "ok"
   },
   {
-    "id": "haiku/largest",
-    "kind": "tatamu",
-    "src": "fn largest<T: PartialOrd + Copy>(list &[T]) T {\nmut max := list[0]\nfor &item in list {\nif item > max {\nmax = item\n}\n}\nmax\n}\nfn main() {\nnums_i32: &[i32] := &[3, 7, 2, 9, 1]\nnums_f64: &[f64] := &[3.5, 7.2, 2.1, 9.8, 1.3]\nnums_char: &[char] := &['c', 'a', 'z', 'b']\nprintln!(\"largest i32: {}\", largest(nums_i32))\nprintln!(\"largest f64: {}\", largest(nums_f64))\nprintln!(\"largest char: {}\", largest(nums_char))\n}\n",
+    "id": "fable/csvavg",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::error::Error;\nuse std::fs;\n\nfn main() -> Result<(), Box<dyn Error>> {\n    let path = env::args().nth(1).ok_or(\"usage: csvavg <file.csv>\")?;\n    let contents = fs::read_to_string(&path)?;\n\n    let mut sum = 0.0;\n    let mut count = 0u32;\n    for line in contents.lines().skip(1) {\n        if line.trim().is_empty() {\n            continue;\n        }\n        let field = line\n            .split(',')\n            .nth(1)\n            .ok_or_else(|| format!(\"missing second column in line: {line}\"))?;\n        let value: f64 = field.trim().parse()?;\n        sum += value;\n        count += 1;\n    }\n\n    if count == 0 {\n        return Err(\"no data rows\".into());\n    }\n    println!(\"{:.2}\", sum / count as f64);\n    Ok(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "haiku/longest",
-    "kind": "tatamu",
-    "src": "fn longest<'a>(x &'a str, y &'a str) &'a str {\nif x.len() >= y.len() {x} else {y}\n}\nfn main() {\nargs: Vec<String> := env::args().collect()\nif args.len() < 3 {\nprintln!(\"usage: longest <string1> <string2>\")\nreturn\n}\ns1 := &args[1]\ns2 := &args[2]\nresult := longest(s1, s2)\nprintln!(\"longer: {}\", result)\n}\n",
+    "id": "fable/inventory",
+    "kind": "rust",
+    "src": "#[derive(Debug, Clone)]\nstruct Item {\n    name: String,\n    qty: u32,\n    price: f64,\n}\n\nimpl Item {\n    fn value(&self) -> f64 {\n        self.qty as f64 * self.price\n    }\n}\n\nfn main() {\n    let mut items = vec![\n        Item {\n            name: String::from(\"widget\"),\n            qty: 10,\n            price: 2.50,\n        },\n        Item {\n            name: String::from(\"gadget\"),\n            qty: 3,\n            price: 19.99,\n        },\n        Item {\n            name: String::from(\"gizmo\"),\n            qty: 7,\n            price: 4.25,\n        },\n        Item {\n            name: String::from(\"doodad\"),\n            qty: 25,\n            price: 0.99,\n        },\n        Item {\n            name: String::from(\"thingamajig\"),\n            qty: 2,\n            price: 49.95,\n        },\n    ];\n\n    items.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap());\n\n    for item in items.iter().take(3) {\n        println!(\"{}: {:.2}\", item.name, item.value());\n    }\n}\n",
     "status": "ok"
   },
   {
-    "id": "haiku/shapes",
-    "kind": "tatamu",
-    "src": "enum Shape {\nCircle(f64),\nRect(f64, f64),\n}\nimpl Shape {\nfn area(&self) f64 {\nmatch self {\nShape::Circle(r) => std::f64::consts::PI * r * r,\nShape::Rect(w, h) => w * h,\n}\n}\n}\nfn main() {\nshapes: Vec<Shape> := vec![\nShape::Circle(2.0),\nShape::Rect(3.0, 4.0),\nShape::Circle(1.0),\n]\nmut total := 0.0\nfor shape in &shapes {\ntotal += shape.area()\n}\nprintln!(\"total area: {}\", total)\n}\n",
+    "id": "fable/dedup",
+    "kind": "rust",
+    "src": "use std::collections::HashSet;\nuse std::env;\nuse std::error::Error;\nuse std::fs;\n\nfn main() -> Result<(), Box<dyn Error>> {\n    let path = env::args().nth(1).ok_or(\"usage: dedup <file>\")?;\n    let contents = fs::read_to_string(&path)?;\n\n    let mut seen = HashSet::new();\n    for line in contents.lines() {\n        if seen.insert(line) {\n            println!(\"{line}\");\n        }\n    }\n    Ok(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "haiku/hms",
-    "kind": "tatamu",
-    "src": "struct Hms +Debug,Clone {h u32, m u32, s u32}\nimpl std::fmt::Display for Hms {\nfn fmt(&self, f &mut std::fmt::Formatter) std::fmt::Result {\nwrite!(f, \"{:02}:{:02}:{:02}\", self.h, self.m, self.s)\n}\n}\nimpl std::str::FromStr for Hms {\ntype Err = String\nfn from_str(s &str) Result<Self, Self::Err> {\nparts: Vec<&str> := s.split(':').collect()\nif parts.len() != 3 {\nreturn Err(\"expected h:m:s format\".to_string())\n}\nh := parts[0].parse::<u32>().map_err(|_| \"invalid h\".to_string())?\nm := parts[1].parse::<u32>().map_err(|_| \"invalid m\".to_string())?\ns := parts[2].parse::<u32>().map_err(|_| \"invalid s\".to_string())?\nOk(Hms {h, m, s})\n}\n}\nfn main() {\nargs: Vec<String> := env::args().collect()\nif args.len() < 2 {\nprintln!(\"usage: hms <h:m:s>\")\nreturn\n}\nhms: Hms := args[1].parse().expect(\"failed to parse\")\nprintln!(\"{}\", hms)\n}\n",
+    "id": "fable/fib",
+    "kind": "rust",
+    "src": "use std::collections::HashMap;\n\nfn fib(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {\n    if n <= 2 {\n        return 1;\n    }\n    if let Some(&value) = memo.get(&n) {\n        return value;\n    }\n    let value = fib(n - 1, memo) + fib(n - 2, memo);\n    memo.insert(n, value);\n    value\n}\n\nfn main() {\n    let mut memo = HashMap::new();\n    for n in 1..=20 {\n        println!(\"fib({}) = {}\", n, fib(n, &mut memo));\n    }\n}\n",
     "status": "ok"
   },
   {
-    "id": "haiku/threads",
-    "kind": "tatamu",
-    "src": "fn main() {\nnums: Vec<i64> := (1..=1000).collect()\nchunk_size := nums.len() / 4\nmut handles := vec![]\n(tx, rx) := std::sync::mpsc::channel::<i64>()\nfor i in 0..4 {\nstart := i * chunk_size\nend := if i == 3 {nums.len()} else {(i + 1) * chunk_size}\nchunk: Vec<i64> := nums[start..end].to_vec()\ntx_clone := tx.clone()\nhandle := std::thread::spawn(move || {\nsum := chunk.iter().sum::<i64>()\ntx_clone.send(sum).unwrap()\n})\nhandles.push(handle)\n}\ndrop(tx)\nmut total := 0i64\nfor sum in rx.iter() {\ntotal += sum\n}\nfor handle in handles {\nhandle.join().unwrap()\n}\nprintln!(\"total: {}\", total)\n}\n",
+    "id": "fable/rpn",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::error::Error;\n\nfn eval(expr: &str) -> Result<f64, Box<dyn Error>> {\n    let mut stack: Vec<f64> = Vec::new();\n\n    for token in expr.split_whitespace() {\n        match token {\n            \"+\" | \"-\" | \"*\" | \"/\" => {\n                let b = stack.pop().ok_or(\"stack underflow\")?;\n                let a = stack.pop().ok_or(\"stack underflow\")?;\n                let result = match token {\n                    \"+\" => a + b,\n                    \"-\" => a - b,\n                    \"*\" => a * b,\n                    \"/\" => {\n                        if b == 0.0 {\n                            return Err(\"division by zero\".into());\n                        }\n                        a / b\n                    }\n                    _ => unreachable!(),\n                };\n                stack.push(result);\n            }\n            _ => {\n                let value: f64 = token\n                    .parse()\n                    .map_err(|_| format!(\"invalid token: {token}\"))?;\n                stack.push(value);\n            }\n        }\n    }\n\n    match stack.as_slice() {\n        [result] => Ok(*result),\n        _ => Err(\"malformed expression\".into()),\n    }\n}\n\nfn main() -> Result<(), Box<dyn Error>> {\n    let expr = env::args().nth(1).ok_or(\"usage: rpn \\\"<expression>\\\"\")?;\n    println!(\"{}\", eval(&expr)?);\n    Ok(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "haiku/stack",
+    "id": "fable/anagram",
     "kind": "tatamu",
-    "src": "struct Stack<T> {items Vec<T>}\nimpl<T> Stack<T> {\nfn push(&mut self, value T) {\nself.items.push(value)\n}\nfn pop(&mut self) Option<T> {\nself.items.pop()\n}\nfn peek(&self) Option<&T> {\nself.items.last()\n}\n}\nfn main() {\nmut stack_i32: Stack<i32> := Stack {items: vec![]}\nstack_i32.push(1)\nstack_i32.push(2)\nstack_i32.push(3)\nprintln!(\"peek i32: {:?}\", stack_i32.peek())\nprintln!(\"pop i32: {:?}\", stack_i32.pop())\nmut stack_str: Stack<String> := Stack {items: vec![]}\nstack_str.push(\"hello\".to_string())\nstack_str.push(\"world\".to_string())\nprintln!(\"peek str: {:?}\", stack_str.peek())\nprintln!(\"pop str: {:?}\", stack_str.pop())\n}\n",
+    "src": "fn main() {\nmut args := env::args().skip(1)\na := args.next().expect(\"usage: anagram <word1> <word2>\")\nb := args.next().expect(\"usage: anagram <word1> <word2>\")\nmut x := a.to_lowercase().chars().collect()\nmut y := b.to_lowercase().chars().collect()\nx.sort()\ny.sort()\nprintln!(\"{}\", x == y)\n}\n",
+    "status": "inference-only",
+    "codes": [
+      "E0282"
+    ],
+    "firstError": "error[E0282]: type annotations needed"
+  },
+  {
+    "id": "fable/csvavg",
+    "kind": "tatamu",
+    "src": "fn main() R<()> {\npath := env::args().nth(1).ok_or(\"usage: csvavg <file>\")?\ntext := fs::read_to_string(&path)?\nmut sum := 0.0\nmut count := 0.0\nfor line in text.lines().skip(1) {\nfield := line.split(',').nth(1).ok_or(\"missing second column\")?\nvalue := field.trim().parse()?\nsum += value\ncount += 1.0\n}\nprintln!(\"{:.2}\", sum / count)\nOk(())\n}\n",
+    "status": "error",
+    "codes": [
+      "E0277"
+    ],
+    "firstError": "error[E0277]: cannot add-assign `()` to `f64`"
+  },
+  {
+    "id": "fable/inventory",
+    "kind": "tatamu",
+    "src": "struct Item +Debug,Clone {name String, qty u32, price f64}\nimpl Item {fn value(&self) f64 {self.qty as f64 * self.price}}\nfn main() {\nmut items := vec![\nItem {name: \"apple\".to_string(), qty: 10, price: 0.5},\nItem {name: \"banana\".to_string(), qty: 150, price: 0.25},\nItem {name: \"cherry\".to_string(), qty: 40, price: 3.0},\nItem {name: \"date\".to_string(), qty: 5, price: 8.0},\nItem {name: \"elderberry\".to_string(), qty: 20, price: 4.5},\n]\nitems.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap())\nfor item in items.iter().take(3) {println!(\"{}: {}\", item.name, item.value())}\n}\n",
     "status": "ok"
   },
   {
-    "id": "opus/largest",
+    "id": "fable/dedup",
     "kind": "tatamu",
-    "src": "fn largest<T: PartialOrd + Copy>(list &[T]) T {\nmut max := list[0]\nfor &item in list.iter() {\nif item > max {max = item}\n}\nmax\n}\nfn main() {\nnumbers := [34, 50, 25, 100, 65]\nprintln!(\"largest i32 = {}\", largest(&numbers))\nfloats := [1.5, 9.25, -3.0, 7.75]\nprintln!(\"largest f64 = {}\", largest(&floats))\nchars := ['y', 'm', 'a', 'q']\nprintln!(\"largest char = {}\", largest(&chars))\n}\n",
+    "src": "fn main() {\npath := env::args().nth(1).expect(\"usage: dedup <file>\")\ntext := fs::read_to_string(&path).expect(\"failed to read file\")\nmut seen := HashSet::new()\nfor line in text.lines() {\nif seen.insert(line) {println!(\"{line}\")}\n}\n}\n",
     "status": "ok"
   },
   {
-    "id": "opus/longest",
+    "id": "fable/fib",
     "kind": "tatamu",
-    "src": "fn longest<'a>(x &'a str, y &'a str) &'a str {\nif x.len() > y.len() {x} else {y}\n}\nfn main() {\nargs: Vec<String> := env::args().skip(1).collect()\nif args.len() < 2 {\nprintln!(\"usage: longest <a> <b>\")\nreturn\n}\nprintln!(\"{}\", longest(&args[0], &args[1]))\n}\n",
+    "src": "fn fib(n u64, memo &mut HashMap<u64, u64>) u64 {\nif n <= 2 {return 1}\nif memo.contains_key(&n) {return memo[&n]}\nv := fib(n - 1, memo) + fib(n - 2, memo)\nmemo.insert(n, v)\nv\n}\nfn main() {\nmut memo := HashMap::new()\nfor n in 1..=20 {println!(\"fib({n}) = {}\", fib(n, &mut memo))}\n}\n",
     "status": "ok"
   },
   {
-    "id": "opus/shapes",
+    "id": "fable/rpn",
     "kind": "tatamu",
-    "src": "enum Shape {\nCircle(f64),\nRect(f64, f64),\n}\nimpl Shape {\nfn area(&self) f64 {\nmatch self {\nShape::Circle(r) => PI * r * r,\nShape::Rect(w, h) => w * h,\n}\n}\n}\nfn main() {\nshapes := vec![Shape::Circle(1.5), Shape::Rect(3.0, 4.0), Shape::Circle(0.5)]\ntotal := shapes.iter().map(|s| s.area()).sum::<f64>()\nfor shape in &shapes {println!(\"area = {:.2}\", shape.area())}\nprintln!(\"total = {total:.2}\")\n}\n",
+    "src": "fn main() R<()> {\nexpr := env::args().nth(1).ok_or(\"usage: rpn <expr>\")?\nmut stack := Vec::new()\nfor token in expr.split_whitespace() {\nmatch token {\n\"+\" | \"-\" | \"*\" | \"/\" => {\nb := stack.pop().ok_or(\"stack underflow\")?\na := stack.pop().ok_or(\"stack underflow\")?\nresult := match token {\n\"+\" => a + b,\n\"-\" => a - b,\n\"*\" => a * b,\n_ => {\nif b == 0.0 {return Err(\"division by zero\".into())}\na / b\n}\n}\nstack.push(result)\n}\n_ => stack.push(token.parse()?),\n}\n}\nif stack.len() != 1 {return Err(\"malformed expression\".into())}\nprintln!(\"{}\", stack[0])\nOk(())\n}\n",
+    "status": "error",
+    "codes": [
+      "E0277"
+    ],
+    "firstError": "error[E0277]: cannot add `()` to `()`"
+  },
+  {
+    "id": "haiku/anagram",
+    "kind": "rust",
+    "src": "use std::env;\n\nfn main() {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 3 {\n        eprintln!(\"Usage: {} <word1> <word2>\", args[0]);\n        std::process::exit(1);\n    }\n\n    let word1 = args[1].to_lowercase();\n    let word2 = args[2].to_lowercase();\n\n    let mut chars1: Vec<char> = word1.chars().collect();\n    let mut chars2: Vec<char> = word2.chars().collect();\n\n    chars1.sort_unstable();\n    chars2.sort_unstable();\n\n    println!(\"{}\", chars1 == chars2);\n}\n",
     "status": "ok"
   },
   {
-    "id": "opus/hms",
-    "kind": "tatamu",
-    "src": "struct Hms +Debug,Clone,Copy {h u32, m u32, s u32}\nimpl fmt::Display for Hms {\nfn fmt(&self, f &mut fmt::Formatter) fmt::Result {\nwrite!(f, \"{:02}:{:02}:{:02}\", self.h, self.m, self.s)\n}\n}\nimpl FromStr for Hms {\ntype Err = String;\nfn from_str(text &str) Result<Self, Self::Err> {\nparts: Vec<&str> := text.split(':').collect()\nif parts.len() != 3 {return Err(format!(\"expected h:m:s, got {text:?}\"))}\nmut values := [0u32; 3]\nfor (i, part) in parts.iter().enumerate() {\nvalues[i] = part.trim().parse().map_err(|_| format!(\"bad number: {part:?}\"))?\n}\nif values[1] > 59 || values[2] > 59 {return Err(\"minutes and seconds must be < 60\".to_string())}\nOk(Hms {h: values[0], m: values[1], s: values[2]})\n}\n}\nfn main() R<()> {\narg := env::args().nth(1).ok_or(\"usage: hms <h:m:s>\")?\nhms: Hms := arg.parse()?\nprintln!(\"{hms}\")\nOk(())\n}\n",
+    "id": "haiku/csvavg",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::fs;\n\nfn main() -> Result<(), Box<dyn std::error::Error>> {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 2 {\n        eprintln!(\"Usage: {} <csv_file>\", args[0]);\n        std::process::exit(1);\n    }\n\n    let contents = fs::read_to_string(&args[1])?;\n    let lines: Vec<&str> = contents.lines().collect();\n\n    if lines.is_empty() {\n        return Err(\"Empty file\".into());\n    }\n\n    let mut sum = 0.0;\n    let mut count = 0;\n\n    for line in &lines[1..] {\n        let fields: Vec<&str> = line.split(',').collect();\n        if fields.len() > 1 {\n            let value: f64 = fields[1].parse()?;\n            sum += value;\n            count += 1;\n        }\n    }\n\n    if count == 0 {\n        return Err(\"No values to average\".into());\n    }\n\n    let average = sum / count as f64;\n    println!(\"{:.2}\", average);\n\n    Ok(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "opus/threads",
-    "kind": "tatamu",
-    "src": "fn main() {\ndata: Vec<i64> := (1..=1000).collect()\nchunk_size := data.len() / 4\n(sender, receiver) := mpsc::channel()\nmut handles := Vec::new()\nfor chunk in data.chunks(chunk_size) {\npart := chunk.to_vec()\ntx := sender.clone()\nhandles.push(thread::spawn(move || {\nsum: i64 := part.iter().sum()\ntx.send(sum).expect(\"failed to send partial sum\")\n}))\n}\ndrop(sender)\nfor handle in handles {handle.join().expect(\"thread panicked\")}\nmut total := 0\nfor partial in receiver {\nprintln!(\"partial = {partial}\")\ntotal += partial\n}\nprintln!(\"total = {total}\")\n}\n",
+    "id": "haiku/inventory",
+    "kind": "rust",
+    "src": "#[derive(Debug, Clone)]\nstruct Item {\n    name: String,\n    qty: u32,\n    price: f64,\n}\n\nimpl Item {\n    fn value(&self) -> f64 {\n        self.qty as f64 * self.price\n    }\n}\n\nfn main() {\n    let mut items = vec![\n        Item {\n            name: \"Apple\".to_string(),\n            qty: 10,\n            price: 1.5,\n        },\n        Item {\n            name: \"Banana\".to_string(),\n            qty: 20,\n            price: 0.8,\n        },\n        Item {\n            name: \"Orange\".to_string(),\n            qty: 15,\n            price: 2.0,\n        },\n        Item {\n            name: \"Mango\".to_string(),\n            qty: 5,\n            price: 3.5,\n        },\n        Item {\n            name: \"Grape\".to_string(),\n            qty: 25,\n            price: 1.2,\n        },\n    ];\n\n    items.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap());\n\n    for item in items.iter().take(3) {\n        println!(\"{}: {:.2}\", item.name, item.value());\n    }\n}\n",
     "status": "ok"
   },
   {
-    "id": "opus/stack",
-    "kind": "tatamu",
-    "src": "struct Stack<T> {items Vec<T>}\nimpl<T> Stack<T> {\nfn new() Self {Stack {items: Vec::new()}}\nfn push(&mut self, item T) {self.items.push(item)}\nfn pop(&mut self) Option<T> {self.items.pop()}\nfn peek(&self) Option<&T> {self.items.last()}\nfn len(&self) usize {self.items.len()}\n}\nfn main() {\nmut numbers: Stack<i32> := Stack::new()\nnumbers.push(1)\nnumbers.push(2)\nnumbers.push(3)\nprintln!(\"peek = {:?}\", numbers.peek())\nprintln!(\"pop = {:?}\", numbers.pop())\nprintln!(\"len = {}\", numbers.len())\nmut words: Stack<String> := Stack::new()\nwords.push(\"hello\".to_string())\nwords.push(\"world\".to_string())\nprintln!(\"peek = {:?}\", words.peek())\nwhile let Some(word) = words.pop() {println!(\"popped {word}\")}\nprintln!(\"empty peek = {:?}\", words.peek())\n}\n",
+    "id": "haiku/dedup",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::fs;\nuse std::io;\nuse std::collections::HashSet;\n\nfn main() -> io::Result<()> {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 2 {\n        eprintln!(\"Usage: {} <file_path>\", args[0]);\n        std::process::exit(1);\n    }\n\n    let contents = fs::read_to_string(&args[1])?;\n    let mut seen = HashSet::new();\n\n    for line in contents.lines() {\n        if seen.insert(line) {\n            println!(\"{}\", line);\n        }\n    }\n\n    Ok(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "sonnet/largest",
-    "kind": "tatamu",
-    "src": "fn largest<T: PartialOrd + Copy>(list &[T]) T {\nmut result := list[0]\nfor &item in list {if item > result {result = item}}\nresult\n}\nfn main() {\nnumbers := vec![34, 50, 25, 100, 65]\nprintln!(\"largest i32 = {}\", largest(&numbers))\nfloats := vec![1.2, 5.6, 3.3, 9.9, 2.1]\nprintln!(\"largest f64 = {}\", largest(&floats))\nchars := vec!['y', 'm', 'a', 'q']\nprintln!(\"largest char = {}\", largest(&chars))\n}\n",
+    "id": "haiku/fib",
+    "kind": "rust",
+    "src": "use std::collections::HashMap;\n\nfn fib(n: u32, memo: &mut HashMap<u32, u64>) -> u64 {\n    if let Some(&result) = memo.get(&n) {\n        return result;\n    }\n\n    let result = if n == 1 || n == 2 {\n        1\n    } else {\n        fib(n - 1, memo) + fib(n - 2, memo)\n    };\n\n    memo.insert(n, result);\n    result\n}\n\nfn main() {\n    let mut memo = HashMap::new();\n\n    for n in 1..=20 {\n        let value = fib(n, &mut memo);\n        println!(\"fib({}) = {}\", n, value);\n    }\n}\n",
     "status": "ok"
   },
   {
-    "id": "sonnet/longest",
-    "kind": "tatamu",
-    "src": "fn longest<'a>(x &'a str, y &'a str) &'a str {\nif x.len() > y.len() {x} else {y}\n}\nfn main() {\nargs: Vec<String> := env::args().collect()\nif args.len() < 3 {\nprintln!(\"usage: longest <a> <b>\")\nreturn\n}\nresult := longest(&args[1], &args[2])\nprintln!(\"longest = {result}\")\n}\n",
+    "id": "haiku/rpn",
+    "kind": "rust",
+    "src": "use std::env;\n\nfn main() -> Result<(), Box<dyn std::error::Error>> {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 2 {\n        eprintln!(\"Usage: {} <expression>\", args[0]);\n        std::process::exit(1);\n    }\n\n    let tokens: Vec<&str> = args[1].split_whitespace().collect();\n    let mut stack: Vec<f64> = Vec::new();\n\n    for token in tokens {\n        match token {\n            \"+\" | \"-\" | \"*\" | \"/\" => {\n                if stack.len() < 2 {\n                    return Err(\"Malformed input: not enough operands\".into());\n                }\n                let b = stack.pop().unwrap();\n                let a = stack.pop().unwrap();\n\n                let result = match token {\n                    \"+\" => a + b,\n                    \"-\" => a - b,\n                    \"*\" => a * b,\n                    \"/\" => {\n                        if b == 0.0 {\n                            return Err(\"Division by zero\".into());\n                        }\n                        a / b\n                    }\n                    _ => unreachable!(),\n                };\n\n                stack.push(result);\n            }\n            _ => {\n                let num: f64 = token.parse()?;\n                stack.push(num);\n            }\n        }\n    }\n\n    if stack.len() != 1 {\n        return Err(\"Malformed input: invalid expression\".into());\n    }\n\n    println!(\"{}\", stack[0]);\n    Ok(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "sonnet/shapes",
+    "id": "haiku/anagram",
     "kind": "tatamu",
-    "src": "enum Shape {\nCircle(f64),\nRect(f64, f64),\n}\nimpl Shape {\nfn area(&self) f64 {\nmatch self {\nShape::Circle(r) => PI * r * r,\nShape::Rect(w, h) => w * h,\n}\n}\n}\nfn main() {\nshapes := vec![Shape::Circle(2.0), Shape::Rect(3.0, 4.0), Shape::Circle(1.0)]\ntotal: f64 := shapes.iter().map(|s| s.area()).sum()\nprintln!(\"total area = {total:.2}\")\n}\n",
+    "src": "fn main() {\nargs := env::args().collect::<Vec<_>>();\nif args.len() < 3 {eprintln!(\"usage: anagram <word1> <word2>\"); return}\nword1 := args[1].to_lowercase();\nword2 := args[2].to_lowercase();\nmut chars1 := word1.chars().collect::<Vec<_>>();\nmut chars2 := word2.chars().collect::<Vec<_>>();\nchars1.sort();\nchars2.sort();\nprintln!(\"{}\", chars1 == chars2);\n}\n",
     "status": "ok"
   },
   {
-    "id": "sonnet/hms",
+    "id": "haiku/csvavg",
     "kind": "tatamu",
-    "src": "struct Hms +Debug,Clone,Copy {h u32, m u32, s u32}\nimpl fmt::Display for Hms {\nfn fmt(&self, f &mut fmt::Formatter) fmt::Result {\nwrite!(f, \"{:02}:{:02}:{:02}\", self.h, self.m, self.s)\n}\n}\nimpl FromStr for Hms {\ntype Err = String\nfn from_str(s &str) Result<Self, Self::Err> {\nparts: Vec<&str> := s.split(':').collect()\nif parts.len() != 3 {return Err(\"expected h:m:s\".to_string())}\nh: u32 := parts[0].parse().map_err(|_| \"invalid hour\".to_string())?\nm: u32 := parts[1].parse().map_err(|_| \"invalid minute\".to_string())?\ns: u32 := parts[2].parse().map_err(|_| \"invalid second\".to_string())?\nOk(Hms {h, m, s})\n}\n}\nfn main() {\nargs: Vec<String> := env::args().collect()\nif args.len() < 2 {\nprintln!(\"usage: hms <h:m:s>\")\nreturn\n}\nhms: Hms := args[1].parse().expect(\"failed to parse hms\")\nprintln!(\"{hms}\")\n}\n",
+    "src": "fn main() R<()> {\npath := env::args().nth(1).ok_or(\"usage: csvavg <file>\")?;\ntext := fs::read_to_string(&path)?;\nmut lines := text.lines();\nlines.next();\nmut sum := 0.0;\nmut count := 0;\nfor line in lines {\nparts := line.split(',').collect::<Vec<_>>();\nif parts.len() > 1 {val := parts[1].trim().parse::<f64>()?; sum += val; count += 1}\n}\nprintln!(\"{:.2}\", sum / count as f64);\nOk(())\n}\n",
     "status": "ok"
   },
   {
-    "id": "sonnet/threads",
+    "id": "haiku/inventory",
     "kind": "tatamu",
-    "src": "fn main() {\nnumbers: Vec<i64> := (1..=1000).collect()\nchunk_size := numbers.len() / 4\n(tx, rx) := mpsc::channel()\nmut handles := Vec::new()\nfor chunk in numbers.chunks(chunk_size) {\nchunk_vec: Vec<i64> := chunk.to_vec()\ntx := tx.clone()\nhandle := thread::spawn(move || {\nsum: i64 := chunk_vec.iter().sum()\ntx.send(sum).unwrap()\n})\nhandles.push(handle)\n}\ndrop(tx)\nfor handle in handles {handle.join().unwrap()}\ntotal: i64 := rx.iter().sum()\nprintln!(\"total = {total}\")\n}\n",
+    "src": "struct Item +Debug,Clone {name String, qty u32, price f64}\nimpl Item {fn value(&self) f64 {self.qty as f64 * self.price}}\nfn main() {\nmut items := vec![Item {name: \"apple\".into(), qty: 10, price: 1.5}, Item {name: \"banana\".into(), qty: 20, price: 0.5}, Item {name: \"cherry\".into(), qty: 5, price: 3.0}, Item {name: \"date\".into(), qty: 8, price: 2.0}, Item {name: \"elderberry\".into(), qty: 12, price: 4.0}];\nitems.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap_or(std::cmp::Ordering::Equal));\nfor item in items.iter().take(3) {println!(\"{}: {}\", item.name, item.value())}\n}\n",
     "status": "ok"
   },
   {
-    "id": "sonnet/stack",
+    "id": "haiku/dedup",
     "kind": "tatamu",
-    "src": "struct Stack<T> {items Vec<T>}\nimpl<T> Stack<T> {\nfn new() Self {Stack {items: Vec::new()}}\nfn push(&mut self, item T) {self.items.push(item)}\nfn pop(&mut self) Option<T> {self.items.pop()}\nfn peek(&self) Option<&T> {self.items.last()}\n}\nfn main() {\nmut int_stack: Stack<i32> := Stack::new()\nint_stack.push(1)\nint_stack.push(2)\nint_stack.push(3)\nprintln!(\"peek = {:?}\", int_stack.peek())\nprintln!(\"pop = {:?}\", int_stack.pop())\nmut string_stack: Stack<String> := Stack::new()\nstring_stack.push(\"hello\".to_string())\nstring_stack.push(\"world\".to_string())\nprintln!(\"peek = {:?}\", string_stack.peek())\nprintln!(\"pop = {:?}\", string_stack.pop())\n}\n",
+    "src": "fn main() R<()> {\npath := env::args().nth(1).ok_or(\"usage: dedup <file>\")?;\ntext := fs::read_to_string(&path)?;\nmut seen := HashSet::new();\nfor line in text.lines() {\nif seen.insert(line) {println!(\"{}\", line)}\n}\nOk(())\n}\n",
     "status": "ok"
+  },
+  {
+    "id": "haiku/fib",
+    "kind": "tatamu",
+    "src": "fn fib(n u64, memo &mut HashMap<u64, u64>) u64 {\nif let Some(&result) = memo.get(&n) {return result}\nresult := if n <= 1 {n} else {fib(n - 1, memo) + fib(n - 2, memo)};\nmemo.insert(n, result);\nresult\n}\nfn main() {\nmut memo := HashMap::new();\nfor n in 1..=20 {println!(\"fib({}) = {}\", n, fib(n, &mut memo))}\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "haiku/rpn",
+    "kind": "tatamu",
+    "src": "fn main() R<()> {\ninput := env::args().nth(1).ok_or(\"usage: rpn <expression>\")?;\nmut stack := Vec::new();\nfor token in input.split_whitespace() {\nif let Ok(num) = token.parse::<f64>() {stack.push(num)} else {\nif stack.len() < 2 {return Err(\"invalid expression\".into())}\nb := stack.pop().unwrap();\na := stack.pop().unwrap();\nresult := match token {\"+\" => a + b, \"-\" => a - b, \"*\" => a * b, \"/\" => if b == 0.0 {return Err(\"division by zero\".into())} else {a / b}, _ => return Err(\"unknown operator\".into()),};\nstack.push(result);\n}\n}\nif stack.len() != 1 {return Err(\"invalid expression\".into())}\nprintln!(\"{}\", stack[0]);\nOk(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/anagram",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::process;\n\n/// Returns the sorted, lowercased characters of `word`, its anagram signature.\nfn signature(word: &str) -> Vec<char> {\n    let mut chars: Vec<char> = word.to_lowercase().chars().collect();\n    chars.sort_unstable();\n    chars\n}\n\nfn main() {\n    let args: Vec<String> = env::args().skip(1).collect();\n    if args.len() != 2 {\n        eprintln!(\"usage: anagram <word1> <word2>\");\n        process::exit(1);\n    }\n\n    println!(\"{}\", signature(&args[0]) == signature(&args[1]));\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/csvavg",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::error::Error;\nuse std::fs;\n\nfn main() -> Result<(), Box<dyn Error>> {\n    let path = env::args().nth(1).ok_or(\"usage: csvavg <file.csv>\")?;\n    let contents = fs::read_to_string(&path)?;\n\n    let mut sum = 0.0;\n    let mut count = 0u32;\n\n    // `skip(1)` drops the header; `enumerate` is offset by 2 for 1-based line numbers.\n    for (index, line) in contents.lines().skip(1).enumerate() {\n        if line.trim().is_empty() {\n            continue;\n        }\n\n        let line_number = index + 2;\n        let field = line\n            .split(',')\n            .nth(1)\n            .ok_or_else(|| format!(\"line {line_number}: missing second column\"))?\n            .trim();\n        let value: f64 = field\n            .parse()\n            .map_err(|err| format!(\"line {line_number}: cannot parse {field:?}: {err}\"))?;\n\n        sum += value;\n        count += 1;\n    }\n\n    if count == 0 {\n        return Err(format!(\"{path}: no data rows\").into());\n    }\n\n    println!(\"{:.2}\", sum / f64::from(count));\n    Ok(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/inventory",
+    "kind": "rust",
+    "src": "#[derive(Debug, Clone)]\nstruct Item {\n    name: String,\n    qty: u32,\n    price: f64,\n}\n\nimpl Item {\n    fn new(name: &str, qty: u32, price: f64) -> Self {\n        Self {\n            name: name.to_string(),\n            qty,\n            price,\n        }\n    }\n\n    fn value(&self) -> f64 {\n        f64::from(self.qty) * self.price\n    }\n}\n\nfn main() {\n    let mut items = vec![\n        Item::new(\"widget\", 12, 2.50),\n        Item::new(\"gasket\", 140, 0.35),\n        Item::new(\"flywheel\", 3, 89.99),\n        Item::new(\"bearing\", 48, 4.25),\n        Item::new(\"housing\", 7, 31.00),\n    ];\n\n    items.sort_by(|a, b| b.value().total_cmp(&a.value()));\n\n    for item in items.iter().take(3) {\n        println!(\"{}: {:.2}\", item.name, item.value());\n    }\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/dedup",
+    "kind": "rust",
+    "src": "use std::collections::HashSet;\nuse std::env;\nuse std::error::Error;\nuse std::fs::File;\nuse std::io::{BufRead, BufReader};\n\nfn main() -> Result<(), Box<dyn Error>> {\n    let path = env::args().nth(1).ok_or(\"usage: dedup <file>\")?;\n    let reader = BufReader::new(File::open(&path)?);\n\n    let mut seen: HashSet<String> = HashSet::new();\n    for line in reader.lines() {\n        let line = line?;\n        if seen.insert(line.clone()) {\n            println!(\"{line}\");\n        }\n    }\n\n    Ok(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/fib",
+    "kind": "rust",
+    "src": "use std::collections::HashMap;\n\nfn fib(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {\n    if n < 2 {\n        return n;\n    }\n    if let Some(&value) = memo.get(&n) {\n        return value;\n    }\n\n    let value = fib(n - 1, memo) + fib(n - 2, memo);\n    memo.insert(n, value);\n    value\n}\n\nfn main() {\n    let mut memo = HashMap::new();\n    for n in 1..=20 {\n        println!(\"fib({}) = {}\", n, fib(n, &mut memo));\n    }\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/rpn",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::error::Error;\n\nfn eval(expr: &str) -> Result<f64, String> {\n    let mut stack: Vec<f64> = Vec::new();\n\n    for token in expr.split_whitespace() {\n        match token {\n            \"+\" | \"-\" | \"*\" | \"/\" => {\n                let rhs = stack\n                    .pop()\n                    .ok_or_else(|| format!(\"operator {token:?}: not enough operands\"))?;\n                let lhs = stack\n                    .pop()\n                    .ok_or_else(|| format!(\"operator {token:?}: not enough operands\"))?;\n\n                let value = match token {\n                    \"+\" => lhs + rhs,\n                    \"-\" => lhs - rhs,\n                    \"*\" => lhs * rhs,\n                    \"/\" if rhs == 0.0 => return Err(\"division by zero\".to_string()),\n                    \"/\" => lhs / rhs,\n                    _ => unreachable!(\"operator set is exhaustive\"),\n                };\n                stack.push(value);\n            }\n            operand => {\n                let value: f64 = operand\n                    .parse()\n                    .map_err(|_| format!(\"invalid token {operand:?}\"))?;\n                stack.push(value);\n            }\n        }\n    }\n\n    match stack.as_slice() {\n        [value] => Ok(*value),\n        [] => Err(\"empty expression\".to_string()),\n        _ => Err(format!(\"{} leftover operands\", stack.len() - 1)),\n    }\n}\n\nfn main() -> Result<(), Box<dyn Error>> {\n    let expr = env::args().nth(1).ok_or(\"usage: rpn \\\"3 4 +\\\"\")?;\n    println!(\"{}\", eval(&expr)?);\n    Ok(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/anagram",
+    "kind": "tatamu",
+    "src": "fn normalize(word &str) Vec<char> {\nmut chars := word.to_lowercase().chars().collect()\nchars.sort()\nchars\n}\nfn main() {\nmut args := env::args().skip(1)\na := args.next().expect(\"usage: anagram <word1> <word2>\")\nb := args.next().expect(\"usage: anagram <word1> <word2>\")\nprintln!(\"{}\", normalize(&a) == normalize(&b))\n}\n",
+    "status": "inference-only",
+    "codes": [
+      "E0282"
+    ],
+    "firstError": "error[E0282]: type annotations needed"
+  },
+  {
+    "id": "opus/csvavg",
+    "kind": "tatamu",
+    "src": "fn main() R<()> {\npath := env::args().nth(1).ok_or(\"usage: csvavg <file.csv>\")?\ntext := fs::read_to_string(&path)?\nmut sum := 0.0\nmut count := 0\nfor line in text.lines().skip(1) {\nline := line.trim()\nif line.is_empty() {continue}\nfield := line.split(',').nth(1).ok_or(\"missing second column\")?\nvalue := field.trim().parse()?\nsum += value\ncount += 1\n}\nif count == 0 {return Err(\"no data rows\".into())}\nprintln!(\"{:.2}\", sum / count as f64)\nOk(())\n}\n",
+    "status": "error",
+    "codes": [
+      "E0277"
+    ],
+    "firstError": "error[E0277]: cannot add-assign `()` to `f64`"
+  },
+  {
+    "id": "opus/inventory",
+    "kind": "tatamu",
+    "src": "struct Item +Debug,Clone {name String, qty u32, price f64}\nimpl Item {fn value(&self) f64 {self.qty as f64 * self.price}}\nfn main() {\nmut items := vec![\nItem {name: \"bolt\".to_string(), qty: 120, price: 0.35},\nItem {name: \"hammer\".to_string(), qty: 8, price: 12.5},\nItem {name: \"drill\".to_string(), qty: 3, price: 89.99},\nItem {name: \"tape\".to_string(), qty: 40, price: 2.25},\nItem {name: \"ladder\".to_string(), qty: 2, price: 145.0},\n]\nitems.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap())\nfor item in items.iter().take(3) {println!(\"{}: {:.2}\", item.name, item.value())}\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/dedup",
+    "kind": "tatamu",
+    "src": "fn main() R<()> {\npath := env::args().nth(1).ok_or(\"usage: dedup <file>\")?\ntext := fs::read_to_string(&path)?\nmut seen := HashSet::new()\nfor line in text.lines() {\nif seen.insert(line) {println!(\"{line}\")}\n}\nOk(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/fib",
+    "kind": "tatamu",
+    "src": "fn fib(n u64, memo &mut HashMap<u64, u64>) u64 {\nif n < 2 {return n}\nif let Some(value) = memo.get(&n) {return *value}\nresult := fib(n - 1, memo) + fib(n - 2, memo)\nmemo.insert(n, result)\nresult\n}\nfn main() {\nmut memo := HashMap::new()\nfor n in 1..=20 {println!(\"fib({n}) = {}\", fib(n, &mut memo))}\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "opus/rpn",
+    "kind": "tatamu",
+    "src": "fn eval(expr &str) R<f64> {\nmut stack = Vec::new()\nmut stack := Vec::new()\nfor token in expr.split_whitespace() {\nmatch token {\n\"+\" | \"-\" | \"*\" | \"/\" => {\nb := stack.pop().ok_or(\"stack underflow\")?\na := stack.pop().ok_or(\"stack underflow\")?\nvalue := match token {\n\"+\" => a + b,\n\"-\" => a - b,\n\"*\" => a * b,\n_ => {\nif b == 0.0 {return Err(\"division by zero\".into())}\na / b\n}\n}\nstack.push(value)\n}\n_ => stack.push(token.parse()?),\n}\n}\nif stack.len() != 1 {return Err(\"malformed expression\".into())}\nOk(stack[0])\n}\nfn main() R<()> {\nexpr := env::args().nth(1).ok_or(\"usage: rpn <expression>\")?\nprintln!(\"{}\", eval(&expr)?)\nOk(())\n}\n",
+    "status": "inference-only",
+    "codes": [
+      "E0282"
+    ],
+    "firstError": "error: invalid variable declaration"
+  },
+  {
+    "id": "sonnet/anagram",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::process;\n\nfn normalize(word: &str) -> Vec<char> {\n    let mut chars: Vec<char> = word.to_lowercase().chars().collect();\n    chars.sort_unstable();\n    chars\n}\n\nfn main() {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 3 {\n        eprintln!(\"Usage: {} <word1> <word2>\", args[0]);\n        process::exit(1);\n    }\n\n    let is_anagram = normalize(&args[1]) == normalize(&args[2]);\n    println!(\"{}\", is_anagram);\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/csvavg",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::error::Error;\nuse std::fs;\nuse std::process;\n\nfn main() {\n    if let Err(e) = run() {\n        eprintln!(\"Error: {}\", e);\n        process::exit(1);\n    }\n}\n\nfn run() -> Result<(), Box<dyn Error>> {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 2 {\n        return Err(format!(\"Usage: {} <csv_path>\", args[0]).into());\n    }\n\n    let contents = fs::read_to_string(&args[1])?;\n    let mut lines = contents.lines();\n    lines.next(); // skip header\n\n    let mut sum = 0.0;\n    let mut count = 0u64;\n\n    for line in lines {\n        let line = line.trim();\n        if line.is_empty() {\n            continue;\n        }\n        let fields: Vec<&str> = line.split(',').collect();\n        let value_str = fields\n            .get(1)\n            .ok_or_else(|| format!(\"missing second column in line: {}\", line))?;\n        let value: f64 = value_str\n            .trim()\n            .parse()\n            .map_err(|e| format!(\"failed to parse '{}' as number: {}\", value_str, e))?;\n        sum += value;\n        count += 1;\n    }\n\n    if count == 0 {\n        return Err(\"no data rows found\".into());\n    }\n\n    let average = sum / count as f64;\n    println!(\"{:.2}\", average);\n    Ok(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/inventory",
+    "kind": "rust",
+    "src": "#[derive(Debug, Clone)]\nstruct Item {\n    name: String,\n    qty: u32,\n    price: f64,\n}\n\nimpl Item {\n    fn value(&self) -> f64 {\n        self.qty as f64 * self.price\n    }\n}\n\nfn main() {\n    let mut items = vec![\n        Item {\n            name: \"Widget\".to_string(),\n            qty: 10,\n            price: 2.50,\n        },\n        Item {\n            name: \"Gadget\".to_string(),\n            qty: 3,\n            price: 19.99,\n        },\n        Item {\n            name: \"Gizmo\".to_string(),\n            qty: 25,\n            price: 1.20,\n        },\n        Item {\n            name: \"Doohickey\".to_string(),\n            qty: 7,\n            price: 8.75,\n        },\n        Item {\n            name: \"Thingamajig\".to_string(),\n            qty: 1,\n            price: 99.99,\n        },\n    ];\n\n    items.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap());\n\n    for item in items.iter().take(3) {\n        println!(\"{}: {}\", item.name, item.value());\n    }\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/dedup",
+    "kind": "rust",
+    "src": "use std::collections::HashSet;\nuse std::env;\nuse std::error::Error;\nuse std::fs;\nuse std::process;\n\nfn main() {\n    if let Err(e) = run() {\n        eprintln!(\"Error: {}\", e);\n        process::exit(1);\n    }\n}\n\nfn run() -> Result<(), Box<dyn Error>> {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 2 {\n        return Err(format!(\"Usage: {} <file_path>\", args[0]).into());\n    }\n\n    let contents = fs::read_to_string(&args[1])?;\n    let mut seen = HashSet::new();\n\n    for line in contents.lines() {\n        if seen.insert(line) {\n            println!(\"{}\", line);\n        }\n    }\n\n    Ok(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/fib",
+    "kind": "rust",
+    "src": "use std::collections::HashMap;\n\nfn fib(n: u64, memo: &mut HashMap<u64, u64>) -> u64 {\n    if n <= 1 {\n        return n;\n    }\n    if let Some(&value) = memo.get(&n) {\n        return value;\n    }\n    let result = fib(n - 1, memo) + fib(n - 2, memo);\n    memo.insert(n, result);\n    result\n}\n\nfn main() {\n    let mut memo: HashMap<u64, u64> = HashMap::new();\n    for n in 1..=20u64 {\n        println!(\"fib({}) = {}\", n, fib(n, &mut memo));\n    }\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/rpn",
+    "kind": "rust",
+    "src": "use std::env;\nuse std::error::Error;\nuse std::process;\n\nfn main() {\n    if let Err(e) = run() {\n        eprintln!(\"Error: {}\", e);\n        process::exit(1);\n    }\n}\n\nfn run() -> Result<(), Box<dyn Error>> {\n    let args: Vec<String> = env::args().collect();\n    if args.len() != 2 {\n        return Err(format!(\"Usage: {} <rpn_expression>\", args[0]).into());\n    }\n\n    let mut stack: Vec<f64> = Vec::new();\n\n    for token in args[1].split_whitespace() {\n        match token {\n            \"+\" | \"-\" | \"*\" | \"/\" => {\n                let b = stack.pop().ok_or(\"stack underflow: not enough operands\")?;\n                let a = stack.pop().ok_or(\"stack underflow: not enough operands\")?;\n                let result = match token {\n                    \"+\" => a + b,\n                    \"-\" => a - b,\n                    \"*\" => a * b,\n                    \"/\" => {\n                        if b == 0.0 {\n                            return Err(\"division by zero\".into());\n                        }\n                        a / b\n                    }\n                    _ => unreachable!(),\n                };\n                stack.push(result);\n            }\n            _ => {\n                let value: f64 = token\n                    .parse()\n                    .map_err(|e| format!(\"failed to parse '{}' as number: {}\", token, e))?;\n                stack.push(value);\n            }\n        }\n    }\n\n    if stack.len() != 1 {\n        return Err(\"malformed expression: leftover operands\".into());\n    }\n\n    println!(\"{}\", stack[0]);\n    Ok(())\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/anagram",
+    "kind": "tatamu",
+    "src": "fn main() {\nargs := env::args().collect()\na := args[1].to_lowercase()\nb := args[2].to_lowercase()\nmut ac := a.chars().collect()\nmut bc := b.chars().collect()\nac.sort()\nbc.sort()\nprintln!(\"{}\", ac == bc)\n}\n",
+    "status": "inference-only",
+    "codes": [
+      "E0282"
+    ],
+    "firstError": "error[E0282]: type annotations needed"
+  },
+  {
+    "id": "sonnet/csvavg",
+    "kind": "tatamu",
+    "src": "fn main() R<()> {\npath := env::args().nth(1).expect(\"usage: csvavg <file>\")\ntext := fs::read_to_string(&path)?\nmut sum := 0.0\nmut count := 0\nfor line in text.lines().skip(1) {\nif line.is_empty() {continue}\ncols := line.split(',').collect()\nvalue := cols[1].trim().parse()?\nsum += value\ncount += 1\n}\navg := sum / count as f64\nprintln!(\"{avg:.2}\")\nOk(())\n}\n",
+    "status": "inference-only",
+    "codes": [
+      "E0282"
+    ],
+    "firstError": "error[E0282]: type annotations needed"
+  },
+  {
+    "id": "sonnet/inventory",
+    "kind": "tatamu",
+    "src": "struct Item +Debug,Clone {name String, qty u32, price f64}\nimpl Item {\nfn value(&self) f64 {self.qty as f64 * self.price}\n}\nfn main() {\nmut items := vec![\nItem {name: \"Widget\".to_string(), qty: 10, price: 2.5},\nItem {name: \"Gadget\".to_string(), qty: 5, price: 12.0},\nItem {name: \"Gizmo\".to_string(), qty: 20, price: 1.75},\nItem {name: \"Doohickey\".to_string(), qty: 3, price: 40.0},\nItem {name: \"Thingamajig\".to_string(), qty: 8, price: 9.99},\n]\nitems.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap())\nfor item in items.iter().take(3) {println!(\"{}: {}\", item.name, item.value())}\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/dedup",
+    "kind": "tatamu",
+    "src": "fn main() {\npath := env::args().nth(1).expect(\"usage: dedup <file>\")\ntext := fs::read_to_string(&path).expect(\"failed to read file\")\nmut seen := HashSet::new()\nfor line in text.lines() {\nif seen.insert(line.to_string()) {println!(\"{line}\")}\n}\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/fib",
+    "kind": "tatamu",
+    "src": "fn fib(n u64, memo &mut HashMap<u64, u64>) u64 {\nif n <= 1 {return n}\nif let Some(&value) = memo.get(&n) {return value}\nresult := fib(n - 1, memo) + fib(n - 2, memo)\nmemo.insert(n, result)\nresult\n}\nfn main() {\nmut memo := HashMap::new()\nfor n in 1..=20 {println!(\"fib({n}) = {}\", fib(n, &mut memo))}\n}\n",
+    "status": "ok"
+  },
+  {
+    "id": "sonnet/rpn",
+    "kind": "tatamu",
+    "src": "fn main() R<()> {\nexpr := env::args().nth(1).expect(\"usage: rpn <expression>\")\nmut stack := Vec::new()\nfor token in expr.split_whitespace() {\nif token == \"+\" || token == \"-\" || token == \"*\" || token == \"/\" {\nb := stack.pop().ok_or(\"stack underflow\")?\na := stack.pop().ok_or(\"stack underflow\")?\nresult := if token == \"+\" {a + b} else if token == \"-\" {a - b} else if token == \"*\" {a * b} else {\nif b == 0.0 {return Err(\"division by zero\".into())}\na / b\n}\nstack.push(result)\n} else {\nvalue := token.parse().map_err(|_| \"invalid number\")?\nstack.push(value)\n}\n}\nif stack.len() != 1 {return Err(\"malformed expression\".into())}\nprintln!(\"{}\", stack[0])\nOk(())\n}\n",
+    "status": "error",
+    "codes": [
+      "E0277"
+    ],
+    "firstError": "error[E0277]: cannot add `()` to `()`"
   }
 ]

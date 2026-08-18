@@ -3,7 +3,8 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync, spawnSync } from "node:child_process";
-import { transpile } from "../../transpiler/tatamuc.mjs";
+import { transpileMapped, pubify } from "../../transpiler/tatamuc.mjs";
+const transpile = (s) => { const m = transpileMapped(s); return pubify(m.rust, m.privLines); };
 
 const R2T = "/tmp/claude-501/rust2ttm-syn/target/release/rust2ttm-syn";
 const file = process.argv[2];

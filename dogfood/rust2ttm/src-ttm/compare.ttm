@@ -24,6 +24,14 @@ trees.into_iter().collect()
 fn sort_attrs(attrs &mut Vec<syn::Attribute>) {
 attrs.sort_by_key(|a| quote::ToTokens::to_token_stream(a).to_string())
 }
+priv struct VisBinarizer;
+impl syn::visit_mut::VisitMut for VisBinarizer {
+fn visit_visibility_mut(&mut self, v &mut syn::Visibility) {
+if !matches!(v, syn::Visibility::Public(_)) {
+*v = syn::Visibility::Inherited
+}
+}
+}
 priv struct PathNormalizer {siblings Vec<String>}
 impl syn::visit_mut::VisitMut for PathNormalizer {
 fn visit_item_mut(&mut self, it &mut syn::Item) {
@@ -40,6 +48,7 @@ sort_attrs(a)
 syn::visit_mut::visit_item_mut(self, it)
 }
 fn visit_impl_item_fn_mut(&mut self, f &mut syn::ImplItemFn) {
+f.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 sort_attrs(&mut f.attrs)
 syn::visit_mut::visit_impl_item_fn_mut(self, f)
 }
@@ -92,14 +101,17 @@ sort_attrs(a)
 syn::visit_mut::visit_foreign_item_mut(self, f)
 }
 fn visit_trait_item_fn_mut(&mut self, f &mut syn::TraitItemFn) {
+f.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 sort_attrs(&mut f.attrs)
 syn::visit_mut::visit_trait_item_fn_mut(self, f)
 }
 fn visit_field_mut(&mut self, f &mut syn::Field) {
+f.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 sort_attrs(&mut f.attrs)
 syn::visit_mut::visit_field_mut(self, f)
 }
 fn visit_variant_mut(&mut self, v &mut syn::Variant) {
+v.attrs.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
 sort_attrs(&mut v.attrs)
 syn::visit_mut::visit_variant_mut(self, v)
 }
@@ -384,7 +396,7 @@ mut items := Vec::new()
 flatten(file.items, &mut items)
 mut norm := PathNormalizer {siblings: siblings.to_vec()}
 for it in items.iter_mut() {
-syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, it)
+syn::visit_mut::VisitMut::visit_item_mut(&mut VisBinarizer, it)
 syn::visit_mut::VisitMut::visit_item_mut(&mut norm, it)
 scrub_attrs(it)
 }

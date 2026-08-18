@@ -241,9 +241,18 @@ lb := bare_update(t, &mut str_open)
 buf_bare.push_str(lb.trim_end())
 depth += count_of(&lb, &['(', '[']) as i64 - count_of(&lb, &[')', ']']) as i64
 ang += angle_delta(&lb)
-pipes += count_of(&lb, &['|'])
 if lb.contains("=>") {has_arrow = true}
-if re(r"[=(,]\s*(move\s+)?\|($|[^|])", &RE_CLOSURE_OPEN).is_match(&lb) {closure_open = true}
+if closure_open {
+pipes += count_of(&lb, &['|'])
+if pipes >= 2 {closure_open = false}
+} else if let Some(m) = re(r"[=(,]\s*(move\s+)?\|($|[^|])", &RE_CLOSURE_OPEN).find(&lb) {
+after := &lb[m.start()..]
+n_pipes := count_of(after, &['|'])
+if n_pipes < 2 {
+closure_open = true
+pipes = n_pipes
+}
+}
 if str_open {continue}
 line_bare := lb
 next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
@@ -260,7 +269,7 @@ lit_depth = 1
 if lit_depth > 0 {continue}
 mut eff_depth := depth
 if buf_bare.ends_with(',') && ang > 0 {eff_depth += ang}
-open_pipes := pipes % 2 == 1 && closure_open && !has_arrow && !buf_bare.ends_with(';')
+open_pipes := closure_open && !has_arrow && !buf_bare.ends_with(';')
 has_cond_brace := buf_bare.contains("&& {") || buf_bare.contains("|| {")
 cond_block := buf_bare.ends_with("&& {") || buf_bare.ends_with("|| {") || (buf_bare.ends_with("} {") && has_cond_brace)
 next_closer := next.starts_with('}') && !(next.starts_with("} {") && has_cond_brace)
@@ -426,7 +435,6 @@ static FIELDRE: OnceLock<regex::Regex> = OnceLock::new()
 static PUBRE: OnceLock<regex::Regex> = OnceLock::new()
 (masked, lits) := mask_lits(raw.trim())
 mut t := masked
-t = re(r"^pub(\([^)]*\))?\s+", &PUBRE).replace(&t, "").to_string()
 t = re(r"^let\s+mut\s+(\w+)(:\s*(?:[^=\[]|\[[^\]]*\])+?)?\s*=\s*", &LETMUT).replace(&t, |c: &regex::Captures| {
 ty := c.get(2).map(|m| m.as_str().trim_end().to_string()).unwrap_or_default()
 format!("mut {}{} := ", &c[1], ty)
