@@ -173,7 +173,7 @@ function transformBindings(seg) {
     .replace(/\bmut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, "let mut $1: $2 =")
     .replace(/\bmut\s+([A-Za-z_]\w*)\s*:=/g, "let mut $1 =")
     .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
-    .replace(/(\([^()]*\))\s*:=/g, "let $1 =")
+    .replace(/(^|[{;]\s*)((?:[A-Za-z_][\w:]*)?\([^=]*?\)|\[[^=]*?\])\s*:=/g, "$1let $2 =")
     .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
 

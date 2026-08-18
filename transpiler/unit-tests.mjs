@@ -121,6 +121,14 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "path-pattern let-else binding", src: `fn f(t &T) Option<u8> {
+Token::Literal(c) := *t else { return None }
+Some(c)
+}`, contains: ["let Token::Literal(c) = *t else { return None };"], excludes: ["Literallet"] },
+  { name: "nested tuple pattern binding", src: `fn g(r R) u8 {
+Ok((a, b)) := r else { return 0 }
+a + b
+}`, contains: ["let Ok((a, b)) = r else { return 0 };"] },
   { name: "inline assignment of if expression gets semi", src: `fn f(args &mut A, p P) R<()> {
 args.h = if p.is_empty() { None } else { Some(p) }
 Ok(())

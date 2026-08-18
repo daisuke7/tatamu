@@ -227,8 +227,8 @@
   "crate": "ripgrep",
   "file": "crates/globset/src/glob.rs",
   "lines": 1687,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -1557,15 +1557,15 @@
   "crate": "clap",
   "file": "clap_derive/src/derives/subcommand.rs",
   "lines": 676,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `gen_for_enum`"
  },
  {
   "crate": "clap",
   "file": "clap_derive/src/derives/value_enum.rs",
   "lines": 134,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",
