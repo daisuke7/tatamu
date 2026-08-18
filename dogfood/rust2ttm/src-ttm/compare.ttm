@@ -1,10 +1,76 @@
+fn strip_macro_trailing_commas(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
+mut trees: Vec<proc_macro2::TokenTree> := ts.into_iter().map(|t| {
+match t {
+proc_macro2::TokenTree::Group(g) => {
+inner := strip_macro_trailing_commas(g.stream())
+proc_macro2::TokenTree::Group(proc_macro2::Group::new(g.delimiter(), inner))
+}
+proc_macro2::TokenTree::Literal(l) => {
+match syn::Lit::new(l.clone()) {
+syn::Lit::Str(s) => proc_macro2::TokenTree::Literal(proc_macro2::Literal::string(&s.value())),
+syn::Lit::ByteStr(s) => proc_macro2::TokenTree::Literal(proc_macro2::Literal::byte_string(&s.value())),
+_ => proc_macro2::TokenTree::Literal(l),
+}
+}
+other => other,
+}
+}).collect()
+while matches!(trees.last(), Some(proc_macro2::TokenTree::Punct(p)) if p.as_char() == ',' || p.as_char() == ';') {
+trees.pop();
+}
+trees.into_iter().collect()
+}
 priv struct PathNormalizer {siblings Vec<String>}
 impl syn::visit_mut::VisitMut for PathNormalizer {
 fn visit_block_mut(&mut self, b &mut syn::Block) {
-if let Some(syn::Stmt::Expr(_, semi)) = b.stmts.last_mut() {
-*semi = None
+match b.stmts.last_mut() {
+Some(syn::Stmt::Expr(_, semi)) => *semi = None,
+Some(syn::Stmt::Macro(m)) => m.semi_token = None,
+_ => {}
 }
 syn::visit_mut::visit_block_mut(self, b)
+}
+fn visit_arm_mut(&mut self, a &mut syn::Arm) {
+if let syn::Expr::Block(b) = &*a.body {
+if b.attrs.is_empty() && b.label.is_none() {
+if b.block.stmts.is_empty() {
+a.body = Box::new(syn::parse_quote!(()))
+} else if b.block.stmts.len() == 1 {
+match &b.block.stmts[0] {
+syn::Stmt::Expr(e, _) => a.body = Box::new(e.clone()),
+_ => {}
+}
+}
+}
+}
+a.comma = None
+syn::visit_mut::visit_arm_mut(self, a)
+}
+fn visit_lit_mut(&mut self, l &mut syn::Lit) {
+if let syn::Lit::Str(s) = l {
+*l = syn::Lit::Str(syn::LitStr::new(&s.value(), s.span()))
+} else if let syn::Lit::ByteStr(s) = l {
+*l = syn::Lit::ByteStr(syn::LitByteStr::new(&s.value(), s.span()))
+}
+syn::visit_mut::visit_lit_mut(self, l)
+}
+fn visit_macro_mut(&mut self, m &mut syn::Macro) {
+m.tokens = strip_macro_trailing_commas(std::mem::take(&mut m.tokens))
+syn::visit_mut::visit_macro_mut(self, m)
+}
+fn visit_expr_call_mut(&mut self, c &mut syn::ExprCall) {
+if c.args.trailing_punct() {
+args: Vec<syn::Expr> := c.args.iter().cloned().collect()
+c.args = args.into_iter().collect()
+}
+syn::visit_mut::visit_expr_call_mut(self, c)
+}
+fn visit_expr_method_call_mut(&mut self, c &mut syn::ExprMethodCall) {
+if c.args.trailing_punct() {
+args: Vec<syn::Expr> := c.args.iter().cloned().collect()
+c.args = args.into_iter().collect()
+}
+syn::visit_mut::visit_expr_method_call_mut(self, c)
 }
 fn visit_path_mut(&mut self, p &mut syn::Path) {
 if p.segments.len() > 1 {
@@ -37,6 +103,7 @@ fn flatten(items Vec<syn::Item>, out &mut Vec<syn::Item>) {
 for item in items {
 match item {
 syn::Item::Use(_) => {}
+syn::Item::Mod(m) if m.content.is_none() => {}
 syn::Item::Mod(m) if is_test_mod(&m) => {
 if let Some((_, inner)) = m.content {
 kept: Vec<syn::Item> := inner.into_iter().filter(|it| !matches!(it, syn::Item::Use(_))).collect()
@@ -63,11 +130,11 @@ return Err(format!("item count differs: {} vs {} ({a} vs {b})", ia.len(), ib.len
 }
 mut mismatches := 0
 for (x, y) in ia.iter().zip(ib.iter()) {
-if x != y {
+sx := strip_macro_trailing_commas(quote::ToTokens::to_token_stream(x)).to_string()
+sy := strip_macro_trailing_commas(quote::ToTokens::to_token_stream(y)).to_string()
+if sx != sy {
 mismatches += 1
 println!("MISMATCH: item `{}`", item_label(x))
-sx := quote::ToTokens::to_token_stream(x).to_string()
-sy := quote::ToTokens::to_token_stream(y).to_string()
 pos := sx.bytes().zip(sy.bytes()).position(|(a, b)| a != b).unwrap_or(sx.len().min(sy.len()))
 lo := pos.saturating_sub(40)
 println!("  a: …{}…", &sx[lo..(pos + 40).min(sx.len())])

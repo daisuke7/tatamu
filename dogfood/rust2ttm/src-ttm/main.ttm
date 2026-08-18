@@ -1,6 +1,7 @@
 #dep syn 2 features=full,extra-traits,visit-mut,parsing,printing
 #dep prettyplease 0.2
 #dep quote 1
+#dep proc-macro2 1
 #dep regex 1
 fn main() R<()> {
 args: Vec<String> := env::args().collect()

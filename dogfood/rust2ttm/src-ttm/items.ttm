@@ -39,9 +39,28 @@ file := syn::File {shebang: None, attrs: vec![], items: vec![item.clone()]}
 prettyplease::unparse(&file)
 }
 struct Clearer;
+fn drop_docs(attrs &mut Vec<syn::Attribute>) {
+attrs.retain(|a| !a.path().is_ident("doc"))
+}
 impl syn::visit_mut::VisitMut for Clearer {
 fn visit_visibility_mut(&mut self, v &mut syn::Visibility) {
 *v = syn::Visibility::Inherited
+}
+fn visit_impl_item_fn_mut(&mut self, f &mut syn::ImplItemFn) {
+drop_docs(&mut f.attrs)
+syn::visit_mut::visit_impl_item_fn_mut(self, f)
+}
+fn visit_trait_item_fn_mut(&mut self, f &mut syn::TraitItemFn) {
+drop_docs(&mut f.attrs)
+syn::visit_mut::visit_trait_item_fn_mut(self, f)
+}
+fn visit_field_mut(&mut self, f &mut syn::Field) {
+drop_docs(&mut f.attrs)
+syn::visit_mut::visit_field_mut(self, f)
+}
+fn visit_variant_mut(&mut self, v &mut syn::Variant) {
+drop_docs(&mut v.attrs)
+syn::visit_mut::visit_variant_mut(self, v)
 }
 }
 fn item_ident(item &syn::Item) Option<String> {
@@ -86,6 +105,7 @@ fn convert_one(item &syn::Item, siblings &[String], out &mut Converted) {
 mut cleaned := item.clone()
 derives := extract_derives(&cleaned)
 docs := strip_and_collect(&mut cleaned)
+collect_member_docs(&cleaned, out)
 vis_info := collect_vis(&cleaned)
 syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, &mut cleaned)
 printed := print_item(&cleaned)
@@ -98,7 +118,7 @@ fields_here := in_fields && i > 0
 lines.push(convert_line(l, siblings, fields_here))
 }
 if let Some(d) = derives {
-if let Some(first) = lines.first_mut() {
+if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
 if let Some(pos) = first.find(" {") {
 first.insert_str(pos, &format!(" +{d}"))
 } else {
@@ -113,6 +133,27 @@ out.doc_items.push((name, docs))
 }
 }
 out.ttm.extend(lines)
+}
+fn collect_member_docs(item &syn::Item, out &mut Converted) {
+match item {
+syn::Item::Impl(i) => {
+for it in &i.items {
+if let syn::ImplItem::Fn(m) = it {
+d := doc_lines(&m.attrs)
+if !d.is_empty() {out.doc_items.push((m.sig.ident.to_string(), d))}
+}
+}
+}
+syn::Item::Trait(t) => {
+for it in &t.items {
+if let syn::TraitItem::Fn(m) = it {
+d := doc_lines(&m.attrs)
+if !d.is_empty() {out.doc_items.push((m.sig.ident.to_string(), d))}
+}
+}
+}
+_ => {}
+}
 }
 fn strip_and_collect(item &mut syn::Item) Vec<String> {
 mut docs := Vec::new()

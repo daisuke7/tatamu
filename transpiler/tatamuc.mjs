@@ -172,8 +172,18 @@ function fieldsToRust(fieldsRaw) {
 
 const deriveAttr = (derives) => `#[derive(${derives.split(",").map((d) => d.trim()).join(", ")})]`;
 
-// S4: struct with +derives and `name Type` fields (single-line form)
+// S4: struct with +derives and `name Type` fields (single-line form).
+// Unit and tuple structs take the derive suffix too: `struct Marker +Debug`,
+// `struct Wrap(u8) +Debug,Clone`.
 function transformStruct(line) {
+  const unit = /^struct\s+(\w+(?:<[^{(]*>)?)\s*(\(.*\))?\s*(?:\+([\w,:\s]+?))?\s*;?\s*$/.exec(line.trim());
+  if (unit && !line.includes("{")) {
+    const lines = [];
+    const privFlags = [];
+    if (unit[3]) { lines.push(deriveAttr(unit[3])); privFlags.push(false); }
+    lines.push(`struct ${unit[1]}${unit[2] ?? ""};`); privFlags.push(false);
+    return { lines, privFlags };
+  }
   const m = /^struct\s+(\w+(?:<[^{]*>)?)\s*(?:\+([\w,:\s]+?))?\s*\{(.*)\}\s*$/.exec(line.trim());
   if (!m) return null;
   const [, name, derives, fieldsRaw] = m;
@@ -397,8 +407,10 @@ export function transpileMapped(src) {
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
     else if (/^#\[/.test(bare)) semi = false;                    // attribute
+    else if (/^use\b/.test(bare)) semi = true;                   // in-body use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
-    else if (!/^let\b/.test(bare) && /=>/.test(bare) && !/[[{(]$/.test(bare)) semi = false; // non-block match arm — never `;`
+    else if (!/^let\b/.test(bare) && /=>/.test(bare) && !/[[{(]$/.test(bare) &&
+             bare.indexOf("=>") < (bare.indexOf("{") === -1 ? Infinity : bare.indexOf("{"))) semi = false; // match arm: `pat => …` (arrow before any block)
     else if (/[}\])]$/.test(bare) && (closesLetBlock || closesParenStmt)) {
       // closer with trailing text (`}).to_string()`): statement — unless it is
       // itself the tail expression of a value block
@@ -1142,9 +1154,9 @@ function topLevelItems(ttmSrc) {
   let depth = 0;
   ttmSrc.split("\n").forEach((raw, idx) => {
     const bare = stripLiterals(raw.trim());
-    if (depth === 0) {
-      const m = /^(?:#\[[^\]]*\]\s*)?(fn|struct|enum|trait|const)\s+([A-Za-z_]\w*)/.exec(bare);
-      if (m && !/^#\[/.test(bare)) {
+    if (depth <= 1) {
+      const m = /^(?:#\[[^\]]*\]\s*)?(?:priv\s+)?(?:async\s+)?(fn|struct|enum|trait|const)\s+([A-Za-z_]\w*)/.exec(bare);
+      if (m && !/^#\[/.test(bare) && (depth === 0 || m[1] === "fn")) {
         // for fn/trait the body is noise; for struct/enum the braces ARE the signature
         const sig = (m[1] === "fn" || m[1] === "trait")
           ? raw.trim().replace(/\s*\{.*$/, "").trim()

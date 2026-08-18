@@ -4,7 +4,7 @@ cell.get_or_init(|| regex::Regex::new(pat).unwrap())
 }
 fn strip_lits(line &str) String {
 static RE: OnceLock<regex::Regex> = OnceLock::new()
-re(r####"r#"(?s).*?"#|r"[^"]*"|"(\\.|[^"\\])*"|'(\\.|[^'\\])'"####, &RE).replace_all(line, "\"\"").to_string()
+re(r####"b?r#"(?s).*?"#|b?r"[^"]*"|b?"(\\.|[^"\\])*"|'(\\.|[^'\\])'"####, &RE).replace_all(line, "\"\"").to_string()
 }
 fn count_of(s &str, chars &[char]) usize {
 s.chars().filter(|c| chars.contains(c)).count()
@@ -12,13 +12,31 @@ s.chars().filter(|c| chars.contains(c)).count()
 fn ends_terminated(bare &str) bool {
 bare.ends_with(';') || bare.ends_with('{') || bare.ends_with('}') || bare.ends_with(',') || bare.starts_with("#[")
 }
+fn in_open_string(buf &str) bool {
+blanked := blank_strings(buf)
+blanked.chars().filter(|c| *c == '"').count() % 2 == 1
+}
 fn join_wrapped(input &[String]) Vec<String> {
 mut out := Vec::new()
 mut buf := String::new()
 for (i, line) in input.iter().enumerate() {
-t := line.trim()
-if t.is_empty() {continue}
-if buf.is_empty() {buf = t.to_string()} else {
+open_string := !buf.is_empty() && in_open_string(&buf)
+t := if open_string {line.as_str()} else {line.trim()}
+if t.trim().is_empty() && !open_string {continue}
+if !open_string && t.starts_with("//") {
+if !buf.is_empty() {out.push(strip_trailing_commas(&std::mem::take(&mut buf)))}
+continue
+}
+if buf.is_empty() {buf = t.trim().to_string()} else if open_string {
+// multi-line string literal: fold it into one line with Rust semantics
+if buf.ends_with('\\') {
+buf.pop()
+buf.push_str(t.trim_start())
+} else {
+buf.push_str("\\n")
+buf.push_str(t)
+}
+} else {
 glue := if buf.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.starts_with(']') {""} else {" "}
 buf.push_str(glue)
 buf.push_str(t)
@@ -27,7 +45,7 @@ bare := strip_lits(&buf)
 depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
 next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
 terminated := ends_terminated(&bare) || next.starts_with('}') || next.is_empty()
-if depth <= 0 && terminated {
+if depth <= 0 && terminated && !in_open_string(&buf) {
 out.push(strip_trailing_commas(&std::mem::take(&mut buf)))
 }
 }
@@ -43,7 +61,7 @@ while i < bytes.len() {
 if bytes[i] == b',' {
 mut j := i + 1
 while j < bytes.len() && (bytes[j] == b' ') {j += 1}
-if j < bytes.len() && (bytes[j] == b')' || bytes[j] == b']') {
+if j < bytes.len() && (bytes[j] == b')' || bytes[j] == b']' || bytes[j] == b'>') {
 for k in i..j {keep[k] = false}
 }
 }
@@ -52,29 +70,75 @@ i += 1
 line.char_indices().filter(|(idx, _)| *keep.get(*idx).unwrap_or(&true)).map(|(_, c)| c).collect()
 }
 fn convert_sig(t &str) String {
-static FN_RE: OnceLock<regex::Regex> = OnceLock::new()
-static PARAM_RE: OnceLock<regex::Regex> = OnceLock::new()
-fn_re := re(r"\bfn\s+(\w+)(<[^>]*>)?\s*\(([^)]*)\)\s*(->\s*)?", &FN_RE)
-param_re := re(r"^(mut\s+)?(\w+):\s*", &PARAM_RE)
-fn_re.replace(t, |caps: &regex::Captures| {
-name := &caps[1]
-gen := caps.get(2).map(|m| m.as_str()).unwrap_or("")
-params := caps.get(3).map(|m| m.as_str()).unwrap_or("")
-mut parts := Vec::new()
+start := match t.find("fn ") {
+Some(s) if t[..s].chars().all(|c| c.is_alphanumeric() || c == ' ' || c == '_' || c == '"') => s,
+_ => return t.to_string(),
+}
+rest := &t[start + 3..]
+name_end := rest.find(|c: char| !c.is_alphanumeric() && c != '_').unwrap_or(rest.len())
+name := &rest[..name_end]
+mut i := start + 3 + name_end
+bytes: Vec<char> := t.chars().collect()
+mut generics := String::new()
+if bytes.get(i) == Some(&'<') {
 mut depth := 0i64
-mut cur := String::new()
-for ch in params.chars() {
-match ch {
-'<' | '(' | '[' => depth += 1,
-'>' | ')' | ']' => depth -= 1,
+g0 := i
+while i < bytes.len() {
+match bytes[i] {
+'<' => depth += 1,
+'>' => {
+depth -= 1
+if depth == 0 {i += 1; break}
+}
 _ => {}
 }
-if ch == ',' && depth == 0 {parts.push(std::mem::take(&mut cur))} else {cur.push(ch)}
+i += 1
+}
+generics = bytes[g0..i].iter().collect()
+}
+while bytes.get(i) == Some(&' ') {i += 1}
+if bytes.get(i) != Some(&'(') {return t.to_string()}
+mut depth := 0i64
+p0 := i
+while i < bytes.len() {
+match bytes[i] {
+'(' => depth += 1,
+')' => {
+depth -= 1
+if depth == 0 {i += 1; break}
+}
+_ => {}
+}
+i += 1
+}
+params_raw: String := bytes[p0 + 1..i - 1].iter().collect()
+mut after: String := bytes[i..].iter().collect()
+after = after.trim_start().to_string()
+if after.starts_with("->") {
+after = after[2..].trim_start().to_string()
+}
+static PARAM_RE: OnceLock<regex::Regex> = OnceLock::new()
+param_re := re(r"^(mut\s+)?(\w+):\s*", &PARAM_RE)
+mut parts := Vec::new()
+mut d := 0i64
+mut cur := String::new()
+for ch in params_raw.chars() {
+match ch {
+'<' | '(' | '[' => d += 1,
+'>' | ')' | ']' => d -= 1,
+_ => {}
+}
+if ch == ',' && d == 0 {parts.push(std::mem::take(&mut cur))} else {cur.push(ch)}
 }
 if !cur.trim().is_empty() {parts.push(cur)}
 converted: Vec<String> := parts.iter().map(|p| param_re.replace(p.trim(), "$1$2 ").to_string()).collect()
-format!("fn {name}{gen}({}) ", converted.join(", "))
-}).to_string()
+mut out := t[..start].to_string()
+out.push_str(&format!("fn {name}{generics}({})", converted.join(", ")))
+if !after.is_empty() {
+out.push(' ')
+out.push_str(&after)
+}
+out
 }
 fn convert_line(raw &str, siblings &[String], in_fields bool) String {
 static LETMUT: OnceLock<regex::Regex> = OnceLock::new()

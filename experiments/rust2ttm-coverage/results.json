@@ -1,0 +1,1815 @@
+[
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/decompress.rs",
+  "lines": 533,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/escape.rs",
+  "lines": 160,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/hostname.rs",
+  "lines": 86,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/human.rs",
+  "lines": 150,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/lib.rs",
+  "lines": 296,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/pattern.rs",
+  "lines": 182,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/process.rs",
+  "lines": 317,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/cli/src/wtr.rs",
+  "lines": 150,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/complete/bash.rs",
+  "lines": 108,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/complete/fish.rs",
+  "lines": 76,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/complete/mod.rs",
+  "lines": 11,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/complete/powershell.rs",
+  "lines": 86,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/complete/zsh.rs",
+  "lines": 33,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/config.rs",
+  "lines": 177,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/defs.rs",
+  "lines": 8162,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/doc/help.rs",
+  "lines": 278,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/doc/man.rs",
+  "lines": 117,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/doc/mod.rs",
+  "lines": 39,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/doc/version.rs",
+  "lines": 174,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/hiargs.rs",
+  "lines": 1517,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/lowargs.rs",
+  "lines": 736,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/mod.rs",
+  "lines": 310,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/flags/parse.rs",
+  "lines": 477,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/haystack.rs",
+  "lines": 161,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/index/disabled.rs",
+  "lines": 10,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/index/enabled.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/index/mod.rs",
+  "lines": 9,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/logger.rs",
+  "lines": 73,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/main.rs",
+  "lines": 490,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected `;`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/messages.rs",
+  "lines": 140,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/core/search.rs",
+  "lines": 450,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/globset/src/fnv.rs",
+  "lines": 31,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/globset/src/glob.rs",
+  "lines": 1687,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/globset/src/lib.rs",
+  "lines": 1308,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/globset/src/pathutil.rs",
+  "lines": 142,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/globset/src/serde_impl.rs",
+  "lines": 129,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/grep/src/lib.rs",
+  "lines": 22,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/default_types.rs",
+  "lines": 379,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/dir.rs",
+  "lines": 1614,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/gitignore.rs",
+  "lines": 886,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/incremental.rs",
+  "lines": 1287,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/lib.rs",
+  "lines": 550,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/overrides.rs",
+  "lines": 294,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/pathutil.rs",
+  "lines": 172,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/types.rs",
+  "lines": 589,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/ignore/src/walk.rs",
+  "lines": 2741,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/index/src/index.rs",
+  "lines": 218,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/index/src/lib.rs",
+  "lines": 7,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/index/src/literal.rs",
+  "lines": 1001,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/matcher/src/interpolate.rs",
+  "lines": 332,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/matcher/src/lib.rs",
+  "lines": 1380,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/pcre2/src/error.rs",
+  "lines": 49,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ErrorKind`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/pcre2/src/lib.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/pcre2/src/matcher.rs",
+  "lines": 506,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/color.rs",
+  "lines": 397,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/counter.rs",
+  "lines": 98,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/hyperlink/aliases.rs",
+  "lines": 93,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/hyperlink/mod.rs",
+  "lines": 1166,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/json.rs",
+  "lines": 1058,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/jsont.rs",
+  "lines": 295,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `fn`, `extern`, `use`, `static`, `const`, `unsafe`, `mod`, `type`, `struct`, `enum`, `uni"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/lib.rs",
+  "lines": 104,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/macros.rs",
+  "lines": 25,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/path.rs",
+  "lines": 177,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/standard.rs",
+  "lines": 3988,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/stats.rs",
+  "lines": 172,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/summary.rs",
+  "lines": 1151,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/printer/src/util.rs",
+  "lines": 609,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/ast.rs",
+  "lines": 217,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/ban.rs",
+  "lines": 84,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `check`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/config.rs",
+  "lines": 357,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/error.rs",
+  "lines": 95,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ErrorKind`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/lib.rs",
+  "lines": 19,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/literal.rs",
+  "lines": 1017,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/matcher.rs",
+  "lines": 671,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/non_matching.rs",
+  "lines": 160,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/regex/src/strip.rs",
+  "lines": 171,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/lib.rs",
+  "lines": 107,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/line_buffer.rs",
+  "lines": 966,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/lines.rs",
+  "lines": 467,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/macros.rs",
+  "lines": 26,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/searcher/core.rs",
+  "lines": 714,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/searcher/glue.rs",
+  "lines": 1550,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/searcher/mmap.rs",
+  "lines": 125,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/searcher/mod.rs",
+  "lines": 1089,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ConfigError`"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/sink.rs",
+  "lines": 664,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "ripgrep",
+  "file": "crates/searcher/src/testutil.rs",
+  "lines": 798,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde/src/integer128.rs",
+  "lines": 15,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde/src/lib.rs",
+  "lines": 286,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "serde",
+  "file": "serde/src/private/de.rs",
+  "lines": 3502,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected `;`\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde/src/private/mod.rs",
+  "lines": 19,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde/src/private/ser.rs",
+  "lines": 1383,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/crate_root.rs",
+  "lines": 172,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/de/ignored_any.rs",
+  "lines": 239,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/de/impls.rs",
+  "lines": 3174,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/de/mod.rs",
+  "lines": 2393,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/de/value.rs",
+  "lines": 1896,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/format.rs",
+  "lines": 31,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/lib.rs",
+  "lines": 122,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/macros.rs",
+  "lines": 231,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/private/content.rs",
+  "lines": 40,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/private/doc.rs",
+  "lines": 166,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/private/mod.rs",
+  "lines": 22,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/private/seed.rs",
+  "lines": 21,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/private/size_hint.rs",
+  "lines": 31,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/private/string.rs",
+  "lines": 24,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/ser/fmt.rs",
+  "lines": 171,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/ser/impls.rs",
+  "lines": 1046,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/ser/impossible.rs",
+  "lines": 217,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/ser/mod.rs",
+  "lines": 2011,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_core/src/std_error.rs",
+  "lines": 49,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/bound.rs",
+  "lines": 432,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/enum_.rs",
+  "lines": 97,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/enum_adjacently.rs",
+  "lines": 325,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/enum_externally.rs",
+  "lines": 214,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `deserialize`"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/enum_internally.rs",
+  "lines": 107,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/enum_untagged.rs",
+  "lines": 136,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/identifier.rs",
+  "lines": 478,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/struct_.rs",
+  "lines": 698,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/tuple.rs",
+  "lines": 284,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de/unit.rs",
+  "lines": 53,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `deserialize`"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/de.rs",
+  "lines": 977,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/deprecated.rs",
+  "lines": 57,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/dummy.rs",
+  "lines": 32,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `wrap_in_const`"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/fragment.rs",
+  "lines": 75,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/ast.rs",
+  "lines": 226,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/attr.rs",
+  "lines": 1819,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/case.rs",
+  "lines": 201,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/check.rs",
+  "lines": 478,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/ctxt.rs",
+  "lines": 68,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/mod.rs",
+  "lines": 29,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/name.rs",
+  "lines": 114,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/receiver.rs",
+  "lines": 294,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/respan.rs",
+  "lines": 17,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/internals/symbol.rs",
+  "lines": 72,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/lib.rs",
+  "lines": 128,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/pretend.rs",
+  "lines": 189,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/ser.rs",
+  "lines": 1370,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive/src/this.rs",
+  "lines": 33,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "serde_derive_internals/lib.rs",
+  "lines": 55,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "serde",
+  "file": "test_suite/no_std/src/main.rs",
+  "lines": 43,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_bench/src/lib.rs",
+  "lines": 5,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/action.rs",
+  "lines": 462,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ArgAction`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/app_settings.rs",
+  "lines": 89,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `AppSettings`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/arg.rs",
+  "lines": 5209,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/arg_group.rs",
+  "lines": 616,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/arg_predicate.rs",
+  "lines": 20,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ArgPredicate`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/arg_settings.rs",
+  "lines": 92,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ArgSettings`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/command.rs",
+  "lines": 5300,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/debug_asserts.rs",
+  "lines": 833,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `detect_duplicate_flags`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/ext.rs",
+  "lines": 47,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/mod.rs",
+  "lines": 72,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/os_str.rs",
+  "lines": 365,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/possible_value.rs",
+  "lines": 236,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/range.rs",
+  "lines": 306,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier or integer\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/resettable.rs",
+  "lines": 213,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/str.rs",
+  "lines": 350,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/styled_str.rs",
+  "lines": 288,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `wrap_unstyled`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/styling.rs",
+  "lines": 221,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/tests.rs",
+  "lines": 59,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/value_hint.rs",
+  "lines": 94,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ValueHint`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/builder/value_parser.rs",
+  "lines": 2700,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `StringValueParser`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/derive.rs",
+  "lines": 454,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/error/context.rs",
+  "lines": 115,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ContextKind`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/error/format.rs",
+  "lines": 495,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/error/kind.rs",
+  "lines": 366,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ErrorKind`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/error/mod.rs",
+  "lines": 947,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/lib.rs",
+  "lines": 54,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/macros.rs",
+  "lines": 604,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/mkeymap.rs",
+  "lines": 189,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/fmt.rs",
+  "lines": 84,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/help.rs",
+  "lines": 40,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/help_template.rs",
+  "lines": 1192,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/mod.rs",
+  "lines": 24,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/textwrap/core.rs",
+  "lines": 159,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/textwrap/mod.rs",
+  "lines": 123,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/textwrap/word_separators.rs",
+  "lines": 93,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/textwrap/wrap_algorithms.rs",
+  "lines": 69,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/output/usage.rs",
+  "lines": 495,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/arg_matcher.rs",
+  "lines": 239,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected an expression\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/error.rs",
+  "lines": 67,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `MatchesError`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/features/mod.rs",
+  "lines": 2,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/features/suggestions.rs",
+  "lines": 179,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/matches/arg_matches.rs",
+  "lines": 2046,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/matches/matched_arg.rs",
+  "lines": 222,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/matches/mod.rs",
+  "lines": 14,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/matches/value_source.rs",
+  "lines": 18,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `ValueSource`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/mod.rs",
+  "lines": 26,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/parser.rs",
+  "lines": 1686,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/parser/validator.rs",
+  "lines": 538,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/any_value.rs",
+  "lines": 128,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/color.rs",
+  "lines": 104,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/escape.rs",
+  "lines": 30,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/flat_map.rs",
+  "lines": 260,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/flat_set.rs",
+  "lines": 112,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/graph.rs",
+  "lines": 50,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/id.rs",
+  "lines": 196,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/mod.rs",
+  "lines": 41,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_builder/src/util/str_to_bool.rs",
+  "lines": 22,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/generator/mod.rs",
+  "lines": 297,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected one of: `for`, parentheses, `fn`, `unsafe`, `extern`, identifier, `::`, `<`, `dyn`, square bracke"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/generator/utils.rs",
+  "lines": 290,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `flags`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/mod.rs",
+  "lines": 55,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/bash.rs",
+  "lines": 310,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/elvish.rs",
+  "lines": 149,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/fish.rs",
+  "lines": 325,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/mod.rs",
+  "lines": 16,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/powershell.rs",
+  "lines": 156,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/shell.rs",
+  "lines": 164,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `Shell`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/aot/shells/zsh.rs",
+  "lines": 705,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `arg_conflicts`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/engine/candidate.rs",
+  "lines": 114,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `}`\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/engine/complete.rs",
+  "lines": 733,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `complete_option`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/engine/custom.rs",
+  "lines": 464,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected identifier\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/engine/mod.rs",
+  "lines": 19,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/env/mod.rs",
+  "lines": 412,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/env/shells.rs",
+  "lines": 617,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/lib.rs",
+  "lines": 110,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete/src/macros.rs",
+  "lines": 13,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_complete_nushell/src/lib.rs",
+  "lines": 261,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/attr.rs",
+  "lines": 224,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/derives/args.rs",
+  "lines": 790,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `gen_for_struct`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/derives/into_app.rs",
+  "lines": 118,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/derives/mod.rs",
+  "lines": 24,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/derives/parser.rs",
+  "lines": 128,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/derives/subcommand.rs",
+  "lines": 676,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/derives/value_enum.rs",
+  "lines": 134,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/dummies.rs",
+  "lines": 100,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/item.rs",
+  "lines": 1493,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"cannot parse string into token stream\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/lib.rs",
+  "lines": 119,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/macros.rs",
+  "lines": 22,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/utils/doc_comments.rs",
+  "lines": 411,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/utils/error.rs",
+  "lines": 23,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/utils/mod.rs",
+  "lines": 14,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/utils/spanned.rs",
+  "lines": 90,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_derive/src/utils/ty.rs",
+  "lines": 167,
+  "stage": "regen-parse-fail",
+  "detail": "Error: Error(\"expected `;`\")"
+ },
+ {
+  "crate": "clap",
+  "file": "clap_lex/src/ext.rs",
+  "lines": 285,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_lex/src/lib.rs",
+  "lines": 527,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_mangen/src/lib.rs",
+  "lines": 354,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "clap_mangen/src/render.rs",
+  "lines": 527,
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `options`"
+ },
+ {
+  "crate": "clap",
+  "file": "src/_concepts.rs",
+  "lines": 109,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/cargo_example.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/cargo_example_derive.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/escaped_positional.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/escaped_positional_derive.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/find.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/git.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/git_derive.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/mod.rs",
+  "lines": 66,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/multicall_busybox.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/multicall_hostname.rs",
+  "lines": 8,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/pacman.rs",
+  "lines": 11,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/repl.rs",
+  "lines": 6,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/repl_derive.rs",
+  "lines": 5,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_cookbook/typed_derive.rs",
+  "lines": 36,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_derive/_tutorial.rs",
+  "lines": 258,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_derive/mod.rs",
+  "lines": 542,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_faq.rs",
+  "lines": 96,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_features.rs",
+  "lines": 30,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/_tutorial.rs",
+  "lines": 247,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/bin/stdio-fixture.rs",
+  "lines": 109,
+  "stage": "equivalent",
+  "detail": ""
+ },
+ {
+  "crate": "clap",
+  "file": "src/lib.rs",
+  "lines": 111,
+  "stage": "equivalent",
+  "detail": ""
+ }
+]
