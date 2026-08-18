@@ -53,7 +53,7 @@ _ => {}
 }
 for st in b.stmts.iter_mut() {
 if let syn::Stmt::Expr(e, semi) = st {
-if matches!(e, syn::Expr::If(_) | syn::Expr::Match(_) | syn::Expr::While(_) | syn::Expr::ForLoop(_) | syn::Expr::Loop(_) | syn::Expr::Block(_) | syn::Expr::Unsafe(_) | syn::Expr::TryBlock(_)) {
+if matches!(e, syn::Expr::If(_) | syn::Expr::Match(_) | syn::Expr::While(_) | syn::Expr::ForLoop(_) | syn::Expr::Loop(_) | syn::Expr::Block(_) | syn::Expr::Unsafe(_) | syn::Expr::TryBlock(_) | syn::Expr::Const(_)) {
 *semi = None
 }
 }
@@ -264,11 +264,7 @@ _ => None,
 }
 }
 fn normalize_for_compare(src &str, siblings &[String]) R<Vec<syn::Item>> {
-stripped: Vec<&str> := src.lines().filter(|l| {
-t := l.trim_start()
-!t.starts_with("///") && !t.starts_with("//!")
-}).collect()
-file := syn::parse_file(&stripped.join("\n"))?
+file := syn::parse_file(src)?
 mut items := Vec::new()
 flatten(file.items, &mut items)
 mut norm := PathNormalizer {siblings: siblings.to_vec()}
