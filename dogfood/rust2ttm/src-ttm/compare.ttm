@@ -90,6 +90,7 @@ syn::visit_mut::visit_lit_mut(self, l)
 }
 fn visit_macro_mut(&mut self, m &mut syn::Macro) {
 m.tokens = strip_macro_trailing_commas(std::mem::take(&mut m.tokens))
+m.tokens = strip_token_docs(std::mem::take(&mut m.tokens))
 if m.path.is_ident("macro_rules") {
 m.tokens = brace_rule_bodies(std::mem::take(&mut m.tokens))
 }
@@ -193,6 +194,37 @@ continue
 }
 }
 out.push(tt)
+}
+out.into_iter().collect()
+}
+fn is_doc_group(tt &proc_macro2::TokenTree) bool {
+if let proc_macro2::TokenTree::Group(g) = tt {
+if g.delimiter() == proc_macro2::Delimiter::Bracket {
+if let Some(proc_macro2::TokenTree::Ident(id)) = g.stream().into_iter().next() {
+return id == "doc"
+}
+}
+}
+false
+}
+fn strip_token_docs(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
+tts: Vec<proc_macro2::TokenTree> := ts.into_iter().collect()
+mut out: Vec<proc_macro2::TokenTree> := Vec::new()
+mut i := 0usize
+while i < tts.len() {
+if let proc_macro2::TokenTree::Punct(p) = &tts[i] {
+if p.as_char() == '#' && i + 1 < tts.len() && is_doc_group(&tts[i + 1]) {
+i += 2
+continue
+}
+}
+match &tts[i] {
+proc_macro2::TokenTree::Group(g) => {
+out.push(proc_macro2::TokenTree::Group(proc_macro2::Group::new(g.delimiter(), strip_token_docs(g.stream()))))
+}
+other => out.push(other.clone()),
+}
+i += 1
 }
 out.into_iter().collect()
 }
