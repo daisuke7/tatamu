@@ -114,6 +114,7 @@ const TRANSFORM_CASES = [
   { name: "mut walrus", src: `fn main() {\nmut x := 5\n}`, contains: ["let mut x = 5;"] },
   { name: "tuple walrus", src: `fn main() {\n(a, b) := f()\n}`, contains: ["let (a, b) = f();"] },
   { name: "annotated walrus", src: `fn main() {\nxs: Vec<_> := it.collect()\n}`, contains: ["let xs: Vec<_> = it.collect();"] },
+  { name: "annotated walrus with path type", src: `fn main() {\nkept: Vec<syn::Item> := xs.collect()\nmut m: std::collections::HashMap<String, u8> := HashMap::new()\n}`, contains: ["let kept: Vec<syn::Item> = xs.collect();", "let mut m: std::collections::HashMap<String, u8> = HashMap::new();"] },
   { name: "reassignment untouched", src: `fn main() {\nmut x := 1\nx = 2\n}`, contains: ["x = 2;"], excludes: ["let x = 2"] },
   // signatures
   { name: "fn signature", src: `fn add(a i64, b i64) i64 {a + b}`, contains: ["fn add(a: i64, b: i64) -> i64 {a + b}"] },
@@ -164,6 +165,8 @@ const TRANSFORM_CASES = [
   { name: "priv keyword is stripped from output", src: `priv fn helper() u8 {1}\nfn main() {helper();}`, contains: ["fn helper() -> u8 {1}"], excludes: ["priv"] },
   { name: "macro_rules inline arm keeps separator", src: `macro_rules! maxof {\n($a:expr, $b:expr) => {if $a > $b {$a} else {$b}};\n}`, contains: ["{$a} else {$b}};"] },
   { name: "macro_rules multi-line arm closes with semicolon", src: `macro_rules! trace {\n($m:expr) => {\nv := $m\nprintln!("{v}")\n};\n}`, contains: ["let v = $m;", "    };"] },
+  { name: "multiline if-else as fn tail", src: `fn f(ok bool) R<()> {\nif ok {\nprintln!("y")\nOk(())\n} else {\nErr("no".into())\n}\n}`, contains: ["Err(\"no\".into())\n"], excludes: ["Err(\"no\".into());"] },
+  { name: "method-chain closer as fn tail", src: `fn f(t &str) String {\nre.replace(t, |c: &Captures| {\nformat!("x{}", &c[1])\n}).to_string()\n}`, contains: [").to_string()\n"], excludes: [").to_string();"] },
   { name: "arg-position async block tail is a value", src: `fn main() {\nh := tokio::spawn(async move {\nfetch(1).await\n})\nh\n}`, contains: ["fetch(1).await\n"], excludes: ["fetch(1).await;"] },
 ];
 

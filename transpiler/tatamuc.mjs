@@ -150,9 +150,9 @@ function transformFnSigs(seg) {
 // S1: := bindings, with optional type ascription (v0.2): `x: Vec<_> := expr`
 function transformBindings(seg) {
   return seg
-    .replace(/\bmut\s+([A-Za-z_]\w*)\s*:\s*([^=:]+?)\s*:=/g, "let mut $1: $2 =")
+    .replace(/\bmut\s+([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, "let mut $1: $2 =")
     .replace(/\bmut\s+([A-Za-z_]\w*)\s*:=/g, "let mut $1 =")
-    .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:\s*([^=:]+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
+    .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:\s*((?:[^=:]|::)+?)\s*:=/g, (mm, pre, name, ty) => `${pre}let ${name}: ${ty} =`)
     .replace(/(\([^()]*\))\s*:=/g, "let $1 =")
     .replace(/(^|[{;]\s*|\s)([A-Za-z_]\w*)\s*:=/g, (mm, pre, name) => `${pre}let ${name} =`);
 }
@@ -336,6 +336,9 @@ export function transpileMapped(src) {
     return false;
   };
   const blockContext = (bare, stack, i) => {
+    // `} else {` / `} else if … {` closes and reopens the same construct —
+    // the new block inherits the context of the one just closed
+    if (/^\}/.test(bare) && /\{$/.test(bare)) return stack[stack.length - 1] ?? "other";
     if (/^macro_rules!/.test(bare)) return "macro-rules";
     // a macro arm `(pattern) => {` inside macro_rules — its closer needs `};`
     if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
@@ -396,7 +399,12 @@ export function transpileMapped(src) {
     else if (/^#\[/.test(bare)) semi = false;                    // attribute
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && /=>/.test(bare) && !/[[{(]$/.test(bare)) semi = false; // non-block match arm — never `;`
-    else if (/[}\])]$/.test(bare) && (closesLetBlock || closesParenStmt)) semi = true; // closer with trailing text
+    else if (/[}\])]$/.test(bare) && (closesLetBlock || closesParenStmt)) {
+      // closer with trailing text (`}).to_string()`): statement — unless it is
+      // itself the tail expression of a value block
+      const valueTail = nextBare !== undefined && /^\}/.test(nextBare) && VALUE_CONTEXTS.includes(topAfter);
+      semi = !valueTail;
+    }
     else if (/\}$/.test(bare)) semi = /^let\b/.test(bare);       // inline `let x = … {…}`
     else if (/^fn\b/.test(bare) && !/\{/.test(bare)) semi = true; // trait method declaration
     else if (nextBare !== undefined && /^\}/.test(nextBare)) {

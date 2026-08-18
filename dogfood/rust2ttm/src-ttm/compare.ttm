@@ -1,0 +1,83 @@
+priv struct PathNormalizer {siblings Vec<String>}
+impl syn::visit_mut::VisitMut for PathNormalizer {
+fn visit_block_mut(&mut self, b &mut syn::Block) {
+if let Some(syn::Stmt::Expr(_, semi)) = b.stmts.last_mut() {
+*semi = None
+}
+syn::visit_mut::visit_block_mut(self, b)
+}
+fn visit_path_mut(&mut self, p &mut syn::Path) {
+if p.segments.len() > 1 {
+first := p.segments[0].ident.to_string()
+if self.siblings.iter().any(|s| *s == first) {
+rest: Vec<syn::PathSegment> := p.segments.iter().skip(1).cloned().collect()
+p.segments = rest.into_iter().collect()
+}
+}
+syn::visit_mut::visit_path_mut(self, p)
+}
+}
+fn normalize_for_compare(src &str, siblings &[String]) R<Vec<syn::Item>> {
+stripped: Vec<&str> := src.lines().filter(|l| {
+t := l.trim_start()
+!t.starts_with("///") && !t.starts_with("//!")
+}).collect()
+file := syn::parse_file(&stripped.join("\n"))?
+mut items := Vec::new()
+flatten(file.items, &mut items)
+mut norm := PathNormalizer {siblings: siblings.to_vec()}
+for it in items.iter_mut() {
+syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, it)
+syn::visit_mut::VisitMut::visit_item_mut(&mut norm, it)
+scrub_attrs(it)
+}
+Ok(items)
+}
+fn flatten(items Vec<syn::Item>, out &mut Vec<syn::Item>) {
+for item in items {
+match item {
+syn::Item::Use(_) => {}
+syn::Item::Mod(m) if is_test_mod(&m) => {
+if let Some((_, inner)) = m.content {
+kept: Vec<syn::Item> := inner.into_iter().filter(|it| !matches!(it, syn::Item::Use(_))).collect()
+flatten(kept, out)
+}
+}
+_ => out.push(item),
+}
+}
+}
+fn scrub_attrs(item &mut syn::Item) {
+if let Some(a) = item_attrs_mut(item) {
+a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
+}
+}
+fn item_label(item &syn::Item) String {
+item_ident(item).unwrap_or_else(|| "<unnamed>".to_string())
+}
+fn compare_files(a &str, b &str, siblings &[String]) R<()> {
+ia := normalize_for_compare(&fs::read_to_string(a)?, siblings)?
+ib := normalize_for_compare(&fs::read_to_string(b)?, siblings)?
+if ia.len() != ib.len() {
+return Err(format!("item count differs: {} vs {} ({a} vs {b})", ia.len(), ib.len()).into())
+}
+mut mismatches := 0
+for (x, y) in ia.iter().zip(ib.iter()) {
+if x != y {
+mismatches += 1
+println!("MISMATCH: item `{}`", item_label(x))
+sx := quote::ToTokens::to_token_stream(x).to_string()
+sy := quote::ToTokens::to_token_stream(y).to_string()
+pos := sx.bytes().zip(sy.bytes()).position(|(a, b)| a != b).unwrap_or(sx.len().min(sy.len()))
+lo := pos.saturating_sub(40)
+println!("  a: …{}…", &sx[lo..(pos + 40).min(sx.len())])
+println!("  b: …{}…", &sy[lo..(pos + 40).min(sy.len())])
+}
+}
+if mismatches == 0 {
+println!("EQUIVALENT: {} items ({a} == {b})", ia.len())
+Ok(())
+} else {
+Err(format!("{mismatches} item(s) differ").into())
+}
+}

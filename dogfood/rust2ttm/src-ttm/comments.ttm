@@ -1,0 +1,122 @@
+#use std::sync::OnceLock
+struct LedgerEntry {owner String, kind String, anchor String, nth usize, text String}
+priv struct RawLine {code String, above Vec<String>, tail Option<String>}
+fn find_line_comment(line &str) Option<usize> {
+blanked := blank_strings(line)
+blanked.find("//")
+}
+fn blank_strings(line &str) String {
+static RE: OnceLock<regex::Regex> = OnceLock::new()
+re(r####"r#"(?s).*?"#|r"[^"]*"|"(\\.|[^"\\])*"|'(\\.|[^'\\])'"####, &RE).replace_all(line, |c: &regex::Captures| "S".repeat(c[0].len())).to_string()
+}
+fn extract_ledger(src &str, siblings &[String]) Vec<LedgerEntry> {
+mut raws := Vec::new()
+mut pending_above := Vec::new()
+mut in_block := false
+for line in src.lines() {
+mut line := line.to_string()
+if in_block {
+match line.find("*/") {
+Some(e) => {
+pending_above.push(line[..e].trim().to_string())
+line = line[e + 2..].to_string()
+in_block = false
+}
+None => {
+pending_above.push(line.trim().to_string())
+continue
+}
+}
+}
+loop {
+s := match line.find("/*") {
+Some(s) if blank_strings(&line).as_bytes().get(s) == Some(&b'/') => s,
+_ => break,
+}
+match line[s + 2..].find("*/") {
+Some(rel) => {
+txt := line[s + 2..s + 2 + rel].trim().to_string()
+if !txt.is_empty() {pending_above.push(txt)}
+line = format!("{}{}", &line[..s], &line[s + 4 + rel..])
+}
+None => {
+pending_above.push(line[s + 2..].trim().to_string())
+line = line[..s].to_string()
+in_block = true
+break
+}
+}
+}
+t := line.trim()
+if t.starts_with("//!") || t.starts_with("///") {continue}
+mut tail := None
+if let Some(sl) = find_line_comment(&line) {
+text := line[sl + 2..].trim().to_string()
+if line[..sl].trim().is_empty() {
+if !text.is_empty() {pending_above.push(text)}
+} else if !text.is_empty() {tail = Some(text)}
+line = line[..sl].to_string()
+}
+if line.trim().is_empty() {continue}
+raws.push(RawLine {code: line.trim_end().to_string(), above: std::mem::take(&mut pending_above), tail})
+}
+join_and_anchor(&raws, siblings)
+}
+priv struct Joined {text String, above Vec<String>, tails Vec<String>}
+fn join_and_anchor(raws &[RawLine], siblings &[String]) Vec<LedgerEntry> {
+mut joined: Vec<Joined> := Vec::new()
+mut buf: Option<Joined> := None
+for (i, r) in raws.iter().enumerate() {
+t := r.code.trim()
+match buf.as_mut() {
+None => buf = Some(Joined {text: t.to_string(), above: r.above.clone(), tails: r.tail.iter().cloned().collect()}),
+Some(b) => {
+glue := if b.text.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.starts_with(']') {""} else {" "}
+b.text.push_str(glue)
+b.text.push_str(t)
+b.above.extend(r.above.iter().cloned())
+if let Some(tl) = &r.tail {b.tails.push(tl.clone())}
+}
+}
+b := buf.as_ref().unwrap()
+bare := strip_lits(&b.text)
+depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
+next := raws.get(i + 1).map(|r| r.code.trim()).unwrap_or("")
+terminated := ends_terminated(&bare) || next.starts_with('}') || next.is_empty()
+if depth <= 0 && terminated {
+joined.push(buf.take().unwrap())
+}
+}
+if let Some(b) = buf {joined.push(b)}
+mut entries := Vec::new()
+mut shadow: Vec<String> := Vec::new()
+mut owner := String::new()
+mut depth0 := 0i64
+for j in &joined {
+t := j.text.trim()
+converted := convert_line(t, siblings, false)
+if depth0 == 0 {
+if let Some(name) = decl_name(&converted) {owner = name}
+}
+anchor := converted.trim().to_string()
+shadow.push(anchor.clone())
+nth := shadow.iter().filter(|l| **l == anchor).count()
+for a in &j.above {
+if !owner.is_empty() && !a.is_empty() {
+entries.push(LedgerEntry {owner: owner.clone(), kind: "above".to_string(), anchor: anchor.clone(), nth, text: a.clone()})
+}
+}
+for tl in &j.tails {
+if !owner.is_empty() {
+entries.push(LedgerEntry {owner: owner.clone(), kind: "tail".to_string(), anchor: anchor.clone(), nth, text: tl.clone()})
+}
+}
+bare := strip_lits(t)
+depth0 += count_of(&bare, &['{']) as i64 - count_of(&bare, &['}']) as i64
+}
+entries
+}
+fn decl_name(t &str) Option<String> {
+static RE_DECL: OnceLock<regex::Regex> = OnceLock::new()
+re(r"^(?:#\[[^\]]*\]\s*)?(?:priv\s+)?(?:async\s+)?(?:fn|struct|enum|trait|const|static)\s+(\w+)", &RE_DECL).captures(t).map(|c| c[1].to_string())
+}

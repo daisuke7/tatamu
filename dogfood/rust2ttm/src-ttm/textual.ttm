@@ -1,0 +1,126 @@
+#use std::sync::OnceLock
+fn re(pat &'static str, cell &'static OnceLock<regex::Regex>) &'static regex::Regex {
+cell.get_or_init(|| regex::Regex::new(pat).unwrap())
+}
+fn strip_lits(line &str) String {
+static RE: OnceLock<regex::Regex> = OnceLock::new()
+re(r####"r#"(?s).*?"#|r"[^"]*"|"(\\.|[^"\\])*"|'(\\.|[^'\\])'"####, &RE).replace_all(line, "\"\"").to_string()
+}
+fn count_of(s &str, chars &[char]) usize {
+s.chars().filter(|c| chars.contains(c)).count()
+}
+fn ends_terminated(bare &str) bool {
+bare.ends_with(';') || bare.ends_with('{') || bare.ends_with('}') || bare.ends_with(',') || bare.starts_with("#[")
+}
+fn join_wrapped(input &[String]) Vec<String> {
+mut out := Vec::new()
+mut buf := String::new()
+for (i, line) in input.iter().enumerate() {
+t := line.trim()
+if t.is_empty() {continue}
+if buf.is_empty() {buf = t.to_string()} else {
+glue := if buf.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.starts_with(']') {""} else {" "}
+buf.push_str(glue)
+buf.push_str(t)
+}
+bare := strip_lits(&buf)
+depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
+next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
+terminated := ends_terminated(&bare) || next.starts_with('}') || next.is_empty()
+if depth <= 0 && terminated {
+out.push(strip_trailing_commas(&std::mem::take(&mut buf)))
+}
+}
+if !buf.is_empty() {out.push(strip_trailing_commas(&buf))}
+out
+}
+fn strip_trailing_commas(line &str) String {
+blanked := blank_strings(line)
+mut keep: Vec<bool> := vec![true; line.len()]
+bytes := blanked.as_bytes()
+mut i := 0
+while i < bytes.len() {
+if bytes[i] == b',' {
+mut j := i + 1
+while j < bytes.len() && (bytes[j] == b' ') {j += 1}
+if j < bytes.len() && (bytes[j] == b')' || bytes[j] == b']') {
+for k in i..j {keep[k] = false}
+}
+}
+i += 1
+}
+line.char_indices().filter(|(idx, _)| *keep.get(*idx).unwrap_or(&true)).map(|(_, c)| c).collect()
+}
+fn convert_sig(t &str) String {
+static FN_RE: OnceLock<regex::Regex> = OnceLock::new()
+static PARAM_RE: OnceLock<regex::Regex> = OnceLock::new()
+fn_re := re(r"\bfn\s+(\w+)(<[^>]*>)?\s*\(([^)]*)\)\s*(->\s*)?", &FN_RE)
+param_re := re(r"^(mut\s+)?(\w+):\s*", &PARAM_RE)
+fn_re.replace(t, |caps: &regex::Captures| {
+name := &caps[1]
+gen := caps.get(2).map(|m| m.as_str()).unwrap_or("")
+params := caps.get(3).map(|m| m.as_str()).unwrap_or("")
+mut parts := Vec::new()
+mut depth := 0i64
+mut cur := String::new()
+for ch in params.chars() {
+match ch {
+'<' | '(' | '[' => depth += 1,
+'>' | ')' | ']' => depth -= 1,
+_ => {}
+}
+if ch == ',' && depth == 0 {parts.push(std::mem::take(&mut cur))} else {cur.push(ch)}
+}
+if !cur.trim().is_empty() {parts.push(cur)}
+converted: Vec<String> := parts.iter().map(|p| param_re.replace(p.trim(), "$1$2 ").to_string()).collect()
+format!("fn {name}{gen}({}) ", converted.join(", "))
+}).to_string()
+}
+fn convert_line(raw &str, siblings &[String], in_fields bool) String {
+static LETMUT: OnceLock<regex::Regex> = OnceLock::new()
+static LETPLAIN: OnceLock<regex::Regex> = OnceLock::new()
+static CONSTRE: OnceLock<regex::Regex> = OnceLock::new()
+static FIELDRE: OnceLock<regex::Regex> = OnceLock::new()
+static PUBRE: OnceLock<regex::Regex> = OnceLock::new()
+mut t := raw.trim().to_string()
+t = re(r"^pub(\([^)]*\))?\s+", &PUBRE).replace(&t, "").to_string()
+t = re(r"^let\s+mut\s+(\w+)(:\s*[^=]+?)?\s*=\s*", &LETMUT).replace(&t, |c: &regex::Captures| {
+ty := c.get(2).map(|m| m.as_str().trim_end().to_string()).unwrap_or_default()
+format!("mut {}{} := ", &c[1], ty)
+}).to_string()
+t = re(r"^let\s+(\([^)]*\)|\w+)(:\s*[^=]+?)?\s*=\s*([^=])", &LETPLAIN).replace(&t, |c: &regex::Captures| {
+ty := c.get(2).map(|m| m.as_str().trim_end().to_string()).unwrap_or_default()
+format!("{}{} := {}", &c[1], ty, &c[3])
+}).to_string()
+if t.contains("fn ") {t = convert_sig(&t)}
+t = re(r"^const\s+(\w+):\s*", &CONSTRE).replace(&t, "const $1 ").to_string()
+if in_fields {
+t = re(r"^(pub\s+)?(\w+):\s+", &FIELDRE).replace(&t, "$2 ").to_string()
+}
+if !siblings.is_empty() {
+mut stripped := String::new()
+mut rest := t.as_str()
+loop {
+found := siblings.iter().filter_map(|s| rest.find(&format!("{s}::")).map(|i| (i, s.len() + 2))).min()
+match found {
+Some((i, len)) => {
+before := &rest[..i]
+if strip_lits(before).len() == before.len() || !before.contains('"') {
+stripped.push_str(before)
+rest = &rest[i + len..]
+} else {
+stripped.push_str(&rest[..i + len])
+rest = &rest[i + len..]
+}
+}
+None => {
+stripped.push_str(rest)
+break
+}
+}
+}
+t = stripped
+}
+if t.ends_with(';') {t.pop();}
+t.trim_end().to_string()
+}

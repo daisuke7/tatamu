@@ -1,0 +1,204 @@
+#use quote::ToTokens
+struct Converted {ttm Vec<String>, doc_intro Vec<String>, doc_items Vec<(String, Vec<String>)>, uses_kept Vec<String>}
+fn is_pub(v &syn::Visibility) bool {
+matches!(v, syn::Visibility::Public(_))
+}
+fn doc_lines(attrs &[syn::Attribute]) Vec<String> {
+mut out := Vec::new()
+for a in attrs {
+if a.path().is_ident("doc") {
+if let syn::Meta::NameValue(nv) = &a.meta {
+if let syn::Expr::Lit(l) = &nv.value {
+if let syn::Lit::Str(s) = &l.lit {out.push(s.value().trim().to_string())}
+}
+}
+}
+}
+out
+}
+fn derive_list(attrs &[syn::Attribute]) Option<String> {
+for a in attrs {
+if a.path().is_ident("derive") {
+if let syn::Meta::List(l) = &a.meta {
+raw := l.tokens.to_string()
+parts: Vec<String> := raw.split(',').map(|p| p.trim().replace(" :: ", "::").replace(' ', "")).collect()
+return Some(parts.join(","))
+}
+}
+}
+None
+}
+fn keep_attr(a &syn::Attribute) bool {
+!a.path().is_ident("doc") && !a.path().is_ident("derive")
+}
+fn is_test_mod(m &syn::ItemMod) bool {
+m.attrs.iter().any(|a| a.path().is_ident("cfg") && a.to_token_stream().to_string().contains("test"))
+}
+fn print_item(item &syn::Item) String {
+file := syn::File {shebang: None, attrs: vec![], items: vec![item.clone()]}
+prettyplease::unparse(&file)
+}
+struct Clearer;
+impl syn::visit_mut::VisitMut for Clearer {
+fn visit_visibility_mut(&mut self, v &mut syn::Visibility) {
+*v = syn::Visibility::Inherited
+}
+}
+fn item_ident(item &syn::Item) Option<String> {
+match item {
+syn::Item::Fn(f) => Some(f.sig.ident.to_string()),
+syn::Item::Struct(s) => Some(s.ident.to_string()),
+syn::Item::Enum(e) => Some(e.ident.to_string()),
+syn::Item::Trait(t) => Some(t.ident.to_string()),
+syn::Item::Const(c) => Some(c.ident.to_string()),
+syn::Item::Static(s) => Some(s.ident.to_string()),
+_ => None,
+}
+}
+fn use_directive(u &syn::ItemUse, prelude_covered &[&str]) Option<String> {
+text := u.tree.to_token_stream().to_string().replace(" :: ", "::").replace(" ", "")
+if text.starts_with("crate::") || text.starts_with("super::") || text.starts_with("self::") {return None}
+readable := u.tree.to_token_stream().to_string().replace(" :: ", "::").replace(" ,", ",").replace("{ ", "{").replace(" }", "}")
+if prelude_covered.iter().any(|p| text == *p) {return None}
+Some(format!("#use {readable}"))
+}
+fn convert_items(items &[syn::Item], siblings &[String], out &mut Converted) {
+prelude := ["std::collections::HashMap", "std::collections::HashSet", "std::env", "std::fs", "std::process", "std::thread", "std::mem", "std::fmt", "std::error::Error", "std::f64::consts::PI", "std::sync::mpsc", "std::sync::Arc", "std::sync::Mutex", "std::cmp::Ordering", "std::str::FromStr", "std::fmt::Display", "std::fmt::Formatter", "std::io::BufRead", "std::io::BufReader"]
+for item in items {
+match item {
+syn::Item::Use(u) => {
+if let Some(d) = use_directive(u, &prelude) {
+out.uses_kept.push(d)
+}
+}
+syn::Item::Mod(m) if m.content.is_none() => {}
+syn::Item::Mod(m) if is_test_mod(m) => {
+if let Some((_, inner)) = &m.content {
+kept: Vec<syn::Item> := inner.iter().filter(|it| !matches!(it, syn::Item::Use(_))).cloned().collect()
+convert_items(&kept, siblings, out)
+}
+}
+_ => convert_one(item, siblings, out),
+}
+}
+}
+fn convert_one(item &syn::Item, siblings &[String], out &mut Converted) {
+mut cleaned := item.clone()
+derives := extract_derives(&cleaned)
+docs := strip_and_collect(&mut cleaned)
+vis_info := collect_vis(&cleaned)
+syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, &mut cleaned)
+printed := print_item(&cleaned)
+raw_lines: Vec<String> := printed.lines().map(String::from).collect()
+joined := join_wrapped(&raw_lines)
+in_fields := matches!(item, syn::Item::Struct(_) | syn::Item::Enum(_))
+mut lines := Vec::new()
+for (i, l) in joined.iter().enumerate() {
+fields_here := in_fields && i > 0
+lines.push(convert_line(l, siblings, fields_here))
+}
+if let Some(d) = derives {
+if let Some(first) = lines.first_mut() {
+if let Some(pos) = first.find(" {") {
+first.insert_str(pos, &format!(" +{d}"))
+} else {
+first.push_str(&format!(" +{d}"))
+}
+}
+}
+apply_priv(&mut lines, &vis_info)
+if !docs.is_empty() {
+if let Some(name) = item_ident(item) {
+out.doc_items.push((name, docs))
+}
+}
+out.ttm.extend(lines)
+}
+fn strip_and_collect(item &mut syn::Item) Vec<String> {
+mut docs := Vec::new()
+if let Some(a) = item_attrs_mut(item) {
+docs = doc_lines(a)
+a.retain(keep_attr)
+}
+docs
+}
+fn extract_derives(item &syn::Item) Option<String> {
+match item {
+syn::Item::Struct(s) => derive_list(&s.attrs),
+syn::Item::Enum(e) => derive_list(&e.attrs),
+_ => None,
+}
+}
+fn item_attrs_mut(item &mut syn::Item) Option<&mut Vec<syn::Attribute>> {
+match item {
+syn::Item::Fn(f) => Some(&mut f.attrs),
+syn::Item::Struct(s) => Some(&mut s.attrs),
+syn::Item::Enum(e) => Some(&mut e.attrs),
+syn::Item::Trait(t) => Some(&mut t.attrs),
+syn::Item::Const(c) => Some(&mut c.attrs),
+syn::Item::Static(s) => Some(&mut s.attrs),
+syn::Item::Impl(i) => Some(&mut i.attrs),
+syn::Item::Macro(m) => Some(&mut m.attrs),
+_ => None,
+}
+}
+struct VisInfo {item_pub bool, is_impl_for bool, methods Vec<(String, bool)>, fields Vec<(String, bool)>}
+fn collect_vis(item &syn::Item) VisInfo {
+mut info := VisInfo {item_pub: true, is_impl_for: false, methods: Vec::new(), fields: Vec::new()}
+match item {
+syn::Item::Fn(f) => info.item_pub = is_pub(&f.vis),
+syn::Item::Struct(s) => {
+info.item_pub = is_pub(&s.vis)
+if let syn::Fields::Named(named) = &s.fields {
+for f in &named.named {
+if let Some(id) = &f.ident {
+info.fields.push((id.to_string(), is_pub(&f.vis)))
+}
+}
+}
+}
+syn::Item::Enum(e) => info.item_pub = is_pub(&e.vis),
+syn::Item::Trait(t) => info.item_pub = is_pub(&t.vis),
+syn::Item::Const(c) => info.item_pub = is_pub(&c.vis),
+syn::Item::Static(s) => info.item_pub = is_pub(&s.vis),
+syn::Item::Impl(i) => {
+info.is_impl_for = i.trait_.is_some()
+for it in &i.items {
+if let syn::ImplItem::Fn(m) = it {
+info.methods.push((m.sig.ident.to_string(), is_pub(&m.vis)))
+}
+}
+}
+_ => {}
+}
+info
+}
+fn apply_priv(lines &mut Vec<String>, info &VisInfo) {
+if !info.item_pub {
+if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
+first.insert_str(0, "priv ")
+}
+}
+if !info.is_impl_for {
+for (name, is_p) in &info.methods {
+if *is_p {continue}
+prefix := format!("fn {name}(")
+for l in lines.iter_mut() {
+if l.starts_with(&prefix) {
+l.insert_str(0, "priv ")
+break
+}
+}
+}
+}
+for (name, is_p) in &info.fields {
+if *is_p {continue}
+prefix := format!("{name} ")
+for l in lines.iter_mut() {
+if l.starts_with(&prefix) && l.ends_with(',') {
+l.insert_str(0, "priv ")
+break
+}
+}
+}
+}
