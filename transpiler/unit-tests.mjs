@@ -121,6 +121,8 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "impl Trait nested tuple params", src: `fn f(mut self, ifs impl IntoIterator<Item = (impl Into<Id>, impl Into<Pred>)>) Self {self}`, contains: ["ifs: impl IntoIterator<Item = (impl Into<Id>, impl Into<Pred>)>"], excludes: ["impl:"] },
+  { name: "fn pointer param type", src: `fn g(cb fn(u8) -> u8, x u8) u8 {cb(x)}`, contains: ["cb: fn(u8) -> u8, x: u8"] },
   { name: "extern C fn", src: `#[no_mangle]\nextern "C" fn add(a i64, b i64) i64 {a + b}`, contains: [`extern "C" fn add(a: i64, b: i64) -> i64`] },
   { name: "trait method decl gets semicolon", src: `trait Area {\nfn area(&self) f64\n}`, contains: ["fn area(&self) -> f64;"] },
   { name: "extern block decl", src: `extern "C" {\nfn c_mul(a i64, b i64) i64\n}`, contains: ["fn c_mul(a: i64, b: i64) -> i64;"] },

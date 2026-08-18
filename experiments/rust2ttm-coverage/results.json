@@ -1004,8 +1004,8 @@
   "crate": "clap",
   "file": "clap_builder/src/builder/arg.rs",
   "lines": 5209,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected identifier\")"
+  "stage": "ast-mismatch",
+  "detail": "MISMATCH: item `<unnamed>`"
  },
  {
   "crate": "clap",

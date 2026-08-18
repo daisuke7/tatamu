@@ -134,9 +134,24 @@ function transformFnSigs(seg) {
       if (seg[k] === "{") { braceAt = k; break; }
     }
     const retRaw = (braceAt === -1 ? seg.slice(j + 1) : seg.slice(j + 1, braceAt)).trim();
-    const newParams = params.split(/,(?![^<(]*[>)])/).map((p) => {
+    // depth-aware split (nested generics/tuples/fn-pointers keep their commas)
+    const parts = [];
+    {
+      let d = 0, cur = "";
+      for (let ci = 0; ci < params.length; ci++) {
+        const ch = params[ci];
+        if (ch === "<" || ch === "(" || ch === "[") d++;
+        else if (ch === ")" || ch === "]") d--;
+        else if (ch === ">" && params[ci - 1] !== "-") d--;
+        if (ch === "," && d === 0) { parts.push(cur); cur = ""; }
+        else cur += ch;
+      }
+      if (cur.trim() !== "") parts.push(cur);
+    }
+    const newParams = parts.map((p) => {
       const t = p.trim();
       if (t === "" || t === "self" || t === "&self" || t === "&mut self") return t;
+      if (/^(&?\s*)?impl\b/.test(t)) return t; // bare impl-Trait parameter type
       const mm = /^(mut\s+)?([A-Za-z_]\w*)\s+(.+)$/.exec(t);
       return mm && mm[2] !== "mut" ? `${mm[1] ?? ""}${mm[2]}: ${mm[3]}` : t;
     }).filter((p) => p !== "").join(", ");

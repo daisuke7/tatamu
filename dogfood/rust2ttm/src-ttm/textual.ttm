@@ -134,13 +134,16 @@ param_re := re(r"^(mut\s+)?(\w+):\s*", &PARAM_RE)
 mut parts := Vec::new()
 mut d := 0i64
 mut cur := String::new()
+mut prev := ' '
 for ch in params_raw.chars() {
 match ch {
 '<' | '(' | '[' => d += 1,
-'>' | ')' | ']' => d -= 1,
+')' | ']' => d -= 1,
+'>' if prev != '-' => d -= 1,
 _ => {}
 }
 if ch == ',' && d == 0 {parts.push(std::mem::take(&mut cur))} else {cur.push(ch)}
+prev = ch
 }
 if !cur.trim().is_empty() {parts.push(cur)}
 converted: Vec<String> := parts.iter().map(|p| param_re.replace(p.trim(), "$1$2 ").to_string()).collect()
