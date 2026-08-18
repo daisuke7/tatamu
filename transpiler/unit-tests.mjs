@@ -230,6 +230,13 @@ wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())
 assert_paths(td.path(), &builder, &["bar", "a", "a/bar"])
 }`, contains: ["wfile(td.path().join(\"bar\"), \"\");", "let mut builder = W::new(td.path());", "&[\"bar\", \"a\", \"a/bar\"]);"] },
+  { name: "macro call closer inside macro_rules stays verbatim", src: `macro_rules! m {
+() => {
+$crate::helper! { left = [],
+right = [], }
+$crate::helper! { x }
+};
+}`, contains: ["right = [], }"], excludes: ["right = [], };"] },
   { name: "closure opening with inline struct continues", src: `fn make() P {
 event_loop_waker := || { struct Dummy {}
 impl Dummy { fn new() -> Self { Self } }

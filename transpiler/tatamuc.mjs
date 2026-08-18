@@ -350,7 +350,8 @@ export function transpileMapped(src) {
       if (macroDepth <= 0) {
         // the closer rejoins normal semicolon logic (let-bound macros get `;`)
         macroDepth = 0;
-        push(raw.replace(/;\s*$/, ""), n, false, false);
+        if (mrDepth > 0) push(raw, n, false, true); // inside macro_rules: stay verbatim
+        else push(raw.replace(/;\s*$/, ""), n, false, false);
       } else push(raw, n, false, true);
       continue;
     }

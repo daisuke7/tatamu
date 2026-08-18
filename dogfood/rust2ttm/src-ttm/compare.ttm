@@ -155,6 +155,13 @@ if let syn::Lit::Str(s) = l {
 }
 syn::visit_mut::visit_lit_mut(self, l)
 }
+fn visit_attribute_mut(&mut self, a &mut syn::Attribute) {
+if let syn::Meta::List(l) = &mut a.meta {
+l.tokens = flatten_spacing(std::mem::take(&mut l.tokens))
+l.tokens = strip_macro_trailing_commas(std::mem::take(&mut l.tokens))
+}
+syn::visit_mut::visit_attribute_mut(self, a)
+}
 fn visit_macro_mut(&mut self, m &mut syn::Macro) {
 m.tokens = strip_macro_trailing_commas(std::mem::take(&mut m.tokens))
 m.tokens = strip_token_docs(std::mem::take(&mut m.tokens))
@@ -199,6 +206,10 @@ items: Vec<syn::FnArg> := s.inputs.iter().cloned().collect()
 s.inputs = items.into_iter().collect()
 }
 syn::visit_mut::visit_signature_mut(self, s)
+}
+fn visit_type_trait_object_mut(&mut self, t &mut syn::TypeTraitObject) {
+t.dyn_token = Some(Default::default())
+syn::visit_mut::visit_type_trait_object_mut(self, t)
 }
 fn visit_type_tuple_mut(&mut self, t &mut syn::TypeTuple) {
 if t.elems.len() > 1 && t.elems.trailing_punct() {
