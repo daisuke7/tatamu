@@ -234,8 +234,8 @@
   "crate": "ripgrep",
   "file": "crates/globset/src/lib.rs",
   "lines": 1308,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -1172,8 +1172,8 @@
   "crate": "clap",
   "file": "clap_builder/src/macros.rs",
   "lines": 604,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "clap",

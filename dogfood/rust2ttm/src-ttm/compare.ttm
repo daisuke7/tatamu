@@ -90,6 +90,9 @@ syn::visit_mut::visit_lit_mut(self, l)
 }
 fn visit_macro_mut(&mut self, m &mut syn::Macro) {
 m.tokens = strip_macro_trailing_commas(std::mem::take(&mut m.tokens))
+if m.path.is_ident("macro_rules") {
+m.tokens = brace_rule_bodies(std::mem::take(&mut m.tokens))
+}
 syn::visit_mut::visit_macro_mut(self, m)
 }
 fn visit_expr_call_mut(&mut self, c &mut syn::ExprCall) {
@@ -165,6 +168,33 @@ p.segments = rest.into_iter().collect()
 }
 syn::visit_mut::visit_path_mut(self, p)
 }
+}
+fn brace_rule_bodies(ts proc_macro2::TokenStream) proc_macro2::TokenStream {
+mut out: Vec<proc_macro2::TokenTree> := Vec::new()
+mut prev_eq := false
+mut prev_arrow := false
+for tt in ts {
+arrow_now := prev_arrow
+prev_arrow = false
+match &tt {
+proc_macro2::TokenTree::Punct(p) if p.as_char() == '=' => prev_eq = true,
+proc_macro2::TokenTree::Punct(p) if p.as_char() == '>' && prev_eq => {
+prev_eq = false
+prev_arrow = true
+}
+_ => prev_eq = false,
+}
+if arrow_now {
+if let proc_macro2::TokenTree::Group(g) = &tt {
+if g.delimiter() != proc_macro2::Delimiter::Brace {
+out.push(proc_macro2::TokenTree::Group(proc_macro2::Group::new(proc_macro2::Delimiter::Brace, g.stream())))
+continue
+}
+}
+}
+out.push(tt)
+}
+out.into_iter().collect()
 }
 fn unwrap_single_block(body &syn::Expr) Option<syn::Expr> {
 b := match body {
