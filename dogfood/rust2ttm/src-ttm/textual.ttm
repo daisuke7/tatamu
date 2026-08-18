@@ -90,7 +90,8 @@ lit_depth = 1
 }
 if lit_depth > 0 {continue}
 depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
-open_pipes := count_of(&bare, &['|']) % 2 == 1 && !bare.contains("=>") && !bare.ends_with(';')
+static RE_CLOSURE_OPEN: OnceLock<regex::Regex> = OnceLock::new()
+open_pipes := count_of(&bare, &['|']) % 2 == 1 && re(r"[=(,]\s*\|[^|]", &RE_CLOSURE_OPEN).is_match(&bare) && !bare.contains("=>") && !bare.ends_with(';')
 terminated := (ends_terminated(&bare) || next.starts_with('}') || next.is_empty()) && !open_pipes
 chained := (next.starts_with('.') || next.starts_with("as ") || next.starts_with('?')) && !bare.ends_with(';')
 if depth <= 0 && terminated && !chained && !in_open_string(&buf) {
