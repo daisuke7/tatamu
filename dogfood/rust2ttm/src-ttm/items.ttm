@@ -239,6 +239,13 @@ syn::Item::Const(c) => Some(&mut c.attrs),
 syn::Item::Static(s) => Some(&mut s.attrs),
 syn::Item::Impl(i) => Some(&mut i.attrs),
 syn::Item::Macro(m) => Some(&mut m.attrs),
+syn::Item::Type(t) => Some(&mut t.attrs),
+syn::Item::Mod(m) => Some(&mut m.attrs),
+syn::Item::Union(u) => Some(&mut u.attrs),
+syn::Item::Use(u) => Some(&mut u.attrs),
+syn::Item::TraitAlias(t) => Some(&mut t.attrs),
+syn::Item::ExternCrate(e) => Some(&mut e.attrs),
+syn::Item::ForeignMod(f) => Some(&mut f.attrs),
 _ => None,
 }
 }

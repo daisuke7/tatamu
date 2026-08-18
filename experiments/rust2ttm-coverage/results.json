@@ -297,8 +297,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/expr_store.rs",
   "lines": 1267,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -654,8 +654,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-expand/src/files.rs",
   "lines": 540,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -682,8 +682,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-expand/src/lib.rs",
   "lines": 1758,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -878,8 +878,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/infer/closure/analysis.rs",
   "lines": 1678,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -892,8 +892,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/infer/coerce.rs",
   "lines": 1688,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -969,8 +969,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/infer.rs",
   "lines": 2863,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1340,8 +1340,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/next_solver/infer/select.rs",
   "lines": 432,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1368,8 +1368,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/next_solver/infer/traits.rs",
   "lines": 243,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -2369,8 +2369,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-assists/src/handlers/destructure_tuple_binding.rs",
   "lines": 2163,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -3916,8 +3916,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide-diagnostics/src/handlers/missing_match_arms.rs",
   "lines": 1218,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4392,8 +4392,8 @@
   "crate": "rust-analyzer",
   "file": "crates/mbe/src/lib.rs",
   "lines": 449,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5309,8 +5309,8 @@
   "crate": "rust-analyzer",
   "file": "crates/stdx/src/anymap.rs",
   "lines": 294,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5442,8 +5442,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax/src/ast/make.rs",
   "lines": 1559,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5540,8 +5540,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax/src/ptr.rs",
   "lines": 129,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5617,8 +5617,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax-bridge/src/lib.rs",
   "lines": 1051,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5750,8 +5750,8 @@
   "crate": "rust-analyzer",
   "file": "crates/vfs/src/loader.rs",
   "lines": 238,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5911,8 +5911,8 @@
   "crate": "rust-analyzer",
   "file": "lib/ungrammar/src/error.rs",
   "lines": 48,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
