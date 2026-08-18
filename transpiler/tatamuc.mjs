@@ -252,13 +252,15 @@ function transformEnumHeader(line) {
 function transformConst(line) {
   const m = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+(.+?)\s*=\s*(.+?);?\s*$/.exec(line.trim());
   if (m) {
+    // already Rust-shaped (macro_rules bodies): leave the colon alone
+    const colon = m[2].startsWith(":") ? "" : ":";
     // a multi-line initializer block gets its ';' from the closer (let-block context)
-    return [`const ${m[1]}: ${m[2]} = ${m[3]}${/\{$/.test(m[3]) ? "" : ";"}`];
+    return [`const ${m[1]}${colon} ${m[2]} = ${m[3]}${/\{$/.test(m[3]) ? "" : ";"}`];
   }
   // valueless declaration (trait interface): `const VALUE Self;`
   const d = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+([^={]+?);?\s*$/.exec(line.trim());
   if (!d) return null;
-  return [`const ${d[1]}: ${d[2]};`];
+  return [`const ${d[1]}${d[2].startsWith(":") ? "" : ":"} ${d[2]};`];
 }
 
 // ---------- use-injection prelude map (S6) ----------

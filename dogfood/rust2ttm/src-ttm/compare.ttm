@@ -28,6 +28,7 @@ impl syn::visit_mut::VisitMut for PathNormalizer {
 fn visit_item_mut(&mut self, it &mut syn::Item) {
 if let Some(a) = item_attrs_mut(it) {
 a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"))
+merge_derives(a)
 sort_attrs(a)
 }
 syn::visit_mut::visit_item_mut(self, it)
@@ -93,6 +94,10 @@ syn::visit_mut::visit_arm_mut(self, a)
 fn visit_expr_closure_mut(&mut self, c &mut syn::ExprClosure) {
 if let Some(e) = unwrap_single_block(&c.body) {
 c.body = Box::new(e)
+}
+if c.inputs.trailing_punct() {
+items: Vec<syn::Pat> := c.inputs.iter().cloned().collect()
+c.inputs = items.into_iter().collect()
 }
 syn::visit_mut::visit_expr_closure_mut(self, c)
 }
@@ -231,6 +236,25 @@ proc_macro2::TokenTree::Punct(proc_macro2::Punct::new(p.as_char(), proc_macro2::
 }
 other => other,
 }).collect()
+}
+fn merge_derives(attrs &mut Vec<syn::Attribute>) {
+mut names: Vec<String> := Vec::new()
+for a in attrs.iter() {
+if a.path().is_ident("derive") {
+if let syn::Meta::List(l) = &a.meta {
+for part in l.tokens.to_string().split(',') {
+t := part.trim().to_string()
+if !t.is_empty() {names.push(t)}
+}
+}
+}
+}
+if names.len() < 2 {return}
+names.sort()
+names.dedup()
+attrs.retain(|a| !a.path().is_ident("derive"))
+ts: proc_macro2::TokenStream := names.join(", ").parse().unwrap()
+attrs.push(syn::parse_quote!(#[derive(#ts)]))
 }
 fn is_doc_group(tt &proc_macro2::TokenTree) bool {
 if let proc_macro2::TokenTree::Group(g) = tt {

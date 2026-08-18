@@ -18,16 +18,16 @@ if let syn::Lit::Str(s) = &l.lit {out.push(s.value().trim().to_string())}
 out
 }
 fn derive_list(attrs &[syn::Attribute]) Option<String> {
+mut parts: Vec<String> := Vec::new()
 for a in attrs {
 if a.path().is_ident("derive") {
 if let syn::Meta::List(l) = &a.meta {
 raw := l.tokens.to_string()
-parts: Vec<String> := raw.split(',').map(|p| p.trim().replace(" :: ", "::").replace(' ', "")).collect()
-return Some(parts.join(","))
+parts.extend(raw.split(',').map(|p| p.trim().replace(" :: ", "::").replace(' ', "")).filter(|p| !p.is_empty()))
 }
 }
 }
-None
+if parts.is_empty() {None} else {Some(parts.join(","))}
 }
 fn keep_attr(a &syn::Attribute) bool {
 !a.path().is_ident("doc") && !a.path().is_ident("derive")

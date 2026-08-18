@@ -121,6 +121,15 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "split derive attributes are all kept", src: `#[derive(Serialize, Debug)]
+#[serde(rename_all = "snake_case")]
+#[derive(Default)]
+enum Scope +Serialize,Debug,Default { #[default] Expr, Item, }`, contains: ["derive"] },
+  { name: "rust-shaped const in macro body stays intact", src: `macro_rules! m {
+() => {
+const _: () = { f(); };
+};
+}`, contains: ["const _: () = { f(); };"], excludes: ["_: :"] },
   { name: "valueless const declaration in trait", src: `trait Sealed {
 const VALUE Self;
 }`, contains: ["const VALUE: Self;"] },

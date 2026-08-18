@@ -48,20 +48,182 @@ pos = end
 }
 0
 }
+fn bare_update(line &str, str_open &mut bool) String {
+mut out := String::new()
+cs: Vec<char> := line.chars().collect()
+mut i := 0usize
+if *str_open {
+mut esc := false
+mut closed := None
+while i < cs.len() {
+ch := cs[i]
+if esc {esc = false} else if ch == '\\' {esc = true} else if ch == '"' {
+closed = Some(i)
+break
+}
+i += 1
+}
+match closed {
+Some(ci) => {
+out.push('"')
+*str_open = false
+i = ci + 1
+}
+None => return out,
+}
+}
+while i < cs.len() {
+ch := cs[i]
+if ch == '"' {
+prev := if i > 0 {cs[i - 1]} else {' '}
+raw := prev == 'r' || (prev == '#' && i >= 2)
+if raw {
+mut hashes := 0usize
+mut k := i
+while k > 0 && cs[k - 1] == '#' {
+hashes += 1
+k -= 1
+}
+mut j := i + 1
+mut done := None
+while j < cs.len() {
+if cs[j] == '"' {
+mut h := 0usize
+while j + 1 + h < cs.len() && cs[j + 1 + h] == '#' && h < hashes {h += 1}
+if h == hashes {
+done = Some(j + hashes)
+break
+}
+}
+j += 1
+}
+match done {
+Some(e) => {
+out.push('"')
+out.push('"')
+i = e + 1
+continue
+}
+None => {
+out.push('"')
+*str_open = true
+return out
+}
+}
+}
+mut esc := false
+mut j := i + 1
+mut done := None
+while j < cs.len() {
+c2 := cs[j]
+if esc {esc = false} else if c2 == '\\' {esc = true} else if c2 == '"' {
+done = Some(j)
+break
+}
+j += 1
+}
+match done {
+Some(e) => {
+out.push('"')
+out.push('"')
+i = e + 1
+}
+None => {
+out.push('"')
+*str_open = true
+return out
+}
+}
+} else if ch == '\'' {
+if i + 2 < cs.len() && cs[i + 1] == '\\' {
+mut j := i + 2
+while j < cs.len() && cs[j] != '\'' {j += 1}
+if j < cs.len() {
+out.push('\'')
+out.push('\'')
+i = j + 1
+} else {
+out.push(ch)
+i += 1
+}
+} else if i + 2 < cs.len() && cs[i + 2] == '\'' && cs[i + 1] != '\'' {
+out.push('\'')
+out.push('\'')
+i += 3
+} else {
+out.push(ch)
+i += 1
+}
+} else {
+out.push(ch)
+i += 1
+}
+}
+out
+}
+fn angle_delta(lb &str) i64 {
+mut ang := 0i64
+cs: Vec<char> := lb.chars().collect()
+mut ci := 0usize
+while ci < cs.len() {
+ch := cs[ci]
+prev_ch := if ci > 0 {cs[ci - 1]} else {' '}
+next_ch := cs.get(ci + 1).copied().unwrap_or(' ')
+after2 := cs.get(ci + 2).copied().unwrap_or(' ')
+if (ch == '<' && next_ch == '<' || ch == '>' && next_ch == '>') && prev_ch == ' ' && after2 == ' ' {
+ci += 2
+continue
+}
+op_like := prev_ch == ' ' && (next_ch == ' ' || next_ch == '=')
+match ch {
+'<' if !op_like => ang += 1,
+'>' if prev_ch != '-' && !op_like => ang -= 1,
+_ => {}
+}
+ci += 1
+}
+ang
+}
 fn join_wrapped(input &[String]) Vec<String> {
+static RE_CLOSURE_OPEN: OnceLock<regex::Regex> = OnceLock::new()
 mut out := Vec::new()
 mut buf := String::new()
+mut buf_bare := String::new()
 mut lit_depth := 0i64
+mut str_open := false
+mut depth := 0i64
+mut ang := 0i64
+mut pipes := 0usize
+mut has_arrow := false
+mut closure_open := false
 for (i, line) in input.iter().enumerate() {
-open_string := !buf.is_empty() && in_open_string(&buf)
+open_string := !buf.is_empty() && str_open
 t := if open_string {line.as_str()} else {line.trim()}
 if t.trim().is_empty() && !open_string {continue}
 if !open_string && t.starts_with("//") {
-if !buf.is_empty() {out.push(strip_trailing_commas(&std::mem::take(&mut buf)))}
+if !buf.is_empty() {
+out.push(strip_trailing_commas(&std::mem::take(&mut buf)))
+buf_bare.clear()
+lit_depth = 0
+str_open = false
+depth = 0
+ang = 0
+pipes = 0
+has_arrow = false
+closure_open = false
+}
 continue
 }
-if buf.is_empty() {buf = t.trim().to_string()} else if open_string {
-// multi-line string literal: fold it into one line with Rust semantics
+if buf.is_empty() {
+buf = t.trim().to_string()
+buf_bare.clear()
+str_open = false
+depth = 0
+ang = 0
+pipes = 0
+has_arrow = false
+closure_open = false
+} else if open_string {
 if buf.ends_with('\\') {
 buf.pop()
 buf.push_str(t.trim_start())
@@ -74,13 +236,19 @@ glue := if buf.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.s
 buf.push_str(glue)
 buf.push_str(t)
 }
-if in_open_string(&buf) {continue}
-bare := strip_lits(&buf)
-line_bare := strip_lits(t.trim())
+lb := bare_update(t, &mut str_open)
+buf_bare.push_str(&lb)
+depth += count_of(&lb, &['(', '[']) as i64 - count_of(&lb, &[')', ']']) as i64
+ang += angle_delta(&lb)
+pipes += count_of(&lb, &['|'])
+if lb.contains("=>") {has_arrow = true}
+if re(r"[=(,]\s*\|($|[^|])", &RE_CLOSURE_OPEN).is_match(&lb) {closure_open = true}
+if str_open {continue}
+line_bare := lb
 next := input.get(i + 1).map(|l| l.trim()).unwrap_or("")
 if lit_depth > 0 {
 lit_depth += count_of(&line_bare, &['{']) as i64 - count_of(&line_bare, &['}']) as i64
-} else if bare.ends_with('{') && !bare.trim_start().starts_with("match ") {
+} else if buf_bare.ends_with('{') && !buf_bare.trim_start().starts_with("match ") {
 mut j := i + 1
 while input.get(j).map(|l| l.trim().starts_with("#[")).unwrap_or(false) {j += 1}
 probe := input.get(j).map(|l| l.trim()).unwrap_or("")
@@ -89,28 +257,23 @@ lit_depth = 1
 }
 }
 if lit_depth > 0 {continue}
-mut depth := count_of(&bare, &['(', '[']) as i64 - count_of(&bare, &[')', ']']) as i64
-if bare.ends_with(',') {
-mut ang := 0i64
-cs: Vec<char> := bare.chars().collect()
-for (ci, ch) in cs.iter().enumerate() {
-prev_ch := if ci > 0 {cs[ci - 1]} else {' '}
-next_ch := cs.get(ci + 1).copied().unwrap_or(' ')
-op_like := prev_ch == ' ' && (next_ch == ' ' || next_ch == '<' || next_ch == '>' || next_ch == '=')
-match ch {
-'<' if !op_like => ang += 1,
-'>' if prev_ch != '-' && !op_like => ang -= 1,
-_ => {}
+mut eff_depth := depth
+if buf_bare.ends_with(',') && ang > 0 {eff_depth += ang}
+open_pipes := pipes % 2 == 1 && closure_open && !has_arrow && !buf_bare.ends_with(';')
+terminated := (ends_terminated(&buf_bare) || next.starts_with('}') || next.is_empty()) && !open_pipes
+chained := (next.starts_with('.') || next.starts_with("as ") || next.starts_with('?')) && !buf_bare.ends_with(';')
+if std::env::var("R2T_DEBUG_JOIN").is_ok() {
+eprintln!("JOIN i={i} d={depth} eff={eff_depth} lit={lit_depth} term={terminated} chain={chained} pipes={pipes} co={closure_open} tail={:?}", &buf_bare[buf_bare.len().saturating_sub(35)..])
 }
-}
-if ang > 0 {depth += ang}
-}
-static RE_CLOSURE_OPEN: OnceLock<regex::Regex> = OnceLock::new()
-open_pipes := count_of(&bare, &['|']) % 2 == 1 && re(r"[=(,]\s*\|[^|]", &RE_CLOSURE_OPEN).is_match(&bare) && !bare.contains("=>") && !bare.ends_with(';')
-terminated := (ends_terminated(&bare) || next.starts_with('}') || next.is_empty()) && !open_pipes
-chained := (next.starts_with('.') || next.starts_with("as ") || next.starts_with('?')) && !bare.ends_with(';')
-if depth <= 0 && terminated && !chained && !in_open_string(&buf) {
+if eff_depth <= 0 && terminated && !chained {
 out.push(strip_trailing_commas(&std::mem::take(&mut buf)))
+buf_bare.clear()
+str_open = false
+depth = 0
+ang = 0
+pipes = 0
+has_arrow = false
+closure_open = false
 }
 }
 if !buf.is_empty() {out.push(strip_trailing_commas(&buf))}
