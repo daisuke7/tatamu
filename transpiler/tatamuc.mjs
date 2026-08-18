@@ -504,7 +504,7 @@ export function transpileMapped(src) {
       const valueTail = nextBare !== undefined && /^\}/.test(nextBare) && VALUE_CONTEXTS.includes(topAfter);
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
-    else if (/^#\[/.test(bare)) semi = false;                    // attribute
+    else if (/^#\[/.test(bare) && /\]$/.test(bare)) semi = false; // attribute-only line
     else if (/^use\b/.test(bare)) semi = true;                   // in-body use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {

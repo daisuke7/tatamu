@@ -10,7 +10,7 @@ fn count_of(s &str, chars &[char]) usize {
 s.chars().filter(|c| chars.contains(c)).count()
 }
 fn ends_terminated(bare &str) bool {
-bare.ends_with(';') || bare.ends_with('{') || bare.ends_with('}') || bare.ends_with(',') || bare.starts_with("#[")
+bare.ends_with(';') || bare.ends_with('{') || bare.ends_with('}') || bare.ends_with(',') || (bare.starts_with("#[") && bare.ends_with(']'))
 }
 fn in_open_string(buf &str) bool {
 blanked := blank_strings(buf)
@@ -22,7 +22,6 @@ re(r"^(\.\.|\w+\s*:[^:]|\w+\s*,\s*$|\w+\s*$)", &RE_FIELD).is_match(next.trim())
 }
 fn macro_open_depth(bare &str) i64 {
 static MACSTART: OnceLock<regex::Regex> = OnceLock::new()
-if bare.trim_start().starts_with("macro_rules!") {return 0}
 rx := re(r"(^|[^\w!])\w+!\s*[({\[]", &MACSTART)
 mut pos := 0usize
 while let Some(m) = rx.find(&bare[pos..]) {

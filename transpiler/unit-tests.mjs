@@ -121,6 +121,10 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "attribute-prefixed statement gets semi", src: `fn f(&self, debug &mut D) R<()> {
+#[cfg(any(feature = "std", feature = "alloc"))] debug.field(&self.err)
+debug.finish()
+}`, contains: ["debug.field(&self.err);", "debug.finish()"] },
   { name: "range pattern arm block is not an assignment", src: `fn f(byte u8, total &mut Vec<bool>) {
 match byte {
 b'.' | b'0'..=b'9' => {
