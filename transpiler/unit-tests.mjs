@@ -121,6 +121,14 @@ const TRANSFORM_CASES = [
   { name: "generics preserved", src: `fn largest<T: PartialOrd + Copy>(list &[T]) T {list[0]}`, contains: ["fn largest<T: PartialOrd + Copy>(list: &[T]) -> T"] },
   { name: "lifetimes", src: `fn longest<'a>(x &'a str, y &'a str) &'a str {x}`, contains: ["fn longest<'a>(x: &'a str, y: &'a str) -> &'a str"] },
   { name: "mut param", src: `fn gcd(mut a u64, mut b u64) u64 {a}`, contains: ["fn gcd(mut a: u64, mut b: u64) -> u64"] },
+  { name: "range pattern arm block is not an assignment", src: `fn f(byte u8, total &mut Vec<bool>) {
+match byte {
+b'.' | b'0'..=b'9' => {
+total[usize::from(byte)] = true
+}
+_ => {}
+}
+}`, contains: ["total[usize::from(byte)] = true;"], excludes: ["};\n        _"] },
   { name: "string ending in r is not a raw-string opener", src: `fn f() {
 wfile(td.path().join("bar"), "")
 mut builder := W::new(td.path())

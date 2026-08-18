@@ -414,7 +414,7 @@ export function transpileMapped(src) {
       else if (ch === "=" && d === 0) {
         const prev = bare[i - 1], next = bare[i + 1];
         if (next === "=" || next === ">") { i++; continue; }
-        if (prev === "=" || prev === "!" || prev === "<" || prev === ">") continue;
+        if (prev === "=" || prev === "!" || prev === "<" || prev === ">" || prev === ".") continue; // cmp ops & ..=
         return true;
       }
     }
@@ -428,6 +428,8 @@ export function transpileMapped(src) {
     if (/^macro_rules!/.test(bare)) return "macro-rules";
     // a macro arm `(pattern) => {` inside macro_rules — its closer needs `};`
     if (/=>\s*\{$/.test(bare) && stack[stack.length - 1] === "macro-rules") return "macro-arm";
+    // an arm opening a block (`pat => {`) is never an assignment context
+    if (/=>\s*\{$/.test(bare)) return VALUE_CONTEXTS.includes(stack[stack.length - 1]) ? "value-arm" : "other";
     if (/^use\b/.test(bare)) return "use-block";         // multi-line `use x::{…}` closer needs `};`
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
     // lone `{`: opener of a multi-line signature (wrapped where clause) — scan

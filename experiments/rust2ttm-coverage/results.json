@@ -101,8 +101,8 @@
   "crate": "ripgrep",
   "file": "crates/core/flags/defs.rs",
   "lines": 8162,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: identifier, `::`, `<`, `_`, literal, `const`, `ref`, `mut`, `&`, parentheses, square brac"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
@@ -402,8 +402,8 @@
   "crate": "ripgrep",
   "file": "crates/printer/src/hyperlink/mod.rs",
   "lines": 1166,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected one of: identifier, `::`, `<`, `_`, literal, `const`, `ref`, `mut`, `&`, parentheses, square brac"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "ripgrep",
