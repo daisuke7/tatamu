@@ -198,11 +198,11 @@ mut has_arrow := false
 mut closure_open := false
 for (i, line) in input.iter().enumerate() {
 open_string := !buf.is_empty() && str_open
-t := if open_string {line.as_str()} else {line.trim()}
+t := if open_string {line.as_str()} else {line.trim_start()}
 if t.trim().is_empty() && !open_string {continue}
 if !open_string && t.starts_with("//") {
-if !buf.is_empty() {
-out.push(strip_trailing_commas(&std::mem::take(&mut buf)))
+if !buf.is_empty() && depth <= 0 && !buf_bare.ends_with("&& {") && !buf_bare.ends_with("|| {") {
+out.push(strip_trailing_commas(std::mem::take(&mut buf).trim_end()))
 buf_bare.clear()
 lit_depth = 0
 str_open = false
@@ -215,7 +215,7 @@ closure_open = false
 continue
 }
 if buf.is_empty() {
-buf = t.trim().to_string()
+buf = t.to_string()
 buf_bare.clear()
 str_open = false
 depth = 0
@@ -238,7 +238,7 @@ buf.push_str(glue)
 buf.push_str(t)
 }
 lb := bare_update(t, &mut str_open)
-buf_bare.push_str(&lb)
+buf_bare.push_str(lb.trim_end())
 depth += count_of(&lb, &['(', '[']) as i64 - count_of(&lb, &[')', ']']) as i64
 ang += angle_delta(&lb)
 pipes += count_of(&lb, &['|'])
@@ -261,13 +261,16 @@ if lit_depth > 0 {continue}
 mut eff_depth := depth
 if buf_bare.ends_with(',') && ang > 0 {eff_depth += ang}
 open_pipes := pipes % 2 == 1 && closure_open && !has_arrow && !buf_bare.ends_with(';')
-terminated := (ends_terminated(&buf_bare) || next.starts_with('}') || next.is_empty()) && !open_pipes
-chained := (next.starts_with('.') || next.starts_with("as ") || next.starts_with('?')) && !buf_bare.ends_with(';')
+has_cond_brace := buf_bare.contains("&& {") || buf_bare.contains("|| {")
+cond_block := buf_bare.ends_with("&& {") || buf_bare.ends_with("|| {") || (buf_bare.ends_with("} {") && has_cond_brace)
+next_closer := next.starts_with('}') && !(next.starts_with("} {") && has_cond_brace)
+terminated := (ends_terminated(&buf_bare) || next_closer || next.is_empty()) && !open_pipes && !cond_block
+chained := (next.starts_with('.') || next.starts_with("as ") || next.starts_with('?') || next.starts_with("+ ") || next.starts_with("&& ") || next.starts_with("|| ")) && !buf_bare.ends_with(';')
 if std::env::var("R2T_DEBUG_JOIN").is_ok() {
 eprintln!("JOIN i={i} d={depth} eff={eff_depth} lit={lit_depth} term={terminated} chain={chained} pipes={pipes} co={closure_open} tail={:?}", &buf_bare[buf_bare.len().saturating_sub(35)..])
 }
 if eff_depth <= 0 && terminated && !chained {
-out.push(strip_trailing_commas(&std::mem::take(&mut buf)))
+out.push(strip_trailing_commas(std::mem::take(&mut buf).trim_end()))
 buf_bare.clear()
 str_open = false
 depth = 0
@@ -277,7 +280,7 @@ has_arrow = false
 closure_open = false
 }
 }
-if !buf.is_empty() {out.push(strip_trailing_commas(&buf))}
+if !buf.is_empty() {out.push(strip_trailing_commas(buf.trim_end()))}
 out
 }
 fn strip_trailing_commas(line &str) String {
@@ -462,6 +465,6 @@ break
 }
 t = stripped
 }
-if t.ends_with(';') {t.pop();}
+if t.ends_with(';') && !t.ends_with("};") {t.pop();}
 restore_lits(t.trim_end(), &lits)
 }

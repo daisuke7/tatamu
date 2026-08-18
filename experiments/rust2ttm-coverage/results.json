@@ -2201,8 +2201,8 @@
   "crate": "polars",
   "file": "crates/polars-compute/src/cast/mod.rs",
   "lines": 1284,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected an expression\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",
@@ -3020,8 +3020,8 @@
   "crate": "polars",
   "file": "crates/polars-core/src/chunked_array/builder/list/primitive.rs",
   "lines": 169,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",
@@ -5323,8 +5323,8 @@
   "crate": "polars",
   "file": "crates/polars-io/src/cloud/cloud_writer/bufferer.rs",
   "lines": 234,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",
@@ -10230,8 +10230,8 @@
   "crate": "polars",
   "file": "crates/polars-python/src/error.rs",
   "lines": 160,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",
@@ -11000,8 +11000,8 @@
   "crate": "polars",
   "file": "crates/polars-sql/src/sql_expr.rs",
   "lines": 1668,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",
@@ -12232,8 +12232,8 @@
   "crate": "polars",
   "file": "crates/polars-stream/src/skeleton.rs",
   "lines": 298,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `run_query`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",
@@ -12918,8 +12918,8 @@
   "crate": "polars",
   "file": "crates/polars-utils/src/nulls.rs",
   "lines": 86,
-  "stage": "ast-mismatch",
-  "detail": "MISMATCH: item `<unnamed>`"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "polars",

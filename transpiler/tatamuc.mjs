@@ -274,8 +274,11 @@ function transformConst(line) {
   if (m) {
     // already Rust-shaped (macro_rules bodies): leave the colon alone
     const colon = m[2].startsWith(":") ? "" : ":";
-    // a multi-line initializer block gets its ';' from the closer (let-block context)
-    return [`const ${m[1]}${colon} ${m[2]} = ${m[3]}${/\{$/.test(m[3]) ? "" : ";"}`];
+    // an initializer whose braces stay open gets its ';' from the closer
+    const vb = stripLiterals(m[3]);
+    let open = 0;
+    for (const ch of vb) { if ("{([".includes(ch)) open++; else if ("})]".includes(ch)) open--; }
+    return [`const ${m[1]}${colon} ${m[2]} = ${m[3]}${open > 0 ? "" : ";"}`];
   }
   // valueless declaration (trait interface): `const VALUE Self;`
   const d = /^const\s+(?!fn\b)([A-Za-z_]\w*)\s+([^={]+?);?\s*$/.exec(line.trim());
@@ -360,8 +363,9 @@ export function transpileMapped(src) {
         if (d > 0) mrDepth = d;
       }
     }
-    // lenient: strip an existing trailing semicolon (re-added consistently later)
-    let line = inMacroRules ? raw : raw.replace(/;\s*$/, "");
+    // lenient: strip an existing trailing semicolon (re-added consistently later);
+    // `};` stays — semi logic cannot always reconstruct it mid-expression
+    let line = (inMacroRules || /\};\s*$/.test(raw)) ? raw : raw.replace(/;\s*$/, "");
     // `#use` directive: explicit import escape hatch (mainly for traits)
     const useM = /^#use\s+(.+)$/.exec(line.trim());
     if (useM) { extraUses.push(`use ${useM[1].trim()};`); continue; }
@@ -593,7 +597,7 @@ export function transpileMapped(src) {
       semi = closesLetBlock || (closesParenStmt && !valueTail);
     }
     else if (/^#\[/.test(bare) && /\]$/.test(bare)) semi = false; // attribute-only line
-    else if (/\.\.$/.test(bare)) semi = false;                   // rest pattern / open range continues
+    else if (/\.\.$/.test(bare) && !/^let\b/.test(bare) && !topLevelAssign(bare)) semi = false; // rest pattern continues (not an open-range binding)
     else if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare) && netClosed.length === 0) semi = true; // use statements (verbatim Rust)
     else if (stack[stack.length - 1] === "macro-rules" && /=>/.test(bare) && /\}$/.test(bare)) semi = true; // inline macro arm: `(p) => {…};`
     else if (!/^let\b/.test(bare) && !/[[{(]$/.test(bare) && (() => {
