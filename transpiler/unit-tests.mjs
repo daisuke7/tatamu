@@ -3,7 +3,7 @@
 //
 // run: node transpiler/unit-tests.mjs
 
-import { transpile, diagnose, docCheck, buildProject } from "./tatamuc.mjs";
+import { transpile, diagnose, docCheck, buildProject, transpileMapped, attachInlineComments } from "./tatamuc.mjs";
 
 // ---------- diagnostics cases ----------
 // expect: [rule, line] pairs that MUST be present; forbid: rules that MUST NOT fire.
@@ -43,6 +43,41 @@ const DIAG_CASES = [
 // ---------- doc freshness cases ----------
 
 const DOC_CASES = [
+  {
+    name: "scoped comment anchor: orphan when absent from its own item",
+    ttm: `fn f() {
+x += 1
+}
+fn g() {
+y += 1
+}`,
+    sidecar: "## f\n\n~ tail `y += 1`: belongs to g, not f\n",
+    expect: ["comment-orphan", "doc-missing"],
+  },
+  {
+    name: "scoped comment anchor: found inside its item",
+    ttm: `fn f() {
+x += 1
+}
+fn g() {
+x += 1
+}`,
+    sidecar: "## g\n\n~ tail `x += 1`: increment in g\n",
+    expect: ["doc-missing"],
+    ok: true,
+  },
+  {
+    name: "impl method path anchor",
+    ttm: `struct S;
+impl S {
+fn tick(&mut self) {
+self.n += 1
+}
+}`,
+    sidecar: "## S::tick\n\n~ tail `self.n += 1`: bump\n",
+    expect: ["doc-missing"],
+    ok: true,
+  },
   {
     name: "orphan section",
     ttm: `fn run() {}`,
@@ -471,6 +506,27 @@ for (const c of DIAG_CASES) {
   if (errs.length) { fail++; problems.push(`DIAG ${c.name}: ${errs.join("; ")}`); } else pass++;
 }
 
+// item-scoped comment re-insertion: the anchor resolves inside its owning
+// item, not at the first file-wide occurrence
+{
+  const ttm = "fn f() {\nx += 1\n}\nfn g() {\nx += 1\n}";
+  const sidecar = "## g\n\n~ tail `x += 1`: increment in g\n";
+  const m = transpileMapped(ttm);
+  const out = attachInlineComments(m.rust, m.map, ttm, sidecar);
+  const lines = out.split("\n");
+  const fBody = lines.slice(0, 3).join("\n");
+  const gBody = lines.slice(3).join("\n");
+  if (gBody.includes("// increment in g") && !fBody.includes("//")) pass++;
+  else { fail++; problems.push("ATTACH scoped re-insertion:\n" + out); }
+}
+{
+  const ttm = "struct S;\nimpl S {\nfn tick(&mut self) {\nself.n += 1\n}\n}";
+  const sidecar = "## S::tick\n\n~ tail `self.n += 1`: bump\n";
+  const m = transpileMapped(ttm);
+  const out = attachInlineComments(m.rust, m.map, ttm, sidecar);
+  if (out.includes("self.n += 1; // bump")) pass++;
+  else { fail++; problems.push("ATTACH method-path anchor:\n" + out); }
+}
 for (const c of DOC_CASES) {
   const diags = docCheck(c.ttm, c.sidecar);
   const errs = [];

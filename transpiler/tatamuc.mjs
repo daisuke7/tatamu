@@ -1345,7 +1345,7 @@ export function mergeDocs(rust, sidecarMd) {
   const sections = { "": [] };
   let current = "";
   for (const line of sidecarMd.split("\n")) {
-    const h = /^##\s+(?:`)?([A-Za-z_]\w*)(?:`)?\s*$/.exec(line);
+    const h = /^##\s+(?:`)?([A-Za-z_]\w*(?:::[A-Za-z_]\w*)?)(?:`)?\s*$/.exec(line);
     if (h) { current = h[1]; sections[current] = []; continue; }
     if (/^#\s/.test(line)) continue; // top-level title
     (sections[current] ??= []).push(line);
@@ -1424,7 +1424,7 @@ function parseSidecar(md) {
   const order = [];
   let current = null;
   for (const line of md.split("\n")) {
-    const h = /^##\s+(?:`)?([A-Za-z_]\w*)(?:`)?\s*$/.exec(line);
+    const h = /^##\s+(?:`)?([A-Za-z_]\w*(?:::[A-Za-z_]\w*)?)(?:`)?\s*$/.exec(line);
     if (h) { current = h[1]; sections[current] = { sig: null, body: [], inline: [] }; order.push(current); continue; }
     if (current === null) { intro.push(line); continue; }
     const s = sections[current];
@@ -1437,10 +1437,95 @@ function parseSidecar(md) {
   return { intro, sections, order };
 }
 
+
+// ---------- item-scoped comment anchors (AST-path resolution) ----------
+// Maps a sidecar section name (`name` or `Type::method`) to the .ttm line
+// ranges it owns, so anchor ordinals resolve within the item instead of the
+// whole file. Lines belonging to a nested method range are excluded from the
+// enclosing impl-target range, mirroring the converter's ledger scoping.
+const DECL_NAME_RE = /^(?:#\[[^\]]*\]\s*)*(?:priv\s+)?(?:pub(?:\([^)]*\))?\s+)?(?:async\s+|unsafe\s+|const\s+)*(?:fn|struct|enum|trait|union|type|const|static)\s+([A-Za-z_]\w*)/;
+const METHOD_NAME_RE = /^(?:#\[[^\]]*\]\s*)*(?:priv\s+)?(?:pub(?:\([^)]*\))?\s+)*(?:async\s+|unsafe\s+|const\s+)*fn\s+([A-Za-z_]\w*)/;
+function implTargetOf(t) {
+  if (!/^impl\b/.test(t)) return null;
+  const f = /\bfor\s+&?(?:mut\s+)?(?:dyn\s+)?(?:[\w]+::)*([A-Za-z_]\w*)/.exec(t);
+  if (f) return f[1];
+  const m = /^impl\s*(?:<[^{]*?>)?\s*&?(?:mut\s+)?(?:dyn\s+)?(?:[\w]+::)*([A-Za-z_]\w*)/.exec(t);
+  return m ? m[1] : null;
+}
+function itemRanges(srcLines) {
+  const ranges = [];
+  const open = [];
+  let depth = 0;
+  let implTarget = null;
+  for (let i = 0; i < srcLines.length; i++) {
+    const t = srcLines[i];
+    const bare = stripLiterals(t);
+    const opens = (bare.match(/{/g) ?? []).length;
+    const closes = (bare.match(/}/g) ?? []).length;
+    if (depth === 0) {
+      const im = implTargetOf(t);
+      if (im !== null && opens > closes) {
+        implTarget = im;
+        open.push({ name: im, start: i, atDepth: 0 });
+      } else {
+        const dn = DECL_NAME_RE.exec(t);
+        if (dn) {
+          if (opens > closes) open.push({ name: dn[1], start: i, atDepth: 0 });
+          else ranges.push({ name: dn[1], start: i, end: i });
+        }
+      }
+    } else if (depth === 1 && implTarget !== null) {
+      const mn = METHOD_NAME_RE.exec(t);
+      if (mn) {
+        const full = `${implTarget}::${mn[1]}`;
+        if (opens > closes) open.push({ name: full, start: i, atDepth: 1 });
+        else ranges.push({ name: full, start: i, end: i });
+      }
+    }
+    depth += opens - closes;
+    while (open.length && depth <= open[open.length - 1].atDepth) {
+      const o = open.pop();
+      ranges.push({ name: o.name, start: o.start, end: i });
+      if (o.atDepth === 0) implTarget = null;
+    }
+  }
+  return ranges;
+}
+// nth occurrence of `text` among the lines a section owns; -1 if absent
+function nthIndexScoped(srcLines, ranges, name, text, nth) {
+  const own = ranges.filter((r) => r.name === name);
+  if (own.length === 0) return -1;
+  const sub = ranges.filter((r) => r.name.startsWith(name + "::"));
+  const inSub = (i) => sub.some((r) => i >= r.start && i <= r.end);
+  let seen = 0;
+  for (const r of own) {
+    for (let i = r.start; i <= r.end; i++) {
+      if (inSub(i)) continue;
+      if (srcLines[i] === text && ++seen === nth) return i;
+    }
+  }
+  return -1;
+}
+// occurrences of `text` within a section (for --doc-check)
+function countScoped(srcLines, ranges, name, text) {
+  const own = ranges.filter((r) => r.name === name);
+  if (own.length === 0) return -1; // section has no code range at all
+  const sub = ranges.filter((r) => r.name.startsWith(name + "::"));
+  const inSub = (i) => sub.some((r) => i >= r.start && i <= r.end);
+  let seen = 0;
+  for (const r of own) {
+    for (let i = r.start; i <= r.end; i++) {
+      if (!inSub(i) && srcLines[i] === text) seen++;
+    }
+  }
+  return seen;
+}
+
 // re-insert ledgered inline comments into generated Rust, using the .ttm line map
 export function attachInlineComments(rust, map, ttmSrc, sidecarMd) {
   const { sections } = parseSidecar(sidecarMd);
   const srcLines = ttmSrc.split("\n").map((l) => l.trim());
+  const ranges = itemRanges(srcLines);
   const nthIndexOf = (arr, text, nth) => {
     let seen = 0;
     for (let i = 0; i < arr.length; i++) if (arr[i] === text && ++seen === nth) return i;
@@ -1448,9 +1533,12 @@ export function attachInlineComments(rust, map, ttmSrc, sidecarMd) {
   };
   const rustLines = rust.split("\n");
   const byIdx = new Map(); // rust line idx -> {above: [], tail: []}
-  for (const sec of Object.values(sections)) {
+  for (const [name, sec] of Object.entries(sections)) {
     for (const e of sec.inline) {
-      const srcNo = nthIndexOf(srcLines, e.anchor, e.nth ?? 1) + 1;
+      // resolve inside the owning item first; whole-file search is the
+      // fallback for legacy sidecars whose ordinals were file-scoped
+      let srcNo = nthIndexScoped(srcLines, ranges, name, e.anchor, e.nth ?? 1) + 1;
+      if (srcNo === 0) srcNo = nthIndexOf(srcLines, e.anchor, e.nth ?? 1) + 1;
       if (srcNo === 0) continue; // orphan — surfaced by --doc-check
       const outIdx = map.indexOf(srcNo);
       if (outIdx === -1) continue;
@@ -1474,9 +1562,11 @@ export function docCheck(ttmSrc, sidecarMd) {
   const items = topLevelItems(ttmSrc);
   const { sections } = parseSidecar(sidecarMd);
   const byName = Object.fromEntries(items.map((i) => [i.name, i]));
+  const pathRanges = itemRanges(ttmSrc.split("\n").map((l) => l.trim()));
+  const knownPath = (n) => pathRanges.some((r) => r.name === n);
   const diags = [];
   for (const name of Object.keys(sections)) {
-    if (!byName[name]) {
+    if (!byName[name] && !knownPath(name)) {
       diags.push({ rule: "doc-orphan", severity: "error", item: name,
         message: `Doc section \`## ${name}\` has no matching item in the code.`,
         suggestion: "The item was removed or renamed — delete the section or rename its header." });
@@ -1494,11 +1584,16 @@ export function docCheck(ttmSrc, sidecarMd) {
         suggestion: `Run --doc-sync to append a stub, or add \`## ${it.name}\` to the sidecar.` });
     }
   }
-  // inline-comment ledger: every anchor must still exist as a .ttm line
+  // inline-comment ledger: every anchor must still exist inside its item
   const srcTrimmed = ttmSrc.split("\n").map((l) => l.trim());
+  const anchorRanges = itemRanges(srcTrimmed);
   for (const [name, sec] of Object.entries(sections)) {
     for (const e of sec.inline ?? []) {
-      if (srcTrimmed.filter((l) => l === e.anchor).length < (e.nth ?? 1)) {
+      const scoped = countScoped(srcTrimmed, anchorRanges, name, e.anchor);
+      const fileWide = srcTrimmed.filter((l) => l === e.anchor).length;
+      // scoped resolution first; legacy file-wide ordinals as fallback
+      const found = scoped >= (e.nth ?? 1) || (scoped === -1 && fileWide >= (e.nth ?? 1));
+      if (!found) {
         const isSafety = /^\s*SAFETY\b/i.test(e.text);
         diags.push({ rule: "comment-orphan", severity: isSafety ? "error" : "warning", item: name,
           anchor: e.anchor, comment: e.text,

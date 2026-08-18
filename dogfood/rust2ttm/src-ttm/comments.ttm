@@ -1,4 +1,5 @@
 #use std::sync::OnceLock
+#use std::collections::HashMap
 struct LedgerEntry {owner String, kind String, anchor String, nth usize, text String}
 priv struct RawLine {code String, above Vec<String>, tail Option<String>}
 fn find_line_comment(line &str) Option<usize> {
@@ -89,16 +90,30 @@ joined.push(buf.take().unwrap())
 }
 if let Some(b) = buf {joined.push(b)}
 mut entries := Vec::new()
-mut shadow: Vec<String> := Vec::new()
+mut shadows: HashMap<String, Vec<String>> := HashMap::new()
 mut owner := String::new()
+mut impl_ctx := String::new()
 mut depth0 := 0i64
 for j in &joined {
 t := j.text.trim()
 converted := convert_line(t, siblings, false)
 if depth0 == 0 {
-if let Some(name) = decl_name(&converted) {owner = name}
+if let Some(ty) = impl_target(&converted) {
+impl_ctx = ty.clone()
+owner = ty
+} else if let Some(name) = decl_name(&converted) {
+owner = name
+impl_ctx.clear()
+} else if !converted.trim_start().starts_with("#[") {
+impl_ctx.clear()
+}
+} else if depth0 == 1 && !impl_ctx.is_empty() {
+if let Some(m) = method_name(&converted) {
+owner = format!("{impl_ctx}::{m}")
+}
 }
 anchor := converted.trim().to_string()
+shadow := shadows.entry(owner.clone()).or_default()
 shadow.push(anchor.clone())
 nth := shadow.iter().filter(|l| **l == anchor).count()
 for a in &j.above {
@@ -118,5 +133,19 @@ entries
 }
 fn decl_name(t &str) Option<String> {
 static RE_DECL: OnceLock<regex::Regex> = OnceLock::new()
-re(r"^(?:#\[[^\]]*\]\s*)?(?:priv\s+)?(?:async\s+)?(?:fn|struct|enum|trait|const|static)\s+(\w+)", &RE_DECL).captures(t).map(|c| c[1].to_string())
+re(r"^(?:#\[[^\]]*\]\s*)*(?:priv\s+)?(?:pub(?:\([^)]*\))?\s+)?(?:async\s+|unsafe\s+|const\s+)*(?:fn|struct|enum|trait|union|type|const|static)\s+(\w+)", &RE_DECL).captures(t).map(|c| c[1].to_string())
+}
+fn impl_target(t &str) Option<String> {
+static RE_FOR: OnceLock<regex::Regex> = OnceLock::new()
+static RE_IMPL: OnceLock<regex::Regex> = OnceLock::new()
+head := t.trim_start()
+if !head.starts_with("impl") {return None}
+if let Some(c) = re(r"\bfor\s+&?(?:mut\s+)?(?:dyn\s+)?(?:[\w]+::)*([A-Za-z_]\w*)", &RE_FOR).captures(head) {
+return Some(c[1].to_string())
+}
+re(r"^impl\s*(?:<[^{]*?>)?\s*&?(?:mut\s+)?(?:dyn\s+)?(?:[\w]+::)*([A-Za-z_]\w*)", &RE_IMPL).captures(head).map(|c| c[1].to_string())
+}
+fn method_name(t &str) Option<String> {
+static RE_METHOD: OnceLock<regex::Regex> = OnceLock::new()
+re(r"^(?:#\[[^\]]*\]\s*)*(?:priv\s+)?(?:pub(?:\([^)]*\))?\s+)?(?:async\s+|unsafe\s+|const\s+)*fn\s+(\w+)", &RE_METHOD).captures(t).map(|c| c[1].to_string())
 }
