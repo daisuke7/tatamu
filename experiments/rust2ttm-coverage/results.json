@@ -185,8 +185,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-def/src/attrs.rs",
   "lines": 1450,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -745,8 +745,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/consteval.rs",
   "lines": 583,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -969,8 +969,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/infer.rs",
   "lines": 2863,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1543,8 +1543,8 @@
   "crate": "rust-analyzer",
   "file": "crates/hir-ty/src/upvars.rs",
   "lines": 403,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -1781,8 +1781,8 @@
   "crate": "rust-analyzer",
   "file": "crates/ide/src/inlay_hints/generic_param.rs",
   "lines": 344,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -4364,8 +4364,8 @@
   "crate": "rust-analyzer",
   "file": "crates/mbe/src/benchmark.rs",
   "lines": 247,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5393,8 +5393,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax/src/algo.rs",
   "lines": 151,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5442,8 +5442,8 @@
   "crate": "rust-analyzer",
   "file": "crates/syntax/src/ast/make.rs",
   "lines": 1559,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",
@@ -5708,8 +5708,8 @@
   "crate": "rust-analyzer",
   "file": "crates/tt/src/lib.rs",
   "lines": 911,
-  "stage": "regen-parse-fail",
-  "detail": "Error: Error(\"unexpected token, expected `;`\")"
+  "stage": "equivalent",
+  "detail": ""
  },
  {
   "crate": "rust-analyzer",

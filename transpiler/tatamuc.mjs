@@ -465,6 +465,7 @@ export function transpileMapped(src) {
     if (/=>\s*\{$/.test(bare)) return VALUE_CONTEXTS.includes(stack[stack.length - 1]) ? "value-arm" : "other";
     if (/^(?:#\[[^\]]*\]\s*)*(?:pub(?:\([^)]*\))?\s+)?use\b/.test(bare)) return "use-block"; // multi-line `use x::{…}` closer needs `};`
     if (/^let\b/.test(bare) || assignsValue(bare)) return "let-block"; // let/assignment of a block expr needs `};`
+    if (/^(return|break)\b/.test(bare) && /\{$/.test(bare)) return "let-block"; // `return match … {` — value block, closer gets `;`
     // lone `{`: opener of a multi-line signature (wrapped where clause) — scan
     // back past continuation lines to find the fn header
     if (/^\{$/.test(bare) && i !== undefined) {

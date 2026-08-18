@@ -129,6 +129,15 @@ fn unraw(&self) Ident;
 colon_token: Token![:] := input.parse()?
 Ok(colon_token)
 }`, contains: ["let colon_token: Token![:] = input.parse()?;"] },
+  { name: "return of multi-line match", src: `fn f(e E) Option<X> {
+return match e {
+E::A(n) => {
+n.find(not_trivia)
+}
+_ => None,
+}
+fn not_trivia() {}
+}`, contains: ["n.find(not_trivia)", "};"], excludes: ["find(not_trivia);"] },
   { name: "const with block initializer", src: `const _ () = {
 const fn is_copy<T: Copy>() {}
 is_copy::<X>();
