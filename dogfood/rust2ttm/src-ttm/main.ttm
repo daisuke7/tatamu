@@ -11,7 +11,10 @@ Some("compare") if args.len() >= 4 => {
 sibs: Vec<String> := args.get(4).map(|s| s.split(',').map(String::from).collect()).unwrap_or_default()
 compare_files(&args[2], &args[3], &sibs)
 }
-_ => Err("usage: rust2ttm convert <src-dir> <out-dir> | compare <a.rs> <b.rs> [sibling,mods]".into()),
+Some("strip") if args.len() >= 4 => strip_dir(&args[2], &args[3]),
+Some("restore") if args.len() >= 4 => restore_dir(&args[2], &args[3]),
+Some("roundtrip") if args.len() >= 4 => roundtrip_dir(&args[2], &args[3]),
+_ => Err("usage: rust2ttm convert <src-dir> <out-dir> | compare <a.rs> <b.rs> [sibling,mods] | strip <src-dir> <out-dir> | restore <stripped-dir> <out-dir> | roundtrip <src-dir> <work-dir>".into()),
 }
 }
 fn convert_dir(src_dir &str, out_dir &str) R<()> {
