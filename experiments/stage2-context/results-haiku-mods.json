@@ -1,0 +1,206 @@
+[
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52272,
+    "out": 2078
+   }
+  ],
+  "cost": 0.0156262,
+  "secs": 25
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53218,
+    "out": 3845
+   }
+  ],
+  "cost": 0.0245558,
+  "secs": 35
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52272,
+    "out": 3385
+   }
+  ],
+  "cost": 0.0221612,
+  "secs": 35
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53218,
+    "out": 4377
+   }
+  ],
+  "cost": 0.0272158,
+  "secs": 28
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52260,
+    "out": 2954
+   }
+  ],
+  "cost": 0.0733684,
+  "secs": 32
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53206,
+    "out": 5882
+   }
+  ],
+  "cost": 0.08990039999999999,
+  "secs": 50
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52260,
+    "out": 2833
+   }
+  ],
+  "cost": 0.0194,
+  "secs": 31
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53206,
+    "out": 3145
+   }
+  ],
+  "cost": 0.0210546,
+  "secs": 22
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52288,
+    "out": 10278
+   }
+  ],
+  "cost": 0.11004440000000001,
+  "secs": 93
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53234,
+    "out": 11427
+   }
+  ],
+  "cost": 0.11768139999999999,
+  "secs": 75
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52288,
+    "out": 11621
+   }
+  ],
+  "cost": 0.0633428,
+  "secs": 117
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53234,
+    "out": 10556
+   }
+  ],
+  "cost": 0.058112399999999995,
+  "secs": 100
+ }
+]

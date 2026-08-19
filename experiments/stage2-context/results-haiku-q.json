@@ -1,0 +1,878 @@
+[
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 52268,
+    "out": 1199
+   }
+  ],
+  "cost": 0.0646094,
+  "secs": 15
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 53215,
+    "out": 1388
+   }
+  ],
+  "cost": 0.0674484,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 52268,
+    "out": 1069
+   }
+  ],
+  "cost": 0.010580800000000001,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 53215,
+    "out": 2008
+   }
+  ],
+  "cost": 0.015370499999999999,
+  "secs": 22
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 52259,
+    "out": 911
+   }
+  ],
+  "cost": 0.0097899,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 53206,
+    "out": 775
+   }
+  ],
+  "cost": 0.0092046,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 52259,
+    "out": 1210
+   }
+  ],
+  "cost": 0.0112849,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 53206,
+    "out": 1018
+   }
+  ],
+  "cost": 0.010419600000000001,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 678
+   }
+  ],
+  "cost": 0.0619824,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 475
+   }
+  ],
+  "cost": 0.0628614,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 758
+   }
+  ],
+  "cost": 0.0090247,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 572
+   }
+  ],
+  "cost": 0.0081894,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 52243,
+    "out": 1699
+   }
+  ],
+  "cost": 0.0670594,
+  "secs": 20
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 53190,
+    "out": 1622
+   }
+  ],
+  "cost": 0.0685684,
+  "secs": 15
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 52243,
+    "out": 1485
+   }
+  ],
+  "cost": 0.0126583,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 53190,
+    "out": 4504
+   }
+  ],
+  "cost": 0.027848,
+  "secs": 33
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 52203,
+    "out": 972
+   }
+  ],
+  "cost": 0.0633444,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 53150,
+    "out": 808
+   }
+  ],
+  "cost": 0.0644184,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 52203,
+    "out": 742
+   }
+  ],
+  "cost": 0.0089393,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 53150,
+    "out": 733
+   }
+  ],
+  "cost": 0.008989,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": false,
+  "parsed": false,
+  "answer": "Looking at the glue logic in both functions:\n\n**join_wrapped** (textual.ttm):\n```rust\nglue := if buf.ends_with('(') || t.starts_with(')') || (t.starts_with('.') && !t.starts_with(\"..\")) || t.starts_wi",
+  "calls": [
+   {
+    "in": 52322,
+    "out": 2701
+   }
+  ],
+  "cost": 0.0722274,
+  "secs": 27
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53269,
+    "out": 1688
+   }
+  ],
+  "cost": 0.0690564,
+  "secs": 19
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": false,
+  "parsed": false,
+  "answer": "Looking at the glue logic in both functions:\n\n**`join_and_anchor` (comments.ttm):**\n```\nglue := if b.text.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.starts_with(']') {\"\"} else {\" ",
+  "calls": [
+   {
+    "in": 52322,
+    "out": 1433
+   }
+  ],
+  "cost": 0.0124062,
+  "secs": 16
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53269,
+    "out": 872
+   }
+  ],
+  "cost": 0.0096959,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52234,
+    "out": 496
+   }
+  ],
+  "cost": 0.0610264,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53181,
+    "out": 466
+   }
+  ],
+  "cost": 0.0627704,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52234,
+    "out": 506
+   }
+  ],
+  "cost": 0.007762400000000001,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53181,
+    "out": 494
+   }
+  ],
+  "cost": 0.007797100000000001,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 692
+   }
+  ],
+  "cost": 0.0620524,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 561
+   }
+  ],
+  "cost": 0.0632914,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 638
+   }
+  ],
+  "cost": 0.0084247,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 809
+   }
+  ],
+  "cost": 0.0093744,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 52260,
+    "out": 911
+   }
+  ],
+  "cost": 0.0631534,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 53207,
+    "out": 957
+   }
+  ],
+  "cost": 0.0652774,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 52260,
+    "out": 1124
+   }
+  ],
+  "cost": 0.010855,
+  "secs": 15
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 53207,
+    "out": 1083
+   }
+  ],
+  "cost": 0.0107447,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 52215,
+    "out": 1559
+   }
+  ],
+  "cost": 0.013025499999999999,
+  "secs": 19
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 53162,
+    "out": 2696
+   }
+  ],
+  "cost": 0.0188052,
+  "secs": 29
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 52215,
+    "out": 3607
+   }
+  ],
+  "cost": 0.023265499999999998,
+  "secs": 38
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": false,
+  "parsed": false,
+  "answer": "Looking at the `convert_line` function in `textual.rs`, I need to trace what happens to `let mut total: i64 = 0;`:\n\n1. The line is processed by the LETMUT regex: `r\"^let\\s+mut\\s+(\\w+)(:\\s*(?:[^=\\[]|\\[",
+  "calls": [
+   {
+    "in": 53162,
+    "out": 2894
+   }
+  ],
+  "cost": 0.0197952,
+  "secs": 29
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 52212,
+    "out": 1634
+   }
+  ],
+  "cost": 0.0666724,
+  "secs": 21
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 0,
+  "correct": false,
+  "parsed": true,
+  "answer": "pub const LIMIT: usize = 8",
+  "calls": [
+   {
+    "in": 53159,
+    "out": 5141
+   }
+  ],
+  "cost": 0.0861014,
+  "secs": 53
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 52212,
+    "out": 1376
+   }
+  ],
+  "cost": 0.012110200000000002,
+  "secs": 18
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 53159,
+    "out": 2492
+   }
+  ],
+  "cost": 0.0177849,
+  "secs": 28
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52239,
+    "out": 637
+   }
+  ],
+  "cost": 0.0617414,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53186,
+    "out": 860
+   }
+  ],
+  "cost": 0.0647504,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52239,
+    "out": 744
+   }
+  ],
+  "cost": 0.0089529,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53186,
+    "out": 868
+   }
+  ],
+  "cost": 0.0096676,
+  "secs": 12
+ }
+]

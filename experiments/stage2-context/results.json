@@ -1,0 +1,2162 @@
+[
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 52268,
+    "out": 1199
+   }
+  ],
+  "cost": 0.0646094,
+  "secs": 15
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 53215,
+    "out": 1388
+   }
+  ],
+  "cost": 0.0674484,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 52268,
+    "out": 1069
+   }
+  ],
+  "cost": 0.010580800000000001,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 53215,
+    "out": 2008
+   }
+  ],
+  "cost": 0.015370499999999999,
+  "secs": 22
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 52259,
+    "out": 911
+   }
+  ],
+  "cost": 0.0097899,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 53206,
+    "out": 775
+   }
+  ],
+  "cost": 0.0092046,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 52259,
+    "out": 1210
+   }
+  ],
+  "cost": 0.0112849,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 53206,
+    "out": 1018
+   }
+  ],
+  "cost": 0.010419600000000001,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 678
+   }
+  ],
+  "cost": 0.0619824,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 475
+   }
+  ],
+  "cost": 0.0628614,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 758
+   }
+  ],
+  "cost": 0.0090247,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 572
+   }
+  ],
+  "cost": 0.0081894,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 52243,
+    "out": 1699
+   }
+  ],
+  "cost": 0.0670594,
+  "secs": 20
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 53190,
+    "out": 1622
+   }
+  ],
+  "cost": 0.0685684,
+  "secs": 15
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 52243,
+    "out": 1485
+   }
+  ],
+  "cost": 0.0126583,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 53190,
+    "out": 4504
+   }
+  ],
+  "cost": 0.027848,
+  "secs": 33
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 52203,
+    "out": 972
+   }
+  ],
+  "cost": 0.0633444,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 53150,
+    "out": 808
+   }
+  ],
+  "cost": 0.0644184,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 52203,
+    "out": 742
+   }
+  ],
+  "cost": 0.0089393,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 53150,
+    "out": 733
+   }
+  ],
+  "cost": 0.008989,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": false,
+  "parsed": false,
+  "answer": "Looking at the glue logic in both functions:\n\n**join_wrapped** (textual.ttm):\n```rust\nglue := if buf.ends_with('(') || t.starts_with(')') || (t.starts_with('.') && !t.starts_with(\"..\")) || t.starts_wi",
+  "calls": [
+   {
+    "in": 52322,
+    "out": 2701
+   }
+  ],
+  "cost": 0.0722274,
+  "secs": 27
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53269,
+    "out": 1688
+   }
+  ],
+  "cost": 0.0690564,
+  "secs": 19
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": false,
+  "parsed": false,
+  "answer": "Looking at the glue logic in both functions:\n\n**`join_and_anchor` (comments.ttm):**\n```\nglue := if b.text.ends_with('(') || t.starts_with(')') || t.starts_with('.') || t.starts_with(']') {\"\"} else {\" ",
+  "calls": [
+   {
+    "in": 52322,
+    "out": 1433
+   }
+  ],
+  "cost": 0.0124062,
+  "secs": 16
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53269,
+    "out": 872
+   }
+  ],
+  "cost": 0.0096959,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52234,
+    "out": 496
+   }
+  ],
+  "cost": 0.0610264,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53181,
+    "out": 466
+   }
+  ],
+  "cost": 0.0627704,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52234,
+    "out": 506
+   }
+  ],
+  "cost": 0.007762400000000001,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53181,
+    "out": 494
+   }
+  ],
+  "cost": 0.007797100000000001,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 692
+   }
+  ],
+  "cost": 0.0620524,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 561
+   }
+  ],
+  "cost": 0.0632914,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 52257,
+    "out": 638
+   }
+  ],
+  "cost": 0.0084247,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 53204,
+    "out": 809
+   }
+  ],
+  "cost": 0.0093744,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 52260,
+    "out": 911
+   }
+  ],
+  "cost": 0.0631534,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 53207,
+    "out": 957
+   }
+  ],
+  "cost": 0.0652774,
+  "secs": 12
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 52260,
+    "out": 1124
+   }
+  ],
+  "cost": 0.010855,
+  "secs": 15
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 53207,
+    "out": 1083
+   }
+  ],
+  "cost": 0.0107447,
+  "secs": 14
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 52215,
+    "out": 1559
+   }
+  ],
+  "cost": 0.013025499999999999,
+  "secs": 19
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 53162,
+    "out": 2696
+   }
+  ],
+  "cost": 0.0188052,
+  "secs": 29
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 52215,
+    "out": 3607
+   }
+  ],
+  "cost": 0.023265499999999998,
+  "secs": 38
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": false,
+  "parsed": false,
+  "answer": "Looking at the `convert_line` function in `textual.rs`, I need to trace what happens to `let mut total: i64 = 0;`:\n\n1. The line is processed by the LETMUT regex: `r\"^let\\s+mut\\s+(\\w+)(:\\s*(?:[^=\\[]|\\[",
+  "calls": [
+   {
+    "in": 53162,
+    "out": 2894
+   }
+  ],
+  "cost": 0.0197952,
+  "secs": 29
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 52212,
+    "out": 1634
+   }
+  ],
+  "cost": 0.0666724,
+  "secs": 21
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 0,
+  "correct": false,
+  "parsed": true,
+  "answer": "pub const LIMIT: usize = 8",
+  "calls": [
+   {
+    "in": 53159,
+    "out": 5141
+   }
+  ],
+  "cost": 0.0861014,
+  "secs": 53
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 52212,
+    "out": 1376
+   }
+  ],
+  "cost": 0.012110200000000002,
+  "secs": 18
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 53159,
+    "out": 2492
+   }
+  ],
+  "cost": 0.0177849,
+  "secs": 28
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52239,
+    "out": 637
+   }
+  ],
+  "cost": 0.0617414,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53186,
+    "out": 860
+   }
+  ],
+  "cost": 0.0647504,
+  "secs": 11
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 52239,
+    "out": 744
+   }
+  ],
+  "cost": 0.0089529,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 53186,
+    "out": 868
+   }
+  ],
+  "cost": 0.0096676,
+  "secs": 12
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52272,
+    "out": 2078
+   }
+  ],
+  "cost": 0.0156262,
+  "secs": 25
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53218,
+    "out": 3845
+   }
+  ],
+  "cost": 0.0245558,
+  "secs": 35
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52272,
+    "out": 3385
+   }
+  ],
+  "cost": 0.0221612,
+  "secs": 35
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53218,
+    "out": 4377
+   }
+  ],
+  "cost": 0.0272158,
+  "secs": 28
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52260,
+    "out": 2954
+   }
+  ],
+  "cost": 0.0733684,
+  "secs": 32
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53206,
+    "out": 5882
+   }
+  ],
+  "cost": 0.08990039999999999,
+  "secs": 50
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52260,
+    "out": 2833
+   }
+  ],
+  "cost": 0.0194,
+  "secs": 31
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53206,
+    "out": 3145
+   }
+  ],
+  "cost": 0.0210546,
+  "secs": 22
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52288,
+    "out": 10278
+   }
+  ],
+  "cost": 0.11004440000000001,
+  "secs": 93
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53234,
+    "out": 11427
+   }
+  ],
+  "cost": 0.11768139999999999,
+  "secs": 75
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 52288,
+    "out": 11621
+   }
+  ],
+  "cost": 0.0633428,
+  "secs": 117
+ },
+ {
+  "kind": "mod",
+  "model": "claude-haiku-4-5-20251001",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 53234,
+    "out": 10556
+   }
+  ],
+  "cost": 0.058112399999999995,
+  "secs": 100
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 69941,
+    "out": 213
+   }
+  ],
+  "cost": 0.422835,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 70551,
+    "out": 11
+   }
+  ],
+  "cost": 0.23604899999999998,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 69941,
+    "out": 225
+   }
+  ],
+  "cost": 0.024362699999999998,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 70551,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213357,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 69914,
+    "out": 260
+   }
+  ],
+  "cost": 0.235962,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 70524,
+    "out": 382
+   }
+  ],
+  "cost": 0.241452,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 69914,
+    "out": 234
+   }
+  ],
+  "cost": 0.0244896,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 70524,
+    "out": 200
+   }
+  ],
+  "cost": 0.0241626,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69901,
+    "out": 11
+   }
+  ],
+  "cost": 0.23214900000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70511,
+    "out": 11
+   }
+  ],
+  "cost": 0.23580900000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69901,
+    "out": 11
+   }
+  ],
+  "cost": 0.021140700000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70511,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213237,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 15
+   }
+  ],
+  "cost": 0.232125,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 440
+   }
+  ],
+  "cost": 0.24216,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 15
+   }
+  ],
+  "cost": 0.0211965,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 2255
+   }
+  ],
+  "cost": 0.0549795,
+  "secs": 23
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 69837,
+    "out": 95
+   }
+  ],
+  "cost": 0.233025,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 70447,
+    "out": 118
+   }
+  ],
+  "cost": 0.23703000000000002,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 69837,
+    "out": 115
+   }
+  ],
+  "cost": 0.022681499999999997,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 70447,
+    "out": 116
+   }
+  ],
+  "cost": 0.022879499999999997,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69994,
+    "out": 277
+   }
+  ],
+  "cost": 0.236697,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70604,
+    "out": 279
+   }
+  ],
+  "cost": 0.240387,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69994,
+    "out": 273
+   }
+  ],
+  "cost": 0.0250986,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70604,
+    "out": 312
+   }
+  ],
+  "cost": 0.025866599999999997,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69881,
+    "out": 11
+   }
+  ],
+  "cost": 0.23202899999999996,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70491,
+    "out": 11
+   }
+  ],
+  "cost": 0.23568899999999995,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69881,
+    "out": 11
+   }
+  ],
+  "cost": 0.0211347,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70491,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213177,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69903,
+    "out": 11
+   }
+  ],
+  "cost": 0.23216099999999998,
+  "secs": 4
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70513,
+    "out": 11
+   }
+  ],
+  "cost": 0.23582099999999998,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69903,
+    "out": 11
+   }
+  ],
+  "cost": 0.021141300000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70513,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213243,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 69919,
+    "out": 11
+   }
+  ],
+  "cost": 0.232257,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 70529,
+    "out": 11
+   }
+  ],
+  "cost": 0.235917,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 69919,
+    "out": 11
+   }
+  ],
+  "cost": 0.0211461,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 70529,
+    "out": 11
+   }
+  ],
+  "cost": 0.021329100000000004,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 69849,
+    "out": 213
+   }
+  ],
+  "cost": 0.234867,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 70459,
+    "out": 631
+   }
+  ],
+  "cost": 0.244797,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 69849,
+    "out": 1526
+   }
+  ],
+  "cost": 0.0438501,
+  "secs": 18
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 70459,
+    "out": 1404
+   }
+  ],
+  "cost": 0.04220310000000001,
+  "secs": 17
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 69846,
+    "out": 2761
+   }
+  ],
+  "cost": 0.273069,
+  "secs": 31
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 142645,
+    "out": 1759
+   }
+  ],
+  "cost": 0.29323920000000003,
+  "secs": 22
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 140901,
+    "out": 1185
+   }
+  ],
+  "cost": 0.0669474,
+  "secs": 19
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 70456,
+    "out": 1725
+   }
+  ],
+  "cost": 0.047017199999999995,
+  "secs": 20
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 11
+   }
+  ],
+  "cost": 0.232065,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 11
+   }
+  ],
+  "cost": 0.235725,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 11
+   }
+  ],
+  "cost": 0.021136500000000003,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213195,
+  "secs": 6
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69928,
+    "out": 1593
+   }
+  ],
+  "cost": 0.256041,
+  "secs": 18
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70537,
+    "out": 1771
+   }
+  ],
+  "cost": 0.262365,
+  "secs": 17
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69928,
+    "out": 1595
+   }
+  ],
+  "cost": 0.0449088,
+  "secs": 18
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70537,
+    "out": 1771
+   }
+  ],
+  "cost": 0.047731499999999996,
+  "secs": 16
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69926,
+    "out": 3356
+   }
+  ],
+  "cost": 0.282474,
+  "secs": 29
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70535,
+    "out": 3481
+   }
+  ],
+  "cost": 0.288003,
+  "secs": 27
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 141134,
+    "out": 3995
+   }
+  ],
+  "cost": 0.1095834,
+  "secs": 35
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70535,
+    "out": 3375
+   }
+  ],
+  "cost": 0.07179089999999999,
+  "secs": 26
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69946,
+    "out": 9626
+   }
+  ],
+  "cost": 0.376644,
+  "secs": 78
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70555,
+    "out": 7872
+   }
+  ],
+  "cost": 0.35398799999999997,
+  "secs": 67
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69946,
+    "out": 8218
+   }
+  ],
+  "cost": 0.1442592,
+  "secs": 76
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70555,
+    "out": 8535
+   }
+  ],
+  "cost": 0.14919690000000002,
+  "secs": 76
+ }
+]

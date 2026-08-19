@@ -1,0 +1,1082 @@
+[
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 69941,
+    "out": 213
+   }
+  ],
+  "cost": 0.422835,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 70551,
+    "out": 11
+   }
+  ],
+  "cost": 0.23604899999999998,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 69941,
+    "out": 225
+   }
+  ],
+  "cost": 0.024362699999999998,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "tuple-vis",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "B",
+  "calls": [
+   {
+    "in": 70551,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213357,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 69914,
+    "out": 260
+   }
+  ],
+  "cost": 0.235962,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 70524,
+    "out": 382
+   }
+  ],
+  "cost": 0.241452,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 69914,
+    "out": 234
+   }
+  ],
+  "cost": 0.0244896,
+  "secs": 8
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "use-set",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": [
+   "std::collections::BTreeMap",
+   "std::io::Write"
+  ],
+  "calls": [
+   {
+    "in": 70524,
+    "out": 200
+   }
+  ],
+  "cost": 0.0241626,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69901,
+    "out": 11
+   }
+  ],
+  "cost": 0.23214900000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70511,
+    "out": 11
+   }
+  ],
+  "cost": 0.23580900000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69901,
+    "out": 11
+   }
+  ],
+  "cost": 0.021140700000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pp-panic",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70511,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213237,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 15
+   }
+  ],
+  "cost": 0.232125,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 440
+   }
+  ],
+  "cost": 0.24216,
+  "secs": 9
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 15
+   }
+  ],
+  "cost": 0.0211965,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "method-owner",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Parser::step",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 2255
+   }
+  ],
+  "cost": 0.0549795,
+  "secs": 23
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 69837,
+    "out": 95
+   }
+  ],
+  "cost": 0.233025,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 70447,
+    "out": 118
+   }
+  ],
+  "cost": 0.23703000000000002,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 69837,
+    "out": 115
+   }
+  ],
+  "cost": 0.022681499999999997,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "impl-target",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "Config",
+  "calls": [
+   {
+    "in": 70447,
+    "out": 116
+   }
+  ],
+  "cost": 0.022879499999999997,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69994,
+    "out": 277
+   }
+  ],
+  "cost": 0.236697,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70604,
+    "out": 279
+   }
+  ],
+  "cost": 0.240387,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69994,
+    "out": 273
+   }
+  ],
+  "cost": 0.0250986,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "glue-diff",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70604,
+    "out": 312
+   }
+  ],
+  "cost": 0.025866599999999997,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69881,
+    "out": 11
+   }
+  ],
+  "cost": 0.23202899999999996,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70491,
+    "out": 11
+   }
+  ],
+  "cost": 0.23568899999999995,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69881,
+    "out": 11
+   }
+  ],
+  "cost": 0.0211347,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "trailing-commas",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70491,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213177,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69903,
+    "out": 11
+   }
+  ],
+  "cost": 0.23216099999999998,
+  "secs": 4
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70513,
+    "out": 11
+   }
+  ],
+  "cost": 0.23582099999999998,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 69903,
+    "out": 11
+   }
+  ],
+  "cost": 0.021141300000000002,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "pub-crate",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "D",
+  "calls": [
+   {
+    "in": 70513,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213243,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 69919,
+    "out": 11
+   }
+  ],
+  "cost": 0.232257,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 70529,
+    "out": 11
+   }
+  ],
+  "cost": 0.235917,
+  "secs": 6
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 69919,
+    "out": 11
+   }
+  ],
+  "cost": 0.0211461,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "macrorules-delim",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "A",
+  "calls": [
+   {
+    "in": 70529,
+    "out": 11
+   }
+  ],
+  "cost": 0.021329100000000004,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 69849,
+    "out": 213
+   }
+  ],
+  "cost": 0.234867,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 70459,
+    "out": 631
+   }
+  ],
+  "cost": 0.244797,
+  "secs": 10
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 69849,
+    "out": 1526
+   }
+  ],
+  "cost": 0.0438501,
+  "secs": 18
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-letmut",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "mut total: i64 := 0",
+  "calls": [
+   {
+    "in": 70459,
+    "out": 1404
+   }
+  ],
+  "cost": 0.04220310000000001,
+  "secs": 17
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 69846,
+    "out": 2761
+   }
+  ],
+  "cost": 0.273069,
+  "secs": 31
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 142645,
+    "out": 1759
+   }
+  ],
+  "cost": 0.29323920000000003,
+  "secs": 22
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 140901,
+    "out": 1185
+   }
+  ],
+  "cost": 0.0669474,
+  "secs": 19
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "line-const",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "const LIMIT usize = 8",
+  "calls": [
+   {
+    "in": 70456,
+    "out": 1725
+   }
+  ],
+  "cost": 0.047017199999999995,
+  "secs": 20
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 11
+   }
+  ],
+  "cost": 0.232065,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 0,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 11
+   }
+  ],
+  "cost": 0.235725,
+  "secs": 7
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 69887,
+    "out": 11
+   }
+  ],
+  "cost": 0.021136500000000003,
+  "secs": 5
+ },
+ {
+  "kind": "q",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "doc-comments",
+  "rep": 1,
+  "correct": true,
+  "parsed": true,
+  "answer": "C",
+  "calls": [
+   {
+    "in": 70497,
+    "out": 11
+   }
+  ],
+  "cost": 0.0213195,
+  "secs": 6
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69928,
+    "out": 1593
+   }
+  ],
+  "cost": 0.256041,
+  "secs": 18
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70537,
+    "out": 1771
+   }
+  ],
+  "cost": 0.262365,
+  "secs": 17
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69928,
+    "out": 1595
+   }
+  ],
+  "cost": 0.0449088,
+  "secs": 18
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "count-cmd",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70537,
+    "out": 1771
+   }
+  ],
+  "cost": 0.047731499999999996,
+  "secs": 16
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69926,
+    "out": 3356
+   }
+  ],
+  "cost": 0.282474,
+  "secs": 29
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70535,
+    "out": 3481
+   }
+  ],
+  "cost": 0.288003,
+  "secs": 27
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 141134,
+    "out": 3995
+   }
+  ],
+  "cost": 0.1095834,
+  "secs": 35
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "todo-kind",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70535,
+    "out": 3375
+   }
+  ],
+  "cost": 0.07179089999999999,
+  "secs": 26
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69946,
+    "out": 9626
+   }
+  ],
+  "cost": 0.376644,
+  "secs": 78
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 0,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70555,
+    "out": 7872
+   }
+  ],
+  "cost": 0.35398799999999997,
+  "secs": 67
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "ttm",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 69946,
+    "out": 8218
+   }
+  ],
+  "cost": 0.1442592,
+  "secs": 76
+ },
+ {
+  "kind": "mod",
+  "model": "claude-sonnet-5",
+  "cond": "rust",
+  "id": "block-tail",
+  "rep": 1,
+  "rounds": 0,
+  "success": true,
+  "calls": [
+   {
+    "in": 70555,
+    "out": 8535
+   }
+  ],
+  "cost": 0.14919690000000002,
+  "secs": 76
+ }
+]
