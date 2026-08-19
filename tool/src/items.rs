@@ -1,0 +1,597 @@
+use crate::textual::*;
+
+use quote::ToTokens;
+use std::sync::OnceLock;
+
+pub struct Converted {
+    pub ttm: Vec<String>,
+    pub doc_intro: Vec<String>,
+    pub doc_items: Vec<(String, Vec<String>)>,
+    pub uses_kept: Vec<String>,
+}
+pub fn is_pub(v: &syn::Visibility) -> bool {
+    matches!(v, syn::Visibility::Public(_))
+}
+pub fn doc_lines(attrs: &[syn::Attribute]) -> Vec<String> {
+    let mut out = Vec::new();
+    for a in attrs {
+        if a.path().is_ident("doc") {
+            if let syn::Meta::NameValue(nv) = &a.meta {
+                if let syn::Expr::Lit(l) = &nv.value {
+                    if let syn::Lit::Str(s) = &l.lit {
+                        out.push(s.value().trim().to_string())
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+pub fn derive_list(attrs: &[syn::Attribute]) -> Option<String> {
+    let mut parts: Vec<String> = Vec::new();
+    for a in attrs {
+        if a.path().is_ident("derive") {
+            if let syn::Meta::List(l) = &a.meta {
+                let raw = l.tokens.to_string();
+                parts.extend(
+                    raw.split(',')
+                        .map(|p| p.trim().replace(" :: ", "::").replace(' ', ""))
+                        .filter(|p| !p.is_empty()),
+                );
+            }
+        }
+    }
+    if parts.is_empty() {
+        None
+    } else {
+        Some(parts.join(","))
+    }
+}
+pub fn keep_attr(a: &syn::Attribute) -> bool {
+    !a.path().is_ident("doc") && !a.path().is_ident("derive")
+}
+pub fn is_test_mod(m: &syn::ItemMod) -> bool {
+    m.attrs
+        .iter()
+        .any(|a| a.path().is_ident("cfg") && a.to_token_stream().to_string().contains("test"))
+}
+pub fn print_item(item: &syn::Item) -> String {
+    let file = syn::File {
+        shebang: None,
+        attrs: vec![],
+        items: vec![item.clone()],
+    };
+    prettyplease::unparse(&file)
+}
+pub struct Clearer;
+struct VisClearer;
+impl syn::visit_mut::VisitMut for VisClearer {
+    fn visit_block_mut(&mut self, _b: &mut syn::Block) {}
+    fn visit_item_mut(&mut self, it: &mut syn::Item) {
+        match it {
+            syn::Item::Mod(_)
+            | syn::Item::Union(_)
+            | syn::Item::ForeignMod(_)
+            | syn::Item::ExternCrate(_)
+            | syn::Item::Use(_) => {}
+            syn::Item::Struct(s) if s.generics.where_clause.is_some() => {
+                s.vis = syn::Visibility::Inherited;
+            }
+            syn::Item::Struct(s) if matches!(s.fields, syn::Fields::Unnamed(_)) => {
+                s.vis = syn::Visibility::Inherited;
+            }
+            _ => syn::visit_mut::visit_item_mut(self, it),
+        }
+    }
+    fn visit_visibility_mut(&mut self, v: &mut syn::Visibility) {
+        *v = syn::Visibility::Inherited;
+    }
+}
+pub fn drop_docs(attrs: &mut Vec<syn::Attribute>) {
+    attrs.retain(|a| !a.path().is_ident("doc"));
+}
+pub fn reescape_tokens(ts: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    ts.into_iter()
+        .map(|tt| match tt {
+            proc_macro2::TokenTree::Group(g) => {
+                let ng = proc_macro2::Group::new(g.delimiter(), reescape_tokens(g.stream()));
+                proc_macro2::TokenTree::Group(ng)
+            }
+            proc_macro2::TokenTree::Literal(l) => {
+                let s = l.to_string();
+                if s.starts_with('r') || s.starts_with("br") {
+                    match syn::parse_str::<syn::Lit>(&s) {
+                        Ok(syn::Lit::Str(ls)) => proc_macro2::TokenTree::Literal(
+                            proc_macro2::Literal::string(&ls.value()),
+                        ),
+                        Ok(syn::Lit::ByteStr(bs)) => proc_macro2::TokenTree::Literal(
+                            proc_macro2::Literal::byte_string(&bs.value()),
+                        ),
+                        _ => proc_macro2::TokenTree::Literal(l),
+                    }
+                } else {
+                    proc_macro2::TokenTree::Literal(l)
+                }
+            }
+            other => other,
+        })
+        .collect()
+}
+impl syn::visit_mut::VisitMut for Clearer {
+    fn visit_lit_mut(&mut self, l: &mut syn::Lit) {
+        if let syn::Lit::Str(s) = l {
+            if s.token().to_string().starts_with('r') {
+                *l = syn::Lit::Str(syn::LitStr::new(&s.value(), s.span()));
+            }
+        } else if let syn::Lit::ByteStr(s) = l {
+            if s.token().to_string().starts_with("br") {
+                *l = syn::Lit::ByteStr(syn::LitByteStr::new(&s.value(), s.span()));
+            }
+        }
+        syn::visit_mut::visit_lit_mut(self, l);
+    }
+    fn visit_macro_mut(&mut self, m: &mut syn::Macro) {
+        m.tokens = reescape_tokens(std::mem::take(&mut m.tokens));
+        syn::visit_mut::visit_macro_mut(self, m);
+    }
+    fn visit_impl_item_fn_mut(&mut self, f: &mut syn::ImplItemFn) {
+        drop_docs(&mut f.attrs);
+        syn::visit_mut::visit_impl_item_fn_mut(self, f);
+    }
+    fn visit_trait_item_fn_mut(&mut self, f: &mut syn::TraitItemFn) {
+        drop_docs(&mut f.attrs);
+        syn::visit_mut::visit_trait_item_fn_mut(self, f);
+    }
+    fn visit_field_mut(&mut self, f: &mut syn::Field) {
+        drop_docs(&mut f.attrs);
+        syn::visit_mut::visit_field_mut(self, f);
+    }
+    fn visit_variant_mut(&mut self, v: &mut syn::Variant) {
+        drop_docs(&mut v.attrs);
+        syn::visit_mut::visit_variant_mut(self, v);
+    }
+}
+pub fn item_ident(item: &syn::Item) -> Option<String> {
+    match item {
+        syn::Item::Fn(f) => Some(f.sig.ident.to_string()),
+        syn::Item::Struct(s) => Some(s.ident.to_string()),
+        syn::Item::Enum(e) => Some(e.ident.to_string()),
+        syn::Item::Trait(t) => Some(t.ident.to_string()),
+        syn::Item::Const(c) => Some(c.ident.to_string()),
+        syn::Item::Static(s) => Some(s.ident.to_string()),
+        _ => None,
+    }
+}
+pub fn use_directive(u: &syn::ItemUse, prelude_covered: &[&str]) -> Option<String> {
+    let text = u
+        .tree
+        .to_token_stream()
+        .to_string()
+        .replace(" :: ", "::")
+        .replace(" ", "");
+    if text.starts_with("crate::") || text.starts_with("super::") || text.starts_with("self::") {
+        return None;
+    }
+    let readable = u
+        .tree
+        .to_token_stream()
+        .to_string()
+        .replace(" :: ", "::")
+        .replace(" ,", ",")
+        .replace("{ ", "{")
+        .replace(" }", "}");
+    if prelude_covered.iter().any(|p| text == *p) {
+        return None;
+    }
+    Some(format!("#use {readable}"))
+}
+pub fn convert_items(items: &[syn::Item], siblings: &[String], out: &mut Converted) {
+    let prelude = [
+        "std::collections::HashMap",
+        "std::collections::HashSet",
+        "std::env",
+        "std::fs",
+        "std::process",
+        "std::thread",
+        "std::mem",
+        "std::fmt",
+        "std::error::Error",
+        "std::f64::consts::PI",
+        "std::sync::mpsc",
+        "std::sync::Arc",
+        "std::sync::Mutex",
+        "std::cmp::Ordering",
+        "std::str::FromStr",
+        "std::fmt::Display",
+        "std::fmt::Formatter",
+        "std::io::BufRead",
+        "std::io::BufReader",
+    ];
+    for item in items {
+        match item {
+            syn::Item::Use(u) => {
+                if let Some(d) = use_directive(u, &prelude) {
+                    out.uses_kept.push(d);
+                }
+            }
+            syn::Item::Mod(m) if m.content.is_none() => {}
+            syn::Item::Mod(m) if is_test_mod(m) => {
+                if let Some((_, inner)) = &m.content {
+                    let kept: Vec<syn::Item> = inner
+                        .iter()
+                        .filter(|it| !matches!(it, syn::Item::Use(_)))
+                        .cloned()
+                        .collect();
+                    convert_items(&kept, siblings, out);
+                }
+            }
+            _ => convert_one(item, siblings, out),
+        }
+    }
+}
+pub fn convert_one(item: &syn::Item, siblings: &[String], out: &mut Converted) {
+    let mut cleaned = item.clone();
+    let derives = extract_derives(&cleaned);
+    let docs = strip_and_collect(&mut cleaned);
+    collect_member_docs(&cleaned, out);
+    let vis_info = collect_vis(&cleaned);
+    syn::visit_mut::VisitMut::visit_item_mut(&mut VisClearer, &mut cleaned);
+    syn::visit_mut::VisitMut::visit_item_mut(&mut Clearer, &mut cleaned);
+    let printed =
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| print_item(&cleaned))) {
+            Ok(p) => p,
+            Err(_) => quote::ToTokens::to_token_stream(item).to_string(),
+        };
+    static PP_RANGE_FIX: OnceLock<regex::Regex> = OnceLock::new();
+    let rx = crate::textual::re(r"(\d\.)\.\.", &PP_RANGE_FIX);
+    let raw_lines: Vec<String> = printed
+        .lines()
+        .map(|l| {
+            if rx.is_match(l) {
+                let (masked, lits) = crate::textual::mask_lits(l);
+                crate::textual::restore_lits(&rx.replace_all(&masked, "$1 .."), &lits)
+            } else {
+                l.to_string()
+            }
+        })
+        .collect();
+    let joined = join_wrapped(&raw_lines);
+    let in_fields = matches!(item, syn::Item::Struct(s) if s.generics.where_clause.is_none())
+        || matches!(item, syn::Item::Enum(_));
+    let mut lines = Vec::new();
+    let mut mac_depth = 0i64;
+    let mut seen_brace = false;
+    for (i, l) in joined.iter().enumerate() {
+        let bare = strip_lits(l);
+        let fields_here = in_fields && i > 0 && (seen_brace || bare.contains('{'));
+        if bare.contains('{') {
+            seen_brace = true
+        }
+        if mac_depth > 0 {
+            mac_depth +=
+                count_of(&bare, &['{', '(', '[']) as i64 - count_of(&bare, &['}', ')', ']']) as i64;
+            lines.push(l.trim_end().to_string());
+            continue;
+        }
+        let d = macro_open_depth(&bare);
+        if d > 0 {
+            mac_depth = d
+        }
+        lines.push(convert_line(l, siblings, fields_here));
+    }
+    if let Some(d) = derives {
+        if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
+            static UNION_RE: OnceLock<regex::Regex> = OnceLock::new();
+            if first.ends_with(',')
+                || crate::textual::re(r"^(pub(\([^)]*\))?\s+)?union\b", &UNION_RE).is_match(first)
+            {
+                lines.insert(0, format!("#[derive({d})]"));
+            } else {
+                static WHERE_RE: OnceLock<regex::Regex> = OnceLock::new();
+                let pos = re(r"\swhere\s", &WHERE_RE)
+                    .find(first)
+                    .map(|m| m.start())
+                    .or_else(|| first.find(" {"));
+                match pos {
+                    Some(p) => first.insert_str(p, &format!(" +{d}")),
+                    None => {
+                        if first.ends_with(';') {
+                            first.pop();
+                            first.push_str(&format!(" +{d};"));
+                        } else {
+                            first.push_str(&format!(" +{d}"));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    apply_priv(&mut lines, &vis_info);
+    if !docs.is_empty() {
+        if let Some(name) = item_ident(item) {
+            out.doc_items.push((name, docs));
+        }
+    }
+    out.ttm.extend(lines);
+}
+pub fn collect_member_docs(item: &syn::Item, out: &mut Converted) {
+    match item {
+        syn::Item::Impl(i) => {
+            for it in &i.items {
+                if let syn::ImplItem::Fn(m) = it {
+                    let d = doc_lines(&m.attrs);
+                    if !d.is_empty() {
+                        out.doc_items.push((m.sig.ident.to_string(), d))
+                    }
+                }
+            }
+        }
+        syn::Item::Trait(t) => {
+            for it in &t.items {
+                if let syn::TraitItem::Fn(m) = it {
+                    let d = doc_lines(&m.attrs);
+                    if !d.is_empty() {
+                        out.doc_items.push((m.sig.ident.to_string(), d))
+                    }
+                }
+            }
+        }
+        _ => {}
+    }
+}
+pub fn strip_and_collect(item: &mut syn::Item) -> Vec<String> {
+    let mut docs = Vec::new();
+    if let Some(a) = item_attrs_mut(item) {
+        docs = doc_lines(a);
+        a.retain(keep_attr);
+    }
+    docs
+}
+pub fn extract_derives(item: &syn::Item) -> Option<String> {
+    match item {
+        syn::Item::Struct(s) => derive_list(&s.attrs),
+        syn::Item::Enum(e) => derive_list(&e.attrs),
+        syn::Item::Union(u) => derive_list(&u.attrs),
+        _ => None,
+    }
+}
+pub fn item_attrs_mut(item: &mut syn::Item) -> Option<&mut Vec<syn::Attribute>> {
+    match item {
+        syn::Item::Fn(f) => Some(&mut f.attrs),
+        syn::Item::Struct(s) => Some(&mut s.attrs),
+        syn::Item::Enum(e) => Some(&mut e.attrs),
+        syn::Item::Trait(t) => Some(&mut t.attrs),
+        syn::Item::Const(c) => Some(&mut c.attrs),
+        syn::Item::Static(s) => Some(&mut s.attrs),
+        syn::Item::Impl(i) => Some(&mut i.attrs),
+        syn::Item::Macro(m) => Some(&mut m.attrs),
+        syn::Item::Type(t) => Some(&mut t.attrs),
+        syn::Item::Mod(m) => Some(&mut m.attrs),
+        syn::Item::Union(u) => Some(&mut u.attrs),
+        syn::Item::Use(u) => Some(&mut u.attrs),
+        syn::Item::TraitAlias(t) => Some(&mut t.attrs),
+        syn::Item::ExternCrate(e) => Some(&mut e.attrs),
+        syn::Item::ForeignMod(f) => Some(&mut f.attrs),
+        _ => None,
+    }
+}
+pub struct VisInfo {
+    pub item_pub: bool,
+    pub is_impl_for: bool,
+    pub methods: Vec<(String, bool)>,
+    pub fields: Vec<(String, bool)>,
+}
+pub fn collect_vis(item: &syn::Item) -> VisInfo {
+    let mut info = VisInfo {
+        item_pub: true,
+        is_impl_for: false,
+        methods: Vec::new(),
+        fields: Vec::new(),
+    };
+    match item {
+        syn::Item::Fn(f) => info.item_pub = is_pub(&f.vis),
+        syn::Item::Struct(s) => {
+            info.item_pub = is_pub(&s.vis);
+            if s.generics.where_clause.is_some() {
+                return info;
+            }
+            if let syn::Fields::Named(named) = &s.fields {
+                for f in &named.named {
+                    if let Some(id) = &f.ident {
+                        info.fields.push((id.to_string(), is_pub(&f.vis)));
+                    }
+                }
+            }
+        }
+        syn::Item::Enum(e) => info.item_pub = is_pub(&e.vis),
+        syn::Item::Trait(t) => info.item_pub = is_pub(&t.vis),
+        syn::Item::Const(c) => info.item_pub = is_pub(&c.vis),
+        syn::Item::Static(s) => info.item_pub = is_pub(&s.vis),
+        syn::Item::Type(t) => info.item_pub = is_pub(&t.vis),
+        syn::Item::TraitAlias(t) => info.item_pub = is_pub(&t.vis),
+        syn::Item::Impl(i) => {
+            info.is_impl_for = i.trait_.is_some();
+            for it in &i.items {
+                match it {
+                    syn::ImplItem::Fn(m) => info
+                        .methods
+                        .push((format!("fn {}", m.sig.ident), is_pub(&m.vis))),
+                    syn::ImplItem::Const(c) => info
+                        .methods
+                        .push((format!("const {}", c.ident), is_pub(&c.vis))),
+                    syn::ImplItem::Type(t) => info
+                        .methods
+                        .push((format!("type {}", t.ident), is_pub(&t.vis))),
+                    _ => {}
+                }
+            }
+        }
+        _ => {}
+    }
+    info
+}
+pub fn apply_priv(lines: &mut Vec<String>, info: &VisInfo) {
+    if !info.item_pub {
+        if let Some(first) = lines.iter_mut().find(|l| !l.starts_with("#[")) {
+            first.insert_str(0, "priv ");
+        }
+    }
+    if !info.is_impl_for {
+        let mut remaining: Vec<(String, bool)> =
+            info.methods.iter().filter(|(_, p)| !*p).cloned().collect();
+        let mut depth = 0i64;
+        for l in lines.iter_mut() {
+            if depth == 1 && !remaining.is_empty() {
+                let mut head = l.as_str();
+                loop {
+                    if let Some(r) = head.strip_prefix("async ") {
+                        head = r
+                    } else if let Some(r) = head.strip_prefix("unsafe ") {
+                        head = r
+                    } else if head.starts_with("const ") && head.contains(" fn ") {
+                        head = &head[6..]
+                    } else if head.starts_with("const fn ") {
+                        head = &head[6..]
+                    } else if head.starts_with("extern \"") {
+                        match head[8..].find('"') {
+                            Some(e) => head = head[8 + e + 1..].trim_start(),
+                            None => break,
+                        }
+                    } else if head.starts_with("#[") {
+                        match head.find(']') {
+                            Some(e) => head = head[e + 1..].trim_start(),
+                            None => break,
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                let hit = remaining.iter().position(|(name, _)| {
+                    let p1 = format!("{name}(");
+                    let p2 = format!("{name}<");
+                    let p3 = format!("{name} ");
+                    let p4 = format!("{name}:");
+                    head.starts_with(&p1)
+                        || head.starts_with(&p2)
+                        || l.starts_with(&p3)
+                        || l.starts_with(&p4)
+                });
+                if let Some(hi) = hit {
+                    l.insert_str(0, "priv ");
+                    remaining.remove(hi);
+                }
+            }
+            let b = crate::textual::strip_lits(l);
+            depth += crate::textual::count_of(&b, &['{']) as i64
+                - crate::textual::count_of(&b, &['}']) as i64;
+        }
+    }
+    for (name, is_p) in &info.fields {
+        if *is_p {
+            continue;
+        }
+        let prefix = format!("{name} ");
+        let colon_prefix = format!("{name}:");
+        let mut done = false;
+        for l in lines.iter_mut() {
+            if (l.starts_with(&prefix) || l.starts_with(&colon_prefix)) && l.ends_with(',') {
+                l.insert_str(0, "priv ");
+                done = true;
+                break;
+            }
+        }
+        if !done {
+            for l in lines.iter_mut() {
+                let mut ip = 0usize;
+                loop {
+                    let rest = &l[ip..];
+                    let ws = rest.len() - rest.trim_start().len();
+                    if !rest.trim_start().starts_with("#[") {
+                        break;
+                    }
+                    let attr_start = ip + ws;
+                    let mut depth = 0i64;
+                    let mut end = None;
+                    let mut esc_state = false;
+                    let mut in_str = false;
+                    let mut in_char = false;
+                    for (bi, ch) in l[attr_start..].char_indices() {
+                        if esc_state {
+                            esc_state = false;
+                            continue;
+                        }
+                        if ch == '\\' {
+                            esc_state = true;
+                            continue;
+                        }
+                        if in_str {
+                            if ch == '"' {
+                                in_str = false
+                            }
+                            continue;
+                        }
+                        if in_char {
+                            if ch == '\'' {
+                                in_char = false
+                            }
+                            continue;
+                        }
+                        match ch {
+                            '"' => in_str = true,
+                            '\'' => in_char = true,
+                            '[' => depth += 1,
+                            ']' => {
+                                depth -= 1;
+                                if depth == 0 {
+                                    end = Some(attr_start + bi + 1);
+                                    break;
+                                }
+                            }
+                            _ => {}
+                        }
+                    }
+                    match end {
+                        Some(e) => {
+                            ip = e;
+                            while l[ip..].starts_with(' ') {
+                                ip += 1
+                            }
+                        }
+                        None => break,
+                    }
+                }
+                if ip > 0
+                    && (l[ip..].starts_with(&prefix) || l[ip..].starts_with(&format!("{name}:")))
+                {
+                    l.insert_str(ip, "priv ");
+                    done = true;
+                    break;
+                }
+            }
+        }
+        if done {
+            continue;
+        }
+        let pats = [
+            format!("{{ {name} "),
+            format!(", {name} "),
+            format!("{{ {name}: "),
+            format!(", {name}: "),
+            format!("] {name} "),
+            format!("] {name}: "),
+        ];
+        for l in lines.iter_mut() {
+            let mut pos = None;
+            for pat in &pats {
+                if let Some(i) = l.find(pat.as_str()) {
+                    pos = Some(i + 2);
+                    break;
+                }
+            }
+            if let Some(pp) = pos {
+                l.insert_str(pp, "priv ");
+                break;
+            }
+        }
+    }
+}

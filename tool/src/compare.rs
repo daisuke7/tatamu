@@ -1,0 +1,534 @@
+use crate::items::*;
+
+use std::error::Error;
+use std::fs;
+use std::sync::OnceLock;
+
+pub fn strip_macro_trailing_commas(ts: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    let mut trees: Vec<proc_macro2::TokenTree> = ts
+        .into_iter()
+        .map(|t| match t {
+            proc_macro2::TokenTree::Group(g) => {
+                let inner = strip_macro_trailing_commas(g.stream());
+                proc_macro2::TokenTree::Group(proc_macro2::Group::new(g.delimiter(), inner))
+            }
+            proc_macro2::TokenTree::Literal(l) => match syn::Lit::new(l.clone()) {
+                syn::Lit::Str(s) => {
+                    proc_macro2::TokenTree::Literal(proc_macro2::Literal::string(&s.value()))
+                }
+                syn::Lit::ByteStr(s) => {
+                    proc_macro2::TokenTree::Literal(proc_macro2::Literal::byte_string(&s.value()))
+                }
+                _ => proc_macro2::TokenTree::Literal(l),
+            },
+            other => other,
+        })
+        .collect();
+    while matches!(trees.last(), Some(proc_macro2::TokenTree::Punct(p)) if p.as_char() == ',' || p.as_char() == ';')
+    {
+        trees.pop();
+    }
+    trees.into_iter().collect()
+}
+pub fn sort_attrs(attrs: &mut Vec<syn::Attribute>) {
+    attrs.sort_by_key(|a| quote::ToTokens::to_token_stream(a).to_string());
+}
+struct VisBinarizer;
+impl syn::visit_mut::VisitMut for VisBinarizer {
+    fn visit_visibility_mut(&mut self, v: &mut syn::Visibility) {
+        if !matches!(v, syn::Visibility::Public(_)) {
+            *v = syn::Visibility::Inherited;
+        }
+    }
+}
+struct PathNormalizer {
+    pub siblings: Vec<String>,
+}
+impl syn::visit_mut::VisitMut for PathNormalizer {
+    fn visit_item_mut(&mut self, it: &mut syn::Item) {
+        if let syn::Item::Macro(im) = it {
+            if im.mac.path.is_ident("macro_rules") {
+                im.semi_token = None;
+            }
+        }
+        if let Some(a) = item_attrs_mut(it) {
+            a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+            merge_derives(a);
+            sort_attrs(a);
+        }
+        syn::visit_mut::visit_item_mut(self, it);
+    }
+    fn visit_impl_item_fn_mut(&mut self, f: &mut syn::ImplItemFn) {
+        f.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut f.attrs);
+        syn::visit_mut::visit_impl_item_fn_mut(self, f);
+    }
+    fn visit_impl_item_const_mut(&mut self, c: &mut syn::ImplItemConst) {
+        c.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut c.attrs);
+        syn::visit_mut::visit_impl_item_const_mut(self, c);
+    }
+    fn visit_impl_item_type_mut(&mut self, t: &mut syn::ImplItemType) {
+        t.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut t.attrs);
+        syn::visit_mut::visit_impl_item_type_mut(self, t);
+    }
+    fn visit_trait_item_const_mut(&mut self, c: &mut syn::TraitItemConst) {
+        c.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut c.attrs);
+        syn::visit_mut::visit_trait_item_const_mut(self, c);
+    }
+    fn visit_trait_item_type_mut(&mut self, t: &mut syn::TraitItemType) {
+        t.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut t.attrs);
+        syn::visit_mut::visit_trait_item_type_mut(self, t);
+    }
+    fn visit_impl_item_macro_mut(&mut self, m: &mut syn::ImplItemMacro) {
+        m.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut m.attrs);
+        syn::visit_mut::visit_impl_item_macro_mut(self, m);
+    }
+    fn visit_trait_item_macro_mut(&mut self, m: &mut syn::TraitItemMacro) {
+        m.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut m.attrs);
+        syn::visit_mut::visit_trait_item_macro_mut(self, m);
+    }
+    fn visit_local_mut(&mut self, l: &mut syn::Local) {
+        l.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        syn::visit_mut::visit_local_mut(self, l);
+    }
+    fn visit_foreign_item_mut(&mut self, f: &mut syn::ForeignItem) {
+        let attrs = match f {
+            syn::ForeignItem::Fn(x) => Some(&mut x.attrs),
+            syn::ForeignItem::Static(x) => Some(&mut x.attrs),
+            syn::ForeignItem::Type(x) => Some(&mut x.attrs),
+            syn::ForeignItem::Macro(x) => Some(&mut x.attrs),
+            _ => None,
+        };
+        if let Some(a) = attrs {
+            a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+            sort_attrs(a);
+        }
+        syn::visit_mut::visit_foreign_item_mut(self, f);
+    }
+    fn visit_trait_item_fn_mut(&mut self, f: &mut syn::TraitItemFn) {
+        f.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut f.attrs);
+        syn::visit_mut::visit_trait_item_fn_mut(self, f);
+    }
+    fn visit_field_mut(&mut self, f: &mut syn::Field) {
+        f.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut f.attrs);
+        syn::visit_mut::visit_field_mut(self, f);
+    }
+    fn visit_variant_mut(&mut self, v: &mut syn::Variant) {
+        v.attrs
+            .retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+        sort_attrs(&mut v.attrs);
+        syn::visit_mut::visit_variant_mut(self, v);
+    }
+    fn visit_block_mut(&mut self, b: &mut syn::Block) {
+        match b.stmts.last_mut() {
+            Some(syn::Stmt::Expr(_, semi)) => *semi = None,
+            Some(syn::Stmt::Macro(m)) => m.semi_token = None,
+            _ => {}
+        }
+        for st in b.stmts.iter_mut() {
+            if let syn::Stmt::Expr(e, semi) = st {
+                if matches!(
+                    e,
+                    syn::Expr::If(_)
+                        | syn::Expr::Match(_)
+                        | syn::Expr::While(_)
+                        | syn::Expr::ForLoop(_)
+                        | syn::Expr::Loop(_)
+                        | syn::Expr::Block(_)
+                        | syn::Expr::Unsafe(_)
+                        | syn::Expr::TryBlock(_)
+                        | syn::Expr::Const(_)
+                ) {
+                    *semi = None;
+                }
+            } else if let syn::Stmt::Macro(m) = st {
+                if matches!(m.mac.delimiter, syn::MacroDelimiter::Brace(_)) {
+                    m.semi_token = None;
+                }
+            }
+        }
+        syn::visit_mut::visit_block_mut(self, b);
+    }
+    fn visit_arm_mut(&mut self, a: &mut syn::Arm) {
+        if let Some(e) = unwrap_single_block(&a.body) {
+            a.body = Box::new(e);
+        }
+        a.comma = None;
+        syn::visit_mut::visit_arm_mut(self, a);
+    }
+    fn visit_expr_closure_mut(&mut self, c: &mut syn::ExprClosure) {
+        if let Some(e) = unwrap_single_block(&c.body) {
+            c.body = Box::new(e);
+        }
+        if c.inputs.trailing_punct() {
+            let items: Vec<syn::Pat> = c.inputs.iter().cloned().collect();
+            c.inputs = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_expr_closure_mut(self, c);
+    }
+    fn visit_where_clause_mut(&mut self, w: &mut syn::WhereClause) {
+        if w.predicates.trailing_punct() {
+            let preds: Vec<syn::WherePredicate> = w.predicates.iter().cloned().collect();
+            w.predicates = preds.into_iter().collect();
+        }
+        syn::visit_mut::visit_where_clause_mut(self, w);
+    }
+    fn visit_lit_mut(&mut self, l: &mut syn::Lit) {
+        if let syn::Lit::Str(s) = l {
+            *l = syn::Lit::Str(syn::LitStr::new(&s.value(), s.span()));
+        } else if let syn::Lit::ByteStr(s) = l {
+            *l = syn::Lit::ByteStr(syn::LitByteStr::new(&s.value(), s.span()));
+        } else if let syn::Lit::CStr(s) = l {
+            *l = syn::Lit::CStr(syn::LitCStr::new(&s.value(), s.span()));
+        }
+        syn::visit_mut::visit_lit_mut(self, l);
+    }
+    fn visit_attribute_mut(&mut self, a: &mut syn::Attribute) {
+        if let syn::Meta::List(l) = &mut a.meta {
+            l.tokens = flatten_spacing(std::mem::take(&mut l.tokens));
+            l.tokens = strip_macro_trailing_commas(std::mem::take(&mut l.tokens));
+        }
+        syn::visit_mut::visit_attribute_mut(self, a);
+    }
+    fn visit_macro_mut(&mut self, m: &mut syn::Macro) {
+        m.tokens = strip_macro_trailing_commas(std::mem::take(&mut m.tokens));
+        m.tokens = strip_token_docs(std::mem::take(&mut m.tokens));
+        m.tokens = flatten_spacing(std::mem::take(&mut m.tokens));
+        if m.path.is_ident("macro_rules") {
+            m.tokens = brace_rule_bodies(std::mem::take(&mut m.tokens));
+            m.delimiter = syn::MacroDelimiter::Brace(Default::default());
+        }
+        syn::visit_mut::visit_macro_mut(self, m);
+    }
+    fn visit_expr_call_mut(&mut self, c: &mut syn::ExprCall) {
+        if c.args.trailing_punct() {
+            let args: Vec<syn::Expr> = c.args.iter().cloned().collect();
+            c.args = args.into_iter().collect();
+        }
+        syn::visit_mut::visit_expr_call_mut(self, c);
+    }
+    fn visit_expr_method_call_mut(&mut self, c: &mut syn::ExprMethodCall) {
+        if c.args.trailing_punct() {
+            let args: Vec<syn::Expr> = c.args.iter().cloned().collect();
+            c.args = args.into_iter().collect();
+        }
+        syn::visit_mut::visit_expr_method_call_mut(self, c);
+    }
+    fn visit_angle_bracketed_generic_arguments_mut(
+        &mut self,
+        a: &mut syn::AngleBracketedGenericArguments,
+    ) {
+        a.colon2_token = None;
+        if a.args.trailing_punct() {
+            let items: Vec<syn::GenericArgument> = a.args.iter().cloned().collect();
+            a.args = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_angle_bracketed_generic_arguments_mut(self, a);
+    }
+    fn visit_generics_mut(&mut self, g: &mut syn::Generics) {
+        if g.params.trailing_punct() {
+            let items: Vec<syn::GenericParam> = g.params.iter().cloned().collect();
+            g.params = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_generics_mut(self, g);
+    }
+    fn visit_signature_mut(&mut self, s: &mut syn::Signature) {
+        if s.inputs.trailing_punct() {
+            let items: Vec<syn::FnArg> = s.inputs.iter().cloned().collect();
+            s.inputs = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_signature_mut(self, s);
+    }
+    fn visit_type_trait_object_mut(&mut self, t: &mut syn::TypeTraitObject) {
+        t.dyn_token = Some(Default::default());
+        syn::visit_mut::visit_type_trait_object_mut(self, t);
+    }
+    fn visit_type_tuple_mut(&mut self, t: &mut syn::TypeTuple) {
+        if t.elems.len() > 1 && t.elems.trailing_punct() {
+            let items: Vec<syn::Type> = t.elems.iter().cloned().collect();
+            t.elems = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_type_tuple_mut(self, t);
+    }
+    fn visit_expr_struct_mut(&mut self, e: &mut syn::ExprStruct) {
+        if e.fields.trailing_punct() && e.rest.is_none() {
+            let items: Vec<syn::FieldValue> = e.fields.iter().cloned().collect();
+            e.fields = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_expr_struct_mut(self, e);
+    }
+    fn visit_expr_array_mut(&mut self, e: &mut syn::ExprArray) {
+        if e.elems.trailing_punct() {
+            let items: Vec<syn::Expr> = e.elems.iter().cloned().collect();
+            e.elems = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_expr_array_mut(self, e);
+    }
+    fn visit_expr_tuple_mut(&mut self, e: &mut syn::ExprTuple) {
+        if e.elems.len() > 1 && e.elems.trailing_punct() {
+            let items: Vec<syn::Expr> = e.elems.iter().cloned().collect();
+            e.elems = items.into_iter().collect();
+        }
+        syn::visit_mut::visit_expr_tuple_mut(self, e);
+    }
+    fn visit_path_mut(&mut self, p: &mut syn::Path) {
+        if p.segments.len() > 1 {
+            let first = p.segments[0].ident.to_string();
+            if self.siblings.iter().any(|s| *s == first) {
+                let rest: Vec<syn::PathSegment> = p.segments.iter().skip(1).cloned().collect();
+                p.segments = rest.into_iter().collect();
+            }
+        }
+        syn::visit_mut::visit_path_mut(self, p);
+    }
+}
+pub fn brace_rule_bodies(ts: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    let mut out: Vec<proc_macro2::TokenTree> = Vec::new();
+    let mut prev_eq = false;
+    let mut prev_arrow = false;
+    for tt in ts {
+        let arrow_now = prev_arrow;
+        prev_arrow = false;
+        match &tt {
+            proc_macro2::TokenTree::Punct(p) if p.as_char() == '=' => prev_eq = true,
+            proc_macro2::TokenTree::Punct(p) if p.as_char() == '>' && prev_eq => {
+                prev_eq = false;
+                prev_arrow = true;
+            }
+            _ => prev_eq = false,
+        }
+        if arrow_now {
+            if let proc_macro2::TokenTree::Group(g) = &tt {
+                if g.delimiter() != proc_macro2::Delimiter::Brace {
+                    out.push(proc_macro2::TokenTree::Group(proc_macro2::Group::new(
+                        proc_macro2::Delimiter::Brace,
+                        g.stream(),
+                    )));
+                    continue;
+                }
+            }
+        }
+        out.push(tt);
+    }
+    out.into_iter().collect()
+}
+pub fn flatten_spacing(ts: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    static FLOAT_RE: OnceLock<regex::Regex> = OnceLock::new();
+    let mut out: Vec<proc_macro2::TokenTree> = Vec::new();
+    for tt in ts {
+        match tt {
+            proc_macro2::TokenTree::Group(g) => {
+                out.push(proc_macro2::TokenTree::Group(proc_macro2::Group::new(
+                    g.delimiter(),
+                    flatten_spacing(g.stream()),
+                )));
+            }
+            proc_macro2::TokenTree::Punct(p) => {
+                out.push(proc_macro2::TokenTree::Punct(proc_macro2::Punct::new(
+                    p.as_char(),
+                    proc_macro2::Spacing::Alone,
+                )));
+            }
+            proc_macro2::TokenTree::Literal(l) => {
+                let s = l.to_string();
+                if let Some(c) = crate::textual::re(r"^(\d+)\.(\d+)$", &FLOAT_RE).captures(&s) {
+                    out.push(proc_macro2::TokenTree::Literal(
+                        proc_macro2::Literal::u64_unsuffixed(c[1].parse().unwrap_or(0)),
+                    ));
+                    out.push(proc_macro2::TokenTree::Punct(proc_macro2::Punct::new(
+                        '.',
+                        proc_macro2::Spacing::Alone,
+                    )));
+                    out.push(proc_macro2::TokenTree::Literal(
+                        proc_macro2::Literal::u64_unsuffixed(c[2].parse().unwrap_or(0)),
+                    ));
+                } else {
+                    out.push(proc_macro2::TokenTree::Literal(l));
+                }
+            }
+            other => out.push(other),
+        }
+    }
+    out.into_iter().collect()
+}
+pub fn merge_derives(attrs: &mut Vec<syn::Attribute>) {
+    let mut names: Vec<String> = Vec::new();
+    for a in attrs.iter() {
+        if a.path().is_ident("derive") {
+            if let syn::Meta::List(l) = &a.meta {
+                for part in l.tokens.to_string().split(',') {
+                    let t = part.trim().to_string();
+                    if !t.is_empty() {
+                        names.push(t)
+                    }
+                }
+            }
+        }
+    }
+    if names.len() < 2 {
+        return;
+    }
+    names.sort();
+    names.dedup();
+    attrs.retain(|a| !a.path().is_ident("derive"));
+    let ts: proc_macro2::TokenStream = names.join(", ").parse().unwrap();
+    attrs.push(syn::parse_quote!(#[derive(#ts)]));
+}
+pub fn is_doc_group(tt: &proc_macro2::TokenTree) -> bool {
+    if let proc_macro2::TokenTree::Group(g) = tt {
+        if g.delimiter() == proc_macro2::Delimiter::Bracket {
+            if let Some(proc_macro2::TokenTree::Ident(id)) = g.stream().into_iter().next() {
+                return id == "doc";
+            }
+        }
+    }
+    false
+}
+pub fn strip_token_docs(ts: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    let tts: Vec<proc_macro2::TokenTree> = ts.into_iter().collect();
+    let mut out: Vec<proc_macro2::TokenTree> = Vec::new();
+    let mut i = 0usize;
+    while i < tts.len() {
+        if let proc_macro2::TokenTree::Punct(p) = &tts[i] {
+            if p.as_char() == '#' && i + 1 < tts.len() && is_doc_group(&tts[i + 1]) {
+                i += 2;
+                continue;
+            }
+            if p.as_char() == '#' && i + 2 < tts.len() && is_doc_group(&tts[i + 2]) {
+                if let proc_macro2::TokenTree::Punct(b) = &tts[i + 1] {
+                    if b.as_char() == '!' {
+                        i += 3;
+                        continue;
+                    }
+                }
+            }
+        }
+        match &tts[i] {
+            proc_macro2::TokenTree::Group(g) => {
+                out.push(proc_macro2::TokenTree::Group(proc_macro2::Group::new(
+                    g.delimiter(),
+                    strip_token_docs(g.stream()),
+                )));
+            }
+            other => out.push(other.clone()),
+        }
+        i += 1;
+    }
+    out.into_iter().collect()
+}
+pub fn unwrap_single_block(body: &syn::Expr) -> Option<syn::Expr> {
+    let b = match body {
+        syn::Expr::Block(b) if b.attrs.is_empty() && b.label.is_none() => b,
+        _ => return None,
+    };
+    if b.block.stmts.is_empty() {
+        return Some(syn::parse_quote!(()));
+    }
+    if b.block.stmts.len() != 1 {
+        return None;
+    }
+    match &b.block.stmts[0] {
+        syn::Stmt::Expr(e, _) => Some(e.clone()),
+        syn::Stmt::Macro(m) => Some(syn::Expr::Macro(syn::ExprMacro {
+            attrs: m.attrs.clone(),
+            mac: m.mac.clone(),
+        })),
+        _ => None,
+    }
+}
+pub fn normalize_for_compare(
+    src: &str,
+    siblings: &[String],
+) -> Result<Vec<syn::Item>, Box<dyn Error>> {
+    let file = syn::parse_file(src)?;
+    let mut items = Vec::new();
+    flatten(file.items, &mut items);
+    let mut norm = PathNormalizer {
+        siblings: siblings.to_vec(),
+    };
+    for it in items.iter_mut() {
+        syn::visit_mut::VisitMut::visit_item_mut(&mut VisBinarizer, it);
+        syn::visit_mut::VisitMut::visit_item_mut(&mut norm, it);
+        scrub_attrs(it);
+    }
+    Ok(items)
+}
+pub fn flatten(items: Vec<syn::Item>, out: &mut Vec<syn::Item>) {
+    for item in items {
+        match item {
+            syn::Item::Use(_) => {}
+            syn::Item::Mod(m) if m.content.is_none() => {}
+            syn::Item::Mod(m) if is_test_mod(&m) => {
+                if let Some((_, inner)) = m.content {
+                    let kept: Vec<syn::Item> = inner
+                        .into_iter()
+                        .filter(|it| !matches!(it, syn::Item::Use(_)))
+                        .collect();
+                    flatten(kept, out);
+                }
+            }
+            _ => out.push(item),
+        }
+    }
+}
+pub fn scrub_attrs(item: &mut syn::Item) {
+    if let Some(a) = item_attrs_mut(item) {
+        a.retain(|at| !at.path().is_ident("doc") && !at.path().is_ident("allow"));
+    }
+}
+pub fn item_label(item: &syn::Item) -> String {
+    item_ident(item).unwrap_or_else(|| "<unnamed>".to_string())
+}
+pub fn compare_files(a: &str, b: &str, siblings: &[String]) -> Result<(), Box<dyn Error>> {
+    let ia = normalize_for_compare(&fs::read_to_string(a)?, siblings)?;
+    let ib = normalize_for_compare(&fs::read_to_string(b)?, siblings)?;
+    if ia.len() != ib.len() {
+        return Err(format!(
+            "item count differs: {} vs {} ({a} vs {b})",
+            ia.len(),
+            ib.len()
+        )
+        .into());
+    }
+    let mut mismatches = 0;
+    for (x, y) in ia.iter().zip(ib.iter()) {
+        let sx = strip_macro_trailing_commas(quote::ToTokens::to_token_stream(x)).to_string();
+        let sy = strip_macro_trailing_commas(quote::ToTokens::to_token_stream(y)).to_string();
+        if sx != sy {
+            mismatches += 1;
+            println!("MISMATCH: item `{}`", item_label(x));
+            let pos = sx
+                .bytes()
+                .zip(sy.bytes())
+                .position(|(a, b)| a != b)
+                .unwrap_or(sx.len().min(sy.len()));
+            let lo = pos.saturating_sub(40);
+            println!("  a: …{}…", &sx[lo..(pos + 40).min(sx.len())]);
+            println!("  b: …{}…", &sy[lo..(pos + 40).min(sy.len())]);
+        }
+    }
+    if mismatches == 0 {
+        println!("EQUIVALENT: {} items ({a} == {b})", ia.len());
+        Ok(())
+    } else {
+        Err(format!("{mismatches} item(s) differ").into())
+    }
+}
