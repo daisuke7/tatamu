@@ -1,0 +1,38 @@
+[
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "blind",
+  "id": "d5-skip-sentinel",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "States 0 is a sentinel for inert prefilter state and that 1 is subtracted to get the real skip count.",
+  "answer": "The value 0 in the `skips` field is a sentinel indicating the prefilter state is inert (disabled). When reading the actual count via the `skips()` method, the code subtracts 1 because `skips` is stored as 1-indexed (actual_count + 1) to allow 0 to serve as a disabled marker.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131439,
+   "out": 971
+  },
+  "cost": 0.3277536,
+  "secs": 22.24
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "id": "d5-skip-sentinel",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "States 0 is a sentinel for inert state and that 1 is subtracted to get the real skip count.",
+  "answer": "The value 0 is used as a sentinel to mark the prefilter state as inert/inactive. When reading the skip count via the `skips()` method, the code adjusts by subtracting 1 from the stored value, since `skips` is internally stored as 1-indexed to allow 0 to serve as the sentinel.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131566,
+   "out": 820
+  },
+  "cost": 0.32718060000000004,
+  "secs": 17.666
+ }
+]

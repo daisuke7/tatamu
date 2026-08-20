@@ -1,0 +1,218 @@
+[
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d1-overlap-loads",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is missing/empty (an error message about prompt length was returned instead of an actual answer), so it fails to address either rubric point.",
+  "answer": "Prompt is too long · the request is ~204899 tokens (limit 200000) but this conversation is only ~146322 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.0609156,
+  "secs": 8.638
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d2-64byte-loop",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is missing (an error message about prompt length was submitted instead of an actual answer)",
+  "answer": "Prompt is too long · the request is ~204893 tokens (limit 200000) but this conversation is only ~146322 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.060132599999999994,
+  "secs": 8.422
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d3-twoway-inline-variants",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is missing entirely (an error message instead of content), so it fails to satisfy either rubric criterion.",
+  "answer": "Prompt is too long · the request is ~204909 tokens (limit 200000) but this conversation is only ~146337 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.060684600000000005,
+  "secs": 8.236
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d4-reverse-no-prefilter",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is missing entirely (an error message about prompt length was submitted instead of an answer), so it cannot convey the required justification.",
+  "answer": "Prompt is too long · the request is ~204875 tokens (limit 200000) but this conversation is only ~146288 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.0602886,
+  "secs": 8.575
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d5-skip-sentinel",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is missing/empty (a token-limit error message, not an actual answer), so it cannot satisfy the rubric.",
+  "answer": "Prompt is too long · the request is ~204894 tokens (limit 200000) but this conversation is only ~146305 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.060084599999999995,
+  "secs": 8.125
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d6-small-fallback",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is missing/empty (prompt-too-long error), so it cannot be graded as correct.",
+  "answer": "Prompt is too long · the request is ~204895 tokens (limit 200000) but this conversation is only ~146310 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.060216599999999995,
+  "secs": 8.114
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d7-sse2-missing",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "The candidate answer is not an explanation at all—it's an error message stating the prompt exceeded the token limit, so it fails to address the OS-vector-register-support rubric criterion.",
+  "answer": "Prompt is too long · the request is ~204898 tokens (limit 200000) but this conversation is only ~146305 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.0603426,
+  "secs": 8.853
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d8-abstraction-breaker",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "No candidate answer was actually provided (prompt-too-long error), so it cannot satisfy the rubric.",
+  "answer": "Prompt is too long · the request is ~204906 tokens (limit 200000) but this conversation is only ~146321 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.060321599999999996,
+  "secs": 8.04
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c1-arch-sets",
+  "kind": "code",
+  "correct": false,
+  "judgeWhy": "The candidate answer is empty/non-responsive (a prompt-too-long error), so it does not list any of the required instruction sets.",
+  "answer": "Prompt is too long · the request is ~204856 tokens (limit 200000) but this conversation is only ~146279 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.0599376,
+  "secs": 7.905
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c2-vector-trait",
+  "kind": "code",
+  "correct": false,
+  "judgeWhy": "The candidate answer is not a substantive response but an error message stating the prompt was too long, so it does not name the Vector trait.",
+  "answer": "Prompt is too long · the request is ~204873 tokens (limit 200000) but this conversation is only ~146299 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.0595116,
+  "secs": 8.822
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c3-ranker-default",
+  "kind": "code",
+  "correct": false,
+  "judgeWhy": "The candidate answer is an error message, not a substantive response naming DefaultFrequencyRank or describing its rank method.",
+  "answer": "Prompt is too long · the request is ~204887 tokens (limit 200000) but this conversation is only ~146298 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.059868599999999994,
+  "secs": 8.006
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c4-swar-width",
+  "kind": "code",
+  "correct": false,
+  "judgeWhy": "The candidate answer is empty (a prompt-too-long error message), so it does not state usize/machine word per iteration as required.",
+  "answer": "Prompt is too long · the request is ~204888 tokens (limit 200000) but this conversation is only ~146297 tokens — the rest is system prompt, tool definitions, and attachment content. A single-exchange conversation cannot be compacted; reduce attached files/tools or start with less context.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "cost": 0.059877599999999996,
+  "secs": 9.437
+ }
+]
