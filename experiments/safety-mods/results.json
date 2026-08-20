@@ -1,0 +1,365 @@
+[
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "blind",
+  "id": "t1-once-u32",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41956,
+   "out": 8657
+  },
+  "cost": 0.127187,
+  "secs": 73.508,
+  "feedback": null,
+  "regraded": true
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "blind",
+  "id": "t2-is-running",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41879,
+   "out": 3768
+  },
+  "cost": 0.10258800000000001,
+  "secs": 38.897,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "blind",
+  "id": "t3-oncebox-init-value",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41914,
+   "out": 5142
+  },
+  "cost": 0.10952799999999999,
+  "secs": 49.241,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "lens",
+  "id": "t1-once-u32",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [
+   "notes race",
+   "notes OnceNonZeroUsize",
+   "notes get_or_try_init",
+   "owners "
+  ],
+  "turns": 8,
+  "tokens": {
+   "in": 359163,
+   "out": 6471
+  },
+  "cost": 0.1591013,
+  "secs": 68.07,
+  "feedback": null,
+  "regraded": true
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "lens",
+  "id": "t2-is-running",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 42032,
+   "out": 7650
+  },
+  "cost": 0.122304,
+  "secs": 73.688,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "lens",
+  "id": "t3-oncebox-init-value",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [
+   "notes race",
+   "notes OnceBox"
+  ],
+  "turns": 6,
+  "tokens": {
+   "in": 267952,
+   "out": 6759
+  },
+  "cost": 0.1477103,
+  "secs": 68.81,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "t1-once-u32",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56386,
+   "out": 8152
+  },
+  "cost": 0.153522,
+  "secs": 47.966,
+  "feedback": null,
+  "regraded": true
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "t2-is-running",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56309,
+   "out": 5094
+  },
+  "cost": 0.138078,
+  "secs": 54.713,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "t3-oncebox-init-value",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56344,
+   "out": 8542
+  },
+  "cost": 0.155388,
+  "secs": 79.145,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "blind",
+  "id": "t1-once-u32",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 2,
+  "tokens": {
+   "in": 115963,
+   "out": 7737
+  },
+  "cost": 0.48812939999999994,
+  "secs": 60.061,
+  "feedback": null,
+  "regraded": true
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "blind",
+  "id": "t2-is-running",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 2,
+  "tokens": {
+   "in": 114064,
+   "out": 4663
+  },
+  "cost": 0.43120679999999995,
+  "secs": 37.155,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "blind",
+  "id": "t3-oncebox-init-value",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 2,
+  "tokens": {
+   "in": 113988,
+   "out": 4991
+  },
+  "cost": 0.43542,
+  "secs": 39.247,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "lens",
+  "id": "t1-once-u32",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [
+   "notes race",
+   "notes OnceNonZeroUsize",
+   "notes OnceNonZeroUsize::new",
+   "notes OnceNonZeroUsize::get",
+   "notes get_unchecked",
+   "notes OnceNonZeroUsize::set",
+   "notes OnceNonZeroUsize::get_or_init",
+   "notes OnceNonZeroUsize::get_or_try_init",
+   "notes OnceBool"
+  ],
+  "turns": 6,
+  "tokens": {
+   "in": 376438,
+   "out": 11795
+  },
+  "cost": 0.7000893,
+  "secs": 89.11,
+  "feedback": null,
+  "regraded": true
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "lens",
+  "id": "t2-is-running",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [
+   "notes imp_std",
+   "owners ",
+   "notes OnceCell::is_initialized",
+   "notes OnceCell::initialize",
+   "notes initialize_or_wait",
+   "notes imp_std.rs:123",
+   "notes RUNNING",
+   "notes STATE_MASK",
+   "notes Guard"
+  ],
+  "turns": 6,
+  "tokens": {
+   "in": 364409,
+   "out": 5214
+  },
+  "cost": 0.5512593000000001,
+  "secs": 48.649,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "lens",
+  "id": "t3-oncebox-init-value",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [
+   "notes OnceBox",
+   "notes OnceBox::set",
+   "notes OnceBox::get_or_init",
+   "notes race"
+  ],
+  "turns": 4,
+  "tokens": {
+   "in": 232488,
+   "out": 5753
+  },
+  "cost": 0.49203240000000004,
+  "secs": 47.983,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "t1-once-u32",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 3,
+  "tokens": {
+   "in": 231029,
+   "out": 10165
+  },
+  "cost": 0.6656304,
+  "secs": 76.792,
+  "feedback": null,
+  "regraded": true
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "t2-is-running",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75494,
+   "out": 5619
+  },
+  "cost": 0.537243,
+  "secs": 44.001,
+  "feedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "t3-oncebox-init-value",
+  "ok": true,
+  "gate": null,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75538,
+   "out": 7253
+  },
+  "cost": 0.5620170000000001,
+  "secs": 50.998,
+  "feedback": null
+ }
+]
