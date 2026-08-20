@@ -1,0 +1,260 @@
+[
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d1-overlap-loads",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "Candidate captures both the vector-load-avoids-scalar-loop purpose and the already-searched/no-match justification for the overlap.",
+  "answer": "Overlapping loads at the haystack edges ensure complete coverage without complex partial-load masking logic: the initial unaligned load catches any matches before alignment, and the final load backtracks to cover the tail. The overlap is safe because if a match exists in the overlapping region, it will be found by whichever load processes it, and we only care about finding the match, not which specific load detected it.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131592,
+   "out": 1621
+  },
+  "cost": 0.32008289999999995,
+  "secs": 26.436
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d2-64byte-loop",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "Correctly states the four comparisons are OR-ed into one vector for a single movemask test, matching the rubric.",
+  "answer": "It uses a short-circuit check by ORing all four comparison results together and checking the combined result with a single movemask operation; only if a match is possible does it compute individual movemasks for each vector to locate the exact position, avoiding unnecessary per-vector movemask calls when no match exists.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131586,
+   "out": 1568
+  },
+  "cost": 0.2853062,
+  "secs": 26.142
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d3-twoway-inline-variants",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "Correctly identifies avoiding prefilter overhead when disabled and locates the decision in the parent meta searcher.",
+  "answer": "To avoid the runtime overhead of checking whether a prefilter is enabled when it's disabled, separate explicitly-inlined search implementations are generated for each case, allowing the compiler to optimize away prefilter code when unused. The decision between them is made in the parent meta searcher (the `Searcher` type in memmem/searcher.rs), which stores a function pointer to the appropriate implementation and constructs either a prefilter-enabled or prefilter-disabled searcher variant.",
+  "notesCalls": [
+   "notes find_small_imp",
+   "notes twoway",
+   "notes Finder",
+   "notes small",
+   "notes Shift",
+   "owners ",
+   "notes find_with_prefilter"
+  ],
+  "turns": 8,
+  "tokens": {
+   "in": 1092611,
+   "out": 4266
+  },
+  "cost": 0.4154739,
+  "secs": 61.456
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d4-reverse-no-prefilter",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "Answer conveys both required elements: substantial extra code needed and unclear/unproven benefit, plus the bonus file-an-issue mention.",
+  "answer": "Prefilters are not used for reverse searches because it would require a lot of additional code and it's unclear whether the performance benefit would be worth it, though the code invites compelling use cases to be filed as issues.",
+  "notesCalls": [
+   "notes twoway",
+   "notes SearcherRev",
+   "notes searcher",
+   "owners ",
+   "notes Finder::find_with_prefilter",
+   "notes FinderRev::rfind",
+   "notes rfind"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 267504,
+   "out": 1578
+  },
+  "cost": 0.30719399999999997,
+  "secs": 29.128
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d5-skip-sentinel",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "States 0 means inert state and that 1 is subtracted from the stored value to get the actual skip count.",
+  "answer": "A value of 0 for the `skips` field indicates an \"inert\" prefilter state (checked by `is_inert()`). When reading the skip count via the `skips()` method, the code adjusts by subtracting 1 from the stored value, making the actual skip count one less than what is stored (an off-by-one encoding where the stored value starts at 1 to represent 0 actual skips).",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131587,
+   "out": 879
+  },
+  "cost": 0.2817852,
+  "secs": 18.389
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d6-small-fallback",
+  "kind": "doc",
+  "correct": false,
+  "judgeWhy": "It attributes the shortcut to Rabin-Karp startup cost rather than the haystack being too small for vector routines to engage.",
+  "answer": "Rabin-Karp can be constructed very quickly with minimal memory overhead, making it especially useful for small haystacks where it finishes its search before more complex algorithms (like vector-based searchers) even start up.",
+  "notesCalls": [
+   "notes searcher",
+   "notes searcher_kind_sse2",
+   "notes rabinkarp",
+   "notes is_fast"
+  ],
+  "turns": 5,
+  "tokens": {
+   "in": 663402,
+   "out": 1388
+  },
+  "cost": 0.3872226,
+  "secs": 29.822
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d7-sse2-missing",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "Correctly attributes the possibility to the OS choosing not to support vector registers rather than the CPU lacking SSE2.",
+  "answer": "The OS can choose not to support vector registers, even though SSE2 is part of the x86_64 baseline ISA.",
+  "notesCalls": [
+   "notes searcher",
+   "notes Searcher",
+   "notes Searcher::new"
+  ],
+  "turns": 4,
+  "tokens": {
+   "in": 537239,
+   "out": 3355
+  },
+  "cost": 0.3880233,
+  "secs": 51.586
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "d8-abstraction-breaker",
+  "kind": "doc",
+  "correct": true,
+  "judgeWhy": "Candidate captures both the lack of public API support (implied by needing to expose infrastructure) and correctly gives the reason: author avoided public API design work without a concrete use case.",
+  "answer": "The crate-internal path exists because the author did not want to spend time thinking about how to expose the prefilter infrastructure in the public API, and exporting it would require careful API design rather than simply exposing the types.",
+  "notesCalls": [
+   "notes Pre",
+   "notes memmem",
+   "notes twoway",
+   "notes find_with_prefilter"
+  ],
+  "turns": 5,
+  "tokens": {
+   "in": 664161,
+   "out": 1455
+  },
+  "cost": 0.34266289999999994,
+  "secs": 30.086
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "c1-arch-sets",
+  "kind": "code",
+  "correct": true,
+  "judgeWhy": "Lists all four required instruction sets: NEON, simd128 (wasm), SSE2, and AVX2.",
+  "answer": "The SIMD instruction sets with dedicated implementations are NEON (ARM), SIMD128 (WebAssembly), SSE2 (x86-64), and AVX2 (x86-64).",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131549,
+   "out": 647
+  },
+  "cost": 0.28014120000000003,
+  "secs": 17.033
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "c2-vector-trait",
+  "kind": "code",
+  "correct": true,
+  "judgeWhy": "The answer explicitly names the Vector trait as the abstraction.",
+  "answer": "The Vector trait, which abstracts over different instruction set implementations through generic methods like splat, load_aligned, load_unaligned, and cmpeq, with associated CmpEq and MoveMask traits.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131566,
+   "out": 558
+  },
+  "cost": 0.2791272,
+  "secs": 16.677
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "c3-ranker-default",
+  "kind": "code",
+  "correct": true,
+  "judgeWhy": "Names DefaultFrequencyRank and correctly describes rank mapping a byte to a u8 frequency score.",
+  "answer": "DefaultFrequencyRank is the default ranker type. Its rank method maps each byte value (0–255) to a heuristic frequency rank from a 256-element lookup table (RANK array), where lower scores indicate rarer bytes preferred for pair selection.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131580,
+   "out": 1247
+  },
+  "cost": 0.2822282,
+  "secs": 23.964
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "lens",
+  "variant": "forced",
+  "id": "c4-swar-width",
+  "kind": "code",
+  "correct": true,
+  "judgeWhy": "Matches rubric: identifies two usize (word) reads per iteration, consistent with SWAR-style loop.",
+  "answer": "The core loop reads two `usize` values per iteration.",
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 131581,
+   "out": 1679
+  },
+  "cost": 0.2857852,
+  "secs": 27.769
+ }
+]

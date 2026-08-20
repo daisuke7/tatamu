@@ -61,14 +61,24 @@ function rsFiles(dir, prefix = "") {
 }
 const FILES = rsFiles(SRC);
 
+// --variant tweaks the lens instructions (docs/40 finding #3 follow-up):
+//   plain  (default): "use only if you actually need it"
+//   guided : nudge — rationale/why questions should fetch notes first
+//   forced : must run ./notes at least once before answering
+const VARIANT = argOf("--variant", "plain");
 function contextBlock(cond) {
   const base = cond === "full" ? SRC : STRIPPED;
+  const lensTail = {
+    plain: `Use these only if you actually need the externalized documentation.`,
+    guided: `IMPORTANT: the code is correct but its "why" lives in the sidecars. If a question asks about rationale, design decisions, trade-offs, or anything a comment would explain, run \`./notes\` on the relevant item(s) FIRST and base your answer on what it returns. Only skip fetching when the answer is plainly visible in the code itself.`,
+    forced: `You MUST run \`./notes\` at least once on the item(s) the question concerns before answering, and base your answer on what it returns.`,
+  }[VARIANT];
   const intro =
     cond === "lens"
       ? `The codebase below is the \`memchr\` Rust crate with all comments and docs EXTERNALIZED into sidecar ledgers. The code is byte-identical to the original except that comments and docs were moved out. You can retrieve them on demand with shell commands:
 - \`./owners\` — list every item with its file and line range
 - \`./notes <name>\` — print the docs and inline comments for one item (suffix match, e.g. \`./notes find_raw\`). Use a file stem for module-level docs (e.g. \`./notes searcher\`).
-Use these only if you actually need the externalized documentation.`
+${lensTail}`
       : `The codebase below is the \`memchr\` Rust crate.`;
   const body = FILES.map((f) => `## src/${f}\n\`\`\`rust\n${readFileSync(join(base, f), "utf8")}\`\`\``).join("\n\n");
   return `${intro}\n\n# Codebase\n\n${body}`;
@@ -177,7 +187,7 @@ for (const model of MODELS) {
       const answer = parseAnswer(res.text);
       const j = judge(q, answer);
       const rec = {
-        type: "q", model: short, cond, id: q.id, kind: q.kind,
+        type: "q", model: short, cond, variant: VARIANT, id: q.id, kind: q.kind,
         correct: j.correct, judgeWhy: j.why, answer: answer.slice(0, 600),
         notesCalls: readCalls(dir), turns: res.turns,
         tokens: res.tokens, cost: res.cost + j.cost, secs: (Date.now() - t0) / 1000,
