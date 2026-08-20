@@ -1,0 +1,70 @@
+[
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56275,
+   "out": 6060
+  },
+  "cost": 0.0359365,
+  "secs": 56.487,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56275,
+   "out": 8456
+  },
+  "cost": 0.0479165,
+  "secs": 82.563,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 5,
+  "tokens": {
+   "in": 153767,
+   "out": 9313
+  },
+  "cost": 0.20179020000000003,
+  "secs": 68.138,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75489,
+   "out": 7551
+  },
+  "cost": 0.1359171,
+  "secs": 55.623,
+  "lastFeedback": null
+ }
+]

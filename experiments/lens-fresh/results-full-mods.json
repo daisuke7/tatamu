@@ -1,0 +1,70 @@
+[
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 3,
+  "tokens": {
+   "in": 176705,
+   "out": 18641
+  },
+  "cost": 0.3089756,
+  "secs": 174.084,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/haiku-full-m1-is-initialized-r2/crate/src/race.rs:350:9\n    |\n264 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n350 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 3,
+  "tokens": {
+   "in": 176421,
+   "out": 23439
+  },
+  "cost": 0.3323976,
+  "secs": 214.767,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/haiku-full-m2-oncebox-into-inner-r2/crate/src/race.rs:332:9\n    |\n252 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n332 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 4,
+  "tokens": {
+   "in": 312895,
+   "out": 22203
+  },
+  "cost": 1.4067593999999999,
+  "secs": 160.848,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/sonnet-full-m1-is-initialized-r2/crate/src/race.rs:349:9\n    |\n264 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n349 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 8,
+  "tokens": {
+   "in": 666476,
+   "out": 31785
+  },
+  "cost": 1.7489880000000002,
+  "secs": 237.011,
+  "lastFeedback": "cargo build failed:\nerror[E0425]: cannot find type `OnceBox` in this scope\n --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/sonnet-full-m2-oncebox-into-inner-r2/crate/src/race.rs:1:9\n  |\n1 | impl<T> OnceBox<T> {\n  |         ^^^^^^^ not found in this scope\n\nerror[E0433]: cannot find module or crate `mem` in this scope\n  --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/sonnet-full-m2-oncebox-into-inner-r2/crate/src/race.rs:11:9\n   |\n11 |         mem::forget"
+ }
+]

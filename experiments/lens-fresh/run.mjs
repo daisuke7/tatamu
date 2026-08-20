@@ -100,7 +100,10 @@ function agentDir(cond) {
 function llm(model, prompt, cond, cwd) {
   const cliArgs = ["-p", prompt, "--model", model, "--output-format", "json", "--max-turns", "12"];
   if (cond === "stripped") cliArgs.push("--allowedTools", "Bash(./notes:*),Bash(./owners:*)");
-  const r = spawnSync("claude", cliArgs, { encoding: "utf8", timeout: 900000, maxBuffer: 32 * 1024 * 1024, cwd });
+  const r = spawnSync("claude", cliArgs, {
+    encoding: "utf8", timeout: 900000, maxBuffer: 32 * 1024 * 1024, cwd,
+    env: { ...process.env, CLAUDE_CODE_MAX_OUTPUT_TOKENS: "32000" },
+  });
   if (r.status !== 0 && !r.stdout) throw new Error(`claude failed: ${r.stderr?.slice(0, 500)}`);
   const d = JSON.parse(r.stdout);
   const u = d.usage ?? {};
@@ -134,8 +137,11 @@ function parseAnswer(text) {
 }
 
 function extractCode(text) {
-  const blocks = [...text.matchAll(/```[a-z]*\n([\s\S]*?)```/g)];
-  if (blocks.length) return blocks[blocks.length - 1][1];
+  // Fence-aware extraction: doc comments in the emitted file contain their
+  // own ``` fences (`/// \`\`\``), so a block only ends at a ``` that starts
+  // a line. Take the LARGEST block (answers sometimes carry extra fragments).
+  const blocks = [...text.matchAll(/^```[a-z]*\n([\s\S]*?)^``` *$/gm)].map((m) => m[1]);
+  if (blocks.length) return blocks.reduce((a, b) => (b.length > a.length ? b : a));
   return text.trim();
 }
 

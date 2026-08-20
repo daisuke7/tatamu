@@ -1,0 +1,1032 @@
+[
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d1-orderings",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes race"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 84373,
+   "out": 254
+  },
+  "cost": 0.0106336,
+  "secs": 8.222
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d1-orderings",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56248,
+   "out": 392
+  },
+  "cost": 0.114446,
+  "secs": 8.877
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d2-race-behavior",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41959,
+   "out": 2263
+  },
+  "cost": 0.095223,
+  "secs": 26.162
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d2-race-behavior",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56259,
+   "out": 790
+  },
+  "cost": 0.116458,
+  "secs": 11.742
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d3-acquire-failure",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 42011,
+   "out": 1353
+  },
+  "cost": 0.090777,
+  "secs": 19.275
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d3-acquire-failure",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56311,
+   "out": 501
+  },
+  "cost": 0.115117,
+  "secs": 9.35
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d4-imp-std-origin",
+  "kind": "doc",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41972,
+   "out": 969
+  },
+  "cost": 0.088779,
+  "secs": 12.757
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d4-imp-std-origin",
+  "kind": "doc",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56272,
+   "out": 226
+  },
+  "cost": 0.113664,
+  "secs": 6.547
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d5-waiter-states",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41955,
+   "out": 1346
+  },
+  "cost": 0.09063,
+  "secs": 14.285
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d5-waiter-states",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56255,
+   "out": 244
+  },
+  "cost": 0.11372,
+  "secs": 6.573
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d6-send-bound",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes Sync for OnceCell",
+   "notes imp_std",
+   "notes OnceCell"
+  ],
+  "turns": 4,
+  "tokens": {
+   "in": 173927,
+   "out": 1532
+  },
+  "cost": 0.1108151,
+  "secs": 23.977
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d6-send-bound",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56313,
+   "out": 349
+  },
+  "cost": 0.114361,
+  "secs": 7.03
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d7-const-lazy",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes Lazy",
+   "notes Lazy",
+   "notes lib"
+  ],
+  "turns": 4,
+  "tokens": {
+   "in": 178098,
+   "out": 1589
+  },
+  "cost": 0.11757439999999998,
+  "secs": 25.304
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d7-const-lazy",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56249,
+   "out": 452
+  },
+  "cost": 0.11474799999999999,
+  "secs": 9.582
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d8-msrv-policy",
+  "kind": "doc",
+  "got": "C",
+  "want": "C",
+  "correct": true,
+  "notesCalls": [
+   "notes lib"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 88433,
+   "out": 956
+  },
+  "cost": 0.1018736,
+  "secs": 17.304
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "d8-msrv-policy",
+  "kind": "doc",
+  "got": "C",
+  "want": "C",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56286,
+   "out": 290
+  },
+  "cost": 0.114012,
+  "secs": 7.338
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "c1-state-values",
+  "kind": "code",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41990,
+   "out": 234
+  },
+  "cost": 0.08514000000000001,
+  "secs": 5.961
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c1-state-values",
+  "kind": "code",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56290,
+   "out": 188
+  },
+  "cost": 0.11351,
+  "secs": 5.959
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "c2-oncebool-repr",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41949,
+   "out": 219
+  },
+  "cost": 0.08498299999999999,
+  "secs": 5.894
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c2-oncebool-repr",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56249,
+   "out": 449
+  },
+  "cost": 0.114733,
+  "secs": 8.206
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "c3-isinit-ordering",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41937,
+   "out": 143
+  },
+  "cost": 0.084579,
+  "secs": 5.585
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c3-isinit-ordering",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56237,
+   "out": 244
+  },
+  "cost": 0.113684,
+  "secs": 7.257
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "c4-oncebox-set-err",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41957,
+   "out": 419
+  },
+  "cost": 0.08599899999999999,
+  "secs": 9.153
+ },
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "full",
+  "id": "c4-oncebox-set-err",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56257,
+   "out": 326
+  },
+  "cost": 0.114134,
+  "secs": 7.08
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "m1-is-initialized",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41975,
+   "out": 5574
+  },
+  "cost": 0.11181,
+  "secs": 52.139,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "m2-oncebox-into-inner",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 41975,
+   "out": 6296
+  },
+  "cost": 0.11542000000000001,
+  "secs": 59.215,
+  "lastFeedback": null
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d1-orderings",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes race"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 114101,
+   "out": 73
+  },
+  "cost": 0.3618948,
+  "secs": 7.054
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d1-orderings",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75445,
+   "out": 11
+  },
+  "cost": 0.452829,
+  "secs": 4.935
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d2-race-behavior",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes race"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 114123,
+   "out": 117
+  },
+  "cost": 0.36258989999999997,
+  "secs": 7.61
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d2-race-behavior",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75462,
+   "out": 11
+  },
+  "cost": 0.452931,
+  "secs": 4.986
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d3-acquire-failure",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56900,
+   "out": 11
+  },
+  "cost": 0.34155899999999995,
+  "secs": 4.774
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d3-acquire-failure",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75537,
+   "out": 11
+  },
+  "cost": 0.453381,
+  "secs": 4.558
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d4-imp-std-origin",
+  "kind": "doc",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56842,
+   "out": 11
+  },
+  "cost": 0.341211,
+  "secs": 4.805
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d4-imp-std-origin",
+  "kind": "doc",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75479,
+   "out": 11
+  },
+  "cost": 0.45303299999999996,
+  "secs": 5.026
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d5-waiter-states",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56829,
+   "out": 155
+  },
+  "cost": 0.34329299999999996,
+  "secs": 6.184
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d5-waiter-states",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75466,
+   "out": 11
+  },
+  "cost": 0.452955,
+  "secs": 5.039
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d6-send-bound",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes OnceCell",
+   "notes Sync"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 115845,
+   "out": 159
+  },
+  "cost": 0.37317570000000005,
+  "secs": 8.324
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d6-send-bound",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75528,
+   "out": 11
+  },
+  "cost": 0.453327,
+  "secs": 5.521
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d7-const-lazy",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes lib",
+   "notes lib",
+   "notes lib"
+  ],
+  "turns": 4,
+  "tokens": {
+   "in": 233550,
+   "out": 361
+  },
+  "cost": 0.41773530000000003,
+  "secs": 13.028
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d7-const-lazy",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75445,
+   "out": 11
+  },
+  "cost": 0.452829,
+  "secs": 5.395
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "d8-msrv-policy",
+  "kind": "doc",
+  "got": "C",
+  "want": "C",
+  "correct": true,
+  "notesCalls": [
+   "notes lib"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 118686,
+   "out": 85
+  },
+  "cost": 0.3893169,
+  "secs": 6.888
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "d8-msrv-policy",
+  "kind": "doc",
+  "got": "C",
+  "want": "C",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75492,
+   "out": 11
+  },
+  "cost": 0.453111,
+  "secs": 5.008
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "c1-state-values",
+  "kind": "code",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56852,
+   "out": 11
+  },
+  "cost": 0.34127099999999994,
+  "secs": 4.751
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "c1-state-values",
+  "kind": "code",
+  "got": "A",
+  "want": "A",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75489,
+   "out": 11
+  },
+  "cost": 0.45309299999999997,
+  "secs": 5.506
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "c2-oncebool-repr",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56806,
+   "out": 11
+  },
+  "cost": 0.340995,
+  "secs": 4.784
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "c2-oncebool-repr",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75443,
+   "out": 11
+  },
+  "cost": 0.45281699999999997,
+  "secs": 5.196
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "c3-isinit-ordering",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56798,
+   "out": 11
+  },
+  "cost": 0.34094699999999994,
+  "secs": 4.901
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "c3-isinit-ordering",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75435,
+   "out": 11
+  },
+  "cost": 0.452769,
+  "secs": 5.726
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "c4-oncebox-set-err",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56810,
+   "out": 11
+  },
+  "cost": 0.34101899999999996,
+  "secs": 5.231
+ },
+ {
+  "type": "q",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "c4-oncebox-set-err",
+  "kind": "code",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75447,
+   "out": 11
+  },
+  "cost": 0.452841,
+  "secs": 5.238
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "m1-is-initialized",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [
+   "notes get",
+   "owners ",
+   "notes is_initialized",
+   "notes race::OnceNonZeroUsize::get"
+  ],
+  "turns": 4,
+  "tokens": {
+   "in": 240212,
+   "out": 5925
+  },
+  "cost": 0.5126729999999999,
+  "secs": 50.037,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "stripped",
+  "id": "m2-oncebox-into-inner",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 2,
+  "tokens": {
+   "in": 114937,
+   "out": 5838
+  },
+  "cost": 0.45313499999999995,
+  "secs": 45.755,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56275,
+   "out": 6060
+  },
+  "cost": 0.0359365,
+  "secs": 56.487,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 56275,
+   "out": 8456
+  },
+  "cost": 0.0479165,
+  "secs": 82.563,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 5,
+  "tokens": {
+   "in": 153767,
+   "out": 9313
+  },
+  "cost": 0.20179020000000003,
+  "secs": 68.138,
+  "lastFeedback": null
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": true,
+  "rounds": 1,
+  "notesCalls": [],
+  "turns": 1,
+  "tokens": {
+   "in": 75489,
+   "out": 7551
+  },
+  "cost": 0.1359171,
+  "secs": 55.623,
+  "lastFeedback": null
+ }
+]

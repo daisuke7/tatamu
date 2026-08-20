@@ -1,0 +1,70 @@
+[
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 3,
+  "tokens": {
+   "in": 176705,
+   "out": 18153
+  },
+  "cost": 0.2455019,
+  "secs": 169.115,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/haiku-full-m1-is-initialized-r2/crate/src/race.rs:350:9\n    |\n264 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n350 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ },
+ {
+  "type": "mod",
+  "model": "haiku",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 3,
+  "tokens": {
+   "in": 176421,
+   "out": 27598
+  },
+  "cost": 0.15565910000000002,
+  "secs": 233.755,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/haiku-full-m2-oncebox-into-inner-r2/crate/src/race.rs:332:9\n    |\n252 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n332 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m1-is-initialized",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 7,
+  "tokens": {
+   "in": 314871,
+   "out": 23731
+  },
+  "cost": 1.011288,
+  "secs": 168.396,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/sonnet-full-m1-is-initialized-r2/crate/src/race.rs:355:9\n    |\n268 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n355 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ },
+ {
+  "type": "mod",
+  "model": "sonnet",
+  "cond": "full",
+  "id": "m2-oncebox-into-inner",
+  "ok": false,
+  "rounds": 3,
+  "notesCalls": [],
+  "turns": 7,
+  "tokens": {
+   "in": 552201,
+   "out": 24456
+  },
+  "cost": 0.5504361,
+  "secs": 187.603,
+  "lastFeedback": "cargo build failed:\nerror: this file contains an unclosed delimiter\n   --> /var/folders/px/ft4n9nzs1f599h_m6k2r9nlc0000gn/T/lens-fresh/mods/sonnet-full-m2-oncebox-into-inner-r2/crate/src/race.rs:332:9\n    |\n252 | impl<'a, T> OnceRef<'a, T> {\n    |                            - unclosed delimiter\n...\n332 |     /// \n    |         ^\n\nerror: could not compile `once_cell` (lib) due to 1 previous error\n"
+ }
+]

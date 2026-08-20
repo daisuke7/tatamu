@@ -1,0 +1,22 @@
+[
+ {
+  "type": "q",
+  "model": "haiku",
+  "cond": "stripped",
+  "id": "d1-orderings",
+  "kind": "doc",
+  "got": "B",
+  "want": "B",
+  "correct": true,
+  "notesCalls": [
+   "notes race"
+  ],
+  "turns": 2,
+  "tokens": {
+   "in": 84416,
+   "out": 297
+  },
+  "cost": 0.0906168,
+  "secs": 9.409
+ }
+]
