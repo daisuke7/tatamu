@@ -100,14 +100,33 @@ fn item_spans(src: &str) -> Vec<ItemSpan> {
     spans
 }
 
-/// Sidecar sections for a source file, if its `.doc.md` exists.
+/// Sidecar sections for a source file, if its `.doc.md` exists. The module
+/// docs (`//!` intro) are exposed as a pseudo-section named after the file
+/// stem, so `notes race` can fetch them like any item.
 fn sidecar_sections(file: &str) -> Vec<crate::strip::Section> {
     let sc_path = file.strip_suffix(".rs").map(|b| format!("{b}.doc.md"));
     let Some(sc_path) = sc_path else {
         return Vec::new();
     };
     match fs::read_to_string(&sc_path) {
-        Ok(s) => parse_strip_sidecar(&s).2,
+        Ok(s) => {
+            let (intro, _, mut sections) = parse_strip_sidecar(&s);
+            if !intro.is_empty() {
+                let stem = std::path::Path::new(file)
+                    .file_stem()
+                    .map(|s| s.to_string_lossy().to_string())
+                    .unwrap_or_default();
+                sections.insert(
+                    0,
+                    crate::strip::Section {
+                        owner: stem,
+                        docs: intro,
+                        notes: Vec::new(),
+                    },
+                );
+            }
+            sections
+        }
         Err(_) => Vec::new(),
     }
 }
