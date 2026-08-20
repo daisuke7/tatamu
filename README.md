@@ -51,7 +51,7 @@ node transpiler/tatamuc.mjs --project src out    # cargo project + FFI bindings
 
 ## Current stage & roadmap
 
-Staged plan ([docs/00](docs/00-concept.md)): dialect → own semantics → own compiler → ecosystem.
+Staged plan ([docs/00](docs/00-concept.md)): dialect → own semantics → own compiler → ecosystem. **The full arc from the Stage 2 gate defeat to the comment-externalization pivot and its validation (docs/34–43) is summarized in [docs/44](docs/44-pivot-summary.md).**
 
 - **Stage 1 (Rust token-saving dialect): gate cleared.** Token reduction ≥30% measured (27–45%, −42.2% vs handwritten Rust); LLM compile success 24/24 = raw Rust baseline
 - **Stage 2 (AI-oriented features): implemented; gate measured, not met.** Structured diagnostics, project generation, out-of-band docs/comment ledger (AST-path anchors), C/JS/TS/Dart FFI, wasm/mobile targets are all built and verified. The gate was measured on two axes and not met on either. Fix-loop axis ([docs/34](docs/34-stage2-gate.md)): frontier models tie raw Rust exactly; no improvement. Large-context axis ([docs/35](docs/35-stage2-context.md)): with a whole codebase in context, comprehension/modification accuracy is an exact tie (Sonnet 24/24 vs 24/24, all modifications first-shot in both conditions) — and the dialect tax observed in docs/34 disappears when the codebase itself serves as few-shot context. Measured with Claude's own tokenizer, the dialect's own compression is a robust **−11%** (two independent materials); the bulk of the headline savings (−56%) comes from comment/doc externalization, which does not require the dialect
@@ -139,6 +139,8 @@ node transpiler/tatamuc.mjs --project src out    # cargo プロジェクト + FF
 ```
 
 ## 現在の Stage と今後
+
+**Stage 2 ゲート敗北からコメント外部化への転回と、その検証まで(docs/34〜43)の総括は [docs/44](docs/44-pivot-summary.md)。**
 
 段階計画([docs/00](docs/00-concept.md)): 方言 → 独自意味論 → 独自処理系 → エコシステム。
 
