@@ -7,25 +7,49 @@ use std::error::Error;
 use std::fs;
 use std::sync::OnceLock;
 
+/// A standalone comment waiting for the code line it sits above.
+pub(crate) struct AboveNote {
+    pub text: String,
+    /// a blank line separated the comment from its anchor
+    pub detached: bool,
+    /// indent column of the comment's own line
+    pub indent: usize,
+    /// captured before any doc lines of the same anchor
+    pub pre_docs: bool,
+    /// captured before the module intro and any code (file preamble)
+    pub pre_intro: bool,
+    /// a kept-verbatim comment block was emitted after this note, so later
+    /// blank lines no longer describe its detachment
+    pub sealed: bool,
+}
 pub(crate) struct SLine {
     pub code: String,
-    pub above: Vec<(String, bool)>,
-    pub tail: Option<String>,
+    pub above: Vec<AboveNote>,
+    /// (text, spaces between code end and `//` — alignment padding)
+    pub tail: Option<(String, usize)>,
     pub docs: Vec<String>,
 }
 struct Stripped {
     pub text: String,
     pub slines: Vec<SLine>,
     pub intro: Vec<String>,
+    /// true when the module docs came from a clean standalone `/*! ... */`
+    /// block, so restore can reproduce that form byte-exactly
+    pub intro_block: bool,
 }
 pub(crate) struct JoinedRaw {
     pub text: String,
     pub lo: usize,
     pub hi: usize,
 }
-fn cut_line_comment(line: &str, keep_safety: bool) -> (String, Option<String>, Option<String>) {
+/// Returns (code, comment, safety-comment, gap) where gap counts the spaces
+/// between the end of the code and the `//` (alignment padding).
+fn cut_line_comment(
+    line: &str,
+    keep_safety: bool,
+) -> (String, Option<String>, Option<String>, usize) {
     match find_line_comment(line) {
-        None => (line.to_string(), None, None),
+        None => (line.to_string(), None, None, 0),
         Some(sl) => {
             let raw = line[sl + 2..].trim_end();
             let text = match raw.strip_prefix(' ') {
@@ -33,19 +57,24 @@ fn cut_line_comment(line: &str, keep_safety: bool) -> (String, Option<String>, O
                 _ => raw.to_string(),
             };
             let before = line[..sl].to_string();
+            let gap = sl - before.trim_end().len();
             if keep_safety && text.starts_with("SAFETY") {
-                return (before.trim_end().to_string(), None, Some(text));
+                return (before.trim_end().to_string(), None, Some(text), gap);
             }
-            (before.trim_end().to_string(), Some(text), None)
+            (before.trim_end().to_string(), Some(text), None, gap)
         }
     }
+}
+fn indent_col(l: &str) -> usize {
+    l.len() - l.trim_start().len()
 }
 fn strip_source(src: &str) -> Stripped {
     let mut out: Vec<String> = Vec::new();
     let mut slines: Vec<SLine> = Vec::new();
-    let mut pending_above: Vec<(String, bool)> = Vec::new();
+    let mut pending_above: Vec<AboveNote> = Vec::new();
     let mut pending_docs: Vec<String> = Vec::new();
     let mut intro: Vec<String> = Vec::new();
+    let mut intro_block = false;
     let mut in_block = false;
     let mut keep_block = false;
     let mut str_open = false;
@@ -67,7 +96,7 @@ fn strip_source(src: &str) -> Stripped {
         }
         if mac_depth > 0 {
             out.push(line.trim_end().to_string());
-            let (cv, _, _) = cut_line_comment(&line, false);
+            let (cv, _, _, _) = cut_line_comment(&line, false);
             let bare = strip_lits(&cv);
             mac_depth +=
                 count_of(&bare, &['{', '(', '[']) as i64 - count_of(&bare, &['}', ')', ']']) as i64;
@@ -94,28 +123,44 @@ fn strip_source(src: &str) -> Stripped {
             }
             match line.find("*/") {
                 Some(e) => {
-                    let t = line[..e].trim().to_string();
-                    push_block_text(
-                        t,
-                        block_mode,
-                        &mut pending_above,
-                        &mut pending_docs,
-                        &mut intro,
-                    );
+                    let clean_close =
+                        line[..e].trim().is_empty() && line[e + 2..].trim().is_empty();
+                    if block_mode == 1 && intro_block && clean_close {
+                        // standalone `*/` closing a clean module-doc block
+                    } else {
+                        if block_mode == 1 && intro_block {
+                            intro_block = false;
+                        }
+                        let t = line[..e].trim().to_string();
+                        push_block_text(
+                            t,
+                            block_mode,
+                            indent_col(&line),
+                            &mut pending_above,
+                            &mut pending_docs,
+                            &mut intro,
+                        );
+                    }
                     line = line[e + 2..].to_string();
                     in_block = false;
                     block_mode = 0;
                     changed = true;
                 }
                 None => {
-                    let t = line.trim().to_string();
-                    push_block_text(
-                        t,
-                        block_mode,
-                        &mut pending_above,
-                        &mut pending_docs,
-                        &mut intro,
-                    );
+                    if block_mode == 1 && intro_block {
+                        // inside a clean `/*!` block: keep the line verbatim
+                        intro.push(line.clone());
+                    } else {
+                        let t = line.trim().to_string();
+                        push_block_text(
+                            t,
+                            block_mode,
+                            indent_col(&line),
+                            &mut pending_above,
+                            &mut pending_docs,
+                            &mut intro,
+                        );
+                    }
                     continue;
                 }
             }
@@ -126,6 +171,11 @@ fn strip_source(src: &str) -> Stripped {
                 Some(s) if blank_strings(&line).as_bytes().get(s) == Some(&b'/') => s,
                 _ => break,
             };
+            // A `/*` after a line-comment start is text, not a block opener
+            // (doc lines cite URLs like `docs.rs/linked-hash-map/*/...`).
+            if blank_strings(&line)[..s].contains("//") {
+                break;
+            }
             let standalone = line[..s].trim().is_empty();
             let after = &line[s + 2..];
             let mode = if after.starts_with('!') {
@@ -138,27 +188,57 @@ fn strip_source(src: &str) -> Stripped {
             let mstrip = if mode > 0 { 1 } else { 0 };
             match line[s + 2 + mstrip..].find("*/") {
                 Some(rel) => {
+                    // Plain (non-doc) block comments stay verbatim: a
+                    // standalone one keeps its whole line, an inline one
+                    // stays embedded in the code line. Only doc blocks
+                    // (`/*!`, `/**`) are externalized.
+                    if mode == 0 {
+                        if standalone {
+                            keep_whole = true;
+                        }
+                        break;
+                    }
                     let txt = line[s + 2 + mstrip..s + 2 + mstrip + rel]
                         .trim()
                         .to_string();
-                    if standalone && mode == 0 && txt.starts_with("SAFETY") {
-                        keep_whole = true;
-                        break;
-                    }
-                    push_block_text(txt, mode, &mut pending_above, &mut pending_docs, &mut intro);
+                    push_block_text(
+                        txt,
+                        mode,
+                        indent_col(&line),
+                        &mut pending_above,
+                        &mut pending_docs,
+                        &mut intro,
+                    );
                     line = format!("{}{}", &line[..s], &line[s + 4 + mstrip + rel..]);
                     changed = true;
                 }
                 None => {
                     let txt = line[s + 2 + mstrip..].trim().to_string();
-                    if standalone && mode == 0 && txt.starts_with("SAFETY") {
+                    if standalone && mode == 0 {
+                        // multi-line plain block comment: keep it whole
                         out.push(line.clone());
                         in_block = true;
                         keep_block = true;
                         keep_whole = true;
                         break;
                     }
-                    push_block_text(txt, mode, &mut pending_above, &mut pending_docs, &mut intro);
+                    if mode == 1 && standalone && txt.is_empty() && intro.is_empty() {
+                        // clean `/*!` opener on its own line: remember the
+                        // block form instead of pushing an empty intro line
+                        intro_block = true;
+                    } else {
+                        if mode == 1 {
+                            intro_block = false;
+                        }
+                        push_block_text(
+                            txt,
+                            mode,
+                            indent_col(&line),
+                            &mut pending_above,
+                            &mut pending_docs,
+                            &mut intro,
+                        );
+                    }
                     line = line[..s].to_string();
                     in_block = true;
                     block_mode = mode;
@@ -171,6 +251,11 @@ fn strip_source(src: &str) -> Stripped {
             if !keep_block {
                 out.push(line.clone())
             }
+            // a verbatim comment block now separates the pending notes from
+            // their anchor; later blanks say nothing about their detachment
+            for n in pending_above.iter_mut() {
+                n.sealed = true
+            }
             continue;
         }
         let t = line.trim();
@@ -180,6 +265,8 @@ fn strip_source(src: &str) -> Stripped {
         }
         safety_cont = false;
         if t.starts_with("//!") {
+            // mixing `//!` lines with a `/*!` block falls back to line form
+            intro_block = false;
             intro.push(t[3..].strip_prefix(" ").unwrap_or(&t[3..]).to_string());
             continue;
         }
@@ -187,14 +274,21 @@ fn strip_source(src: &str) -> Stripped {
             pending_docs.push(t[3..].strip_prefix(" ").unwrap_or(&t[3..]).to_string());
             continue;
         }
-        let (code, above, safety_tail) = cut_line_comment(&line, true);
+        let (code, above, safety_tail, gap) = cut_line_comment(&line, true);
         let mut tail = None;
         if let Some(a) = above {
             if code.trim().is_empty() {
-                pending_above.push((a, false));
+                pending_above.push(AboveNote {
+                    text: a,
+                    detached: false,
+                    indent: indent_col(&line),
+                    pre_docs: pending_docs.is_empty(),
+                    pre_intro: intro.is_empty() && !intro_block && slines.is_empty(),
+                    sealed: false,
+                });
                 changed = true;
             } else {
-                tail = Some(a);
+                tail = Some((a, gap));
                 changed = true;
             }
         }
@@ -206,14 +300,19 @@ fn strip_source(src: &str) -> Stripped {
         if code.trim().is_empty() {
             if !changed && safety_tail.is_none() {
                 if line.trim().is_empty() {
-                    for p in pending_above.iter_mut() {
-                        p.1 = true
+                    for n in pending_above.iter_mut() {
+                        if !n.sealed {
+                            n.detached = true
+                        }
                     }
                 }
                 out.push(line.trim_end().to_string());
             } else if safety_tail.is_some() {
                 out.push(emit);
                 safety_cont = true;
+                for n in pending_above.iter_mut() {
+                    n.sealed = true
+                }
             }
             continue;
         }
@@ -230,10 +329,27 @@ fn strip_source(src: &str) -> Stripped {
             mac_depth = d
         }
     }
+    // comments at the very end of the file have no code line to anchor to:
+    // keep them inline rather than losing them
+    for n in &pending_above {
+        out.push(format!(
+            "{}//{}",
+            " ".repeat(n.indent),
+            comment_body(&n.text)
+        ));
+    }
+    for d in &pending_docs {
+        out.push(if d.is_empty() {
+            "///".to_string()
+        } else {
+            format!("/// {d}")
+        });
+    }
     Stripped {
         text: format!("{}\n", out.join("\n")),
         slines,
         intro,
+        intro_block,
     }
 }
 pub(crate) fn join_raw(slines: &[SLine]) -> Vec<JoinedRaw> {
@@ -350,8 +466,23 @@ pub(crate) fn owner_walk(joined: &[JoinedRaw]) -> Vec<(String, bool)> {
     let mut owner = String::new();
     let mut stack: Vec<(String, i64, i64)> = Vec::new();
     let mut depth0 = 0i64;
+    // A scope-forming decl whose `{` sits on the NEXT logical line (rustfmt
+    // wraps long where clauses that way) parks its label here; the brace line
+    // completes the push.
+    let mut pending_scope: Option<(String, i64)> = None;
     for j in joined {
         let t = j.text.trim();
+        if let Some((label, kind)) = pending_scope.take() {
+            if t.starts_with('{') {
+                stack.push((label, depth0, kind));
+            } else {
+                let b = strip_lits(t);
+                // still inside the wrapped where clause (further bounds)
+                if !b.contains('{') && !b.contains('}') && !b.contains(';') {
+                    pending_scope = Some((label, kind));
+                }
+            }
+        }
         let mut resolved = false;
         let scope_depth = stack.last().map(|s| s.1 + 1).unwrap_or(0);
         let top_kind = stack.last().map(|s| s.2).unwrap_or(0);
@@ -359,8 +490,13 @@ pub(crate) fn owner_walk(joined: &[JoinedRaw]) -> Vec<(String, bool)> {
         let net = count_of(&bare, &['{']) as i64 - count_of(&bare, &['}']) as i64;
         if depth0 == scope_depth && top_kind == 2 {
             if let Some(v) = variant_name(t) {
-                owner = qualify_owner(&stack, v);
+                let label = qualify_owner(&stack, v);
+                owner = label.clone();
                 resolved = true;
+                // a struct-like variant scopes its named fields
+                if net > 0 {
+                    stack.push((label, depth0, 3))
+                }
             }
         } else if depth0 == scope_depth && top_kind == 3 {
             if let Some(f) = field_name(t) {
@@ -378,6 +514,8 @@ pub(crate) fn owner_walk(joined: &[JoinedRaw]) -> Vec<(String, bool)> {
                 resolved = true;
                 if net > 0 {
                     stack.push((label, depth0, 1))
+                } else if !bare.contains('{') {
+                    pending_scope = Some((label, 1))
                 }
             } else if let Some(m) = scope_mod_name(t) {
                 let label = qualify_owner(&stack, m);
@@ -385,22 +523,41 @@ pub(crate) fn owner_walk(joined: &[JoinedRaw]) -> Vec<(String, bool)> {
                 resolved = true;
                 if net > 0 {
                     stack.push((label, depth0, 0))
+                } else if !bare.contains('{') && !bare.ends_with(';') {
+                    pending_scope = Some((label, 0))
                 }
             } else if let Some(name) = decl_name(t) {
                 let label = qualify_owner(&stack, name);
                 owner = label.clone();
                 resolved = true;
-                if net > 0 {
-                    if scope_is_trait(t) {
-                        stack.push((label, depth0, 1))
-                    } else if scope_is_enum(t) {
-                        stack.push((label, depth0, 2))
-                    } else if scope_is_struct(t) {
-                        stack.push((label, depth0, 3))
+                let kind = if scope_is_trait(t) {
+                    Some(1)
+                } else if scope_is_enum(t) {
+                    Some(2)
+                } else if scope_is_struct(t) {
+                    Some(3)
+                } else {
+                    None
+                };
+                if let Some(kind) = kind {
+                    if net > 0 {
+                        stack.push((label, depth0, kind))
+                    } else if !bare.contains('{') && !bare.ends_with(';') {
+                        pending_scope = Some((label, kind))
                     }
                 }
+            } else if let Some(mac) = macro_rules_name(t) {
+                owner = qualify_owner(&stack, mac);
+                resolved = true;
             } else if let Some(u) = use_name(t) {
                 owner = qualify_owner(&stack, u);
+                resolved = true;
+            }
+        } else if depth0 > scope_depth && !owner.is_empty() {
+            // an item declared inside a body (fn-local struct/enum/const):
+            // label it under the sticky owner so its docs have a home
+            if let Some(name) = decl_name(t).or_else(|| macro_rules_name(t)) {
+                owner = format!("{owner}::{name}");
                 resolved = true;
             }
         }
@@ -435,20 +592,36 @@ fn phys_keys(
     }
     keys
 }
-fn collect_strip(slines: &[SLine]) -> (Vec<LedgerEntry>, Vec<(String, Vec<String>)>) {
+fn collect_strip(
+    slines: &[SLine],
+    has_intro: bool,
+) -> (Vec<LedgerEntry>, Vec<(String, Vec<String>)>) {
     let joined = join_raw(slines);
     let owners = owner_walk(&joined);
     let keys = phys_keys(slines, &joined, &owners);
     let mut entries = Vec::new();
     let mut docs: Vec<(String, Vec<String>)> = Vec::new();
     let mut doc_pool: Vec<String> = Vec::new();
+    // Items redeclared under a different cfg (std/no_std variants) share an
+    // owner label; the n-th declaration gets an `#n` shadow so its docs can
+    // find their way back to the right one.
+    let mut decl_occ: HashMap<String, usize> = HashMap::new();
     for (k, j) in joined.iter().enumerate() {
         let (owner, resolved) = &owners[k];
+        if *resolved {
+            *decl_occ.entry(owner.clone()).or_default() += 1;
+        }
         for i in j.lo..=j.hi {
             doc_pool.extend(slines[i].docs.iter().cloned());
         }
         if *resolved && !doc_pool.is_empty() {
-            docs.push((owner.clone(), std::mem::take(&mut doc_pool)));
+            let n = decl_occ[owner];
+            let name = if n > 1 {
+                format!("{owner}#{n}")
+            } else {
+                owner.clone()
+            };
+            docs.push((name, std::mem::take(&mut doc_pool)));
         } else if !*resolved && !doc_pool.is_empty() && !t_is_attr(&j.text) {
             doc_pool.clear();
             eprintln!(
@@ -463,20 +636,45 @@ fn collect_strip(slines: &[SLine]) -> (Vec<LedgerEntry>, Vec<(String, Vec<String
             } else {
                 o.clone()
             };
-            for (a, detached) in &slines[i].above {
-                let kind = if *detached { "float" } else { "above" };
+            for n in &slines[i].above {
+                let base = if n.detached { "float" } else { "above" };
+                // `^` marks a comment that sat before the item's doc block or
+                // before the module docs, so restore keeps it above them.
+                let pre_mark =
+                    if (n.pre_docs && !slines[i].docs.is_empty()) || (n.pre_intro && has_intro) {
+                        "^"
+                    } else {
+                        ""
+                    };
+                // A comment indented differently from its anchor carries the
+                // difference as `above+4` / `above-2` so restore can put it
+                // back at its own column, not the anchor's.
+                let delta = n.indent as i64 - indent_col(&slines[i].code) as i64;
+                let kind = if delta != 0 {
+                    format!("{base}{pre_mark}{delta:+}")
+                } else {
+                    format!("{base}{pre_mark}")
+                };
                 entries.push(LedgerEntry {
                     owner: sec.clone(),
-                    kind: kind.to_string(),
+                    kind,
                     anchor: anchor.clone(),
                     nth: *nth,
-                    text: a.clone(),
+                    text: n.text.clone(),
                 });
             }
-            if let Some(tl) = &slines[i].tail {
+            if let Some((tl, gap)) = &slines[i].tail {
+                // alignment padding beyond the single default space is kept
+                // as a `tail+N` delta
+                let delta = *gap as i64 - 1;
+                let kind = if delta != 0 {
+                    format!("tail{delta:+}")
+                } else {
+                    "tail".to_string()
+                };
                 entries.push(LedgerEntry {
                     owner: sec.clone(),
-                    kind: "tail".to_string(),
+                    kind,
                     anchor: anchor.clone(),
                     nth: *nth,
                     text: tl.clone(),
@@ -509,6 +707,7 @@ fn unesc(l: &str) -> String {
 fn render_strip_sidecar(
     mod_name: &str,
     intro: &[String],
+    intro_block: bool,
     docs: &[(String, Vec<String>)],
     entries: &[LedgerEntry],
 ) -> String {
@@ -522,6 +721,9 @@ fn render_strip_sidecar(
         }
     }
     let mut doc = format!("# {mod_name}\n");
+    if intro_block {
+        doc.push_str("\n~ form: block\n");
+    }
     for l in intro {
         doc.push('\n');
         doc.push_str(&esc(l));
@@ -571,28 +773,34 @@ fn parse_note(l: &str) -> Option<(String, String, usize, String)> {
     let sp = rest.find(' ')?;
     let kind = rest[..sp].to_string();
     let rem = rest[sp + 1..].strip_prefix('`')?;
-    if let Some(h) = rem.rfind("`#") {
-        let after = &rem[h + 2..];
-        if let Some(c) = after.find(':') {
-            if after[..c].chars().all(|ch| ch.is_ascii_digit()) && !after[..c].is_empty() {
-                let nth: usize = after[..c].parse().ok()?;
-                let text = after[c + 1..]
-                    .strip_prefix(' ')
-                    .unwrap_or(&after[c + 1..])
-                    .to_string();
-                return Some((kind, rem[..h].to_string(), nth, text));
+    // The anchor ends at the first `` ` `` followed by `:` or `#n:`. Scanning
+    // from the left matters: the comment text is prose and may well contain
+    // `` `: `` itself (inline code like `` `:elorw` ``), while a backtick
+    // inside the anchor (a code line) is far rarer.
+    for (h, _) in rem.match_indices('`') {
+        let after = &rem[h + 1..];
+        if let Some(text) = after.strip_prefix(':') {
+            let text = text.strip_prefix(' ').unwrap_or(text).to_string();
+            return Some((kind, rem[..h].to_string(), 1, text));
+        }
+        if let Some(shadow) = after.strip_prefix('#') {
+            if let Some(c) = shadow.find(':') {
+                if c > 0 && shadow[..c].chars().all(|ch| ch.is_ascii_digit()) {
+                    let nth: usize = shadow[..c].parse().ok()?;
+                    let text = shadow[c + 1..]
+                        .strip_prefix(' ')
+                        .unwrap_or(&shadow[c + 1..])
+                        .to_string();
+                    return Some((kind, rem[..h].to_string(), nth, text));
+                }
             }
         }
     }
-    let h = rem.rfind("`:")?;
-    let text = rem[h + 2..]
-        .strip_prefix(' ')
-        .unwrap_or(&rem[h + 2..])
-        .to_string();
-    Some((kind, rem[..h].to_string(), 1, text))
+    None
 }
-pub(crate) fn parse_strip_sidecar(s: &str) -> (Vec<String>, Vec<Section>) {
+pub(crate) fn parse_strip_sidecar(s: &str) -> (Vec<String>, bool, Vec<Section>) {
     let mut intro = Vec::new();
+    let mut intro_block = false;
     let mut sections: Vec<Section> = Vec::new();
     let mut in_intro = true;
     for (i, l) in s.lines().enumerate() {
@@ -609,7 +817,9 @@ pub(crate) fn parse_strip_sidecar(s: &str) -> (Vec<String>, Vec<Section>) {
             continue;
         }
         if in_intro {
-            if !l.trim().is_empty() {
+            if l == "~ form: block" && intro.is_empty() {
+                intro_block = true;
+            } else if !l.is_empty() {
                 intro.push(unesc(l))
             }
             continue;
@@ -628,7 +838,7 @@ pub(crate) fn parse_strip_sidecar(s: &str) -> (Vec<String>, Vec<Section>) {
             sec.docs.push(unesc(l))
         }
     }
-    (intro, sections)
+    (intro, intro_block, sections)
 }
 pub(crate) fn code_lines_of(stripped: &str) -> (Vec<SLine>, Vec<usize>) {
     let mut slines = Vec::new();
@@ -661,7 +871,7 @@ pub(crate) fn code_lines_of(stripped: &str) -> (Vec<SLine>, Vec<usize>) {
             }
             continue;
         }
-        let (code, _, _) = cut_line_comment(line, true);
+        let (code, _, _, _) = cut_line_comment(line, true);
         if code.trim().is_empty() {
             continue;
         }
@@ -679,36 +889,101 @@ pub(crate) fn code_lines_of(stripped: &str) -> (Vec<SLine>, Vec<usize>) {
 fn indent_of(l: &str) -> String {
     l[..l.len() - l.trim_start().len()].to_string()
 }
+/// `above^+4` → ("above", pre-docs, +4); both suffixes are optional.
+fn split_kind_delta(kind: &str) -> (&str, bool, i64) {
+    let (head, delta) = match kind.find(['+', '-']) {
+        Some(pos) => match kind[pos..].parse::<i64>() {
+            Ok(d) => (&kind[..pos], d),
+            Err(_) => (kind, 0),
+        },
+        None => (kind, 0),
+    };
+    match head.strip_suffix('^') {
+        Some(base) => (base, true, delta),
+        None => (head, false, delta),
+    }
+}
+pub(crate) fn split_owner_shadow(owner: &str) -> (String, usize) {
+    if let Some(pos) = owner.rfind('#') {
+        if pos > 0
+            && !owner[pos + 1..].is_empty()
+            && owner[pos + 1..].bytes().all(|b| b.is_ascii_digit())
+        {
+            return (owner[..pos].to_string(), owner[pos + 1..].parse().unwrap());
+        }
+    }
+    (owner.to_string(), 1)
+}
 fn restore_source(stripped: &str, sidecar: &str) -> String {
-    let (intro, sections) = parse_strip_sidecar(sidecar);
+    let (intro, intro_block, sections) = parse_strip_sidecar(sidecar);
     let lines: Vec<String> = stripped.lines().map(String::from).collect();
     let (slines, phys) = code_lines_of(stripped);
     let joined = join_raw(&slines);
     let owners = owner_walk(&joined);
     let keys = phys_keys(&slines, &joined, &owners);
-    let mut by_line: HashMap<usize, Vec<String>> = HashMap::new();
-    let mut tails: Vec<(usize, String)> = Vec::new();
+    // rank orders insertions sharing a line: preamble comments (0) go above
+    // the doc block (1); ordinary comments (2) go below it.
+    let mut by_line: HashMap<usize, Vec<(u8, String)>> = HashMap::new();
+    let mut tails: Vec<(usize, String, i64)> = Vec::new();
+    // which physical lines are comments (incl. whole kept `/* */` blocks), so
+    // the placement walk skips a block as one unit instead of stopping — or
+    // worse, landing — inside it
+    let cmap: Vec<bool> = {
+        let mut map = vec![false; lines.len()];
+        let mut in_blk = false;
+        for (i, l) in lines.iter().enumerate() {
+            let t = l.trim();
+            if in_blk {
+                map[i] = true;
+                if t.contains("*/") {
+                    in_blk = false;
+                }
+            } else if t.starts_with("/*") {
+                map[i] = true;
+                if !t.contains("*/") {
+                    in_blk = true;
+                }
+            } else if t.starts_with("//") {
+                map[i] = true;
+            }
+        }
+        map
+    };
     for sec in &sections {
-        let match_owner = if sec.owner == "(mod)" {
+        // `owner#n` targets the n-th declaration sharing that label (cfg
+        // std/no_std twins); a bare owner is occurrence 1.
+        let (base_owner, occ) = split_owner_shadow(&sec.owner);
+        let match_owner = if base_owner == "(mod)" {
             String::new()
         } else {
-            sec.owner.clone()
+            base_owner.clone()
         };
         if !sec.docs.is_empty() {
-            if let Some(k) = (0..joined.len()).find(|k| owners[*k].1 && owners[*k].0 == match_owner)
+            if let Some(k) = (0..joined.len())
+                .filter(|k| owners[*k].1 && owners[*k].0 == match_owner)
+                .nth(occ - 1)
             {
-                let mut p = phys[joined[k].lo];
+                // Docs go above the item's attributes; walk joined lines so a
+                // multi-line `#[cfg_attr(...)]` is skipped as one unit.
+                let mut kk = k;
+                while kk > 0 && joined[kk - 1].text.trim_start().starts_with("#[") {
+                    kk -= 1
+                }
+                let mut p = phys[joined[kk].lo];
                 let ind = indent_of(&lines[phys[joined[k].lo]]);
                 while p > 0 && lines[p - 1].trim().starts_with("#[") {
                     p -= 1
                 }
                 let slot = by_line.entry(p).or_default();
                 for d in &sec.docs {
-                    slot.push(if d.is_empty() {
-                        format!("{ind}///")
-                    } else {
-                        format!("{ind}/// {d}")
-                    });
+                    slot.push((
+                        1,
+                        if d.is_empty() {
+                            format!("{ind}///")
+                        } else {
+                            format!("{ind}/// {d}")
+                        },
+                    ));
                 }
             } else {
                 eprintln!("restore: no target for docs of `{}`", sec.owner);
@@ -727,58 +1002,93 @@ fn restore_source(stripped: &str, sidecar: &str) -> String {
                     continue;
                 }
             };
+            let (kbase, pre, delta) = split_kind_delta(kind);
             let mut p = phys[i];
-            if kind == "tail" {
-                tails.push((p, text.clone()));
+            if kbase == "tail" {
+                tails.push((p, text.clone(), delta));
             } else {
-                let ind = indent_of(&lines[p]);
-                while p > 0 {
-                    let prev = lines[p - 1].trim();
-                    if prev.starts_with("//") || prev.starts_with("/*") || prev.starts_with('*') {
-                        p -= 1
+                let ind = if delta == 0 {
+                    indent_of(&lines[p])
+                } else {
+                    " ".repeat((indent_of(&lines[p]).len() as i64 + delta).max(0) as usize)
+                };
+                while p > 0 && cmap[p - 1] {
+                    p -= 1
+                }
+                // cross a blank run only when more comment lines sit above it
+                // (comment → kept block → blank → anchor layouts)
+                loop {
+                    let mut q = p;
+                    while q > 0 && lines[q - 1].trim().is_empty() {
+                        q -= 1
+                    }
+                    if q < p && q > 0 && cmap[q - 1] {
+                        p = q;
+                        while p > 0 && cmap[p - 1] {
+                            p -= 1
+                        }
                     } else {
                         break;
                     }
                 }
-                if kind == "float" && p > 0 && lines[p - 1].trim().is_empty() {
+                if kbase == "float" && p > 0 && lines[p - 1].trim().is_empty() {
                     p -= 1
                 }
-                by_line
-                    .entry(p)
-                    .or_default()
-                    .push(format!("{ind}//{}", comment_body(text)));
+                by_line.entry(p).or_default().push((
+                    if pre { 0 } else { 2 },
+                    format!("{ind}//{}", comment_body(text)),
+                ));
             }
         }
     }
-    let mut out = String::new();
-    for l in &intro {
-        out.push_str(
-            &(if l.is_empty() {
+    let mut intro_lines: Vec<String> = Vec::new();
+    if intro_block {
+        intro_lines.push("/*!".to_string());
+        intro_lines.extend(intro.iter().cloned());
+        intro_lines.push("*/".to_string());
+    } else {
+        for l in &intro {
+            intro_lines.push(if l.is_empty() {
                 "//!".to_string()
             } else {
                 format!("//! {l}")
-            }),
-        );
-        out.push('\n');
+            });
+        }
     }
-    let tail_map: HashMap<usize, Vec<String>> = {
-        let mut m: HashMap<usize, Vec<String>> = HashMap::new();
-        for (p, t) in tails {
-            m.entry(p).or_default().push(t)
+    let mut out = String::new();
+    if lines.is_empty() {
+        for l in &intro_lines {
+            out.push_str(l);
+            out.push('\n');
+        }
+    } else {
+        // route the module docs through the same slot as line-0 comments so
+        // a `^` preamble comment can sort above them
+        let slot = by_line.entry(0).or_default();
+        for l in intro_lines.iter().rev() {
+            slot.insert(0, (1, l.clone()));
+        }
+    }
+    let tail_map: HashMap<usize, Vec<(String, i64)>> = {
+        let mut m: HashMap<usize, Vec<(String, i64)>> = HashMap::new();
+        for (p, t, d) in tails {
+            m.entry(p).or_default().push((t, d))
         }
         m
     };
     for (i, l) in lines.iter().enumerate() {
-        if let Some(v) = by_line.get(&i) {
-            for t in v {
-                out.push_str(t);
+        if let Some(v) = by_line.get_mut(&i) {
+            v.sort_by_key(|(rank, _)| *rank);
+            for (_, t) in v {
+                out.push_str(t.as_str());
                 out.push('\n');
             }
         }
         out.push_str(l);
         if let Some(ts) = tail_map.get(&i) {
-            for t in ts {
-                out.push_str(&format!(" //{}", comment_body(t)));
+            for (t, d) in ts {
+                let pad = " ".repeat((1 + d).max(0) as usize);
+                out.push_str(&format!("{pad}//{}", comment_body(t)));
             }
         }
         out.push('\n');
@@ -793,15 +1103,42 @@ fn ast_equal_mod_docs(a: &str, b: &str) -> Result<bool, Box<dyn Error>> {
     Ok(ta.to_string() == tb.to_string())
 }
 pub(crate) fn rs_names(dir: &str) -> Result<Vec<String>, Box<dyn Error>> {
-    let mut names = Vec::new();
-    for entry in fs::read_dir(dir)? {
-        let p = entry?.path();
-        if p.extension().map(|e| e == "rs").unwrap_or(false) {
-            names.push(p.file_stem().unwrap().to_string_lossy().to_string());
+    // Relative stems, subdirectories included: `src/de/mod.rs` under `src`
+    // comes back as `de/mod`, so callers can keep using `{dir}/{name}.rs`.
+    fn walk(dir: &str, prefix: &str, names: &mut Vec<String>) -> Result<(), Box<dyn Error>> {
+        for entry in fs::read_dir(dir)? {
+            let entry = entry?;
+            let p = entry.path();
+            // Symlinks are skipped: crates use them to alias whole source
+            // trees (serde's `src/core -> ../../serde_core/src`) and
+            // following one would duplicate output or loop.
+            if entry.file_type()?.is_symlink() {
+                continue;
+            }
+            let file_name = p.file_name().unwrap().to_string_lossy().to_string();
+            if p.is_dir() {
+                walk(
+                    &p.to_string_lossy(),
+                    &format!("{prefix}{file_name}/"),
+                    names,
+                )?;
+            } else if p.extension().map(|e| e == "rs").unwrap_or(false) {
+                let stem = p.file_stem().unwrap().to_string_lossy();
+                names.push(format!("{prefix}{stem}"));
+            }
         }
+        Ok(())
     }
+    let mut names = Vec::new();
+    walk(dir, "", &mut names)?;
     names.sort();
     Ok(names)
+}
+fn ensure_parent(path: &str) -> Result<(), Box<dyn Error>> {
+    if let Some(parent) = std::path::Path::new(path).parent() {
+        fs::create_dir_all(parent)?;
+    }
+    Ok(())
 }
 pub fn strip_dir(src_dir: &str, out_dir: &str) -> Result<(), Box<dyn Error>> {
     fs::create_dir_all(out_dir)?;
@@ -809,9 +1146,10 @@ pub fn strip_dir(src_dir: &str, out_dir: &str) -> Result<(), Box<dyn Error>> {
     for name in rs_names(src_dir)? {
         let src = fs::read_to_string(format!("{src_dir}/{name}.rs"))?;
         let st = strip_source(&src);
-        let (entries, docs) = collect_strip(&st.slines);
+        let (entries, docs) = collect_strip(&st.slines, !st.intro.is_empty());
+        ensure_parent(&format!("{out_dir}/{name}.rs"))?;
         fs::write(format!("{out_dir}/{name}.rs"), &st.text)?;
-        let sc = render_strip_sidecar(&name, &st.intro, &docs, &entries);
+        let sc = render_strip_sidecar(&name, &st.intro, st.intro_block, &docs, &entries);
         if !sc.is_empty() {
             fs::write(format!("{out_dir}/{name}.doc.md"), sc)?;
         }
@@ -840,6 +1178,7 @@ pub fn restore_dir(src_dir: &str, out_dir: &str) -> Result<(), Box<dyn Error>> {
         } else {
             restore_source(&stripped, &sidecar)
         };
+        ensure_parent(&format!("{out_dir}/{name}.rs"))?;
         fs::write(format!("{out_dir}/{name}.rs"), restored)?;
         eprintln!("restore {name}.rs");
     }
@@ -885,17 +1224,26 @@ pub fn roundtrip_dir(src_dir: &str, work_dir: &str) -> Result<(), Box<dyn Error>
 fn push_block_text(
     t: String,
     mode: i64,
-    above: &mut Vec<(String, bool)>,
+    ind: usize,
+    above: &mut Vec<AboveNote>,
     docs: &mut Vec<String>,
     intro: &mut Vec<String>,
 ) {
     if t.is_empty() && mode == 0 {
         return;
     }
+    let pre = docs.is_empty();
     match mode {
         1 => intro.push(t),
         2 => docs.push(t),
-        _ => above.push((t, false)),
+        _ => above.push(AboveNote {
+            text: t,
+            detached: false,
+            indent: ind,
+            pre_docs: pre,
+            pre_intro: false,
+            sealed: false,
+        }),
     }
 }
 pub(crate) fn comment_body(text: &str) -> String {

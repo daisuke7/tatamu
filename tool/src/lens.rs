@@ -76,8 +76,13 @@ fn item_spans(src: &str) -> Vec<ItemSpan> {
                 }
             }
         }
-        // pull in attrs, docs, and comments sitting directly above the item
-        let mut start = phys[j.lo];
+        // pull in attrs, docs, and comments sitting directly above the item;
+        // multi-line attributes are skipped as whole joined lines first
+        let mut kk = k;
+        while kk > 0 && joined[kk - 1].text.trim_start().starts_with("#[") {
+            kk -= 1;
+        }
+        let mut start = phys[joined[kk].lo];
         while start > 0 {
             let prev = lines[start - 1].trim();
             if prev.starts_with("#[") || prev.starts_with("//") {
@@ -102,7 +107,7 @@ fn sidecar_sections(file: &str) -> Vec<crate::strip::Section> {
         return Vec::new();
     };
     match fs::read_to_string(&sc_path) {
-        Ok(s) => parse_strip_sidecar(&s).1,
+        Ok(s) => parse_strip_sidecar(&s).2,
         Err(_) => Vec::new(),
     }
 }
@@ -135,8 +140,14 @@ pub fn owners_cmd(path: &str) -> R<()> {
 
 /// Owner match rule shared by `show` and `notes`: exact path first, then a
 /// `::`-suffix match so `get` finds `OnceCell::get` when unambiguous.
+/// Sidecar sections may carry an `#n` shadow (cfg twins); a bare query
+/// matches every occurrence, while `name#2` pins one.
 fn owner_matches(candidate: &str, query: &str) -> bool {
-    candidate == query || candidate.ends_with(&format!("::{query}"))
+    if candidate == query {
+        return true;
+    }
+    let (base, _) = crate::strip::split_owner_shadow(candidate);
+    base == query || base.ends_with(&format!("::{query}"))
 }
 
 /// `show`: print the source of every item matching `owner`.

@@ -201,6 +201,12 @@ pub fn decl_name(t: &str) -> Option<String> {
     static RE_DECL: OnceLock<regex::Regex> = OnceLock::new();
     re(r"^(?:#\[[^\]]*\]\s*)*(?:priv\s+)?(?:pub(?:\([^)]*\))?\s+)?(?:async\s+|unsafe\s+|const\s+)*(?:fn|struct|enum|trait|union|type|const|static)\s+(\w+)", &RE_DECL).captures(t).map(|c| c[1].to_string())
 }
+pub fn macro_rules_name(t: &str) -> Option<String> {
+    static RE_MAC: OnceLock<regex::Regex> = OnceLock::new();
+    re(r"^macro_rules!\s*(\w+)", &RE_MAC)
+        .captures(t)
+        .map(|c| c[1].to_string())
+}
 pub fn impl_target(t: &str) -> Option<String> {
     static RE_FOR: OnceLock<regex::Regex> = OnceLock::new();
     static RE_IMPL: OnceLock<regex::Regex> = OnceLock::new();
