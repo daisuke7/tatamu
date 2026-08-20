@@ -2,188 +2,165 @@
 
 *English / [日本語](#tatamu畳む--日本語)*
 
-A proof-of-concept language that transpiles 1:1 to Rust, designed AI-first: for teams that want to maximize LLM development efficiency on large Rust codebases, even at the cost of human writability.
+**Reversible comment/doc externalization for Rust, with on-demand retrieval — cut an AI agent's context tokens by 50–60% without losing a single byte.**
 
-- **Fold (畳む)**: dramatically fewer tokens than Rust — measured **−42.2%** vs handwritten idiomatic Rust, 27–45% vs LLM-generated Rust
-- **Unfold**: `tatamuc` mechanically expands to plain Rust / cargo projects; semantics are identical to Rust
-- **AI efficiency ≥ Rust**: compression is limited to mechanically reversible shorthand, so LLM knowledge of Rust transfers directly (measured: 4 Claude models, 24/24 compile success = same as raw Rust, zero rule violations)
+`tatamu` folds (畳む) the comments and docs out of Rust sources into an anchored sidecar ledger, and unfolds them back byte-exactly. The code itself is never reformatted — not one character. An agent holds the cheap stripped code in context and fetches one item's "why" only when it needs it.
 
+```sh
+tatamu strip src/ stripped/        # externalize comments/docs (code untouched, AST self-checked)
+tatamu owners stripped/            # list every item with file:line-range
+tatamu notes stripped/ MyType::run # fetch just one item's docs & comments
+tatamu restore stripped/ back/     # byte-exact restoration
+tatamu roundtrip src/ work/        # the gate: strip∘restore∘strip fixpoint + byte equality
 ```
-fn main() R<()> {
-text := fs::read_to_string("app.conf")?
-mut counts := HashMap::new()
-for word in text.split_whitespace() {*counts.entry(word).or_insert(0) += 1}
-println!("{counts:?}")
-Ok(())
-}
-```
+
+## Why
+
+Well-documented Rust is expensive to hold in an AI context: in `once_cell`, comments and docs are **56% of the tokens** (measured with Claude's tokenizer); in `regex-automata`, **62% of the bytes**. But deleting them loses the "why" that exists nowhere else. `tatamu` makes that trade-off unnecessary: externalization is fully reversible, and the sidecar stays queryable.
+
+Measured on full crates (bytes):
+
+| crate | reduction |
+|---|---|
+| regex-automata | **−62%** |
+| once_cell | −56% |
+| memchr | −48% |
+| serde_core | −36% |
+| serde_derive (macro-heavy) | −10% |
+
+Reduction tracks comment density — the value is largest on doc-culture crates, zero on uncommented code.
+
+## Guarantees
+
+- **Byte-exact restoration**, verified on 10 corpora / 231 files (once_cell, serde, serde_core, serde_derive, regex, regex-syntax, regex-automata, memchr, tatamu itself, a synthetic protocol crate): **231/231**, zero known inexactness classes ([docs/43](docs/43-blockdoc-ci.md))
+- Semantic safety by construction: code lines are copied, never reformatted; every stripped file passes a doc-attr-stripped AST equality self-check
+- SAFETY comments (with continuation lines), plain `/* */` block comments, and file preambles stay inline; `/*!` and `/** */` doc forms are preserved via ledger markers
+- The whole pipeline is gated in CI: fixture roundtrips packing every hardened failure class (cfg twins, multi-line attributes, rustfmt-wrapped where clauses, macro docs, alignment padding, …), a self-roundtrip, and lens checks
+
+## What the experiments showed
+
+Four controlled experiments (Haiku 4.5 + Sonnet 5; blind / lens / full-comment conditions) mapped exactly what externalization costs and what retrieval recovers:
+
+| knowledge class | where it lives | effect of stripping | evidence |
+|---|---|---|---|
+| facts with a code trace (constants, structure, algorithms) | code | none — even blind models answer correctly | [docs/39](docs/39-lens-fresh.md), [40](docs/40-lens-blind.md) |
+| contracts carried by implementation patterns (orderings, state machines, cleanup) | adjacent code | none — models imitate correctly; 18/18 modification runs, zero violations | [docs/41](docs/41-safety-mods.md) |
+| design rationale ("why we don't…") | comments only | lost blind; recovered via `notes` | [docs/40](docs/40-lens-blind.md) |
+| specs with no implementation yet (protocols, conventions) | comments only | blind collapses to 11–22% (confidently wrong code); **lens recovers 100%, equal to full** | [docs/42](docs/42-novel-design.md) |
+
+Highlights:
+
+- **Retrieval discrimination is near-ideal**: models fetch notes on doc-only questions and never on code-derivable ones (0/8 wasted fetches)
+- **Lens beat full-comment context at the frontier** (Sonnet 11/12 vs 10/12) — explicit retrieval focuses better than passive presence, at 20–32% lower cost
+- **Stripping decides what fits at all**: commented memchr overflows a 200k context under an agent harness (~205k tokens); stripped fits at ~80k
+- **Small models need one sentence**: with "fetch first unless obvious" in the prompt, Haiku matches Sonnet; with "use if needed", its fetch judgment collapses in large contexts
 
 ## Usage
 
-### Writing Tatamu with an LLM
-
-There is no editor plugin or package registry. The intended workflow is **manual copy** of two files into your LLM context / system prompt:
-
-1. **Rule file (compressed spec with few-shot examples)**: [`experiments/llm-generation/prompt-tatamu.md`](experiments/llm-generation/prompt-tatamu.md) — paste into the model's context; this alone is enough for frontier models to write valid Tatamu
-2. **Full language spec (with a Rust-difference table)**: [`docs/tatamu-spec.md`](docs/tatamu-spec.md) — the authoritative reference, for humans and for deeper LLM sessions
-
-Then run the tools below on the generated `.ttm` files.
-
-### Tools
-
-| Tool | Purpose |
-|---|---|
-| `transpiler/tatamuc.mjs` | The transpiler. Modes: expand (default), `--check` (diagnostics as JSON with fix suggestions), `--compile` (rustc/cargo type-check, errors mapped back to `.ttm` coordinates), `--project` (generate a cargo project: `.rs` + C header + JS/TS/Dart bindings), `--header`, `--jsbind`, `--dts`, `--dartbind`, `--docs` (merge sidecar docs/comments back into Rust), `--doc-check` / `--doc-sync` (sidecar freshness) |
-| `dogfood/rust2ttm/` | **Rust → Tatamu converter** (written in Tatamu itself, syn-based). Subcommands: `convert` (Rust dir → `.ttm` + doc/comment sidecars), `compare` (normalized-AST equivalence of two Rust files) |
-| `dogfood/rust2ttm/verify-roundtrip.sh` | One-command gate: Rust → Tatamu → Rust, all files verified AST-equivalent |
-| `experiments/rust2ttm-coverage/measure.mjs` | Whole-crate round-trip measurement (per-file convert → expand → compare) |
-| `experiments/rust2ttm-coverage/diag.mjs` | Single-file round-trip diagnosis with rustc-located errors |
-| `transpiler/unit-tests.mjs` | Unit corpus (158 cases: every bug fix has a minimal repro) |
-| `transpiler/test.mjs` | Sanity corpus (29 programs) |
-| `transpiler/compile-test.mjs` | rustc type-check corpus (requires Rust) |
-
 ```sh
-node transpiler/tatamuc.mjs file.ttm             # expand to Rust
-node transpiler/tatamuc.mjs --check file.ttm     # diagnostics (JSON, LLM-oriented fixes)
-node transpiler/tatamuc.mjs --compile <file|dir> # type-check, errors at .ttm coordinates
-node transpiler/tatamuc.mjs --project src out    # cargo project + FFI bindings
+cargo build --release --manifest-path tool/Cargo.toml
+# binary at tool/target/release/tatamu
 ```
 
-## Current stage & roadmap
+Recommended agent-prompt wording when handing over stripped code (this exact framing is what the experiments validated):
 
-Staged plan ([docs/00](docs/00-concept.md)): dialect → own semantics → own compiler → ecosystem. **The full arc from the Stage 2 gate defeat to the comment-externalization pivot and its validation (docs/34–43) is summarized in [docs/44](docs/44-pivot-summary.md).**
+> The codebase has its comments and docs externalized into sidecar ledgers. The code is byte-identical to the original otherwise. `./owners` lists items; `./notes <name>` prints one item's docs and comments (suffix match; use a file stem for module docs). **Before writing any code, consult `./notes` for the items you are about to modify or imitate** — skip fetching only when the answer is plainly visible in the code.
 
-- **Stage 1 (Rust token-saving dialect): gate cleared.** Token reduction ≥30% measured (27–45%, −42.2% vs handwritten Rust); LLM compile success 24/24 = raw Rust baseline
-- **Stage 2 (AI-oriented features): implemented; gate measured, not met.** Structured diagnostics, project generation, out-of-band docs/comment ledger (AST-path anchors), C/JS/TS/Dart FFI, wasm/mobile targets are all built and verified. The gate was measured on two axes and not met on either. Fix-loop axis ([docs/34](docs/34-stage2-gate.md)): frontier models tie raw Rust exactly; no improvement. Large-context axis ([docs/35](docs/35-stage2-context.md)): with a whole codebase in context, comprehension/modification accuracy is an exact tie (Sonnet 24/24 vs 24/24, all modifications first-shot in both conditions) — and the dialect tax observed in docs/34 disappears when the codebase itself serves as few-shot context. Measured with Claude's own tokenizer, the dialect's own compression is a robust **−11%** (two independent materials); the bulk of the headline savings (−56%) comes from comment/doc externalization, which does not require the dialect
-- **Direction pivot (2026-08-19): comment externalization for plain Rust.** Following the gate results, the project's compression machinery now targets plain Rust directly: `rust2ttm strip` moves comments and docs into an anchored sidecar ledger **without reformatting a single character of code** (SAFETY comments stay inline; macro bodies untouched), `restore` puts them back, and `roundtrip` verifies the loop. Verified on 5 corpora / 25 files: AST-check 25/25, strip∘restore∘strip fixpoint 25/25, byte-exact restore 22/25 (the 3 exceptions are the intentional `/*! */`→`//!` form normalization). Measured on once_cell with Claude's tokenizer: **−53.2% context tokens with zero dialect** ([docs/36](docs/36-strip-pivot.md)). The canonical implementation now lives in `tool/` as a plain-Rust crate (binary `tatamu`; the `.ttm` sources are frozen as legacy), with on-demand retrieval subcommands `owners` / `show` / `notes` so an agent holds stripped code in context and fetches one item's "why" only when needed ([docs/37](docs/37-fold-dogfood.md))
-- **Real-crate hardening (2026-08-20): recursive directories, 226 files verified.** `strip`/`restore`/`roundtrip`/`owners` now recurse into subdirectories (symlinks skipped), so whole published crates can be processed as-is. Applied to full sources of serde_core, serde_derive, regex-syntax, regex-automata and memchr, the roundtrip gate exposed nine real-world failure classes (cfg'd twin definitions, multi-line attributes, rustfmt-wrapped where clauses, enum struct-variant fields, fn-local items, `macro_rules!` docs, URL `/*` false positives, ledger anchor parsing, comment-alignment padding) — all fixed, with the ledger format extended to preserve `/*! */` block form, comment indent/padding deltas, and preamble ordering. Final score across 9 corpora / 226 files: **fixpoint 226/226, byte-exact restore 225/226** (the single exception is an intro-position move with zero data loss). Compression on full crates tracks comment density as predicted: regex-automata **−62%**, memchr −48%, once_cell −56%, serde_derive −10% ([docs/38](docs/38-subdir-hardening.md))
-- **Fresh-context validation (2026-08-20): on-demand retrieval works.** A model given only the stripped once_cell code in a fresh context — with `tatamu notes` available as a logged shell tool — matched the full-code baseline exactly (Haiku & Sonnet: 12/12 comprehension questions, 2/2 modification tasks first-shot, in both conditions). Retrieval discrimination was near-ideal: the models fetched sidecar notes on 9 of 16 doc-only questions and **zero of 8 code-derivable questions**, and total cost was still ~20% lower than the full-code condition despite the extra tool round-trips. The core (a)-path hypothesis — hold cheap stripped code, fetch the "why" only when needed — held end-to-end ([docs/39](docs/39-lens-fresh.md))
-- **Blind & large-scale (2026-08-20): lens beats full at the frontier; compression decides what fits at all.** Rerun 10x bigger (full memchr, 45 files) with free-form judged answers and a blind condition (stripped code, sidecars never mentioned): commented memchr **does not fit Haiku's 200k context at all under an agent harness (~205k tokens) while the stripped version fits with room to spare** — externalization became the fits/doesn't-fit line. Sonnet scored **11/12 with lens vs 10/12 with full comments in context** (and 10/12 blind): its fetches fired on exactly the three questions whose answers exist only in comments, flipping each to correct — including one that the full-comments condition got wrong. New limit found: Haiku's fetch judgment collapses at 80k-token context (1 fetch in 12 questions vs apt fetching at 11k), so small models need harness-side nudging. Stripped+lens also cost 32% less than full. Follow-up: the small-model weakness is prompt-fixable — changing the lens instruction from "use if needed" to "fetch first unless obvious" lifted Haiku from 8/12 to **11/12, matching Sonnet**, including the one question every other condition and model had missed ([docs/40](docs/40-lens-blind.md))
-- **Safety-grade modifications (2026-08-21): contracts travel in code, not comments.** Three modification tasks on stripped once_cell designed so that atomic-ordering guarantees, the waiter-pointer state encoding, and CAS-loser cleanup decide correctness — with mechanical violation detectors (ordering scans, injected waiter tests, drop counting; all pre-validated against known-wrong implementations). Result: **18/18 passes across blind/lens/full x Haiku/Sonnet, zero contract violations** — even blind models imitate the adjacent implementation patterns, which carry the contracts. Complements docs/40: pattern-following modification survives stripping; only the "why" with no code trace (design decisions) needs the sidecar ([docs/41](docs/41-safety-mods.md))
-- **Novel-design experiment (2026-08-21): where the sidecar is necessary AND sufficient.** A synthetic crate (corvid) whose wire-protocol spec exists only in doc comments, with the functions still `todo!()` — so stripping removes the spec and there is no implementation to imitate. Deliberately anti-conventional choices (LE length counting payload only, rot-xor checksum, MSB-first varint, seq from 7 step 2) are graded per test vector against a reference implementation. Result: **blind collapses to 11–22%** (both models confidently ship plausible-but-incompatible protocols — standard LEB128, invented layouts), while **lens scores 100%, exactly matching full**, with precisely targeted fetches even from Haiku. Completes the docs/40–42 knowledge-location map: code-traceable facts and pattern-borne contracts survive stripping; comment-only knowledge is fully lost blind and fully recovered via lens ([docs/42](docs/42-novel-design.md))
-- **Zero known inexactness + CI gate (2026-08-21).** Block-form docs (`/** */`, one-line included) now restore byte-exactly via `~ form: block|inline` ledger markers, and the last known failure layout (preamble comments above `/*!` module docs, the pool.rs case) is solved by keeping preambles inline. All 10 corpora — the 9 real-crate ones plus corvid — now restore **231/231 byte-exact**. The whole pipeline is gated in CI: `tool/tests/roundtrip.rs` drives the real binary over a fixture set packing every hardened failure class plus a self-roundtrip and lens checks, wired into GitHub Actions alongside the 163-case transpiler corpus ([docs/43](docs/43-blockdoc-ci.md))
-- **Stage 3 (independent processing): not started, by design.** Triggers only when the line-based architecture causes real harm. Decision material is already documented: 2 known limits (block-in-condition statement splitting; comment ordinals within one item), both pointing to syn-based statement handling
-- **Reverse direction (Rust → Tatamu) is production-shaped**: existing Rust projects can be migrated file-by-file with a machine-checked equivalence gate (see below)
+Ledger format (`<file>.doc.md`): `## owner` sections with doc bodies and `~ above|tail|float \`anchor\`#n: text` entries; physical-line anchors with scope-qualified owners (`once_box::OnceBox::get_or_try_init`), `#n` shadows for cfg twins, indent/alignment deltas (`above+4`, `tail+1`), and form markers (`~ form: block|inline`). See [docs/36](docs/36-strip-pivot.md) and [docs/38](docs/38-subdir-hardening.md).
 
-## Verification on well-known crates
+## Project history — this began as a language
 
-The round-trip **Rust → Tatamu → Rust** was measured on 18 real crates (~7,900 files, ~3.4M lines) with the strictest available criterion: normalized-AST equivalence **including visibility** (pub/priv round-trip is machine-verified). Throughput 40–80k lines/s.
+Tatamu started (2026-08-17) as an **AI-first Rust dialect**: a 1:1 transpiled shorthand trading human writability for LLM token efficiency. That phase built a full toolchain — transpiler with structured diagnostics and cargo/FFI/wasm/mobile targets, and a syn-based reverse converter verified **AST-equivalent on 18 crates / ~3.4M lines** — and then measured its own gate: *"AI development efficiency ≥ raw Rust, plus clearly fewer tokens."*
 
-> **Measured on 2026-08-18**, against each repository's default-branch HEAD as of that date. Upstream crates evolve daily, so these exact numbers are a snapshot — re-run `experiments/rust2ttm-coverage/measure.mjs` against a fresh clone to reproduce current figures.
+The gate was **not met** on either axis (frontier models tie raw Rust exactly), and the decisive ablation showed the headline compression was never the dialect's: comment externalization alone gives −56%, the dialect only −11 pp more ([docs/35](docs/35-stage2-context.md)). So the dialect was folded, and its comment-ledger machinery became this tool ([docs/36](docs/36-strip-pivot.md)–[37](docs/37-fold-dogfood.md)).
 
-| Crate | Files equivalent | Crate | Files equivalent |
-|---|---|---|---|
-| ripgrep | 86/86 | cargo | 335/335 |
-| serde | 54/54 | wasmtime | 1529/1529 |
-| clap | 119/119 | servo | 1461/1461 |
-| tokio | 348/348 | polars | 1926/1927 ¹ |
-| regex | 175/175 | rust-analyzer | 868/869 ² |
-| syn | 78/78 | diesel | 396/396 |
-| bat | 45/45 | bevy | 1209/1209 |
-| tracing | 105/105 | rayon | 164/164 |
-| itertools | 52/52 | rand | 29/29 |
+- **Full arc summary (gate → pivot → validation)**: [docs/44](docs/44-pivot-summary.md)
+- **Whole-project overview**: [docs/45](docs/45-project-overview.md) · **Chronological record with all links**: [docs/46](docs/46-timeline.md)
+- Legacy assets remain functional: `transpiler/` (tatamuc, 163-case unit corpus in CI), `dogfood/rust2ttm/` (frozen `.ttm` sources), [docs/tatamu-spec.md](docs/tatamu-spec.md) (dialect spec v0.5)
 
-¹ One file uses `&& { … }` block-in-condition (linted by clippy); recorded as a Stage 3 trigger.
-² `minicore.rs` uses nightly-only macros 2.0 / `builtin #` syntax that syn itself cannot parse (input-side limit).
+## Repository layout
 
-Zero panics, zero silent corruption: every non-equivalent file fails **detectably**. Full history: [docs/31](docs/31-crate-coverage.md), [docs/32](docs/32-extreme-coverage.md).
-
-## Layout
-
-| Path | Contents |
+| path | role |
 |---|---|
-| `transpiler/` | tatamuc (expand / diagnostics / project generation / bindings), test corpora |
-| `dogfood/` | Real projects written in Tatamu: rust2ttm (the syn-based converter itself), ttmstat (token-stats CLI), mdlite (Markdown→HTML: CLI / wasm browser demo / Flutter iOS+Android) |
-| `docs/` | Language spec + complete experiment log (00–33, chronological) |
-| `experiments/` | Token measurements, LLM generation runs, FFI/wasm, crate coverage harness |
+| `tool/` | **canonical**: the `tatamu` binary (strip/restore/roundtrip/owners/show/notes) + integration tests |
+| `docs/00–46` | complete chronological record: every measurement, decision and pivot |
+| `experiments/` | reproducible experiment harnesses (gate measurements, lens/blind/safety/novel-design) |
+| `transpiler/`, `dogfood/` | legacy dialect toolchain (kept green in CI) |
+| `.github/workflows/ci.yml` | roundtrip gate + unit corpora on every push/PR |
+
+License: MIT (planned for publication).
 
 ---
 
 # Tatamu(畳む) — 日本語
 
-AI(LLM)がコードを書くことを第一に設計された、Rust への 1:1 トランスパイル言語の PoC。想定ユースケースは「Rust で大規模開発をするチームが、人間の書きやすさを捨ててでも AI の開発効率を最大化したい場面」。
+**Rust ソースのコメント・doc を完全可逆に外部化し、AI が必要な時だけ引き戻す — 文脈トークンを 50〜60% 削減、失うバイトはゼロ。**
 
-- **畳む**: Rust より明らかに少ないトークン — 実測 手書き idiomatic Rust 比 **−42.2%**、LLM 生成 Rust 比 27〜45%
-- **広げる**: `tatamuc` が通常の Rust / cargo プロジェクトに機械展開(意味論は Rust と完全に同一)
-- **AI 開発効率 ≧ Rust**: 圧縮は機械的に復元可能な省略に限定し、LLM の Rust 知識がそのまま転移(実測: 4 Claude モデルでコンパイル 24/24 = 素の Rust と同率、規則違反ゼロ)
-
-## 利用方法(Usage)
-
-### LLM に Tatamu を書かせる
-
-エディタプラグインやレジストリはありません。想定ワークフローは、次の2ファイルを LLM のコンテキスト/システムプロンプトへ**手作業でコピー**することです:
-
-1. **ルールファイル(few-shot 付き圧縮仕様)**: [`experiments/llm-generation/prompt-tatamu.md`](experiments/llm-generation/prompt-tatamu.md) — これだけでフロンティアモデルは正しい Tatamu を書けます
-2. **言語仕様(Rust 差異対照表つき統合版)**: [`docs/tatamu-spec.md`](docs/tatamu-spec.md) — 正式リファレンス
-
-生成された `.ttm` に対して下記ツールを使います。
-
-### ツール一覧
-
-| ツール | 用途 |
-|---|---|
-| `transpiler/tatamuc.mjs` | トランスパイラ本体。展開(デフォルト)/ `--check`(修正提案付き JSON 診断)/ `--compile`(rustc/cargo 型検査、エラーを `.ttm` 座標へ逆マップ)/ `--project`(cargo プロジェクト生成: `.rs` + C ヘッダ + JS/TS/Dart バインディング)/ `--header` / `--jsbind` / `--dts` / `--dartbind` / `--docs`(サイドカーの doc・コメントを Rust に再結合)/ `--doc-check` / `--doc-sync`(サイドカー鮮度管理) |
-| `dogfood/rust2ttm/` | **Rust → Tatamu 変換器**(Tatamu 自身で書かれた syn ベース実装)。`convert`(Rust ディレクトリ → `.ttm` + doc/コメントサイドカー)/ `compare`(2つの Rust の正規化 AST 同値検証) |
-| `dogfood/rust2ttm/verify-roundtrip.sh` | ワンコマンドの往復ゲート(Rust → Tatamu → Rust の全ファイル AST 同値検証) |
-| `experiments/rust2ttm-coverage/measure.mjs` | クレート全量の往復測定(ファイル単位で 変換→展開→比較) |
-| `experiments/rust2ttm-coverage/diag.mjs` | 単一ファイルの往復診断(rustc によるエラー位置特定付き) |
-| `transpiler/unit-tests.mjs` | ユニットコーパス(158 ケース。全バグ修正に最小再現を追加する運用) |
-| `transpiler/test.mjs` | サニティコーパス(29 プログラム) |
-| `transpiler/compile-test.mjs` | rustc 型検査コーパス(要 Rust) |
+`tatamu` はコメント・doc をアンカー付きサイドカー台帳へ「畳み」、バイト完全一致で「広げ」ます。コードは1文字も再整形しません。エージェントは軽くなったコードを文脈に常駐させ、「なぜ」が必要になった項目だけを従量取得します。
 
 ```sh
-node transpiler/tatamuc.mjs file.ttm             # Rust に展開
-node transpiler/tatamuc.mjs --check file.ttm     # 構文診断(LLM 向け修正提案付き JSON)
-node transpiler/tatamuc.mjs --compile <file|dir> # 型検査 → エラーを .ttm 座標に逆マップ
-node transpiler/tatamuc.mjs --project src out    # cargo プロジェクト + FFI バインディング生成
+tatamu strip src/ stripped/        # コメント・doc を外部化(コード無変更、AST 自己検査)
+tatamu owners stripped/            # 全アイテムを file:行範囲 付きで列挙
+tatamu notes stripped/ MyType::run # 1項目の doc・コメントだけ取得
+tatamu restore stripped/ back/     # バイト完全一致で復元
+tatamu roundtrip src/ work/        # ゲート: strip∘restore∘strip 不動点+バイト一致
 ```
 
-## 現在の Stage と今後
+## なぜ
 
-**Stage 2 ゲート敗北からコメント外部化への転回と、その検証まで(docs/34〜43)の総括は [docs/44](docs/44-pivot-summary.md)。**
+よく文書化された Rust は AI 文脈で高くつきます — once_cell はトークンの **56%**(Claude トークナイザ実測)、regex-automata はバイトの **62%** がコメント・doc。しかし消せば、コードのどこにも痕跡が無い「なぜ」を失う。`tatamu` はこのトレードオフを解消します: 外部化は完全可逆で、サイドカーはいつでも照会できます。
 
-段階計画([docs/00](docs/00-concept.md)): 方言 → 独自意味論 → 独自処理系 → エコシステム。
+フルクレート実測(バイト): regex-automata **−62%** / once_cell −56% / memchr −48% / serde_core −36% / serde_derive −10%。削減率はコメント密度に比例します(doc 文化のあるクレートで最大、コメントの無いコードではゼロ)。
 
-- **Stage 1(Rust トークン節約方言): ゲートクリア済み。** トークン削減 30% 以上を実測(27〜45%、手書き Rust 比 −42.2%)、LLM コンパイル成功 24/24 = 素の Rust と同率
-- **Stage 2(AI 向け機能): 実装完了、ゲートは実測の結果「未達」。** 構造化診断・プロジェクト生成・帯域外 doc/コメント台帳(AST パスアンカー)・C/JS/TS/Dart FFI・wasm/モバイルターゲットは全て実装・検証済み。ゲートは2軸で実測し、いずれも未達。修正ループ軸([docs/34](docs/34-stage2-gate.md)): フロンティアモデルでは素の Rust と完全同等で改善なし。大規模文脈軸([docs/35](docs/35-stage2-context.md)): コードベース全体を文脈に載せた理解・変更課題で正答率は完全同点(Sonnet 24/24 vs 24/24、修正課題は両条件とも全て一発成功)— docs/34 で観測された方言税は、コードベース自体が few-shot 実例として働くことで消滅した。Claude 自身のトークナイザによる実測では、方言そのものの圧縮は独立2素材で頑健に **−11%**。見出し級の圧縮(−56%)の主役はコメント・doc の帯域外化であり、それは方言を必要としない
-- **方針転回(2026-08-19): 素の Rust 向けコメント外部化。** ゲート結果を受け、圧縮機構を素の Rust に直接適用する方向へ転回: `rust2ttm strip` がコメント・doc をアンカー付きサイドカー台帳へ退避(**コードは1文字も再整形しない**。SAFETY コメントはインライン温存、マクロ本体は不可侵)、`restore` が元位置へ復元、`roundtrip` が往復を検証する。5コーパス・25ファイルで検証済み: AST 検査 25/25、strip∘restore∘strip 不動点 25/25、バイト完全一致復元 22/25(非一致3件は意図的な `/*! */`→`//!` 形式正規化)。once_cell の Claude トークン実測で **方言ゼロのまま −53.2%**([docs/36](docs/36-strip-pivot.md))。正準実装は素の Rust クレート `tool/`(バイナリ名 `tatamu`、.ttm ソースは legacy として凍結)に移行済みで、従量参照サブコマンド `owners` / `show` / `notes` により、エージェントは stripped コードを文脈に置いたまま必要な項目の「なぜ」だけを取得できる([docs/37](docs/37-fold-dogfood.md))
-- **実クレート硬化(2026-08-20): サブディレクトリ再帰・226ファイル検証。** `strip`/`restore`/`roundtrip`/`owners` がサブディレクトリを再帰処理(symlink はスキップ)するようになり、公開クレートをそのまま扱える。serde_core / serde_derive / regex-syntax / regex-automata / memchr のフルソースに適用したところ、往復ゲートが実世界の故障クラス9種(cfg 双子定義、多行属性、rustfmt 折返し where 句、enum struct 風 variant のフィールド、fn ローカル item、`macro_rules!` doc、URL 内 `/*` 誤認、台帳アンカーのパース、コメント桁揃え)を検出 — 全て修正し、台帳フォーマットを `/*! */` ブロック形式保持・インデント/桁揃えデルタ・前書き順序に対応拡張した。最終成績は9コーパス・226ファイルで **不動点 226/226、バイト完全一致 225/226**(唯一の非一致も intro 位置の移動のみで情報欠損ゼロ)。フルクレートでの圧縮はコメント密度に比例するという予測どおり: regex-automata **−62%**、memchr −48%、once_cell −56%、serde_derive −10%([docs/38](docs/38-subdir-hardening.md))
-- **fresh-context 実証(2026-08-20): 従量参照は成立する。** 新しい文脈に stripped な once_cell だけを渡し、`tatamu notes` をログ付きシェルツールとして許可したモデルは、コメント込みベースラインと完全同成績(Haiku・Sonnet とも理解12問 12/12、改修2課題一発成功、両条件)。参照の選別はほぼ理想的 — doc にしか答えがない問題 16 件中 9 件で notes を引き、**コードから分かる問題では 8 件中 0 件**。ツール往復を含めても総コストは full 条件より約2割安。(a) パスの中核仮説「読みは安く、why は必要な時だけ」が端から端まで実測で成立([docs/39](docs/39-lens-fresh.md))
-- **ブラインド×大規模(2026-08-20): フロンティアでは lens が full を上回り、圧縮が「入るか入らないか」を決めた。** 10倍規模(memchr フル45ファイル)・自由記述 judge 採点・ブラインド条件(サイドカーの存在を秘匿)で再実験: コメント込み memchr は**エージェントハーネス込みで Haiku の 200k 文脈に入らない(~205k tok)が、stripped なら余裕で入る** — 外部化がそのまま fits/doesn't-fit の分水嶺に。Sonnet は **lens 11/12 vs full(コメント文脈常駐)10/12**(blind 10/12)で、notes は「コメントにしか答えが無い3問」にだけ発火して全て正解化 — うち1問は full ですら落とした問い。新しい限界も特定: Haiku は 80k tok 文脈でフェッチ判断が崩壊(12問中1回。11k tok では的確だった)= 小モデルにはハーネス側の誘導が要る。コストも stripped+lens が full 比 −32%。追試: 小モデルの弱点はプロンプトで直る — lens 案内を「必要なら使え」から「まず引け(自明な時だけ省略可)」に変えるだけで Haiku は 8/12 → **11/12(Sonnet 同点)**、全条件・全モデルが落としていた1問まで正解化([docs/40](docs/40-lens-blind.md))
-- **SAFETY 級改修実験(2026-08-21): 契約はコメントでなくコードが運ぶ。** atomic ordering 保証・waiter ポインタの状態エンコード・CAS 敗者の解放が正否を分けるよう設計した3改修課題(違反は ordering スキャン・waiter 注入テスト・Drop カウンタで機械検出、既知の間違い実装で事前検証済み)を stripped once_cell に適用。結果は **blind/lens/full × Haiku/Sonnet の18ラン全合格・契約違反ゼロ** — blind でもモデルは隣接実装パターンを模倣し、そこに契約が刻まれている。docs/40 と相補: パターン追従の改修は strip で劣化せず、コードに痕跡の無い「why」(設計判断)だけがサイドカーを必要とする([docs/41](docs/41-safety-mods.md))
-- **新規設計実験(2026-08-21): サイドカーが必要十分である領域の実証。** ワイヤプロトコル仕様が doc コメントにしか存在せず関数が `todo!()` のままの合成クレート(corvid)— strip すると仕様が消え、模倣対象も無い。反慣習の決定点(LE 長・payload のみ・rot-xor チェックサム・MSB 先行 varint・seq 7 始まり+2)を参照実装ベクタで採点した結果: **blind は 11〜22% に崩壊**(両モデルとも標準 LEB128 や独自レイアウトを確信を持って出荷)、**lens は 100% で full と完全同点**(Haiku でも課題あたり2〜3回の的確な参照)。docs/40〜42 で知識所在マップが完成: コード痕跡のある事実とパターンが運ぶ契約は strip に耐え、コメントのみが担う知識は blind で完全に失われ lens で完全に回収される([docs/42](docs/42-novel-design.md))
-- **既知の非一致ゼロ+CI ゲート化(2026-08-21)。** ブロック形式 doc(`/** */`、一行形式含む)を台帳マーカー `~ form: block|inline` でバイト一致復元し、最後の既知非一致レイアウト(`/*!` より前の前書きコメント=pool.rs 型)は前書きの inline 温存で根治。実クレート9種+corvid の全10コーパスが **231/231 バイト完全一致**に。パイプライン全体を CI 化: `tool/tests/roundtrip.rs` が実バイナリで「故障クラス全部入りフィクスチャ+自己 roundtrip+lens 検査」を駆動し、GitHub Actions で 163 ケースの transpiler コーパスとともに常時実行([docs/43](docs/43-blockdoc-ci.md))
-- **Stage 3(独自処理系): 意図的に未着手。** 行ベース設計が実害を生んだ時点で着手する条件付き。判断材料は文書化済み: 既知の限界2件(条件位置ブロック式の文分割、アイテム内コメント序数)がいずれも「文分割の syn 化」を指している
-- **逆方向(Rust → Tatamu)は実運用形**: 既存 Rust プロジェクトを、機械検証付きの同値ゲートのもとでファイル単位に移行できる(下記)
+## 保証
 
-## 既存著名クレートに対する検証結果
+- **バイト完全一致の復元**: 10コーパス・231ファイル(once_cell / serde 系 / regex 系 / memchr / 自分自身 / 合成クレート)で **231/231、既知の非一致クラスゼロ**([docs/43](docs/43-blockdoc-ci.md))
+- 構成による意味安全: コード行はコピーのみで再整形しない+doc 除去 AST 同値の自己検査
+- SAFETY コメント(継続行込み)・素の `/* */`・ファイル前書きは inline 温存。`/*!`・`/** */` の形式は台帳マーカーで保存
+- パイプライン全体を CI でゲート化(故障クラス全部入りフィクスチャ+自己 roundtrip+lens 検査)
 
-**Rust → Tatamu → Rust** の往復を、実在の18クレート(約7,900ファイル・約340万行)で、最も厳しい基準 — **可視性込み**の正規化 AST 同値(pub/priv の往復も機械検証)— で測定した。スループット 40〜80k 行/秒。
+## 実験が示したこと
 
-> **測定日: 2026-08-18**(各リポジトリの同日時点デフォルトブランチ HEAD が対象)。上流クレートは日々更新されるため、この数値はスナップショットである。最新値は `experiments/rust2ttm-coverage/measure.mjs` を新規 clone に対して再実行することで再現できる。
+対照実験4本(Haiku 4.5+Sonnet 5 × blind/lens/full)で「外部化が何を失わせ、従量参照が何を回収するか」を知識クラス別に確定しました:
 
-| クレート | 同値 | クレート | 同値 |
+| 知識のクラス | 所在 | strip の影響 | 根拠 |
 |---|---|---|---|
-| ripgrep | 86/86 | cargo | 335/335 |
-| serde | 54/54 | wasmtime | 1529/1529 |
-| clap | 119/119 | servo | 1461/1461 |
-| tokio | 348/348 | polars | 1926/1927 ¹ |
-| regex | 175/175 | rust-analyzer | 868/869 ² |
-| syn | 78/78 | diesel | 396/396 |
-| bat | 45/45 | bevy | 1209/1209 |
-| tracing | 105/105 | rayon | 164/164 |
-| itertools | 52/52 | rand | 29/29 |
+| コードに痕跡のある事実 | コード | 無害(blind でも正答) | [docs/39](docs/39-lens-fresh.md)・[40](docs/40-lens-blind.md) |
+| 実装パターンに刻まれた契約(ordering・状態機械・解放) | 隣接コード | 無害(模倣で正しく書ける。改修18ラン違反ゼロ) | [docs/41](docs/41-safety-mods.md) |
+| 設計判断の why(やらない理由) | コメントのみ | blind で喪失 → `notes` で回収 | [docs/40](docs/40-lens-blind.md) |
+| 実装が存在しない仕様 | コメントのみ | **blind は 11〜22% に崩壊(確信を持って非互換実装)、lens は 100% で full と同点** | [docs/42](docs/42-novel-design.md) |
 
-¹ 条件位置ブロック式 `&& { … }`(clippy が警告する稀構文)を含む1ファイル。Stage 3 移行の判断材料として記録。
-² `minicore.rs` は nightly 限定の macros 2.0 / `builtin #` 構文を含み、syn 自体がパース不可(入力側の限界)。
+ハイライト: 参照の選別はほぼ理想(コードで分かる問いへの無駄引き 0/8)/**フロンティアでは lens がコメント常駐 full を上回る**(Sonnet 11/12 vs 10/12、コスト −20〜32%)/コメント込み memchr はハーネス込みで 200k 文脈に入らないが stripped なら 80k — **圧縮が fits/doesn't-fit を決める**/小モデルは案内文を「必要なら使え」→**「まず引け(自明な時だけ省略可)」**にするだけで Sonnet 同点。
 
-パニック・静かな破壊はゼロ — 同値でないファイルはすべて**検出可能な形で**失敗する。全経緯: [docs/31](docs/31-crate-coverage.md)、[docs/32](docs/32-extreme-coverage.md)。
+## 使い方
+
+```sh
+cargo build --release --manifest-path tool/Cargo.toml
+```
+
+stripped コードをエージェントに渡す際の推奨文言(実験で検証済みの言い回し):
+
+> このコードベースはコメント・doc がサイドカー台帳に外部化されている(それ以外はバイト同一)。`./owners` で一覧、`./notes <名前>` で1項目の doc・コメントを取得(接尾一致、モジュール doc はファイル stem)。**コードを書く前に、変更・模倣する項目の `./notes` を必ず引くこと** — コードから自明な場合のみ省略してよい。
+
+台帳フォーマットの詳細は [docs/36](docs/36-strip-pivot.md)・[docs/38](docs/38-subdir-hardening.md)。
+
+## 経緯 — このプロジェクトは言語として始まった
+
+Tatamu は 2026-08-17 に **AI-first な Rust 方言**(人間の書きやすさを捨てて LLM のトークン効率を取る 1:1 変換言語)として始まり、トランスパイラ・構造化診断・cargo/FFI/wasm/モバイル出力・**18クレート約340万行で AST 同値 100%** の逆変換器まで作った上で、自ら定義したゲート「AI にとって Rust と同等以上+明確なトークン削減」を実測しました。
+
+結果は **2軸とも未達**(フロンティアモデルは素の Rust と完全同点)。決定打はアブレーションで、圧縮の主役は方言ではなくコメント外部化(−56% vs 方言 −11%)と判明([docs/35](docs/35-stage2-context.md))。方言は畳まれ、そのコメント台帳機構が本ツールになりました([docs/36](docs/36-strip-pivot.md)〜[37](docs/37-fold-dogfood.md))。
+
+- **転回篇の総括**: [docs/44](docs/44-pivot-summary.md) / **全体統括**: [docs/45](docs/45-project-overview.md) / **時系列(全リンク付き)**: [docs/46](docs/46-timeline.md)
+- legacy 資産は現役のまま保存: `transpiler/`(tatamuc、unit 163 ケースを CI 維持)、`dogfood/rust2ttm/`(.ttm 正準ソース凍結)、[docs/tatamu-spec.md](docs/tatamu-spec.md)(方言仕様 v0.5)
 
 ## 構成
 
-| パス | 内容 |
+| パス | 役割 |
 |---|---|
-| `transpiler/` | tatamuc(展開・診断・プロジェクト生成・バインディング)、テストコーパス |
-| `dogfood/` | Tatamu 自身で書いた実プロジェクト: rust2ttm(syn ベース変換器そのもの)、ttmstat(トークン統計 CLI)、mdlite(Markdown→HTML。CLI / wasm ブラウザデモ / Flutter iOS・Android 実機動作) |
-| `docs/` | 言語仕様と全実験記録(00〜33、時系列) |
-| `experiments/` | トークン実測、LLM 生成実験、FFI/wasm、クレート網羅測定ハーネス |
+| `tool/` | **正準**: `tatamu` バイナリ(strip/restore/roundtrip/owners/show/notes)+統合テスト |
+| `docs/00〜46` | 全測定・全判断・全転換の時系列記録 |
+| `experiments/` | 再現可能な実験ハーネス群 |
+| `transpiler/`・`dogfood/` | legacy 方言ツールチェーン(CI で green 維持) |
+| `.github/workflows/ci.yml` | push/PR ごとの roundtrip ゲート+ユニットコーパス |
+
+ライセンス: MIT(公開時も MIT 予定)。
