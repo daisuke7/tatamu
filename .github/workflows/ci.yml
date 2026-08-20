@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tool:
+    name: tatamu (strip/restore/roundtrip/lens)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: build (deny warnings)
+        run: cargo build --manifest-path tool/Cargo.toml
+        env:
+          RUSTFLAGS: -D warnings
+      - name: integration gate (fixtures + self roundtrip, byte-exact)
+        run: cargo test --manifest-path tool/Cargo.toml
+
+  transpiler:
+    name: tatamuc unit corpus
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node transpiler/unit-tests.mjs

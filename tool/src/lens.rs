@@ -110,7 +110,7 @@ fn sidecar_sections(file: &str) -> Vec<crate::strip::Section> {
     };
     match fs::read_to_string(&sc_path) {
         Ok(s) => {
-            let (intro, _, mut sections) = parse_strip_sidecar(&s);
+            let (intro, intro_block, mut sections) = parse_strip_sidecar(&s);
             if !intro.is_empty() {
                 let stem = std::path::Path::new(file)
                     .file_stem()
@@ -121,6 +121,7 @@ fn sidecar_sections(file: &str) -> Vec<crate::strip::Section> {
                     crate::strip::Section {
                         owner: stem,
                         docs: intro,
+                        docs_form: if intro_block { 1 } else { 0 },
                         notes: Vec::new(),
                     },
                 );

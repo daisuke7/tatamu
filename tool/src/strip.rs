@@ -28,6 +28,9 @@ pub(crate) struct SLine {
     /// (text, spaces between code end and `//` — alignment padding)
     pub tail: Option<(String, usize)>,
     pub docs: Vec<String>,
+    /// doc form of `docs`: 0 = `///` lines, 1 = multi-line `/** */` block,
+    /// 2 = single-line `/** ... */`
+    pub docs_form: u8,
 }
 struct Stripped {
     pub text: String,
@@ -65,6 +68,21 @@ fn cut_line_comment(
         }
     }
 }
+/// Comments sitting above the module docs (a file preamble) cannot be
+/// re-anchored through the ledger without disturbing the intro's position,
+/// so they stay inline: when the intro starts, flush them back into the
+/// output just before any trailing blank lines.
+fn flush_preamble(out: &mut Vec<String>, pending: &mut Vec<AboveNote>) {
+    let mut at = out.len();
+    while at > 0 && out[at - 1].trim().is_empty() {
+        at -= 1;
+    }
+    let lines: Vec<String> = pending
+        .drain(..)
+        .map(|n| format!("{}//{}", " ".repeat(n.indent), comment_body(&n.text)))
+        .collect();
+    out.splice(at..at, lines);
+}
 fn indent_col(l: &str) -> usize {
     l.len() - l.trim_start().len()
 }
@@ -73,6 +91,7 @@ fn strip_source(src: &str) -> Stripped {
     let mut slines: Vec<SLine> = Vec::new();
     let mut pending_above: Vec<AboveNote> = Vec::new();
     let mut pending_docs: Vec<String> = Vec::new();
+    let mut docs_form: u8 = 0;
     let mut intro: Vec<String> = Vec::new();
     let mut intro_block = false;
     let mut in_block = false;
@@ -91,6 +110,7 @@ fn strip_source(src: &str) -> Stripped {
                 above: std::mem::take(&mut pending_above),
                 tail: None,
                 docs: std::mem::take(&mut pending_docs),
+                docs_form: std::mem::take(&mut docs_form),
             });
             continue;
         }
@@ -107,6 +127,7 @@ fn strip_source(src: &str) -> Stripped {
                     above: std::mem::take(&mut pending_above),
                     tail: None,
                     docs: std::mem::take(&mut pending_docs),
+                    docs_form: std::mem::take(&mut docs_form),
                 });
             }
             continue;
@@ -127,9 +148,14 @@ fn strip_source(src: &str) -> Stripped {
                         line[..e].trim().is_empty() && line[e + 2..].trim().is_empty();
                     if block_mode == 1 && intro_block && clean_close {
                         // standalone `*/` closing a clean module-doc block
+                    } else if block_mode == 2 && docs_form == 1 && clean_close {
+                        // standalone `*/` closing a clean item-doc block
                     } else {
                         if block_mode == 1 && intro_block {
                             intro_block = false;
+                        }
+                        if block_mode == 2 && docs_form != 0 {
+                            docs_form = 0;
                         }
                         let t = line[..e].trim().to_string();
                         push_block_text(
@@ -150,6 +176,9 @@ fn strip_source(src: &str) -> Stripped {
                     if block_mode == 1 && intro_block {
                         // inside a clean `/*!` block: keep the line verbatim
                         intro.push(line.clone());
+                    } else if block_mode == 2 && docs_form == 1 {
+                        // inside a clean `/** */` block: keep the line verbatim
+                        pending_docs.push(line.clone());
                     } else {
                         let t = line.trim().to_string();
                         push_block_text(
@@ -201,6 +230,15 @@ fn strip_source(src: &str) -> Stripped {
                     let txt = line[s + 2 + mstrip..s + 2 + mstrip + rel]
                         .trim()
                         .to_string();
+                    if mode == 2 {
+                        let clean_oneline = standalone
+                            && line[s + 4 + mstrip + rel..].trim().is_empty()
+                            && pending_docs.is_empty();
+                        docs_form = if clean_oneline { 2 } else { 0 };
+                    }
+                    if mode == 1 && intro.is_empty() && slines.is_empty() {
+                        flush_preamble(&mut out, &mut pending_above);
+                    }
                     push_block_text(
                         txt,
                         mode,
@@ -222,13 +260,22 @@ fn strip_source(src: &str) -> Stripped {
                         keep_whole = true;
                         break;
                     }
+                    if mode == 1 && intro.is_empty() && slines.is_empty() {
+                        flush_preamble(&mut out, &mut pending_above);
+                    }
                     if mode == 1 && standalone && txt.is_empty() && intro.is_empty() {
                         // clean `/*!` opener on its own line: remember the
                         // block form instead of pushing an empty intro line
                         intro_block = true;
+                    } else if mode == 2 && standalone && txt.is_empty() && pending_docs.is_empty() {
+                        // clean `/**` opener on its own line
+                        docs_form = 1;
                     } else {
                         if mode == 1 {
                             intro_block = false;
+                        }
+                        if mode == 2 {
+                            docs_form = 0;
                         }
                         push_block_text(
                             txt,
@@ -265,12 +312,17 @@ fn strip_source(src: &str) -> Stripped {
         }
         safety_cont = false;
         if t.starts_with("//!") {
+            if intro.is_empty() && !intro_block && slines.is_empty() {
+                flush_preamble(&mut out, &mut pending_above);
+            }
             // mixing `//!` lines with a `/*!` block falls back to line form
             intro_block = false;
             intro.push(t[3..].strip_prefix(" ").unwrap_or(&t[3..]).to_string());
             continue;
         }
         if t.starts_with("///") && !t.starts_with("////") {
+            // mixing `///` lines with a `/** */` block falls back to line form
+            docs_form = 0;
             pending_docs.push(t[3..].strip_prefix(" ").unwrap_or(&t[3..]).to_string());
             continue;
         }
@@ -323,6 +375,7 @@ fn strip_source(src: &str) -> Stripped {
             above: std::mem::take(&mut pending_above),
             tail,
             docs: std::mem::take(&mut pending_docs),
+            docs_form: std::mem::take(&mut docs_form),
         });
         let d = crate::textual::macro_open_depth(&strip_lits(&code));
         if d > 0 {
@@ -338,12 +391,22 @@ fn strip_source(src: &str) -> Stripped {
             comment_body(&n.text)
         ));
     }
-    for d in &pending_docs {
-        out.push(if d.is_empty() {
-            "///".to_string()
-        } else {
-            format!("/// {d}")
-        });
+    if docs_form == 1 && !pending_docs.is_empty() {
+        out.push("/**".to_string());
+        out.extend(pending_docs.iter().cloned());
+        out.push("*/".to_string());
+    } else if docs_form == 2 && !pending_docs.is_empty() {
+        for d in &pending_docs {
+            out.push(format!("/** {d} */"));
+        }
+    } else {
+        for d in &pending_docs {
+            out.push(if d.is_empty() {
+                "///".to_string()
+            } else {
+                format!("/// {d}")
+            });
+        }
     }
     Stripped {
         text: format!("{}\n", out.join("\n")),
@@ -595,13 +658,14 @@ fn phys_keys(
 fn collect_strip(
     slines: &[SLine],
     has_intro: bool,
-) -> (Vec<LedgerEntry>, Vec<(String, Vec<String>)>) {
+) -> (Vec<LedgerEntry>, Vec<(String, Vec<String>, u8)>) {
     let joined = join_raw(slines);
     let owners = owner_walk(&joined);
     let keys = phys_keys(slines, &joined, &owners);
     let mut entries = Vec::new();
-    let mut docs: Vec<(String, Vec<String>)> = Vec::new();
+    let mut docs: Vec<(String, Vec<String>, u8)> = Vec::new();
     let mut doc_pool: Vec<String> = Vec::new();
+    let mut doc_pool_form: u8 = 0;
     // Items redeclared under a different cfg (std/no_std variants) share an
     // owner label; the n-th declaration gets an `#n` shadow so its docs can
     // find their way back to the right one.
@@ -612,6 +676,9 @@ fn collect_strip(
             *decl_occ.entry(owner.clone()).or_default() += 1;
         }
         for i in j.lo..=j.hi {
+            if !slines[i].docs.is_empty() {
+                doc_pool_form = slines[i].docs_form;
+            }
             doc_pool.extend(slines[i].docs.iter().cloned());
         }
         if *resolved && !doc_pool.is_empty() {
@@ -621,7 +688,11 @@ fn collect_strip(
             } else {
                 owner.clone()
             };
-            docs.push((name, std::mem::take(&mut doc_pool)));
+            docs.push((
+                name,
+                std::mem::take(&mut doc_pool),
+                std::mem::take(&mut doc_pool_form),
+            ));
         } else if !*resolved && !doc_pool.is_empty() && !t_is_attr(&j.text) {
             doc_pool.clear();
             eprintln!(
@@ -708,13 +779,13 @@ fn render_strip_sidecar(
     mod_name: &str,
     intro: &[String],
     intro_block: bool,
-    docs: &[(String, Vec<String>)],
+    docs: &[(String, Vec<String>, u8)],
     entries: &[LedgerEntry],
 ) -> String {
     if intro.is_empty() && docs.is_empty() && entries.is_empty() {
         return String::new();
     }
-    let mut owners: Vec<String> = docs.iter().map(|(n, _)| n.clone()).collect();
+    let mut owners: Vec<String> = docs.iter().map(|(n, _, _)| n.clone()).collect();
     for e in entries {
         if !owners.iter().any(|n| *n == e.owner) {
             owners.push(e.owner.clone())
@@ -734,8 +805,13 @@ fn render_strip_sidecar(
     for name in &owners {
         doc.push_str(&format!("\n## {name}\n\n"));
         let mut had_docs = false;
-        for (n, body) in docs {
+        for (n, body, form) in docs {
             if n == name {
+                if *form == 1 {
+                    doc.push_str("~ form: block\n");
+                } else if *form == 2 {
+                    doc.push_str("~ form: inline\n");
+                }
                 for l in body {
                     doc.push_str(&esc(l));
                     doc.push('\n');
@@ -766,6 +842,8 @@ fn render_strip_sidecar(
 pub(crate) struct Section {
     pub owner: String,
     pub docs: Vec<String>,
+    /// doc form: 0 = `///` lines, 1 = multi-line `/** */`, 2 = one-line `/** */`
+    pub docs_form: u8,
     pub notes: Vec<(String, String, usize, String)>,
 }
 fn parse_note(l: &str) -> Option<(String, String, usize, String)> {
@@ -811,6 +889,7 @@ pub(crate) fn parse_strip_sidecar(s: &str) -> (Vec<String>, bool, Vec<Section>) 
             sections.push(Section {
                 owner: name.trim().to_string(),
                 docs: Vec::new(),
+                docs_form: 0,
                 notes: Vec::new(),
             });
             in_intro = false;
@@ -828,6 +907,16 @@ pub(crate) fn parse_strip_sidecar(s: &str) -> (Vec<String>, bool, Vec<Section>) 
             Some(s) => s,
             None => continue,
         };
+        if sec.docs.is_empty() && sec.notes.is_empty() {
+            if l == "~ form: block" {
+                sec.docs_form = 1;
+                continue;
+            }
+            if l == "~ form: inline" {
+                sec.docs_form = 2;
+                continue;
+            }
+        }
         if l.starts_with("~ ") {
             if let Some(n) = parse_note(l) {
                 sec.notes.push(n);
@@ -854,6 +943,7 @@ pub(crate) fn code_lines_of(stripped: &str) -> (Vec<SLine>, Vec<usize>) {
                 above: Vec::new(),
                 tail: None,
                 docs: Vec::new(),
+                docs_form: 0,
             });
             phys.push(i);
             continue;
@@ -881,6 +971,7 @@ pub(crate) fn code_lines_of(stripped: &str) -> (Vec<SLine>, Vec<usize>) {
             above: Vec::new(),
             tail: None,
             docs: Vec::new(),
+            docs_form: 0,
         });
         phys.push(i);
     }
@@ -975,15 +1066,29 @@ fn restore_source(stripped: &str, sidecar: &str) -> String {
                     p -= 1
                 }
                 let slot = by_line.entry(p).or_default();
-                for d in &sec.docs {
-                    slot.push((
-                        1,
-                        if d.is_empty() {
-                            format!("{ind}///")
-                        } else {
-                            format!("{ind}/// {d}")
-                        },
-                    ));
+                if sec.docs_form == 1 {
+                    // reproduce the original `/** ... */` block form; inner
+                    // lines were captured verbatim
+                    slot.push((1, format!("{ind}/**")));
+                    for d in &sec.docs {
+                        slot.push((1, d.clone()));
+                    }
+                    slot.push((1, format!("{ind}*/")));
+                } else if sec.docs_form == 2 {
+                    for d in &sec.docs {
+                        slot.push((1, format!("{ind}/** {d} */")));
+                    }
+                } else {
+                    for d in &sec.docs {
+                        slot.push((
+                            1,
+                            if d.is_empty() {
+                                format!("{ind}///")
+                            } else {
+                                format!("{ind}/// {d}")
+                            },
+                        ));
+                    }
                 }
             } else {
                 eprintln!("restore: no target for docs of `{}`", sec.owner);
@@ -1061,10 +1166,18 @@ fn restore_source(stripped: &str, sidecar: &str) -> String {
             out.push_str(l);
             out.push('\n');
         }
-    } else {
-        // route the module docs through the same slot as line-0 comments so
-        // a `^` preamble comment can sort above them
-        let slot = by_line.entry(0).or_default();
+    } else if !intro_lines.is_empty() {
+        // The module docs sit below any preamble comment block kept inline in
+        // the stripped file: skip the leading run of comment lines plus one
+        // separating blank, then insert.
+        let mut islot = 0;
+        while islot < lines.len() && cmap[islot] {
+            islot += 1;
+        }
+        if islot > 0 && islot < lines.len() && lines[islot].trim().is_empty() {
+            islot += 1;
+        }
+        let slot = by_line.entry(islot).or_default();
         for l in intro_lines.iter().rev() {
             slot.insert(0, (1, l.clone()));
         }
