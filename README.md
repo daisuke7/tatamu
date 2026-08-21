@@ -70,6 +70,8 @@ Ledger format (`<file>.doc.md`): `## owner` sections with doc bodies and `~ abov
 
 ## Project history — this began as a language
 
+**The entire five days — every measurement, failure, and decision, day by day (2026-08-17 to 08-21), with links into all the original reports — is recorded in [docs/46: the chronological record](docs/46-timeline.md).** What follows here is the short version.
+
 Tatamu started (2026-08-17) as an **AI-first Rust dialect**: a 1:1 transpiled shorthand trading human writability for LLM token efficiency. That phase built a full toolchain — transpiler with structured diagnostics and cargo/FFI/wasm/mobile targets, and a syn-based reverse converter verified **AST-equivalent on 18 crates / ~3.4M lines** — and then measured its own gate: *"AI development efficiency ≥ raw Rust, plus clearly fewer tokens."*
 
 The gate was **not met** on either axis (frontier models tie raw Rust exactly), and the decisive ablation showed the headline compression was never the dialect's: comment externalization alone gives −56%, the dialect only −11 pp more ([docs/35](docs/35-stage2-context.md)). So the dialect was folded, and its comment-ledger machinery became this tool ([docs/36](docs/36-strip-pivot.md)–[37](docs/37-fold-dogfood.md)).
@@ -145,6 +147,8 @@ stripped コードをエージェントに渡す際の推奨文言(実験で検�
 台帳フォーマットの詳細は [docs/36](docs/36-strip-pivot.md)・[docs/38](docs/38-subdir-hardening.md)。
 
 ## 経緯 — このプロジェクトは言語として始まった
+
+**この五日間(2026-08-17〜08-21)に起きたことは、測定も、失敗も、判断も、日次の時系列記録 [docs/46](docs/46-timeline.md) に、元レポート全部へのリンク付きで残してある。** 以下はその短縮版である。
 
 Tatamu は 2026-08-17 に **AI-first な Rust 方言**(人間の書きやすさを捨てて LLM のトークン効率を取る 1:1 変換言語)として始まり、トランスパイラ・構造化診断・cargo/FFI/wasm/モバイル出力・**18クレート約340万行で AST 同値 100%** の逆変換器まで作った上で、自ら定義したゲート「AI にとって Rust と同等以上+明確なトークン削減」を実測しました。
 
