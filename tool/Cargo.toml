@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 description = "Comment/doc externalization for Rust: strip comments into an anchored sidecar ledger, restore them byte-exactly, and query them on demand."
 license = "MIT"
+repository = "https://github.com/daisuke7/tatamu"
 
 [dependencies]
 syn = { version = "2", features = ["full", "extra-traits", "visit-mut", "parsing", "printing"] }

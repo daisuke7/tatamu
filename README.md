@@ -90,7 +90,7 @@ The gate was **not met** on either axis (frontier models tie raw Rust exactly), 
 | `transpiler/`, `dogfood/` | legacy dialect toolchain (kept green in CI) |
 | `.github/workflows/ci.yml` | roundtrip gate + unit corpora on every push/PR |
 
-License: MIT (planned for publication).
+License: [MIT](LICENSE).
 
 ---
 
@@ -167,4 +167,4 @@ Tatamu は 2026-08-17 に **AI-first な Rust 方言**(人間の書きやすさ�
 | `transpiler/`・`dogfood/` | legacy 方言ツールチェーン(CI で green 維持) |
 | `.github/workflows/ci.yml` | push/PR ごとの roundtrip ゲート+ユニットコーパス |
 
-ライセンス: MIT(公開時も MIT 予定)。
+ライセンス: [MIT](LICENSE)。
